@@ -1,0 +1,138 @@
+.page {
+    padding-block: 56px 112px;
+    display: grid;
+    gap: 28px;
+}
+
+.page > * {
+    max-width: 880px;
+}
+
+.page h1 {
+    font: 400 calc(1.22 * clamp(28px, 3.6vw, 44px)) / 1.08 var(--f-display);
+}
+
+.programme {
+    display: grid;
+    gap: 20px;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.badge img {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
+.badge strong {
+    font: 500 14px var(--f-body);
+}
+
+.programme h2 {
+    font: 400 calc(1.22 * clamp(22px, 2.4vw, 28px)) / 1.15 var(--f-display);
+}
+
+.logo {
+    height: 48px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: left;
+}
+
+.block h3 {
+    font: 500 11px var(--f-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+.programme .prose {
+    margin-top: 0;
+    max-width: 70ch;
+}
+
+.docs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+}
+
+.docs li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 16px;
+    padding-block: 14px;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+}
+
+.docs a {
+    font-weight: 500;
+}
+
+.docs a:hover,
+.docs a:focus-visible {
+    color: var(--accent);
+}
+
+.meta {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filters button {
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    font: 500 14px var(--f-body);
+    color: var(--text);
+    transition: border-color var(--dur-micro) var(--ease);
+}
+
+.filters button:hover {
+    border-color: var(--text);
+}
+
+.filters button[aria-pressed='true'] {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.contact {
+    margin-top: 8px;
+}
+
+.contact dd a {
+    font-weight: 500;
+}
+
+.contact dd a:hover,
+.contact dd a:focus-visible {
+    color: var(--accent);
+}
+
+.contact dd {
+    display: grid;
+    gap: 4px;
+}
+
+.docs li[hidden] {
+    display: none;
+}

@@ -90,7 +90,15 @@
     "eu": {
         "h": "EU programmes and publications",
         "p": "Projects Tekom carries out with EU co-funding, with the notices each programme requires us to publish.",
-        "notices": "Notices"
+        "notices": "Notices",
+        "cofunded": "Co-funded by the European Union",
+        "emblemAlt": "European Union flag",
+        "summary": "About the project",
+        "objectives": "Aims",
+        "results": "Results",
+        "totalBudget": "Total budget",
+        "euContribution": "EU contribution",
+        "period": "Period"
     },
     "contact": {
         "h": "Tell us about your project",
@@ -103,7 +111,8 @@
             "email": "Email"
         },
         "phone": "Phone",
-        "office": "Office"
+        "office": "Office",
+        "email": "Email"
     },
     "footer": {
         "company": "Company",
@@ -122,5 +131,12 @@
         "eu": "Projects co-funded by the European Union under BG05SFPR002-1.004-1772-C01 and BG16RFPR001-1.004.",
         "made": "Data controller: ТЕКОМ ООД · privacy@tekomltd.com"
     },
-    "note": "Translation to follow"
+    "note": "Translation to follow",
+    "publications": {
+        "h": "Publications",
+        "all": "All",
+        "procurement": "Procurement notices",
+        "eu_notice": "EU notices",
+        "other": "Other"
+    }
 }

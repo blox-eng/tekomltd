@@ -29,7 +29,7 @@ test('no request leaves the site', async ({ page, baseURL }) => {
         foreign.push(request.url());
         return route.abort();
     });
-    for (const path of ['/', '/en', '/de', '/en/privacy']) {
+    for (const path of ['/', '/en', '/de', '/en/privacy', '/projects/art-gallery-centre', '/eu-programmes', '/publications', '/contact']) {
         await page.goto(path, { waitUntil: 'load' });
         await page.evaluate(() => {
             window.scrollTo(0, document.body.scrollHeight);

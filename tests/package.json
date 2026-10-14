@@ -1,0 +1,16 @@
+{
+    "name": "@tekom/tests",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "test:api": "vitest run --config vitest.config.ts",
+        "test:e2e": "pnpm exec playwright test",
+        "test:e2e:ui": "pnpm exec playwright test --ui"
+    },
+    "devDependencies": {
+        "@playwright/test": "1.57.0",
+        "@types/node": "^22.19.17",
+        "typescript": "^5.9.3",
+        "vitest": "^2.1.9"
+    }
+}

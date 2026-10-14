@@ -31,11 +31,12 @@ test('no request leaves the site', async ({ page, baseURL }) => {
     });
     for (const path of ['/', '/en', '/de', '/en/privacy', '/projects/river-house', '/eu-programmes', '/publications', '/contact']) {
         await page.goto(path, { waitUntil: 'load' });
-        await page.evaluate(() => {
-            window.scrollTo(0, document.body.scrollHeight);
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        // Load every image, including the rail's loop copies that mount after hydration.
+        await page.waitForFunction(() => {
             document.querySelectorAll('img[loading=lazy]').forEach((img) => img.setAttribute('loading', 'eager'));
+            return [...document.images].every((img) => img.complete);
         });
-        await page.waitForFunction(() => [...document.images].every((img) => img.complete));
         await page.waitForLoadState('load');
     }
     expect(foreign).toEqual([]);

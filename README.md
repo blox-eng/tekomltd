@@ -35,3 +35,7 @@ SITE_URL=http://localhost:3000 pnpm --filter @tekom/tests test:smoke  # smoke te
 | `docs/superpowers/specs/2026-10-14-tekomltd-site-design.md` | The spec.                                             |
 
 Project photos and texts come from the previous tekomltd.com and belong to ТЕКОМ ООД. Material brand logos belong to their owners and are used to name materials Tekom works with.
+
+## License
+
+Proprietary. Copyright (c) 2026 BLOX ENGINEERING EOOD. All rights reserved. The source is public for reference only: you may not use, copy, modify, distribute or create derivative works from it without written permission from BLOX ENGINEERING EOOD. See [LICENSE](LICENSE) and, for vulnerability reports, [SECURITY.md](SECURITY.md).

@@ -2,6 +2,7 @@
     "name": "@tekom/tests",
     "version": "0.1.0",
     "private": true,
+    "license": "UNLICENSED",
     "scripts": {
         "test:e2e": "pnpm exec playwright test",
         "test:smoke": "pnpm exec playwright test -c playwright.smoke.config.ts",

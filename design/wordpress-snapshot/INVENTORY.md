@@ -56,84 +56,84 @@ live site has a row with its new home in `content/` or the reason it is not used
 
 | ID | Date | Type | File | New home |
 |---|---|---|---|---|
-| 257 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-244125289.jpg` | not used: attached to page home but not shown on it |
-| 262 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo1-219096700.png` | not used: attached to page home but not shown on it |
-| 263 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo2-219096700.png` | not used: attached to page home but not shown on it |
-| 267 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-testimonial-84268399.jpg` | not used: attached to page home but not shown on it |
-| 268 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-testimonial-113165296.jpg` | not used: attached to page home but not shown on it |
-| 272 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/latest-news-93376240.jpg` | not used: not referenced by any live page or project |
-| 276 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/blog-post-92486644.jpg` | not used: not referenced by any live page or project |
-| 278 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/blog-post-134132600.jpg` | not used: not referenced by any live page or project |
-| 279 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/blog-post-332773904.jpg` | not used: not referenced by any live page or project |
-| 288 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/contact-331299731.jpg` | not used: not referenced by any live page or project |
-| 296 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/work-88948309.jpg` | not used: not referenced by any live page or project |
-| 302 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project1-featured-294276386.jpg` | not used: attached to project golden-fish-chernomorets but not shown on its live page |
-| 303 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project1-banner-294276386.jpg` | not used: not referenced by any live page or project |
-| 310 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-banner-51526282.jpg` | not used: not referenced by any live page or project |
-| 311 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-call-to-action-345344531.jpg` | not used: attached to page business-services but not shown on it |
-| 314 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/about-call-to-action-57862405.jpg` | not used: attached to page about but not shown on it |
-| 319 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo9-219096700.png` | not used: attached to page about but not shown on it |
-| 320 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo10-219096700.png` | not used: attached to page about but not shown on it |
-| 321 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo11-219096700.png` | not used: attached to page about but not shown on it |
-| 325 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/about-150120215.jpg` | not used: not referenced by any live page or project |
-| 326 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-parallax-144609983.jpg` | not used: attached to page home but not shown on it |
-| 329 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project2-featured-15013609.jpg` | not used: not referenced by any live page or project |
-| 332 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project2-banner-15013609.jpg` | not used: not referenced by any live page or project |
-| 336 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project3-featured-189023420.jpg` | not used: attached to project stoletov-44 but not shown on its live page |
-| 338 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project3-banner-189023420.jpg` | not used: not referenced by any live page or project |
+| 257 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-244125289.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 262 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo1-219096700.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 263 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo2-219096700.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 267 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-testimonial-84268399.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 268 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-testimonial-113165296.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 272 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/latest-news-93376240.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 276 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/blog-post-92486644.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 278 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/blog-post-134132600.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 279 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/blog-post-332773904.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 288 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/contact-331299731.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 296 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/work-88948309.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 302 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project1-featured-294276386.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 303 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project1-banner-294276386.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 310 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-banner-51526282.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 311 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-call-to-action-345344531.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 314 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/about-call-to-action-57862405.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 319 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo9-219096700.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 320 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo10-219096700.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 321 | 2015-12-20 | image/png | `/wp-content/uploads/2015/12/home-logo11-219096700.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 325 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/about-150120215.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 326 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-parallax-144609983.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 329 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project2-featured-15013609.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 332 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project2-banner-15013609.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 336 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project3-featured-189023420.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 338 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/project3-banner-189023420.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
 | 343 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-35772190.jpg` | content/pages/private-services/services-tabs-35772190.jpg |
-| 345 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-130314980.jpg` | not used: attached to page business-services but not shown on it |
+| 345 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-130314980.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
 | 346 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-139154408.jpg` | content/pages/business-services/services-tabs-139154408.jpg |
-| 347 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-146143418.jpg` | not used: attached to page business-services but not shown on it |
+| 347 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-146143418.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
 | 349 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-224128822.jpg` | content/pages/services/services-tabs-224128822.jpg |
 | 350 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-302512316.jpg` | content/pages/private-services/services-tabs-302512316.jpg |
-| 363 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-146630252.jpg` | not used: not referenced by any live page or project |
-| 364 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-150919640.jpg` | not used: not referenced by any live page or project |
+| 363 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-146630252.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 364 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-150919640.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
 | 365 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-328384091.jpg` | content/pages/business-services/services-tabs-328384091.jpg |
 | 366 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/services-tabs-165442334.jpg` | content/pages/private-services/services-tabs-165442334.jpg |
-| 369 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-slider-62528242.jpg` | not used: not referenced by any live page or project |
-| 370 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project3-call-to-action2-213775522.jpg` | not used: not referenced by any live page or project |
+| 369 | 2015-12-20 | image/jpeg | `/wp-content/uploads/2015/12/home-slider-62528242.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 370 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project3-call-to-action2-213775522.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
 | 372 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project3-detail-image-102200446.jpg` | content/pages/private-services/project3-detail-image-102200446.jpg |
-| 373 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project3-detail-image-242258890.jpg` | not used: attached to project stoletov-44 but not shown on its live page |
-| 374 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project3-detail-image-258507038.jpg` | not used: attached to project stoletov-44 but not shown on its live page |
-| 378 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project1-detail-image-72959041.jpg` | not used: attached to project golden-fish-chernomorets but not shown on its live page |
-| 379 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project1-detail-image-140175490.jpg` | not used: attached to project golden-fish-chernomorets but not shown on its live page |
-| 380 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project1-call-to-action-31867166.jpg` | not used: attached to project golden-fish-chernomorets but not shown on its live page |
-| 381 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project1-detail-image-285652706.jpg` | not used: attached to project golden-fish-chernomorets but not shown on its live page |
-| 399 | 2015-12-22 | image/png | `/wp-content/uploads/2015/12/custom-marker-smaller.png` | not used: not referenced by any live page or project |
-| 470 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/avada-team2-174543104.jpg` | not used: not referenced by any live page or project |
-| 471 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/avada-team3-107714906.jpg` | not used: not referenced by any live page or project |
-| 472 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/avada-team1-21351225.jpg` | not used: not referenced by any live page or project |
-| 473 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/project2-call-to-action-15013612.jpg` | not used: not referenced by any live page or project |
+| 373 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project3-detail-image-242258890.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 374 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project3-detail-image-258507038.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 378 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project1-detail-image-72959041.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 379 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project1-detail-image-140175490.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 380 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project1-call-to-action-31867166.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 381 | 2015-12-21 | image/jpeg | `/wp-content/uploads/2015/12/project1-detail-image-285652706.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 399 | 2015-12-22 | image/png | `/wp-content/uploads/2015/12/custom-marker-smaller.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 470 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/avada-team2-174543104.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 471 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/avada-team3-107714906.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 472 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/avada-team1-21351225.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 473 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/project2-call-to-action-15013612.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
 | 474 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/project2-detail-97066274.jpg` | content/pages/business-services/project2-detail-97066274.jpg |
 | 475 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/project2-detail-161997584.jpg` | content/pages/private-services/project2-detail-161997584.jpg |
-| 476 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/project2-detail-97066739.jpg` | not used: not referenced by any live page or project |
-| 477 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/about-parallax-62758198.jpg` | not used: not referenced by any live page or project |
+| 476 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/project2-detail-97066739.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 477 | 2015-12-23 | image/jpeg | `/wp-content/uploads/2015/12/about-parallax-62758198.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
 | 914 | 2017-01-14 | image/jpeg | `/wp-content/uploads/2017/01/project4-featured-construction.jpg` | content/pages/private-services/project4-featured-construction.jpg |
-| 917 | 2017-01-14 | image/jpeg | `/wp-content/uploads/2017/01/project4-banner-title-bar.jpg` | not used: not referenced by any live page or project |
-| 918 | 2017-01-15 | image/jpeg | `/wp-content/uploads/2015/06/project4-call-to-action.jpg` | not used: attached to project gladstone-44 but not shown on its live page |
-| 921 | 2017-01-15 | image/jpeg | `/wp-content/uploads/2015/06/project4-detail-image-3.jpg` | not used: attached to project gladstone-44 but not shown on its live page |
-| 922 | 2017-01-15 | image/jpeg | `/wp-content/uploads/2015/06/project4-detail-image-1.jpg` | not used: attached to project gladstone-44 but not shown on its live page |
-| 923 | 2017-01-15 | image/jpeg | `/wp-content/uploads/2015/06/project4-detail-image-2.jpg` | not used: attached to project gladstone-44 but not shown on its live page |
-| 952 | 2017-02-21 | image/jpeg | `/wp-content/uploads/2015/12/construction_hat_materials.jpg` | not used: attached to page home but not shown on it |
-| 985 | 2017-02-22 | image/png | `/wp-content/uploads/2017/02/footer-logo.png` | not used: not referenced by any live page or project |
-| 1177 | 2017-03-23 | image/png | `/wp-content/uploads/2017/03/construction_map_pin.png` | not used: not referenced by any live page or project |
-| 1184 | 2017-04-13 | image/png | `/wp-content/uploads/2017/04/construction_logo_retina.png` | not used: not referenced by any live page or project |
-| 1185 | 2017-04-13 | image/png | `/wp-content/uploads/2017/04/construction_logo.png` | not used: not referenced by any live page or project |
-| 1186 | 2017-04-13 | image/png | `/wp-content/uploads/2017/04/construction_mobile_logo_retina.png` | not used: not referenced by any live page or project |
-| 1187 | 2017-04-13 | image/png | `/wp-content/uploads/2017/04/construction_mobile_logo.png` | not used: not referenced by any live page or project |
+| 917 | 2017-01-14 | image/jpeg | `/wp-content/uploads/2017/01/project4-banner-title-bar.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 918 | 2017-01-15 | image/jpeg | `/wp-content/uploads/2015/06/project4-call-to-action.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 921 | 2017-01-15 | image/jpeg | `/wp-content/uploads/2015/06/project4-detail-image-3.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 922 | 2017-01-15 | image/jpeg | `/wp-content/uploads/2015/06/project4-detail-image-1.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 923 | 2017-01-15 | image/jpeg | `/wp-content/uploads/2015/06/project4-detail-image-2.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 952 | 2017-02-21 | image/jpeg | `/wp-content/uploads/2015/12/construction_hat_materials.jpg` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 985 | 2017-02-22 | image/png | `/wp-content/uploads/2017/02/footer-logo.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 1177 | 2017-03-23 | image/png | `/wp-content/uploads/2017/03/construction_map_pin.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 1184 | 2017-04-13 | image/png | `/wp-content/uploads/2017/04/construction_logo_retina.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 1185 | 2017-04-13 | image/png | `/wp-content/uploads/2017/04/construction_logo.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 1186 | 2017-04-13 | image/png | `/wp-content/uploads/2017/04/construction_mobile_logo_retina.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
+| 1187 | 2017-04-13 | image/png | `/wp-content/uploads/2017/04/construction_mobile_logo.png` | not used: stock image or icon of the Avada theme demo, not Tekom's own |
 | 1208 | 2018-09-06 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_Logo1-2-e1536256852206.jpg` | not used: old site logo or icon; the new logo ships with packages/ui |
 | 1209 | 2018-09-06 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_Logo1-e1536256864623.jpg` | not used: old site logo or icon; the new logo ships with packages/ui |
 | 1210 | 2018-09-06 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_Logo1-1-e1536256290959.jpg` | not used: old site logo or icon; the new logo ships with packages/ui |
 | 1211 | 2018-09-06 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_Logo1-3-e1536256351455.jpg` | not used: old site logo or icon; the new logo ships with packages/ui |
 | 1212 | 2018-09-06 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_Logo2.jpg` | not used: old site logo or icon; the new logo ships with packages/ui |
-| 1288 | 2018-09-07 | image/jpeg | `/wp-content/uploads/2015/12/trade-center-stara-zagora1.jpg` | not used: not referenced by any live page or project |
+| 1288 | 2018-09-07 | image/jpeg | `/wp-content/uploads/2015/12/trade-center-stara-zagora1.jpg` | archived: archive/wordpress-media/2015/12/trade-center-stara-zagora1.jpg |
 | 1303 | 2018-09-07 | image/jpeg | `/wp-content/uploads/2015/06/ГЛАДСТОН-IMG_1.jpg` | content/projects/gladstone-44/gladston-img-1.jpg |
-| 1332 | 2018-09-08 | image/jpeg | `/wp-content/uploads/2018/09/Sulica-3.jpg` | not used: attached to project sulitsa-house but not shown on its live page |
-| 1357 | 2018-09-08 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_BG-ISO-9001_2008.jpg` | not used: attached to page about but not shown on it |
-| 1358 | 2018-09-08 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_BG-ICO-14001_2005.jpg` | not used: attached to page about but not shown on it |
-| 1359 | 2018-09-08 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_BG-ISO-18001_2007.jpg` | not used: attached to page about but not shown on it |
-| 1481 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/raya_01.jpg` | not used: attached to project printing-house but not shown on its live page |
+| 1332 | 2018-09-08 | image/jpeg | `/wp-content/uploads/2018/09/Sulica-3.jpg` | archived: archive/wordpress-media/2018/09/Sulica-3.jpg |
+| 1357 | 2018-09-08 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_BG-ISO-9001_2008.jpg` | archived: archive/wordpress-media/2018/09/Tekom_BG-ISO-9001_2008.jpg |
+| 1358 | 2018-09-08 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_BG-ICO-14001_2005.jpg` | archived: archive/wordpress-media/2018/09/Tekom_BG-ICO-14001_2005.jpg |
+| 1359 | 2018-09-08 | image/jpeg | `/wp-content/uploads/2018/09/Tekom_BG-ISO-18001_2007.jpg` | archived: archive/wordpress-media/2018/09/Tekom_BG-ISO-18001_2007.jpg |
+| 1481 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/raya_01.jpg` | archived: archive/wordpress-media/2018/09/raya_01.jpg |
 | 1483 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/Sulica-2.jpg` | content/projects/sulitsa-house/sulica-2.jpg |
 | 1484 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/Sulica-1.jpg` | content/projects/sulitsa-house/sulica-1.jpg |
 | 1485 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/Sulica-4.jpg` | content/projects/sulitsa-house/sulica-4.jpg |
@@ -143,8 +143,8 @@ live site has a row with its new home in `content/` or the reason it is not used
 | 1499 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/ПАРАКЛИС-IMG_3.jpg` | content/projects/st-dimitar-chapel/paraklis-img-3.jpg |
 | 1500 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/ПАРАКЛИС-IMG_2.jpg` | content/projects/st-dimitar-chapel/paraklis-img-2.jpg |
 | 1501 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/ПАРАКЛИС-IMG_0.jpg` | content/projects/st-dimitar-chapel/paraklis-img-0.jpg |
-| 1503 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/Jelezni-Vrata-9-fasada.jpg` | not used: attached to project zhelezni-vrata-9 but not shown on its live page |
-| 1509 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/zhelezni-vrata-arch-1.jpg` | not used: attached to project zhelezni-vrata-18 but not shown on its live page |
+| 1503 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/Jelezni-Vrata-9-fasada.jpg` | not used: byte-identical copy of #1560 |
+| 1509 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/zhelezni-vrata-arch-1.jpg` | archived: archive/wordpress-media/2018/09/zhelezni-vrata-arch-1.jpg |
 | 1510 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/zhelezni-vrata-arch-5.jpg` | content/projects/zhelezni-vrata-18/zhelezni-vrata-arch-5.jpg |
 | 1511 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/zhelezni-vrata-arch-4.jpg` | content/projects/zhelezni-vrata-18/zhelezni-vrata-arch-4.jpg |
 | 1512 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/zhelezni-vrata-arch-3.jpg` | content/projects/zhelezni-vrata-18/zhelezni-vrata-arch-3.jpg |
@@ -152,7 +152,7 @@ live site has a row with its new home in `content/` or the reason it is not used
 | 1514 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/zhelezni-vrata-arch-6.jpg` | content/projects/zhelezni-vrata-18/zhelezni-vrata-arch-6.jpg |
 | 1515 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/zhelezni-vrata-arch-8.jpg` | content/projects/zhelezni-vrata-18/zhelezni-vrata-arch-8.jpg |
 | 1516 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/zhelezni-vrata-arch-2.jpg` | content/projects/zhelezni-vrata-18/zhelezni-vrata-arch-2.jpg |
-| 1517 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/Жел-Врата-18-1-1.jpg` | not used: attached to project zhelezni-vrata-18 but not shown on its live page |
+| 1517 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/Жел-Врата-18-1-1.jpg` | archived: archive/wordpress-media/2018/09/Жел-Врата-18-1-1.jpg |
 | 1519 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/design_zhelezni_vrata_18_3.jpg` | content/projects/zhelezni-vrata-18/design-zhelezni-vrata-18-3.jpg |
 | 1520 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/design_zhelezni_vrata_18_2.jpg` | content/projects/zhelezni-vrata-18/design-zhelezni-vrata-18-2.jpg |
 | 1521 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/design_zhelezni_vrata_18_6.jpg` | content/projects/zhelezni-vrata-18/design-zhelezni-vrata-18-6.jpg |
@@ -218,14 +218,14 @@ live site has a row with its new home in `content/` or the reason it is not used
 | 1607 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/design_7.jpg` | content/projects/chepelare-house/design-7.jpg |
 | 1631 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/Ravda-fasada-2-1.jpg` | content/projects/ravda-conversion/ravda-fasada-2-1.jpg |
 | 1632 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/ravda-imoti-1.jpg` | content/projects/ravda-conversion/ravda-imoti-1.jpg |
-| 1642 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/ostra_mogila_01_new.jpg` | not used: attached to page home but not shown on it |
-| 1686 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-9001-2015-21-04-2022-scaled.jpg` | not used: attached to page about but not shown on it |
-| 1687 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-14001-2015-21-04-2022-scaled.jpg` | not used: attached to page about but not shown on it |
-| 1688 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/OHSAS-45001-2018-21.04.2022-scaled.jpg` | not used: attached to page about but not shown on it |
-| 1689 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-9001-scaled.jpg` | not used: attached to page about but not shown on it |
-| 1690 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-14000-scaled.jpg` | not used: attached to page about but not shown on it |
-| 1691 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-45000-scaled.jpg` | not used: attached to page about but not shown on it |
-| 1701 | 2022-01-19 | image/jpeg | `/wp-content/uploads/2022/01/viber_изображение_2020-09-03_09-25-41-scaled-e1642597809730.jpg` | not used: not referenced by any live page or project |
+| 1642 | 2018-09-09 | image/jpeg | `/wp-content/uploads/2018/09/ostra_mogila_01_new.jpg` | archived: archive/wordpress-media/2018/09/ostra_mogila_01_new.jpg |
+| 1686 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-9001-2015-21-04-2022-scaled.jpg` | archived: archive/wordpress-media/2022/01/ISO-9001-2015-21-04-2022-scaled.jpg |
+| 1687 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-14001-2015-21-04-2022-scaled.jpg` | archived: archive/wordpress-media/2022/01/ISO-14001-2015-21-04-2022-scaled.jpg |
+| 1688 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/OHSAS-45001-2018-21.04.2022-scaled.jpg` | archived: archive/wordpress-media/2022/01/OHSAS-45001-2018-21.04.2022-scaled.jpg |
+| 1689 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-9001-scaled.jpg` | archived: archive/wordpress-media/2022/01/ISO-9001-scaled.jpg |
+| 1690 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-14000-scaled.jpg` | archived: archive/wordpress-media/2022/01/ISO-14000-scaled.jpg |
+| 1691 | 2022-01-05 | image/jpeg | `/wp-content/uploads/2022/01/ISO-45000-scaled.jpg` | archived: archive/wordpress-media/2022/01/ISO-45000-scaled.jpg |
+| 1701 | 2022-01-19 | image/jpeg | `/wp-content/uploads/2022/01/viber_изображение_2020-09-03_09-25-41-scaled-e1642597809730.jpg` | archived: archive/wordpress-media/2022/01/viber_изображение_2020-09-03_09-25-41-scaled-e1642597809730.jpg |
 | 1713 | 2022-01-19 | image/png | `/wp-content/uploads/2022/01/Tekom_Logo.png` | not used: old site logo or icon; the new logo ships with packages/ui |
 | 1787 | 2024-07-11 | application/pdf | `/wp-content/uploads/2024/07/2024-04-15_BG24-183116ES_Tekom-OOD.pdf` | content/publications/2024-07-2024-04-15-bg24-183116es-tekom-ood.pdf |
 | 1788 | 2024-07-11 | application/pdf | `/wp-content/uploads/2024/07/2024-04-15_BG24-183116OHSS_Tekom-OOD.pdf` | content/publications/2024-07-2024-04-15-bg24-183116ohss-tekom-ood.pdf |
@@ -240,7 +240,7 @@ live site has a row with its new home in `content/` or the reason it is not used
 | 1819 | 2025-02-14 | image/jpeg | `/wp-content/uploads/2025/02/Публ.-сайт_Теком.2.jpeg` | not used: a picture of a document page, shown next to its download link; the document itself is imported |
 | 1820 | 2025-02-14 | image/jpeg | `/wp-content/uploads/2025/02/Публ.-сайт_Теком.1.jpeg` | not used: a picture of a document page, shown next to its download link; the document itself is imported |
 | 1840 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2015/12/thumb-img_0619-1-small.jpg` | content/projects/art-gallery-centre/thumb-img-0619-1-small.jpg |
-| 1842 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2025/03/thumb-c68e603e97a3e508672cb7d76eab15062a4213a4473e09d8cf677_d0f679197efd198c.jpg` | not used: not referenced by any live page or project |
+| 1842 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2025/03/thumb-c68e603e97a3e508672cb7d76eab15062a4213a4473e09d8cf677_d0f679197efd198c.jpg` | archived: archive/wordpress-media/2025/03/thumb-c68e603e97a3e508672cb7d76eab15062a4213a4473e09d8cf677_d0f679197efd198c.jpg |
 | 1844 | 2025-03-24 | image/png | `/wp-content/uploads/2018/09/chepelare.png` | content/projects/chepelare-house/chepelare.jpg |
 | 1857 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2025/03/DJI_0091.jpg` | content/projects/asenov-129/dji-0091.jpg |
 | 1858 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2025/03/DJI_0104.jpg` | content/projects/asenov-129/dji-0104.jpg |
@@ -250,19 +250,19 @@ live site has a row with its new home in `content/` or the reason it is not used
 | 1862 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2025/03/DSCF1038-1.jpg` | content/projects/asenov-129/dscf1038-1.jpg |
 | 1863 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2025/03/IMG_20201202_105809-scaled.jpg` | content/projects/asenov-129/img-20201202-105809.jpg |
 | 1864 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2025/03/Pasted-Image-1-scaled.jpg` | content/projects/asenov-129/pasted-image-1.jpg |
-| 1876 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2015/12/IMG_7639.jpg` | not used: attached to project golden-fish-chernomorets but not shown on its live page |
-| 1877 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2015/12/IMG_7639-1.jpg` | not used: attached to project golden-fish-chernomorets but not shown on its live page |
+| 1876 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2015/12/IMG_7639.jpg` | archived: archive/wordpress-media/2015/12/IMG_7639.jpg |
+| 1877 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2015/12/IMG_7639-1.jpg` | archived: archive/wordpress-media/2015/12/IMG_7639-1.jpg |
 | 1880 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/IMG_0388.jpg` | content/projects/printing-house/img-0388.jpg |
-| 1882 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/IMG_76396546-1.jpg` | not used: attached to project ravda-conversion but not shown on its live page |
+| 1882 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/IMG_76396546-1.jpg` | archived: archive/wordpress-media/2018/09/IMG_76396546-1.jpg |
 | 1883 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/IMG_037843-1.jpg` | content/projects/sulitsa-house/img-037843-1.jpg |
 | 1885 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/thumb-ПАРАКЛИС-IMG_1.jpg` | content/projects/st-dimitar-chapel/thumb-paraklis-img-1.jpg |
-| 1888 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/IMG_8057-1.jpg` | not used: attached to project ostra-mogila-house but not shown on its live page |
+| 1888 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/IMG_8057-1.jpg` | archived: archive/wordpress-media/2018/09/IMG_8057-1.jpg |
 | 1893 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2025/03/DSCF0964453.jpg` | content/projects/asenov-129/dscf0964453.jpg |
 | 1894 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/IMG_76396546-2.jpg` | content/projects/ravda-conversion/img-76396546-2.jpg |
-| 1895 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/ivan-asen-1.jpg` | not used: attached to project ivan-asen-168 but not shown on its live page |
+| 1895 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/ivan-asen-1.jpg` | archived: archive/wordpress-media/2018/09/ivan-asen-1.jpg |
 | 1897 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/boruigrad-1.jpg` | content/projects/boruygrad-49/boruigrad-1.jpg |
 | 1899 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/zhelezni-vrata-1.jpg` | content/projects/zhelezni-vrata-18/zhelezni-vrata-1.jpg |
-| 1901 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2015/12/stoletov-2-1.jpg` | not used: attached to project stoletov-44 but not shown on its live page |
+| 1901 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2015/12/stoletov-2-1.jpg` | not used: byte-identical copy of #1904 |
 | 1902 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/ZHELEZNI-VRATA-9-1.jpg` | content/projects/zhelezni-vrata-9/zhelezni-vrata-9-1.jpg |
 | 1904 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2015/12/stoletov-2-1-1.jpg` | content/projects/stoletov-44/stoletov-2-1-1.jpg |
 | 1906 | 2025-03-24 | image/jpeg | `/wp-content/uploads/2018/09/IMG_8086-1.jpg` | content/projects/ostra-mogila-house/img-8086-1.jpg |
@@ -281,27 +281,27 @@ live site has a row with its new home in `content/` or the reason it is not used
 | 1939 | 2025-07-11 | application/pdf | `/wp-content/uploads/2025/07/Изисквания-към-офертите_Т-1.pdf` | content/publications/2025-07-iziskvaniya-kam-ofertite-t-1.pdf |
 | 1940 | 2025-07-11 | application/pdf | `/wp-content/uploads/2025/07/11-9_Проект-договор_ПМС4_Т-1.pdf` | content/publications/2025-07-11-9-proekt-dogovor-pms4-t-1.pdf |
 | 1941 | 2025-07-11 | application/pdf | `/wp-content/uploads/2025/07/11-1_Публ.-пок__на_ПМС4_Т-1.pdf` | content/publications/2025-07-11-1-publ-pok-na-pms4-t-1.pdf |
-| 1953 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/CROP-Thumbnail-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
+| 1953 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/CROP-Thumbnail-scaled.jpg` | archived: archive/wordpress-media/2025/10/CROP-Thumbnail-scaled.jpg |
 | 1954 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/Baumit-ochen-tsentyr-1-.jpg` | content/projects/green-bath-eye-clinic/baumit-ochen-tsentyr-1.jpg |
 | 1955 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/Baumit-ochen-tsentyr-2-.jpg` | content/projects/green-bath-eye-clinic/baumit-ochen-tsentyr-2.jpg |
 | 1956 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/Baumit-ochen-tsentyr-3-.jpg` | content/projects/green-bath-eye-clinic/baumit-ochen-tsentyr-3.jpg |
 | 1957 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/Baumit-ochen-tsentyr-4-.jpg` | content/projects/green-bath-eye-clinic/baumit-ochen-tsentyr-4.jpg |
 | 1958 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/Baumit-ochen-tsentyr-5-.jpg` | content/projects/green-bath-eye-clinic/baumit-ochen-tsentyr-5.jpg |
 | 1959 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/Baumit-ochen-tsentyr-6-.jpg` | content/projects/green-bath-eye-clinic/baumit-ochen-tsentyr-6.jpg |
-| 1960 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0290-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
-| 1961 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0291-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
-| 1962 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0292-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
-| 1963 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0294-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
-| 1964 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0298-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
-| 1965 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0299-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
-| 1966 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0301-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
-| 1967 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0306-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
-| 1970 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0290-1-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
+| 1960 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0290-scaled.jpg` | archived: archive/wordpress-media/2025/10/DSC_0290-scaled.jpg |
+| 1961 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0291-scaled.jpg` | not used: byte-identical copy of #1971 |
+| 1962 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0292-scaled.jpg` | archived: archive/wordpress-media/2025/10/DSC_0292-scaled.jpg |
+| 1963 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0294-scaled.jpg` | not used: byte-identical copy of #1973 |
+| 1964 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0298-scaled.jpg` | not used: byte-identical copy of #1976 |
+| 1965 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0299-scaled.jpg` | not used: byte-identical copy of #1977 |
+| 1966 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0301-scaled.jpg` | not used: byte-identical copy of #1979 |
+| 1967 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0306-scaled.jpg` | not used: byte-identical copy of #1981 |
+| 1970 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0290-1-scaled.jpg` | not used: byte-identical copy of #1960 |
 | 1971 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0291-1-scaled.jpg` | content/projects/green-bath-eye-clinic/dsc-0291-1.jpg |
-| 1972 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0292-1-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
+| 1972 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0292-1-scaled.jpg` | not used: byte-identical copy of #1962 |
 | 1973 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0294-1-scaled.jpg` | content/projects/green-bath-eye-clinic/dsc-0294-1.jpg |
 | 1974 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0296-scaled.jpg` | content/projects/green-bath-eye-clinic/dsc-0296.jpg |
-| 1975 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0297-scaled.jpg` | not used: attached to project green-bath-eye-clinic but not shown on its live page |
+| 1975 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0297-scaled.jpg` | archived: archive/wordpress-media/2025/10/DSC_0297-scaled.jpg |
 | 1976 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0298-1-scaled.jpg` | content/projects/green-bath-eye-clinic/dsc-0298-1.jpg |
 | 1977 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0299-1-scaled.jpg` | content/projects/green-bath-eye-clinic/dsc-0299-1.jpg |
 | 1978 | 2025-10-22 | image/jpeg | `/wp-content/uploads/2025/10/DSC_0300-scaled.jpg` | content/projects/green-bath-eye-clinic/dsc-0300.jpg |
@@ -327,9 +327,9 @@ live site has a row with its new home in `content/` or the reason it is not used
 | 2013 | 2026-03-17 | application/pdf | `/wp-content/uploads/2026/03/Декл.-на-кандид_чл.-12-ал.1-т.1_ПМС4_ТЕКОМ.pdf` | content/publications/2026-03-dekl-na-kandid-chl-12-al-1-t-1-pms4-tekom.pdf |
 | 2014 | 2026-03-17 | application/pdf | `/wp-content/uploads/2026/03/Методика-за-оценка_ТЕКОМ.pdf` | content/publications/2026-03-metodika-za-otsenka-tekom.pdf |
 | 2015 | 2026-03-17 | application/pdf | `/wp-content/uploads/2026/03/Пр_1_Усл.-за-изпълнение.pdf` | content/publications/2026-03-pr-1-usl-za-izpalnenie.pdf |
-| 2020 | 2026-04-01 | image/jpeg | `/wp-content/uploads/2026/04/logoeuro.jpg` | not used: not referenced by any live page or project |
+| 2020 | 2026-04-01 | image/jpeg | `/wp-content/uploads/2026/04/logoeuro.jpg` | not used: generic EU flag or logo; the official emblem ships with packages/ui |
 | 2021 | 2026-04-01 | image/png | `/wp-content/uploads/2026/04/OPRCHR-logo.png` | content/eu-programmes/oprchr-logo.png |
-| 2022 | 2026-04-01 | image/png | `/wp-content/uploads/2026/04/Flag_of_Europe.svg.png` | not used: attached to page home but not shown on it |
+| 2022 | 2026-04-01 | image/png | `/wp-content/uploads/2026/04/Flag_of_Europe.svg.png` | not used: generic EU flag or logo; the official emblem ships with packages/ui |
 | 2023 | 2026-04-01 | image/webp | `/wp-content/uploads/2026/04/news_banner_pkip-1.webp` | content/eu-programmes/pkip.png |
 | 2036 | 2026-07-01 | image/jpeg | `/wp-content/uploads/2026/07/1.-ПУБЛИЧНА-ПОКАНА.jpg` | not used: a picture of a document page, shown next to its download link; the document itself is imported |
 | 2037 | 2026-07-01 | image/jpeg | `/wp-content/uploads/2026/07/2.-ДЕКЛАРАЦИЯ-НА-КАНДИДАТА.jpg` | not used: a picture of a document page, shown next to its download link; the document itself is imported |

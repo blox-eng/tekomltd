@@ -41,20 +41,53 @@
 4. **A visitor sends the contact form without consent, with a bad e-mail, or twice.** The form shows the error next to the field. The database keeps one row per real submission. Test: Task 10 `parseEnquiry` test and the honeypot test.
 5. **An editor saves a turning headline where the start text differs between phrases.** The control app rejects the save and names the bad phrase. Test: Task 2 `splitTurn` test and Task 15 settings validation test.
 
+## Reuse from vamyart
+
+The source is `blox-eng/vamyart` at `main` (commit `c61c8b6` or later). Clone it next to this repo: `gh repo clone blox-eng/vamyart ../vamyart`. Copy each file in this table. Then make only the change in the third column. Rename every `@vamy/` package scope to `@tekom/`. Remove all Stripe, auction, product, certificate, shipping, Algolia, Stackbit and newsletter code that comes with a copied file.
+
+| vamyart source | tekomltd target | Change | Task |
+|---|---|---|---|
+| `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.nvmrc`, `.prettierrc`, `.gitignore`, `.vscode/` | same paths | name `tekomltd`; remove the `slop` scripts; keep the Prettier settings without change | 1 |
+| `tests/` (`package.json`, `playwright.config.ts`, `vitest.config.ts`, `e2e/smoke.test.ts`, `api/helpers.ts`) | `tests/` | filter `@tekom/website`; replace the vamy specs with Tekom specs | 1 |
+| `.github/workflows/release.yml` | same path | none (semantic-release on `main`, Node 22) | 1 |
+| `.github/workflows/daily-pulse.yml` | same path | count `projects`, `enquiries`, `publications`; subject "tekomltd.com daily pulse"; recipient from secret `PULSE_TO` | 16 |
+| (vamyart has no test workflow) | `.github/workflows/ci.yml` | new: lint, typecheck, unit tests, RLS tests | 1, 4 |
+| `.env-example` | `.env-example` | rewrite with the variables of Task 16 only | 1 |
+| `packages/ui/package.json`, `tailwind-preset.js`, `src/index.ts`, `src/lib/utils.ts`, `src/styles/tokens.css` | `packages/ui/` | replace the token values with `DESIGN.md` §1 and §5; keep the file shape and the exports `./tokens.css` and `./tailwind-preset` | 2 |
+| `DESIGN.md` | `DESIGN.md` | done (already adapted in this repo) | — |
+| `packages/db/package.json` scripts, `drizzle.config.ts`, `src/client.ts` | `packages/db/` | keep `migrate`, `generate`, `studio`; `DATABASE_URL` is for migrations only; the request-path clients use `supabase-js` (spec §6) | 4 |
+| `packages/db/migrations/*_rls.sql` (for example `0014_collections_rls.sql`) | pattern for `0001_rls.sql` | same policy style; anon read on `published = true` | 4 |
+| `packages/db/scripts/backfill-image-dimensions.ts` | `scripts/lib/image-dimensions.ts` | reuse to read width and height during the WordPress import | 6 |
+| `packages/i18n/` | `packages/i18n/` | keep the package shape; replace the messages with the mockup `T` strings | 3 |
+| `apps/website/netlify.toml` | `apps/website/netlify.toml` | filter `@tekom/website`; `remote_images` = the Tekom Supabase URL | 7 |
+| `apps/website/src/components/gallery/LandingSlider.tsx` + `.test.tsx`, `src/utils/slider-loop.ts` | `apps/website/src/components/rail/Rail.tsx` | start from it; remove the clone loop (the rail has a counter and an end); accept mixed slide kinds | 8 |
+| `apps/website/src/utils/revalidate-path.ts` + test | `apps/website/src/lib/revalidate-path.ts` | none | 10 |
+| `apps/admin/` shell: `middleware.ts`, `lib/supabase/{client,server}.ts`, `app/layout.tsx`, `app/providers.tsx`, `app/login/`, `app/(dashboard)/layout.tsx`, `components/ui/{skeleton,toast}.tsx`, `netlify.toml`, `vitest.config.ts`, `tailwind.config.ts`, `next.config.ts` | `apps/control/` | rename the app; replace the dashboard navigation with the screens of `docs/control-pane-mapping.md`; remove tRPC | 12 |
+| `apps/admin/lib/image/resize.ts` + test | `apps/control/lib/image/resize.ts` | none | 13 |
+| `apps/admin/lib/revalidate.ts`, `lib/revalidate-paths.ts` + test, `app/api/revalidate/` | `apps/control/lib/`, `apps/control/app/api/revalidate/` | path helpers for projects, crews, publications, legal pages | 13 |
+| `DEPLOYMENT.md` | `DEPLOYMENT.md` | keep sections 1 (Supabase) and 3 (Resend); remove Stripe; add the two Netlify sites and the DNS move | 16 |
+
+**CI/CD after the copy:**
+- Netlify builds each app from its own `netlify.toml`. Each pull request gets a deploy preview for each app. A merge to `main` deploys both apps to production.
+- `ci.yml` runs on each pull request: lint, typecheck, unit tests, and the RLS tests against local Supabase.
+- `release.yml` creates a GitHub release with semantic-release after each merge to `main`. Conventional Commits drive the version.
+- `daily-pulse.yml` sends one digest e-mail per day at 08:00 UTC.
+- Migrations do not run in CI/CD. Run `pnpm --filter @tekom/db migrate` with `DATABASE_URL` before you merge a schema change (`DEPLOYMENT.md` §1).
+
 ---
 
 ### Task 1: Monorepo scaffold and CI
 
 **Files:**
-- Create: `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `tsconfig.base.json`, `.prettierrc`, `.gitignore`, `.nvmrc`
+- Copy from vamyart (see "Reuse from vamyart"): `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.nvmrc`, `.prettierrc`, `.gitignore`, `.vscode/`, `tests/`, `.github/workflows/release.yml`
+- Create: `tsconfig.base.json`, `.env-example`, `.github/workflows/ci.yml`
 - Create: `apps/website/package.json`, `apps/control/package.json`, `packages/{db,ui,i18n}/package.json` (empty `src/index.ts` each)
-- Create: `.github/workflows/ci.yml`
 - Test: `packages/i18n/src/smoke.test.ts`
 
 **Interfaces:**
-- Produces: root scripts `pnpm build`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm e2e`. Workspace names `@tekom/website`, `@tekom/control`, `@tekom/db`, `@tekom/ui`, `@tekom/i18n`.
+- Produces: root scripts `pnpm build`, `pnpm lint`, `pnpm typecheck`, `pnpm test`; `pnpm --filter @tekom/tests test:e2e`. Workspace names `@tekom/website`, `@tekom/control`, `@tekom/db`, `@tekom/ui`, `@tekom/i18n`, `@tekom/tests`.
 
-- [ ] **Step 1: Copy the workspace shape from vamyart.** Use `blox-eng/vamyart` `package.json`, `pnpm-workspace.yaml` and `turbo.json` as the source. Change the name to `tekomltd`. Remove the `slop` scripts and the `tests` workspace.
+- [ ] **Step 1: Copy the scaffold files.** Use the rows of Task 1 in "Reuse from vamyart". Do not change the Prettier settings.
 - [ ] **Step 2: Write the smoke test.**
 
 ```ts
@@ -63,8 +96,9 @@ describe("workspace", () => { it("runs vitest", () => { expect(1 + 1).toBe(2); }
 ```
 
 - [ ] **Step 3: Run the tests.** Run: `pnpm install && pnpm test`. Expected: 1 test passes.
-- [ ] **Step 4: Write the CI workflow.** Trigger on `pull_request` and on `push` to `main`. Use `ubuntu-latest`, `pnpm/action-setup`, Node 20. Run `pnpm lint`, `pnpm typecheck`, `pnpm test`.
-- [ ] **Step 5: Commit.** `git commit -m "chore: monorepo scaffold and CI"`
+- [ ] **Step 4: Write `ci.yml`.** Trigger on `pull_request` and on `push` to `main`. Use `ubuntu-latest`, `pnpm/action-setup@v4`, `actions/setup-node@v4` with Node 22 and the pnpm cache. Run `pnpm install --frozen-lockfile`, `pnpm lint`, `pnpm typecheck`, `pnpm test`.
+- [ ] **Step 5: Keep `release.yml` as copied.** Make sure that the first commit message after the copy is a Conventional Commit.
+- [ ] **Step 6: Commit.** `git commit -m "chore: scaffold from vamyart, CI and release workflows"`
 
 ---
 
@@ -116,7 +150,7 @@ it("needs at least two phrases", () => {
 
 - [ ] **Step 3: Write the glyph test.** Assert that `GLYPHS` has every key of both glyph lists in Global Constraints (25 unique keys; `square` is in both lists). Assert that no value contains `fill=` or `<script`.
 - [ ] **Step 4: Run the tests.** Run: `pnpm --filter @tekom/ui test`. Expected: FAIL (modules are missing).
-- [ ] **Step 5: Write `tokens.css`.** Copy the values from `DESIGN.md` §1 and §5. Copy the `.turn`, `.stamp`, `.btn`, `.ghost`, `.ar` rules from `design/mockup/mockup.tpl.html`.
+- [ ] **Step 5: Copy `packages/ui` from vamyart.** Then replace the values in `tokens.css` with `DESIGN.md` §1 and §5. Copy the `.turn`, `.stamp`, `.btn`, `.ghost`, `.ar` rules from `design/mockup/mockup.tpl.html`.
 - [ ] **Step 6: Write `glyphs.ts`.** Copy the `ICON` strings from `design/mockup/mockup.tpl.html` without change.
 - [ ] **Step 7: Write `splitTurn`.** Compare words from the left. The start is the longest word prefix that all phrases share. Each turn must have one to three words.
 - [ ] **Step 8: Write `TurningWord`.** Port `turnWord` and `armTurn` from the mockup. Use `IntersectionObserver` and pause on hover. Do not start the timer when `prefers-reduced-motion: reduce` is true. Tap and Enter turn the phrase.
@@ -187,6 +221,7 @@ it("allows one site_settings row", async () => { /* second insert throws */ });
   - A user without a `control_members` row cannot write.
   - An `editor` cannot update `site_settings`, `legal_pages`, `eu_programmes` or `control_members`.
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
+- [ ] **Step 3b: Copy `drizzle.config.ts` and the `migrate`, `generate` and `studio` scripts from vamyart.** Run `supabase init` to add `supabase/config.toml` for the local stack.
 - [ ] **Step 4: Write `schema.ts` and generate `0000_init.sql`.** Run `pnpm --filter @tekom/db drizzle-kit generate`. Add `check (char_length(summary_bg) <= 420)`.
 - [ ] **Step 5: Write `0001_rls.sql`.** Enable RLS on every table. Add `select` for `anon` on rows with `published = true`. Add `insert` for `anon` on `enquiries` only. Use `is_member('editor')` and `is_member('owner')` for writes, as in the role column of `docs/control-pane-mapping.md`.
 - [ ] **Step 6: Write `0002_retention.sql`.** Create `purge_old_enquiries()` and the `pg_cron` schedule `0 3 * * *`.
@@ -281,7 +316,7 @@ it("keeps full-size gallery images only", () => {
 - Create: `apps/website/src/app/[locale]/layout.tsx`, `apps/website/src/components/Header.tsx`, `Footer.tsx`, `ThemeToggle.tsx`, `ThemeScript.tsx`, `LangSwitch.tsx`
 - Create: `apps/website/src/app/[locale]/[legal]/page.tsx` (privacy, cookies, data-rights, terms)
 - Create: `apps/website/netlify.toml`
-- Test: `apps/website/e2e/shell.spec.ts`
+- Test: `tests/e2e/website/shell.spec.ts`
 
 **Interfaces:**
 - Consumes: Task 2 tokens, fonts, `Button`. Task 3 catalogues. Task 5 `getSettings`, `getLegalPage`.
@@ -307,7 +342,7 @@ test("no request leaves the site", async ({ page }) => {
 });
 ```
 
-- [ ] **Step 2: Run the tests.** Run: `pnpm --filter @tekom/website e2e`. Expected: FAIL.
+- [ ] **Step 2: Run the tests.** Run: `pnpm --filter @tekom/tests test:e2e`. Expected: FAIL.
 - [ ] **Step 3: Write the routing.** Use next-intl `localePrefix: "as-needed"` with `defaultLocale: "bg"`.
 - [ ] **Step 4: Write `ThemeScript`.** Put an inline script in `<head>`. It reads `localStorage["tekom-theme"]` in `try/catch` and sets `data-theme` before paint.
 - [ ] **Step 5: Write `Header` and `Footer`.** Follow `DESIGN.md` §7 and the mockup markup. Hide each social icon when its URL is empty.
@@ -322,7 +357,7 @@ test("no request leaves the site", async ({ page }) => {
 
 **Files:**
 - Create: `apps/website/src/app/[locale]/page.tsx`, `apps/website/src/components/rail/Rail.tsx`, `ProjectSlide.tsx`, `PanelSlide.tsx`, `CrewStatSlide.tsx`, `rail.ts`
-- Test: `apps/website/src/components/rail/rail.test.ts`, `apps/website/e2e/rail.spec.ts`
+- Test: `apps/website/src/components/rail/rail.test.ts`, `tests/e2e/website/rail.spec.ts`
 
 **Interfaces:**
 - Consumes: Task 5 `getHome`. Task 2 `Glyph`, `Stamp`.
@@ -343,7 +378,7 @@ it("keeps order for two panels at the same index by sort", () => { /* … */ });
 
 - [ ] **Step 2: Write the e2e tests.** At 390×844 each slide is the full viewport width. The counter shows `01 / NN` and changes after a swipe. On desktop the arrow buttons scroll the rail. A click on a project slide opens `/projects/<slug>`.
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
-- [ ] **Step 4: Write `buildRail` and the slide components.** Copy the CSS of `.rail`, `.track`, `.slide`, `.cap`, `.panel`, `.crew`, `.collage` from the mockup into CSS modules.
+- [ ] **Step 4: Start from vamyart `LandingSlider.tsx`.** Remove the clone loop. Then write `buildRail` and the slide components. Copy the CSS of `.rail`, `.track`, `.slide`, `.cap`, `.panel`, `.crew`, `.collage` from the mockup into CSS modules.
 - [ ] **Step 5: Use `next/image` for covers.** Set `sizes="(max-width: 640px) 100vw, 60vh"`. Set `priority` on the first slide only.
 - [ ] **Step 6: Run the tests.** Expected: PASS.
 - [ ] **Step 7: Commit.** `git commit -m "feat(website): project rail with panels and crew slides"`
@@ -355,7 +390,7 @@ it("keeps order for two panels at the same index by sort", () => { /* … */ });
 **Files:**
 - Create: `apps/website/src/components/home/{Promise,Stats,Crews,CrewScene,PartnerServices,Materials,Partners}.tsx`
 - Create: `apps/website/src/components/map/{geo.ts,BulgariaMap.tsx,CityMap.tsx,bulgaria-outline.ts}`
-- Test: `apps/website/src/components/map/geo.test.ts`, `apps/website/e2e/home.spec.ts`
+- Test: `apps/website/src/components/map/geo.test.ts`, `tests/e2e/website/home.spec.ts`
 
 **Interfaces:**
 - Consumes: Task 5 `HomeData`. Task 2 `TurningWord`, `splitTurn`, `Glyph`, `Stamp`.
@@ -391,7 +426,7 @@ it("draws a 500 m scale bar to scale", () => expect(scaleBarPx(500)).toBeCloseTo
 - Create: `apps/website/src/app/[locale]/eu-programmes/page.tsx`, `publications/page.tsx`, `contact/page.tsx`
 - Create: `apps/website/src/app/[locale]/contact/actions.ts`, `apps/website/src/lib/enquiry.ts`, `apps/website/src/lib/mail.ts`
 - Create: `apps/website/src/app/api/revalidate/route.ts`
-- Test: `apps/website/src/lib/enquiry.test.ts`, `apps/website/src/app/api/revalidate/route.test.ts`, `apps/website/e2e/pages.spec.ts`
+- Test: `apps/website/src/lib/enquiry.test.ts`, `apps/website/src/app/api/revalidate/route.test.ts`, `tests/e2e/website/pages.spec.ts`
 
 **Interfaces:**
 - Consumes: Task 5 queries. Task 3 `pick`.
@@ -456,7 +491,7 @@ it("redirects an old slug from history", () => { /* old-slug → /projects/new-s
 - Create: `apps/control/` (Next.js App Router), `apps/control/middleware.ts`, `apps/control/lib/supabase/{client,server}.ts`, `apps/control/lib/auth.ts`, `apps/control/messages/{bg,en}.json` (next-intl, Bulgarian default)
 - Create: `apps/control/app/login/page.tsx`, `apps/control/app/(dashboard)/layout.tsx`, `apps/control/app/(dashboard)/members/page.tsx`
 - Create: `apps/control/netlify.toml`
-- Test: `apps/control/lib/auth.test.ts`, `apps/control/e2e/auth.spec.ts`
+- Test: `apps/control/lib/auth.test.ts`, `tests/e2e/control/auth.spec.ts`
 
 **Interfaces:**
 - Consumes: Task 4 `control_members`, `is_member`.
@@ -465,7 +500,7 @@ it("redirects an old slug from history", () => { /* old-slug → /projects/new-s
 - [ ] **Step 1: Write the role tests.** `canEdit("editor", "settings")` is `false`. `canEdit("editor", "projects")` is `true`. `canEdit("owner", x)` is `true` for each screen.
 - [ ] **Step 2: Write the e2e tests.** A signed-out visit to `/` goes to `/login`. An editor does not see Settings, Legal pages, EU programmes, Enquiries or Members in the navigation.
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
-- [ ] **Step 4: Copy `middleware.ts` and `lib/supabase/*` from vamyart `apps/admin`.** Change the redirect target and the cookie names only.
+- [ ] **Step 4: Copy the `apps/admin` shell from vamyart (see the Task 12 row in "Reuse from vamyart").** Rename it to `apps/control`. Remove tRPC. Keep `middleware.ts` and `lib/supabase/*` without change except the redirect target.
 - [ ] **Step 5: Write `requireRole`, `canEdit`, the login page and the members screen.** Members: invite by e-mail with `auth.admin.inviteUserByEmail`, set role, remove.
 - [ ] **Step 6: Run the tests.** Expected: PASS.
 - [ ] **Step 7: Commit.** `git commit -m "feat(control): auth, roles and members"`
@@ -478,7 +513,7 @@ it("redirects an old slug from history", () => { /* old-slug → /projects/new-s
 - Create: `apps/control/app/(dashboard)/projects/{page.tsx,[id]/page.tsx,actions.ts}`
 - Create: `apps/control/lib/image/resize.ts` (copy from vamyart), `apps/control/lib/geocode.ts`, `apps/control/lib/slug.ts`, `apps/control/lib/revalidate.ts`
 - Create: `apps/control/components/{LangFields,ImageUploader,PinPreview,SortableList}.tsx`
-- Test: `apps/control/lib/{slug,geocode}.test.ts`, `apps/control/app/(dashboard)/projects/actions.test.ts`, `apps/control/e2e/projects.spec.ts`
+- Test: `apps/control/lib/{slug,geocode}.test.ts`, `apps/control/app/(dashboard)/projects/actions.test.ts`, `tests/e2e/control/projects.spec.ts`
 
 **Interfaces:**
 - Consumes: Task 12 `requireRole`. Task 9 `projectCountry`, `projectCity` (import from `@tekom/ui` after you move `geo.ts` there in this task).
@@ -510,7 +545,7 @@ it("handles щ and ъ", () => expect(slugify("Щастие ъгъл")).toBe("sht
 **Files:**
 - Create: `apps/control/components/ListEditor.tsx`, `apps/control/lib/screens.ts`
 - Create: `apps/control/app/(dashboard)/{rail-panels,promises,stats,crews,partner-services,materials,partners,eu-programmes,publications,legal}/page.tsx` and `actions.ts` for each
-- Test: `apps/control/lib/screens.test.ts`, `apps/control/e2e/content.spec.ts`
+- Test: `apps/control/lib/screens.test.ts`, `tests/e2e/control/content.spec.ts`
 
 **Interfaces:**
 - Consumes: Task 12 `requireRole`, Task 13 `LangFields`, `SortableList`, `revalidateWebsite`. Task 2 `GLYPHS`.
@@ -547,7 +582,8 @@ it("handles щ and ъ", () => expect(slugify("Щастие ъгъл")).toBe("sht
 ### Task 16: Deploy the demo
 
 **Files:**
-- Create: `DEPLOYMENT.md`, `apps/website/e2e/smoke.spec.ts`
+- Copy from vamyart: `DEPLOYMENT.md`, `.github/workflows/daily-pulse.yml`
+- Create: `tests/e2e/website/smoke.spec.ts`
 - Modify: `README.md`
 
 **Interfaces:**
@@ -559,6 +595,8 @@ it("handles щ and ъ", () => expect(slugify("Щастие ъгъл")).toBe("sht
 - [ ] **Step 3: Set the environment variables.** Website: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `REVALIDATE_SECRET`, `SITE_URL`. Set `RESEND_API_KEY` and `MAIL_FROM` only after the sender domain is verified. Without them, the site stores enquiries and sends no mail. Control: the two Supabase public values, `SUPABASE_SERVICE_ROLE_KEY`, `REVALIDATE_SECRET`, `WEBSITE_URL`.
 - [ ] **Step 4: Invite the first owner.** Use the Members screen or the Supabase dashboard.
 - [ ] **Step 5: Write the smoke test.** It opens `/`, `/en/projects`, one project page, `/contact` and `/privacy` on the deployed URL and expects HTTP 200 and no console error.
-- [ ] **Step 6: Run the smoke test.** Run: `SITE_URL=https://tekomltd-website.netlify.app pnpm --filter @tekom/website e2e smoke`. Expected: PASS.
-- [ ] **Step 7: Write `DEPLOYMENT.md`.** Describe the DNS move from SuperHosting: apex and `www` to Netlify, `control` CNAME to the control site, and keep the MX records unchanged.
+- [ ] **Step 6: Run the smoke test.** Run: `SITE_URL=https://tekomltd-website.netlify.app pnpm --filter @tekom/tests test:e2e website/smoke`. Expected: PASS.
+- [ ] **Step 6b: Copy and adapt `daily-pulse.yml`.** Set the secrets `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY` and `PULSE_TO` in the GitHub repo.
+- [ ] **Step 6c: Turn on deploy previews.** In each Netlify site, set "Deploy previews" to "Any pull request" and the production branch to `main`.
+- [ ] **Step 7: Copy `DEPLOYMENT.md` from vamyart and adapt it.** Describe the DNS move from SuperHosting: apex and `www` to Netlify, `control` CNAME to the control site, and keep the MX records unchanged.
 - [ ] **Step 8: Commit.** `git commit -m "docs: deployment guide and smoke test"`

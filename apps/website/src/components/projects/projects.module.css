@@ -191,12 +191,12 @@
     font-weight: 500;
 }
 
-.nextLink .ar {
+.nextLink :global(.ar) {
     display: inline-block;
     transition: transform var(--dur-standard) var(--ease);
 }
 
-.nextLink:hover .ar {
+.nextLink:hover :global(.ar) {
     transform: translateX(4px);
 }
 

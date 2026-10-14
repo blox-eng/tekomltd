@@ -6,7 +6,10 @@ import { LOCALES, type Locale } from '@tekom/i18n';
 import { fallbackNote, projectFacts } from '@/components/projects/facts';
 import styles from '@/components/projects/projects.module.css';
 import { allProjectSlugs, getProject } from '@/content/projects';
+import { JsonLd } from '@/components/JsonLd';
 import { Link } from '@/i18n/navigation';
+import { breadcrumbJsonLd, projectJsonLd } from '@/lib/jsonld';
+import { describe, pageMetadata } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -20,12 +23,13 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     const { locale, slug } = await params;
     const project = getProject(slug, locale);
     if (!project) return {};
-    const description = project.metaDescription ?? project.summary ?? undefined;
-    return {
+    return pageMetadata({
+        locale,
+        path: `/projects/${slug}`,
         title: project.metaTitle ?? project.title,
-        description,
-        openGraph: { images: [project.ogImage ?? project.cover].map(({ src, width, height, alt }) => ({ url: src, width, height, alt })) }
-    };
+        description: project.metaDescription ?? (project.summary ? describe(project.summary) : null),
+        image: project.ogImage ?? project.cover
+    });
 }
 
 export default async function ProjectPage({ params }: { params: Promise<Params> }) {
@@ -33,8 +37,9 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     setRequestLocale(locale);
     const project = getProject(slug, locale);
     if (!project) notFound();
-    const [root, t, scope] = await Promise.all([
+    const [root, nav, t, scope] = await Promise.all([
         getTranslations({ locale }),
+        getTranslations({ locale, namespace: 'nav' }),
         getTranslations({ locale, namespace: 'project' }),
         getTranslations({ locale, namespace: 'scope' })
     ]);
@@ -47,6 +52,17 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
     return (
         <div className={`wrap ${styles.detail}`}>
+            <JsonLd data={projectJsonLd(project, locale)} />
+            <JsonLd
+                data={breadcrumbJsonLd(
+                    [
+                        { name: 'Tekom', path: '/' },
+                        { name: nav('projects'), path: '/projects' },
+                        { name: project.title, path: `/projects/${slug}` }
+                    ],
+                    locale
+                )}
+            />
             <Link href="/projects" className={styles.back}>
                 {t('back')}
             </Link>

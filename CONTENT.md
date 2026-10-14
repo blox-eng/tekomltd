@@ -73,7 +73,11 @@ images:
 draft: true
 ```
 
-`slug` е същото като името на папката. `scopes` е едно или повече от: `full` (ново строителство), `restore` (реставрация), `facade` (фасада), `interior` (интериор), `stone` (камък). 4. Качете снимките в **същата папка**: отворете `content/projects/kazanlak-house/` → **Add file → Upload files**. Имената трябва да съвпадат с тези в `images`. 5. **Първата снимка в списъка `images` е заглавната (cover).** Редът в списъка е редът на сайта. 6. Докато проектът не е готов, оставете `draft: true`: проектът не се вижда. Когато е готов, изтрийте реда `draft: true` (или напишете `draft: false`).
+`slug` е същото като името на папката. `scopes` е едно или повече от: `full` (ново строителство), `restore` (реставрация), `facade` (фасада), `interior` (интериор), `stone` (камък).
+
+4. Качете снимките в **същата папка**: отворете `content/projects/kazanlak-house/` → **Add file → Upload files**. Имената трябва да съвпадат с тези в `images`.
+5. **Първата снимка в списъка `images` е заглавната (cover).** Редът в списъка е редът на сайта.
+6. Докато проектът не е готов, оставете `draft: true`: проектът не се вижда. Когато е готов, изтрийте реда `draft: true` (или напишете `draft: false`).
 
 Съвет: снимките до около 2 MB, поне 1600 px по-дългата страна, формат `.jpg`.
 
@@ -83,7 +87,7 @@ draft: true
 
 ```yaml
 hours:
-  bg: Пон – Пет . 9.00 – 18.00
+  bg: Пон – Пет, 9.00 – 18.00
 ```
 
 Текстовете на страниците са в `content/pages/` (например `about.bg.md`). Това са обикновен текст със заглавия, започващи с `##`. Първите редове между `---` (заглавие, дата) не се пипат, освен ако не искате да сменяте заглавието.
@@ -235,7 +239,11 @@ images:
 draft: true
 ```
 
-`slug` equals the folder name. `scopes` is one or more of: `full` (new build), `restore`, `facade`, `interior`, `stone`. 4. Upload the photos into the **same folder**: open `content/projects/kazanlak-house/` → **Add file → Upload files**. The names must match the ones in `images`. 5. **The first photo in `images` is the cover.** The list order is the order on the site. 6. While the project is not ready keep `draft: true`: it stays hidden. When ready, delete the line (or write `draft: false`).
+`slug` equals the folder name. `scopes` is one or more of: `full` (new build), `restore`, `facade`, `interior`, `stone`.
+
+4. Upload the photos into the **same folder**: open `content/projects/kazanlak-house/` → **Add file → Upload files**. The names must match the ones in `images`.
+5. **The first photo in `images` is the cover.** The list order is the order on the site.
+6. While the project is not ready keep `draft: true`: it stays hidden. When ready, delete the line (or write `draft: false`).
 
 Tip: photos up to about 2 MB, at least 1600 px on the long side, `.jpg`.
 
@@ -245,7 +253,7 @@ Example: new opening hours. Open `content/settings.yaml`, click the pencil and c
 
 ```yaml
 hours:
-  bg: Пон – Пет . 9.00 – 18.00
+  bg: Пон – Пет, 9.00 – 18.00
   en: Mon–Fri 9:00–18:00
 ```
 

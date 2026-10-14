@@ -63,6 +63,7 @@ The locked reference is the clickable mockup in `design/mockup/index.html` (open
 - Content max width 1280px. Side gutter `max(16px, env(safe-area-inset-*))`.
 - Body text max ~65 characters.
 - The project rail is the only full-bleed element. Desktop height `clamp(420px, 100svh − 150px, 880px)`; on phones every slide is full width and full height, snapping one per swipe.
+- The red rail panel keeps its text at full opacity. The mockup dimmed it to 0.7; that fails WCAG AA on the red.
 
 ## 4. Radius
 

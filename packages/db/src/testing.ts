@@ -10,7 +10,15 @@ const migrationsDir = new URL('../migrations/', import.meta.url);
 
 export async function createTestDb() {
     const client = new PGlite();
-    await client.exec('CREATE ROLE anon NOLOGIN; CREATE ROLE authenticated NOLOGIN;');
+    // Stand-ins for what Supabase provides, just enough for the policies in 0001 to be created.
+    await client.exec(`
+        CREATE ROLE anon NOLOGIN;
+        CREATE ROLE authenticated NOLOGIN;
+        CREATE SCHEMA auth;
+        CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql AS 'SELECT NULL::uuid';
+        CREATE FUNCTION auth.jwt() RETURNS jsonb LANGUAGE sql AS 'SELECT ''{}''::jsonb';
+        CREATE TABLE auth.mfa_factors (id uuid PRIMARY KEY, user_id uuid NOT NULL, status text NOT NULL);
+    `);
 
     const journal: { entries: { tag: string }[] } = JSON.parse(readFileSync(new URL('meta/_journal.json', migrationsDir), 'utf8'));
     for (const { tag } of journal.entries) {

@@ -62,6 +62,35 @@ CREATE POLICY "legal_pages_authenticated_all"          ON legal_pages          F
 CREATE POLICY "site_settings_authenticated_all"        ON site_settings        FOR ALL TO authenticated USING (true) WITH CHECK (true);--> statement-breakpoint
 CREATE POLICY "enquiries_authenticated_all"            ON enquiries            FOR ALL TO authenticated USING (true) WITH CHECK (true);--> statement-breakpoint
 
+-- true when the session is aal2, or when the user has no verified MFA factor yet.
+-- SECURITY DEFINER because authenticated cannot read auth.mfa_factors; it only looks at the caller's own factors.
+CREATE FUNCTION public.mfa_satisfied() RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path = '' AS $$
+	SELECT array[auth.jwt() ->> 'aal'] <@ (
+		SELECT CASE WHEN count(id) > 0 THEN array['aal2'] ELSE array['aal1', 'aal2'] END
+		FROM auth.mfa_factors
+		WHERE user_id = auth.uid() AND status = 'verified'
+	);
+$$;--> statement-breakpoint
+REVOKE EXECUTE ON FUNCTION public.mfa_satisfied() FROM PUBLIC, anon;--> statement-breakpoint
+GRANT EXECUTE ON FUNCTION public.mfa_satisfied() TO authenticated;--> statement-breakpoint
+
+-- MFA at the data layer: once the account has a verified factor, only an aal2 session may
+-- read or write. Before enrolment (no verified factor) aal1 is enough, so TOTP can be set up.
+DO $$
+DECLARE t text;
+BEGIN
+	FOREACH t IN ARRAY ARRAY['projects', 'project_slug_history', 'project_images', 'rail_panels', 'promises', 'stats', 'crews', 'crew_roles', 'partner_services', 'partners', 'material_brands', 'eu_programmes', 'publications', 'legal_pages', 'site_settings', 'enquiries'] LOOP
+		EXECUTE format(
+			'CREATE POLICY %I ON public.%I AS RESTRICTIVE FOR ALL TO authenticated USING (%s) WITH CHECK (%s)',
+			t || '_authenticated_mfa', t, 'public.mfa_satisfied()', 'public.mfa_satisfied()'
+		);
+	END LOOP;
+END;
+$$;--> statement-breakpoint
+
 -- Defence in depth: anon keeps only the grants its policies use (TRUNCATE ignores RLS).
 REVOKE INSERT, UPDATE, DELETE, TRUNCATE ON ALL TABLES IN SCHEMA public FROM anon;--> statement-breakpoint
-GRANT INSERT ON enquiries TO anon;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE INSERT, UPDATE, DELETE, TRUNCATE ON TABLES FROM anon;--> statement-breakpoint
+ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE USAGE, UPDATE ON SEQUENCES FROM anon;--> statement-breakpoint
+-- Only the fields the public form sends: id, created_at and handled_at always take the server's values.
+GRANT INSERT (name, email, phone, scope, message, locale, consent_at) ON enquiries TO anon;

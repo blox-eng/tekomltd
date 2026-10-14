@@ -49,6 +49,8 @@ export function checkContent(root: string): CheckResult {
 
     const has = (file: string) => existsSync(join(absRoot, file));
 
+    for (const required of [SETTINGS_FILE, HOME_FILE]) if (!has(required)) fail(required, '', 'required file is missing');
+
     if (has(SETTINGS_FILE)) {
         const settings = parse(Settings, readYaml(SETTINGS_FILE), SETTINGS_FILE);
         if (settings) {

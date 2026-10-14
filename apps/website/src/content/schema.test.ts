@@ -36,12 +36,12 @@ describe('Project', () => {
     });
     it('needs lat and lng together', () => expect(Project.safeParse({ ...minimal, lat: 42 }).success).toBe(false));
     it('rejects a file path that leaves the content folder', () => {
-        const image = { file: '../secret.jpg', width: 10, height: 10 };
+        const image = { file: '../secret.jpg' };
         expect(Project.safeParse({ ...minimal, images: [image] }).success).toBe(false);
         expect(Project.safeParse({ ...minimal, images: [{ ...image, file: '/etc/passwd.jpg' }] }).success).toBe(false);
     });
     it('allows one cover at most', () => {
-        const image = { file: 'a.jpg', width: 10, height: 10, is_cover: true };
+        const image = { file: 'a.jpg', is_cover: true };
         expect(Project.safeParse({ ...minimal, images: [image, { ...image, file: 'b.jpg' }] }).success).toBe(false);
     });
     it('rejects an unknown key', () => expect(Project.safeParse({ ...minimal, published: true }).success).toBe(false));
@@ -170,6 +170,17 @@ describe('checkContent', () => {
                 'home.yaml:rail_panels'
             ])
         );
+    });
+
+    it('requires settings.yaml and home.yaml when the root exists', () => {
+        const r = checkContent(fixture('no-required-files'));
+        expect(r.ok).toBe(false);
+        if (r.ok) return;
+        expect(r.errors.map((e) => e.file)).toEqual(['settings.yaml', 'home.yaml']);
+    });
+
+    it('rejects image sizes in content files', () => {
+        expect(Project.safeParse({ ...minimal, images: [{ file: 'a.jpg', width: 1, height: 1 }] }).success).toBe(false);
     });
 
     it('fails on a missing root', () => {

@@ -127,6 +127,8 @@
     position: relative;
     font-weight: 500;
     font-size: 14px;
+    /* Red on --wall falls below AA; the turning word carries the accent. */
+    color: var(--text);
 }
 
 .panel {

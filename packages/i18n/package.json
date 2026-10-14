@@ -2,6 +2,7 @@
     "name": "@tekom/i18n",
     "version": "0.1.0",
     "private": true,
+    "license": "UNLICENSED",
     "scripts": {
         "lint": "prettier --check .",
         "typecheck": "tsc --noEmit",

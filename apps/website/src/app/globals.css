@@ -154,14 +154,14 @@ h3 {
     stroke-width: 1.6;
 }
 
-.hdr-cta {
+.site-header .hdr-cta {
     height: 38px;
     padding: 0 16px;
     font-size: 14px;
 }
 
 @media (max-width: 900px) {
-    .hdr-cta {
+    .site-header .hdr-cta {
         display: none;
     }
 }

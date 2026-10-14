@@ -38,6 +38,7 @@ projects/kazanlak-house/project.yaml: images.0.file file not found: kazanlak-1.j
 
 - `file not found: ...` — името на снимката във файла не съвпада с качения файл (главни/малки букви, разширение `.jpg`).
 - `slug "..." must match its folder` — полето `slug` трябва да е същото като името на папката.
+- `images.N.focus Invalid option` — `focus` е само една от думите `center`, `top`, `bottom`, `left`, `right`, с малки букви.
 - `use lowercase letters, digits and single hyphens` — в `slug` само малки латински букви, цифри и тирета: `nova-kashta`.
 - `cannot read YAML` — объркан отстъп или липсващи кавички (вижте „Правила за YAML“).
 - `wp_id ... is already used by ...` или `wp_slug ... is already used by ...` — редът е копиран от друг проект. В нов проект изтрийте реда.
@@ -89,6 +90,17 @@ draft: true
 
 4. Качете снимките в **същата папка**: отворете `content/projects/kazanlak-house/` → **Add file → Upload files**. Имената трябва да съвпадат с тези в `images`.
 5. **Първата снимка в списъка `images` е заглавната (cover).** Редът в списъка е редът на сайта.
+
+   Снимките в списъка с проекти и в галерията се показват като квадрати: сайтът изрязва краищата. Ако изрязването отрязва важната част, добавете към снимката `focus` — коя част да остане: `top` (горе), `bottom` (долу), `left` (ляво), `right` (дясно) или `center` (среда, по подразбиране). Цялата снимка се отваря с клик върху квадрата.
+
+   ```yaml
+   images:
+     - file: kazanlak-1.jpg
+       is_cover: true
+     - file: kazanlak-2.jpg
+       focus: top
+   ```
+
 6. Докато проектът не е готов, оставете `draft: true`: проектът не се вижда. Когато е готов, изтрийте реда `draft: true` (или напишете `draft: false`).
 
 Съвет: снимките до около 2 MB, поне 1600 px по-дългата страна, формат `.jpg`.
@@ -215,6 +227,7 @@ Common errors:
 
 - `file not found: ...` — the photo name in the file does not match the uploaded file (upper/lower case, `.jpg` extension).
 - `slug "..." must match its folder` — the `slug` field must equal the folder name.
+- `images.N.focus Invalid option` — `focus` is only one of `center`, `top`, `bottom`, `left`, `right`, in lowercase.
 - `use lowercase letters, digits and single hyphens` — `slug` uses only lowercase Latin letters, digits and hyphens: `nova-kashta`.
 - `cannot read YAML` — wrong indentation or missing quotes (see "YAML rules").
 - `wp_id ... is already used by ...` or `wp_slug ... is already used by ...` — the line was copied from another project. Delete it in a new project.
@@ -268,6 +281,17 @@ Optional fields (top level, no indentation):
 
 4. Upload the photos into the **same folder**: open `content/projects/kazanlak-house/` → **Add file → Upload files**. The names must match the ones in `images`.
 5. **The first photo in `images` is the cover.** The list order is the order on the site.
+
+   Photos in the project list and the gallery show as squares: the site crops the edges. If the crop cuts off the important part, add `focus` to the photo, the part to keep: `top`, `bottom`, `left`, `right` or `center` (the default). A click on the square opens the whole photo.
+
+   ```yaml
+   images:
+     - file: kazanlak-1.jpg
+       is_cover: true
+     - file: kazanlak-2.jpg
+       focus: top
+   ```
+
 6. While the project is not ready keep `draft: true`: it stays hidden. When ready, delete the line (or write `draft: false`).
 
 Tip: photos up to about 2 MB, at least 1600 px on the long side, `.jpg`.

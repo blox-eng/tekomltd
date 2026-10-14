@@ -19,3 +19,4 @@ images:
     is_cover: true
     alt: { bg: Фасадата на къщата, en: The front of the house }
   - file: garden.jpg
+    focus: bottom

@@ -1,8 +1,10 @@
 import type { Locale } from '@tekom/i18n';
 import { t, text, type Img } from './load';
-import type { Project, SCOPES } from './schema';
+import type { FOCUS, Project, SCOPES } from './schema';
 
 export type Scope = (typeof SCOPES)[number];
+export type Focus = (typeof FOCUS)[number];
+export type ProjectImg = Img & { focus: Focus };
 
 export type ProjectCard = {
     slug: string;
@@ -12,12 +14,12 @@ export type ProjectCard = {
     year: number | null;
     areaM2: number | null;
     scopes: Scope[];
-    cover: Img;
+    cover: ProjectImg;
     wide: boolean;
     pin: { lat: number; lng: number } | null;
 };
 
-export function toProjectCard(project: Project, cover: Img, locale: Locale): ProjectCard {
+export function toProjectCard(project: Project, cover: ProjectImg, locale: Locale): ProjectCard {
     const title = t(project.title, locale);
     const hasPin = project.show_on_map && project.lat !== undefined && project.lng !== undefined;
     return {

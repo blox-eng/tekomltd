@@ -5,6 +5,8 @@ import { LEGAL_SLUGS } from './paths';
 
 export const SCOPES = ['full', 'restore', 'facade', 'interior', 'stone'] as const;
 export const SUMMARY_MAX = 460;
+/** Which part of a photo a square thumbnail keeps. */
+export const FOCUS = ['center', 'top', 'bottom', 'left', 'right'] as const;
 
 const text = z.string().trim().min(1);
 
@@ -39,7 +41,8 @@ const url = z.url({ protocol: /^https?$/ });
 export const ProjectImage = z.strictObject({
     file: imagePath,
     alt: L.optional(),
-    is_cover: z.boolean().default(false)
+    is_cover: z.boolean().default(false),
+    focus: z.enum(FOCUS).default('center')
 });
 
 export const Project = z

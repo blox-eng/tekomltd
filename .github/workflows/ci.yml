@@ -44,7 +44,7 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @tekom/tests exec playwright install --with-deps chromium
+      - run: pnpm --filter @tekom/tests exec playwright install --with-deps chromium firefox webkit
       # The Playwright web server builds and serves tests/fixtures/content (CONTENT_ROOT), not content/.
       - run: pnpm --filter @tekom/tests test:e2e
         env:

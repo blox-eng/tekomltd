@@ -55,7 +55,8 @@
         "scope": "Unser Umfang",
         "next": "Nächstes:",
         "inBulgarian": "Beschreibung auf Bulgarisch. Übersetzung folgt.",
-        "cta": "Etwas Ähnliches geplant? Sprechen Sie uns an"
+        "cta": "Etwas Ähnliches geplant? Sprechen Sie uns an",
+        "fullPhoto": "Ganzes Foto: {alt}"
     },
     "eu": {
         "h": "EU-Programme und Veröffentlichungen",

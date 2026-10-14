@@ -6,13 +6,14 @@ import { PublicationList } from '@/components/public/PublicationList';
 import styles from '@/components/public/public.module.css';
 import { listPublications } from '@/content/public-info';
 import { PUBLICATION_KINDS } from '@/content/schema';
+import { pageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'publications' });
-    return { title: t('h') };
+    return pageMetadata({ locale: locale as Locale, path: '/publications', title: t('h') });
 }
 
 export default async function PublicationsPage({ params }: Props) {

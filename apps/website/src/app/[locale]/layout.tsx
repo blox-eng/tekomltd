@@ -7,8 +7,12 @@ import '@tekom/ui/tokens.css';
 import '../globals.css';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { JsonLd } from '@/components/JsonLd';
 import { ThemeScript } from '@/components/ThemeScript';
+import { getSettings } from '@/content/settings';
 import { routing } from '@/i18n/routing';
+import { businessJsonLd } from '@/lib/jsonld';
+import { SITE_URL } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -16,7 +20,7 @@ export function generateStaticParams() {
     return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata: Metadata = { title: { default: 'Tekom', template: '%s · Tekom' } };
+export const metadata: Metadata = { metadataBase: new URL(SITE_URL), title: { default: 'Tekom', template: '%s · Tekom' } };
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale } = await params;
@@ -29,6 +33,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
                 <ThemeScript />
             </head>
             <body>
+                <JsonLd data={businessJsonLd(getSettings(locale))} />
                 <NextIntlClientProvider>
                     <Header locale={locale} />
                     <main id="main">{children}</main>

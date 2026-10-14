@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@tekom/i18n';
 import styles from '@/components/public/public.module.css';
 import { getSettings } from '@/content/settings';
+import { pageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -10,8 +11,8 @@ const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, '')}`;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: 'nav' });
-    return { title: t('contact') };
+    const [t, contact] = await Promise.all([getTranslations({ locale, namespace: 'nav' }), getTranslations({ locale, namespace: 'contact' })]);
+    return pageMetadata({ locale: locale as Locale, path: '/contact', title: t('contact'), description: contact('p') });
 }
 
 export default async function ContactPage({ params }: Props) {

@@ -6,13 +6,14 @@ import type { Locale } from '@tekom/i18n';
 import { formatDate, formatEur, formatSize } from '@/components/public/format';
 import styles from '@/components/public/public.module.css';
 import { listProgrammes, listPublications } from '@/content/public-info';
+import { pageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'eu' });
-    return { title: t('h') };
+    return pageMetadata({ locale: locale as Locale, path: '/eu-programmes', title: t('h'), description: t('p') });
 }
 
 export default async function EuProgrammesPage({ params }: Props) {

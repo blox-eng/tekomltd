@@ -16,6 +16,8 @@ import { Rail } from '@/components/rail/Rail';
 import { buildRail, collageTools } from '@/components/rail/rail';
 import { getHome } from '@/content/home';
 import { Link } from '@/i18n/navigation';
+import { getSettings } from '@/content/settings';
+import { pageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -24,7 +26,8 @@ const isGlyph = (tool: string): tool is GlyphKey => (CREW_GLYPH_KEYS as readonly
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'home' });
-    return { title: { absolute: t('title') } };
+    const { metaDescription, ogImage } = getSettings(locale as Locale);
+    return pageMetadata({ locale: locale as Locale, path: '/', title: t('title'), absoluteTitle: true, description: metaDescription, image: ogImage });
 }
 
 export default async function HomePage({ params }: Props) {

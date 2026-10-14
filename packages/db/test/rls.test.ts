@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { createHmac } from 'node:crypto';
 import { join, resolve } from 'node:path';
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { drizzle } from 'drizzle-orm/postgres-js';
@@ -31,7 +32,19 @@ function localStack() {
 
 const noSession = { auth: { persistSession: false, autoRefreshToken: false } };
 
+function totp(base32Secret: string) {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+    const bits = [...base32Secret.replace(/=+$/, '').toUpperCase()].map((c) => alphabet.indexOf(c).toString(2).padStart(5, '0')).join('');
+    const key = Buffer.from(bits.match(/.{8}/g)!.map((b) => parseInt(b, 2)));
+    const counter = Buffer.alloc(8);
+    counter.writeBigUInt64BE(BigInt(Math.floor(Date.now() / 30_000)));
+    const hmac = createHmac('sha1', key).update(counter).digest();
+    const offset = hmac[hmac.length - 1]! & 0xf;
+    return ((hmac.readUInt32BE(offset) & 0x7fffffff) % 1_000_000).toString().padStart(6, '0');
+}
+
 let sql: postgres.Sql;
+let stack: ReturnType<typeof localStack>;
 let anon: SupabaseClient;
 let service: SupabaseClient;
 let authed: SupabaseClient;
@@ -113,7 +126,7 @@ function rowFor(table: (typeof contentTables)[number] | 'enquiries'): Record<str
 }
 
 beforeAll(async () => {
-    const stack = localStack();
+    stack = localStack();
     sql = postgres(stack.DB_URL, { max: 1, onnotice: () => {} });
     await migrate(drizzle(sql), { migrationsFolder: resolve(__dirname, '../migrations') });
     await sql`truncate ${sql(contentTables)}, enquiries cascade`;
@@ -123,6 +136,7 @@ beforeAll(async () => {
 
     const { error: createError } = await service.auth.admin.createUser({ ...editor, email_confirm: true });
     if (createError && !/already been registered|already exists/i.test(createError.message)) throw createError;
+    await sql`delete from auth.mfa_factors where user_id = (select id from auth.users where email = ${editor.email})`;
     authed = createClient(stack.API_URL, stack.ANON_KEY, noSession);
     const { error: signInError } = await authed.auth.signInWithPassword(editor);
     if (signInError) throw signInError;
@@ -155,10 +169,25 @@ describe('anon', () => {
     });
 
     it('sees images and old slugs of published projects only', async () => {
-        const images = await anon.from('project_images').select('project_id');
-        const history = await anon.from('project_slug_history').select('project_id');
-        expect(images.error ?? history.error).toBeNull();
-        expect([...images.data!, ...history.data!].map((r) => r.project_id)).not.toContain(parents.projectId);
+        const published = await service
+            .from('projects')
+            .insert(Object.assign(rowFor('projects'), { published: true }))
+            .select('id')
+            .single();
+        expect(published.error).toBeNull();
+        const draftId = parents.projectId;
+        const publishedId = published.data!.id;
+
+        const images = [draftId, publishedId].map((project_id) => Object.assign(rowFor('project_images'), { project_id }));
+        const history = [draftId, publishedId].map((project_id) => Object.assign(rowFor('project_slug_history'), { project_id }));
+        expect((await service.from('project_images').insert(images)).error).toBeNull();
+        expect((await service.from('project_slug_history').insert(history)).error).toBeNull();
+
+        const seenImages = await anon.from('project_images').select('project_id, storage_path').in('project_id', [draftId, publishedId]);
+        const seenHistory = await anon.from('project_slug_history').select('project_id, old_slug').in('project_id', [draftId, publishedId]);
+        expect(seenImages.error ?? seenHistory.error).toBeNull();
+        expect(seenImages.data).toEqual([{ project_id: publishedId, storage_path: images[1]!.storage_path }]);
+        expect(seenHistory.data).toEqual([{ project_id: publishedId, old_slug: history[1]!.old_slug }]);
     });
 
     it.each(contentTables)('cannot insert into %s', async (table) => {
@@ -183,6 +212,14 @@ describe('anon', () => {
         expect(data ?? []).toHaveLength(0);
         const { count } = await service.from('enquiries').select('id', { count: 'exact', head: true });
         expect(count).toBeGreaterThan(0);
+    });
+
+    it.each([
+        ['created_at', '2999-01-01T00:00:00Z'],
+        ['id', '00000000-0000-0000-0000-000000000001']
+    ])('cannot choose the %s of an enquiry', async (column, value) => {
+        const { error } = await anon.from('enquiries').insert({ ...rowFor('enquiries'), [column]: value });
+        expect(error?.code).toBe('42501');
     });
 
     it('cannot mark its own enquiry as handled', async () => {
@@ -259,5 +296,43 @@ describe('retention', () => {
     it('is not callable through the API', async () => {
         const { error } = await anon.rpc('purge_old_enquiries');
         expect(error?.code).toBe('42501');
+    });
+});
+
+describe('MFA', () => {
+    let factorId: string | undefined;
+
+    afterAll(async () => {
+        if (factorId) await sql`delete from auth.mfa_factors where id = ${factorId}`;
+    });
+
+    it('lets an aal1 session write while the account has no verified factor', async () => {
+        const { error } = await authed.from('promises').insert(rowFor('promises'));
+        expect(error).toBeNull();
+    });
+
+    it('lets an aal2 session write once a factor is verified', async () => {
+        const mfa = createClient(stack.API_URL, stack.ANON_KEY, noSession);
+        expect((await mfa.auth.signInWithPassword(editor)).error).toBeNull();
+        const enrolled = await mfa.auth.mfa.enroll({ factorType: 'totp', friendlyName: `rls-${Date.now()}` });
+        expect(enrolled.error).toBeNull();
+        factorId = enrolled.data!.id;
+        const verified = await mfa.auth.mfa.challengeAndVerify({ factorId, code: totp(enrolled.data!.totp.secret) });
+        expect(verified.error).toBeNull();
+
+        expect((await mfa.from('promises').insert(rowFor('promises'))).error).toBeNull();
+        const path = `rls/${Date.now()}-aal2.txt`;
+        expect((await mfa.storage.from('site-media').upload(path, 'x', { contentType: 'text/plain' })).error).toBeNull();
+        expect((await mfa.storage.from('site-media').remove([path])).error).toBeNull();
+    });
+
+    it('denies an aal1 session once a factor is verified', async () => {
+        expect(factorId).toBeDefined();
+        const inserted = await authed.from('promises').insert(rowFor('promises'));
+        expect(inserted.error?.code).toBe('42501');
+        const read = await authed.from('promises').select('id');
+        expect(read.data ?? []).toHaveLength(0);
+        const uploaded = await authed.storage.from('site-media').upload(`rls/${Date.now()}-aal1.txt`, 'x', { contentType: 'text/plain' });
+        expect(uploaded.error).not.toBeNull();
     });
 });

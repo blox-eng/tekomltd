@@ -17,6 +17,9 @@
     },
     "test": {
       "dependsOn": ["^build"]
+    },
+    "content:check": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/content/**"]
     }
   }
 }

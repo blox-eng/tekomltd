@@ -5,11 +5,21 @@
     "scripts": {
         "lint": "prettier --check .",
         "typecheck": "tsc --noEmit",
-        "test": "vitest run --passWithNoTests"
+        "test": "vitest run --passWithNoTests",
+        "content:check": "tsx src/content/check.ts"
     },
     "devDependencies": {
+        "@types/node": "^22.20.5",
         "prettier": "^3.8.3",
+        "tsx": "^4.23.15",
         "typescript": "^5.9.3",
         "vitest": "^2.1.9"
+    },
+    "dependencies": {
+        "@tekom/i18n": "workspace:*",
+        "@tekom/ui": "workspace:*",
+        "gray-matter": "^4.0.3",
+        "yaml": "^2.9.1",
+        "zod": "^4.6.7"
     }
 }

@@ -55,6 +55,7 @@ export const Project = z
         year: z.number().int().min(1900).max(2100).optional(),
         built_area_m2: z.number().positive().optional(),
         scopes: z.array(z.enum(SCOPES)).default([]),
+        sort: z.number().int().optional(),
         wide: z.boolean().default(false),
         on_rail: z.boolean().default(false),
         wp_id: z.number().int().positive().optional(),

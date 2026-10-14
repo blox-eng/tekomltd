@@ -2,9 +2,9 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { basename, join, relative, resolve, sep } from 'node:path';
 import { LOCALES } from '@tekom/i18n';
 import { splitTurn, TurnError } from '@tekom/ui/turn';
-import matter from 'gray-matter';
 import YAML from 'yaml';
 import { z } from 'zod';
+import { parseFrontMatter } from './load';
 import { EU_PROGRAMMES_FILE, HOME_FILE, LEGAL_DIR, parseLegalFile, PROJECT_FILE, PROJECTS_DIR, PUBLICATIONS_FILE, resolveRef, SETTINGS_FILE } from './paths';
 import { EuProgramme, Home, LegalPage, Project, Publication, Settings } from './schema';
 
@@ -165,14 +165,14 @@ export function checkContent(root: string): CheckResult {
                 continue;
             }
             pages.add(`${id.slug}.${id.locale}`);
-            let front: matter.GrayMatterFile<string>;
+            let front: ReturnType<typeof parseFrontMatter>;
             try {
-                front = matter(readFileSync(join(dir, name), 'utf8'), { engines: { yaml: (s) => YAML.parse(s) ?? {} } });
+                front = parseFrontMatter(readFileSync(join(dir, name), 'utf8'));
             } catch (e) {
                 fail(file, '', `cannot read front matter: ${(e as Error).message}`);
                 continue;
             }
-            parse(LegalPage, { ...front.data, ...id, body: front.content.trim() }, file);
+            parse(LegalPage, { ...front.data, ...id, body: front.body }, file);
         }
         for (const key of pages) {
             const [slug, locale] = key.split('.');

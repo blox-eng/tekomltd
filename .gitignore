@@ -36,3 +36,6 @@ tmp*
 .playwright-mcp/
 .superpowers/
 .claude/
+
+# synced from content/ by apps/website/scripts/sync-media.ts
+apps/website/public/media/

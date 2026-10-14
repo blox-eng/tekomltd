@@ -1,0 +1,7 @@
+slug: old-town-house
+title: { bg: Къща в стария град }
+place: { bg: Стара Загора }
+sort: 1
+on_rail: true
+images:
+  - file: front.jpg

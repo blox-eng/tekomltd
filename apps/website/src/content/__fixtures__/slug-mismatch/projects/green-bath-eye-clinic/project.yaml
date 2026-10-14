@@ -16,7 +16,5 @@ old_slugs: [eye-clinic]
 draft: false
 images:
   - file: cover.jpg
-    width: 2400
-    height: 1600
     is_cover: true
     alt: { bg: Фасадата на клиниката }

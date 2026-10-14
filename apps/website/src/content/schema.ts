@@ -38,8 +38,6 @@ const url = z.url({ protocol: /^https?$/ });
 
 export const ProjectImage = z.strictObject({
     file: imagePath,
-    width: z.number().int().positive(),
-    height: z.number().int().positive(),
     alt: L.optional(),
     is_cover: z.boolean().default(false)
 });

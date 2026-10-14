@@ -14,14 +14,14 @@ rail_panels:
   - kind: crew_stat
     after_project_index: 3
     stat_value: '25'
-    unit: { bg: години на обекта*, en: years on site* }
+    unit: { bg: години на обекта, en: years on site }
     body: { bg: Семейна фирма от Стара Загора. }
 promises:
   - title: { bg: 'Цена, на която можете да разчитате' }
     body: { bg: Количествата се вземат от проекта. }
 stats:
   - value: '25'
-    label: { bg: години строим в Стара Загора* }
+    label: { bg: години строим в Стара Загора }
     unconfirmed: true
 crews:
   - key: site

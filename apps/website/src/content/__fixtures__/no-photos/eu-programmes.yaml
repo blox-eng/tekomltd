@@ -1,0 +1,9 @@
+- code: BG16RFPR001-1.004
+  title: { bg: Програма за конкурентоспособност }
+  summary: { bg: Кратко описание. }
+  objectives: { bg: Цели. }
+  results: { bg: Резултати. }
+  total_budget_eur: 120000
+  eu_contribution_eur: 60000
+  period_start: 2024-01-01
+  period_end: 2025-12-31

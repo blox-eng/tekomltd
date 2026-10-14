@@ -121,6 +121,7 @@ export function checkContent(root: string): CheckResult {
                 if (wpIds.has(project.wp_id)) fail(file, 'wp_id', `wp_id ${project.wp_id} is already used by ${wpIds.get(project.wp_id)}`);
                 wpIds.set(project.wp_id, folder);
             }
+            if (!project.draft && project.images.length === 0) fail(file, 'images', 'project has no photos; add at least one image or set draft: true');
             project.images.forEach((image, i) => requireFile(file, `images.${i}.file`, image.file));
             requireFile(file, 'og_image', project.og_image);
         }

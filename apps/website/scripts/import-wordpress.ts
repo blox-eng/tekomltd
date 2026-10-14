@@ -2,6 +2,7 @@
  * Imports the current tekomltd.com (WordPress) into `content/` and keeps a raw snapshot in `design/wordpress-snapshot/`.
  *
  *   pnpm import:wp                 snapshot, the 17 projects with every gallery image, the pages without a mockup slot, the programme logos
+ *                                  and archive/wordpress-media (Tekom's own old files the new site does not use; not published)
  *   pnpm import:wp --publications  snapshot, every document (PDF, DOC, DOCX) and the publications list
  *
  * Both runs rewrite `url-map.json` (old upload URL → new public URL) and `INVENTORY.md`. Re-running is safe: generated
@@ -40,7 +41,8 @@ const IMAGE_PUBLICATIONS = ['/wp-content/uploads/2025/06/semeini.png'];
 const EUMIS = 'https://eumis2020.government.bg/';
 
 type Snapshot = { pages: WpPost[]; portfolio: WpPost[]; media: WpMedia[]; mediaTotal: number };
-type UrlMap = { files: Record<string, string>; pages: Record<string, string> };
+/** `files` and `pages` are public redirects; `archive` lists old files kept in archive/ (not published). */
+type UrlMap = { files: Record<string, string>; pages: Record<string, string>; archive: Record<string, string> };
 type Doc = {
     urls: string[];
     mediaIds: number[];
@@ -67,6 +69,7 @@ async function main() {
         await importProjects(snap, urlMap);
         await importPages(snap, docs, urlMap);
         await importProgrammeLogos(snap, urlMap);
+        await archiveUnused(snap, docs, urlMap);
     }
     writeJson(URL_MAP_FILE, sortMap(urlMap));
     writeFileSync(join(SNAPSHOT, 'INVENTORY.md'), inventory(snap, docs, urlMap));
@@ -308,6 +311,67 @@ async function importProgrammeLogos(snap: Snapshot, urlMap: UrlMap) {
     }
 }
 
+// ---------- archive
+
+const ARCHIVE = join(REPO_ROOT, 'archive', 'wordpress-media');
+const DUPLICATE = 'duplicate of #';
+/** A rendered page of a document, shown next to its download link. */
+const isDocumentPicture = (path: string) =>
+    /-pdf(-\d+x\d+)?\.jpe?g$/i.test(path) || /\/2026\/07\/\d\.-/.test(path) || /Публ.-сайт_Теком\.\d/i.test(path) || /_Т(\.1)?\.jpe?g$/i.test(path);
+const isOldLogo = (path: string) => /Tekom_Logo|favicon|cropped-/i.test(path);
+/** Generic EU flag and logo downloads; the official emblem ships with packages/ui. */
+const isEuEmblem = (path: string) => /Flag_of_Europe|logoeuro/i.test(path);
+/** Stock images and icons that came with the Avada theme demo, not Tekom's own. */
+const isThemeAsset = (path: string) =>
+    /\/(2015\/(06|12)|2017\/\d\d)\/(home|blog-post|latest-news|contact|work|project\d|services|about|avada-team\d*|construction|footer-logo|custom-marker)[-_.]/i.test(
+        path
+    );
+
+/**
+ * Keeps every old file that is Tekom's own but has no place on the new site (photos the live pages did not show, old
+ * certificates) in archive/wordpress-media/<yyyy>/<mm>/ under its WordPress name. Theme assets, document previews, old
+ * logos and byte-identical copies of an imported file are left out. Nothing in archive/ is published.
+ */
+async function archiveUnused(snap: Snapshot, docs: Doc[], urlMap: UrlMap) {
+    const key = (url: string) => imageKey(sitePath(url));
+    const imported = new Set(Object.keys(urlMap.files).map(key));
+    for (const d of docs) for (const u of d.urls) if (u.startsWith(SITE)) imported.add(key(u));
+    const seen = new Map<string, number>();
+    for (const m of snap.media) if (imported.has(key(m.source_url))) seen.set(sha256((await download(m.source_url)).body), m.id);
+
+    urlMap.archive = {};
+    const keep = new Set<string>();
+    for (const m of snap.media) {
+        const path = sitePath(m.source_url);
+        if (imported.has(key(m.source_url)) || isDocumentPicture(path) || isOldLogo(path) || isEuEmblem(path) || isThemeAsset(path)) continue;
+        const { body } = await download(m.source_url);
+        const hash = sha256(body);
+        if (seen.has(hash)) {
+            urlMap.archive[path] = `${DUPLICATE}${seen.get(hash)}`;
+            continue;
+        }
+        seen.set(hash, m.id);
+        const dir = join(ARCHIVE, ...path.split('/').slice(-3, -1));
+        const name = basename(path);
+        const out = m.mime_type.startsWith('image/') ? await saveImage(body, join(dir, name.replace(/\.[a-z]+$/i, ''))) : join(dir, name);
+        if (!m.mime_type.startsWith('image/')) writeFileIfChanged(out, body);
+        keep.add(out);
+        urlMap.archive[path] = relative(REPO_ROOT, out).split('\\').join('/');
+    }
+    for (const file of listFiles(ARCHIVE)) if (!keep.has(file)) rmSync(file);
+    console.log(`archive: ${keep.size} files in archive/wordpress-media`);
+}
+
+function archiveNote(entry: string | undefined): string | null {
+    if (!entry) return null;
+    return entry.startsWith(DUPLICATE) ? `not used: byte-identical copy of #${entry.slice(DUPLICATE.length)}` : `archived: ${entry}`;
+}
+
+function listFiles(dir: string): string[] {
+    if (!existsSync(dir)) return [];
+    return readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? listFiles(join(dir, e.name)) : [join(dir, e.name)]));
+}
+
 // ---------- inventory
 
 function inventory(snap: Snapshot, docs: Doc[], urlMap: UrlMap): string {
@@ -330,7 +394,9 @@ function inventory(snap: Snapshot, docs: Doc[], urlMap: UrlMap): string {
     /** Why a file of the old site has no place in content/. */
     const reasonForPath = (path: string, post: number | null = null): string => {
         const refs = where.get(key(path)) ?? [];
-        if (/-pdf(-\d+x\d+)?\.jpe?g$/i.test(path) || /\/2026\/07\/\d\.-/.test(path) || /Публ.-сайт_Теком\.\d/i.test(path) || /_Т(\.1)?\.jpe?g$/i.test(path)) {
+        if (isThemeAsset(path)) return "not used: stock image or icon of the Avada theme demo, not Tekom's own";
+        if (isEuEmblem(path)) return 'not used: generic EU flag or logo; the official emblem ships with packages/ui';
+        if (isDocumentPicture(path)) {
             return 'not used: a picture of a document page, shown next to its download link; the document itself is imported';
         }
         if (refs.includes('page home')) return 'not used: image of the old home page; the new home page comes from the mockup';
@@ -339,7 +405,7 @@ function inventory(snap: Snapshot, docs: Doc[], urlMap: UrlMap): string {
         if (refs.length) return `not used: shown on ${refs.join(', ')} only as a small preview; the full picture is imported where the page shows it`;
         if (post && projectSlug.has(post)) return `not used: attached to project ${projectSlug.get(post)} but not shown on its live page`;
         if (post && pageName.has(post)) return `not used: attached to page ${pageName.get(post)} but not shown on it`;
-        if (/Tekom_Logo|favicon|cropped-/i.test(path)) return 'not used: old site logo or icon; the new logo ships with packages/ui';
+        if (isOldLogo(path)) return 'not used: old site logo or icon; the new logo ships with packages/ui';
         return 'not used: not referenced by any live page or project';
     };
     const reason = (m: WpMedia) => reasonForPath(sitePath(m.source_url), m.post);
@@ -353,7 +419,7 @@ function inventory(snap: Snapshot, docs: Doc[], urlMap: UrlMap): string {
                 doc.urls[0] === m.source_url || !doc.mediaIds.length
                     ? `content/${doc.file}`
                     : `content/${doc.file} (byte-identical duplicate of #${doc.mediaIds[0]})`;
-        else home = newHomeByKey.get(key(m.source_url)) ?? reason(m);
+        else home = newHomeByKey.get(key(m.source_url)) ?? archiveNote(urlMap.archive[path]) ?? reason(m);
         return `| ${m.id} | ${m.date.slice(0, 10)} | ${m.mime_type.replace('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'docx')} | \`${path}\` | ${home} |`;
     });
 
@@ -431,13 +497,14 @@ ${eumis.join('\n') || '| none | |'}
 // ---------- files
 
 function readUrlMap(): UrlMap {
-    const empty: UrlMap = { files: {}, pages: {} };
+    const empty: UrlMap = { files: {}, pages: {}, archive: {} };
     return existsSync(URL_MAP_FILE) ? { ...empty, ...(JSON.parse(readFileSync(URL_MAP_FILE, 'utf8')) as UrlMap) } : empty;
 }
 
 const sortMap = (m: UrlMap): UrlMap => ({
     files: Object.fromEntries(Object.entries(m.files).sort(([a], [b]) => a.localeCompare(b))),
-    pages: Object.fromEntries(Object.entries(m.pages).sort(([a], [b]) => a.localeCompare(b)))
+    pages: Object.fromEntries(Object.entries(m.pages).sort(([a], [b]) => a.localeCompare(b))),
+    archive: Object.fromEntries(Object.entries(m.archive).sort(([a], [b]) => a.localeCompare(b)))
 });
 
 const writeJson = (path: string, data: unknown) => writeFileIfChanged(path, `${JSON.stringify(data, null, 2)}\n`);

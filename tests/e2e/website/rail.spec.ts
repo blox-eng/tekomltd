@@ -26,11 +26,12 @@ test.describe('rail on desktop', () => {
     test('the arrow buttons scroll the rail and the counter follows', async ({ page }) => {
         await page.goto('/');
         const track = page.locator('[data-rail-track]');
+        const rail = track.locator('..');
         await expect(counter(page)).toHaveText(/^01 \//);
-        await page.getByRole('button', { name: 'Next' }).click();
+        await rail.getByRole('button', { name: 'Next' }).click();
         await expect.poll(() => track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(100);
         await expect(counter(page)).toHaveText(/^02 \//);
-        await page.getByRole('button', { name: 'Previous' }).click();
+        await rail.getByRole('button', { name: 'Previous' }).click();
         await expect(counter(page)).toHaveText(/^01 \//);
     });
 

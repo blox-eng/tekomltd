@@ -1,0 +1,324 @@
+/* Ported from the promise, numbers, partner services and trust blocks of design/mockup/mockup.tpl.html; values come from tokens.css. */
+
+/* promise */
+.why {
+    padding-block: 112px 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: 48px;
+}
+
+@media (max-width: 860px) {
+    .why {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding-block: 64px 0;
+    }
+}
+
+.why h2 {
+    font: 400 calc(1.22 * clamp(30px, 4.4vw, 56px)) / 1.04 var(--f-display);
+    letter-spacing: -0.01em;
+}
+
+.why h2 em {
+    font-style: italic;
+    color: var(--accent);
+}
+
+.lead {
+    color: var(--muted);
+    margin: 20px 0 0;
+    max-width: 40ch;
+}
+
+.risks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+}
+
+.risks li {
+    display: grid;
+    grid-template-columns: minmax(0, 15ch) minmax(0, 1fr);
+    gap: 24px;
+    padding-block: 20px;
+    border-bottom: 1px solid var(--line);
+}
+
+@media (max-width: 520px) {
+    .risks li {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
+
+.risks b {
+    font-weight: 500;
+}
+
+.risks span {
+    color: var(--muted);
+}
+
+/* numbers */
+.nums {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-block: 1px solid var(--line);
+    margin-top: 96px;
+}
+
+.nums > div {
+    padding: 28px 20px 24px 0;
+    display: grid;
+    gap: 6px;
+}
+
+.nums > div + div {
+    padding-left: 20px;
+    border-left: 1px solid var(--line);
+}
+
+.nums b {
+    font: 400 calc(1.22 * clamp(30px, 3.6vw, 44px)) / 1 var(--f-display);
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+}
+
+.nums b sup {
+    font-size: 0.45em;
+    vertical-align: top;
+    margin-left: 2px;
+}
+
+.nums span {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 22ch;
+}
+
+@media (max-width: 760px) {
+    .nums {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .nums > div:nth-child(3) {
+        border-left: 0;
+        padding-left: 0;
+    }
+
+    .nums > div:nth-child(n + 3) {
+        border-top: 1px solid var(--line);
+    }
+}
+
+/* partner services */
+.psec {
+    padding-block: 112px 0;
+}
+
+@media (max-width: 860px) {
+    .psec {
+        padding-block: 64px 0;
+    }
+}
+
+.ptrack {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    padding-bottom: 4px;
+}
+
+.ptrack::-webkit-scrollbar {
+    display: none;
+}
+
+.pcard {
+    flex: none;
+    width: 264px;
+    scroll-snap-align: start;
+    background: var(--wall);
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: background-color var(--dur-standard) var(--ease);
+}
+
+.pcard:hover {
+    background: color-mix(in srgb, var(--wall) 70%, var(--field));
+}
+
+.pcard :global(.glyph) {
+    width: 44px;
+    height: 44px;
+    color: var(--muted);
+    transition: color var(--dur-standard) var(--ease);
+}
+
+.pcard:hover :global(.glyph) {
+    color: var(--accent);
+}
+
+.pcard h3 {
+    font: 400 calc(1.22 * 20px) / 1.2 var(--f-display);
+    letter-spacing: -0.01em;
+    margin-top: 52px;
+}
+
+.pcard p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+    .pcard {
+        width: 78vw;
+    }
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-block: 14px 0;
+}
+
+.arrows {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.arrows button {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    font-size: 16px;
+    display: grid;
+    place-items: center;
+    transition: border-color var(--dur-micro) var(--ease);
+}
+
+.arrows button:hover {
+    border-color: var(--text);
+}
+
+@media (max-width: 640px) {
+    .arrows {
+        display: none;
+    }
+}
+
+/* materials and partners */
+.trust {
+    padding-block: 112px;
+    display: grid;
+    gap: 56px;
+}
+
+@media (max-width: 860px) {
+    .trust {
+        padding-block: 64px;
+    }
+}
+
+.brands {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 28px;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+    margin: 0;
+    padding-inline: 0;
+    list-style: none;
+}
+
+@media (max-width: 860px) {
+    .brands {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+.brands img {
+    max-width: 100%;
+    max-height: 34px;
+    width: auto;
+    height: auto;
+    margin-inline: auto;
+    display: block;
+    filter: grayscale(1) contrast(1.1);
+    opacity: 0.6;
+    transition:
+        opacity var(--dur-standard) var(--ease),
+        filter var(--dur-standard) var(--ease);
+}
+
+.brands li:hover img,
+.brands li:focus-within img {
+    filter: none;
+    opacity: 1;
+}
+
+:global(:root[data-theme='dark']) .brands img {
+    filter: grayscale(1) invert(1) brightness(1.4);
+    opacity: 0.55;
+}
+
+@media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .brands img {
+        filter: grayscale(1) invert(1) brightness(1.4);
+        opacity: 0.55;
+    }
+}
+
+:global(:root[data-theme='dark']) .brands li:hover img,
+:global(:root[data-theme='dark']) .brands li:focus-within img {
+    filter: none;
+    opacity: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .brands li:hover img,
+    :global(:root:not([data-theme='light'])) .brands li:focus-within img {
+        filter: none;
+        opacity: 1;
+    }
+}
+
+.partners {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 32px;
+    border-top: 1px solid var(--line);
+}
+
+@media (max-width: 760px) {
+    .partners {
+        grid-template-columns: 1fr;
+    }
+}
+
+.partners > div {
+    padding-block: 14px;
+    border-bottom: 1px solid var(--line-2);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.partners span:last-child {
+    color: var(--muted);
+    font-size: 14px;
+    text-align: right;
+}

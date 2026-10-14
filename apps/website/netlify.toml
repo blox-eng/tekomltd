@@ -1,6 +1,0 @@
-[build]
-  command = "cd /opt/build/repo && pnpm install && pnpm turbo build --filter=@tekom/website"
-  publish = ".next"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"

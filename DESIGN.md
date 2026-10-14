@@ -88,7 +88,7 @@ The locked reference is the clickable mockup in `design/mockup/index.html` (open
 - **Text link** (`.link`): red, weight 500, no underline.
 - Every button or link that goes somewhere ends with `→` in `<span class="ar">`, which slides 4px on hover.
 - **Rail arrows:** 44×44 square, 1px `--line` outline.
-- **Language switch:** `BG · EN · DE` in Plex Mono 12px; inactive `--faint`, active `--text` with a 1px red underline. No box.
+- **Language switch:** `BG · EN · DE` in Plex Mono 12px; inactive `--muted` (`--faint` fails AA for text), active `--text` with a 1px red underline. No box.
 - **Theme switch:** a bare 15px moon icon in `--muted`, 32px target.
 - **Inputs:** `--field` fill, 1px `--line`, radius 0, 16px text (no iOS zoom), label above in `--muted` 14px.
 - Touch targets ≥ 40px.

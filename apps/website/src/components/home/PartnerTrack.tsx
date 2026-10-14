@@ -15,7 +15,7 @@ export function PartnerTrack({ label, prevLabel, nextLabel, children }: Props) {
 
     return (
         <>
-            <div ref={track} className={styles.ptrack}>
+            <div ref={track} className={styles.ptrack} role="region" aria-label={label} tabIndex={0}>
                 {children}
             </div>
             <div className={styles.bar}>

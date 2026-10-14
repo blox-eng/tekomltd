@@ -3,6 +3,9 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
+        "dev": "next dev --port 3000",
+        "build": "next build",
+        "start": "next start",
         "lint": "prettier --check .",
         "typecheck": "tsc --noEmit",
         "test": "vitest run --passWithNoTests",
@@ -14,11 +17,17 @@
         "seed:mockup": "tsx scripts/seed-from-mockup.ts"
     },
     "devDependencies": {
+        "@netlify/plugin-nextjs": "^5.16.2",
         "@types/node": "^22.20.5",
+        "@types/react": "^19.3.0",
+        "@types/react-dom": "^19.3.0",
         "@types/turndown": "^5.0.6",
+        "autoprefixer": "^10.6.1",
         "node-html-parser": "^9.0.4",
+        "postcss": "^8.5.30",
         "prettier": "^3.8.3",
         "sharp": "^0.35.5",
+        "tailwindcss": "^3.4.19",
         "tsx": "^4.23.15",
         "turndown": "^7.2.4",
         "typescript": "^5.9.3",
@@ -29,6 +38,11 @@
         "@tekom/ui": "workspace:*",
         "gray-matter": "^4.0.3",
         "image-size": "^2.0.4",
+        "next": "^15.5.27",
+        "next-intl": "^4.14.9",
+        "react": "^19.3.0",
+        "react-dom": "^19.3.0",
+        "react-markdown": "^10.1.0",
         "yaml": "^2.9.1",
         "zod": "^4.6.7"
     }

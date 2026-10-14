@@ -17,12 +17,12 @@ export default defineConfig({
             use: { ...devices['Desktop Chrome'] }
         }
     ],
-    // Start dev server automatically if not already running
+    // Serves the production build: the site is static, so the e2e run tests what ships.
     webServer: {
-        command: 'pnpm turbo dev --filter=@tekom/website',
+        command: 'pnpm --filter @tekom/website build && pnpm --filter @tekom/website start',
         url: BASE_URL,
-        reuseExistingServer: true,
+        reuseExistingServer: !process.env.CI,
         cwd: '..',
-        timeout: 60_000
+        timeout: 300_000
     }
 });

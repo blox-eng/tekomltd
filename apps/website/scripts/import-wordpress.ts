@@ -5,13 +5,16 @@
  *                                  and archive/wordpress-media (Tekom's own old files the new site does not use; not published)
  *   pnpm import:wp --publications  snapshot, every document (PDF, DOC, DOCX) and the publications list
  *
- * Both runs rewrite `url-map.json` (old upload URL → new public URL) and `INVENTORY.md`. Re-running is safe: generated
- * fields and files are overwritten, fields a person added (translations, meta, drafts) are kept.
+ * Both runs rewrite `url-map.json` (old upload URL → new public URL, old page → new public path) and `INVENTORY.md`.
+ * The import is a one-off: it refuses to run once its output exists, unless `--force` is given. With `--force` it
+ * overwrites generated fields and the Markdown pages, keeps fields, images and publication rows people added, and
+ * deletes only files the previous run wrote (as recorded in url-map.json).
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join, relative } from 'node:path';
 import YAML from 'yaml';
 import { REPO_ROOT, readGeo, readMockProjects, readMockup } from './lib/mockup';
+import { assertFirstRun, type ImageEntry, mergeImages, removeStale } from './lib/reimport';
 import { download, fetchCollection, saveImage, savePng, sha256, SITE, sitePath, type WpMedia, type WpPost } from './lib/wp';
 import { wpPageToMarkdown } from './lib/wp-markdown';
 import { decodeEntities, excerpt, galleryUrls, imageKey, parseDetails, slugifyFile } from './wp-parse';
@@ -32,6 +35,8 @@ const SLOT_PAGES: Record<number, string> = {
     3: 'content/legal/privacy.*.md (rewritten for the static site)',
     1815: 'content/publications.yaml and content/eu-programmes.yaml'
 };
+/** Public paths of the new site that replace the slot pages (redirect targets). */
+const SLOT_TARGETS: Record<number, string> = { 5: '/', 11: '/projects', 15: '/contact', 3: '/privacy', 1815: '/publications' };
 /** Pages without a mockup slot, kept as Markdown under content/pages/<slug>.bg.md. */
 const MARKDOWN_PAGES = [7, 1376, 1375, 9, 1405, 1924];
 /** Programme logos on the old home page. */
@@ -55,24 +60,37 @@ type Doc = {
 };
 
 const publicationsOnly = process.argv.includes('--publications');
+const force = process.argv.includes('--force');
+
+/** Files the previous run wrote (from url-map.json); only these may be replaced or deleted. */
+type Written = { before: Set<string>; now: Set<string> };
 
 async function main() {
+    assertFirstRun([publicationsOnly ? join(CONTENT, 'publications.yaml') : join(CONTENT, 'projects')], force);
     const snap = await snapshot();
     const docs = await planDocuments(snap);
     const urlMap = readUrlMap();
+    const before = publicationsOnly ? new Set<string>() : writtenFiles(urlMap);
+    const written: Written = { before, now: new Set() };
+    const previousDocuments = new Set(
+        Object.values(urlMap.files)
+            .filter((to) => to.startsWith(`${MEDIA_URL}/publications/`))
+            .map((to) => to.slice(MEDIA_URL.length + 1))
+    );
     // Each run owns its part of the URL map: the documents, or everything else.
     const isDocument = (to: string) => to.startsWith(`${MEDIA_URL}/publications/`);
     urlMap.files = Object.fromEntries(Object.entries(urlMap.files).filter(([, to]) => isDocument(to) !== publicationsOnly));
     if (publicationsOnly) {
-        await importPublications(docs, urlMap);
+        await importPublications(docs, urlMap, previousDocuments);
     } else {
-        await importProjects(snap, urlMap);
-        await importPages(snap, docs, urlMap);
+        await importProjects(snap, urlMap, written);
+        await importPages(snap, docs, urlMap, written);
         await importProgrammeLogos(snap, urlMap);
-        await archiveUnused(snap, docs, urlMap);
+        await archiveUnused(snap, docs, urlMap, written);
+        for (const file of removeStale(written.before, written.now)) console.log(`removed ${relative(REPO_ROOT, file)}`);
     }
     writeJson(URL_MAP_FILE, sortMap(urlMap));
-    writeFileSync(join(SNAPSHOT, 'INVENTORY.md'), inventory(snap, docs, urlMap));
+    writeFileIfChanged(join(SNAPSHOT, 'INVENTORY.md'), inventory(snap, docs, urlMap));
     console.log(`import:wp: done (${publicationsOnly ? 'publications' : 'projects and pages'}); see design/wordpress-snapshot/INVENTORY.md`);
 }
 
@@ -176,7 +194,11 @@ async function planDocuments(snap: Snapshot): Promise<Doc[]> {
     return docs.sort((a, b) => b.publishedOn.localeCompare(a.publishedOn) || a.file.localeCompare(b.file));
 }
 
-async function importPublications(docs: Doc[], urlMap: UrlMap) {
+async function importPublications(docs: Doc[], urlMap: UrlMap, previousDocuments: Set<string>) {
+    // Rows people added (files the import never wrote) stay, after the imported ones.
+    const imported = new Set([...previousDocuments, ...docs.map((d) => d.file)]);
+    const path = join(CONTENT, 'publications.yaml');
+    const added = existsSync(path) ? ((YAML.parse(readFileSync(path, 'utf8')) ?? []) as { file: string }[]).filter((r) => !imported.has(r.file)) : [];
     const rows = docs.map((d) => ({
         ...(d.programme ? { programme: d.programme } : {}),
         kind: d.kind,
@@ -185,20 +207,20 @@ async function importPublications(docs: Doc[], urlMap: UrlMap) {
         published_on: d.publishedOn,
         ...(d.wpUrl ? { wp_url: d.wpUrl } : {})
     }));
-    writeYaml(join(CONTENT, 'publications.yaml'), rows);
+    writeYaml(path, [...rows, ...added]);
     for (const d of docs) for (const url of d.urls) if (url.startsWith(SITE)) urlMap.files[sitePath(url)] = `${MEDIA_URL}/${d.file}`;
     console.log(`publications: ${docs.length} documents from ${docs.reduce((n, d) => n + d.urls.length, 0)} links`);
 }
 
 // ---------- projects
 
-async function importProjects(snap: Snapshot, urlMap: UrlMap) {
+async function importProjects(snap: Snapshot, urlMap: UrlMap, written: Written) {
     const mockup = readMockup();
     const geo = readGeo();
     const byId = new Map(snap.portfolio.map((p) => [p.id, p]));
     const mediaById = new Map(snap.media.map((m) => [m.id, m]));
     const mock = readMockProjects();
-    let images = 0;
+    let imageCount = 0;
     for (const [index, p] of mock.entries()) {
         const wp = byId.get(p.id);
         if (!wp) throw new Error(`portfolio item ${p.id} (${p.slug}) is not on the live site`);
@@ -211,11 +233,8 @@ async function importProjects(snap: Snapshot, urlMap: UrlMap) {
 
         const urls: string[] = [];
         for (const url of [cover, ...galleryUrls(wp.content.rendered)]) if (!urls.some((u) => imageKey(u) === imageKey(url))) urls.push(url);
-        const keptAlt = new Map<string, Record<string, string>>(
-            ((existing.images as { file: string; alt?: Record<string, string> }[] | undefined) ?? []).map((i) => [i.file, i.alt ?? {}])
-        );
         const title = p.t;
-        const written: { file: string; alt: Record<string, string>; is_cover?: true }[] = [];
+        const imported: { file: string; alt: Record<string, string> }[] = [];
         const names = new Set<string>();
         for (const url of urls) {
             let name = slugifyFile(basename(sitePath(url))).replace(/(-scaled)?\.[a-z]+$/, '');
@@ -223,11 +242,13 @@ async function importProjects(snap: Snapshot, urlMap: UrlMap) {
             names.add(name);
             const out = await saveImage((await download(url)).body, join(dir, name));
             const rel = basename(out);
-            written.push({ file: rel, alt: { ...keptAlt.get(rel), bg: title.bg }, ...(written.length === 0 ? { is_cover: true as const } : {}) });
+            imported.push({ file: rel, alt: { bg: title.bg } });
+            written.now.add(out);
             urlMap.files[sitePath(url)] = `${MEDIA_URL}/projects/${p.slug}/${rel}`;
-            images++;
+            imageCount++;
         }
-        removeStaleImages(dir, new Set(written.map((w) => w.file)));
+        const importedBefore = new Set([...written.before].filter((f) => dirname(f) === dir).map((f) => basename(f)));
+        const images = mergeImages((existing.images as ImageEntry[] | undefined) ?? [], imported, importedBefore);
 
         const details = parseDetails(wp.content.rendered);
         const [lat, lng] = geo[String(p.id)] ?? [];
@@ -249,20 +270,16 @@ async function importProjects(snap: Snapshot, urlMap: UrlMap) {
             on_rail: true,
             wp_id: wp.id,
             wp_slug: decodeURIComponent(wp.slug),
-            images: written
+            images
         };
         writeYaml(file, project);
     }
-    console.log(`projects: ${mock.length} projects, ${images} images`);
-}
-
-function removeStaleImages(dir: string, keep: Set<string>) {
-    for (const name of readdirSync(dir)) if (/\.(jpe?g|png|webp)$/i.test(name) && !keep.has(name)) rmSync(join(dir, name));
+    console.log(`projects: ${mock.length} projects, ${imageCount} images`);
 }
 
 // ---------- pages
 
-async function importPages(snap: Snapshot, docs: Doc[], urlMap: UrlMap) {
+async function importPages(snap: Snapshot, docs: Doc[], urlMap: UrlMap, written: Written) {
     const docByPath = new Map<string, Doc>();
     for (const d of docs) for (const url of d.urls) if (url.startsWith(SITE)) docByPath.set(sitePath(url), d);
     const pageBySlug = new Map(snap.pages.map((p) => [p.slug, p]));
@@ -271,7 +288,6 @@ async function importPages(snap: Snapshot, docs: Doc[], urlMap: UrlMap) {
     for (const id of MARKDOWN_PAGES) {
         const page = snap.pages.find((p) => p.id === id)!;
         const dir = join(CONTENT, 'pages', page.slug);
-        const saved = new Set<string>();
         const body = await wpPageToMarkdown(page.content.rendered, {
             document: (url) => {
                 const d = docByPath.get(sitePath(url));
@@ -281,7 +297,7 @@ async function importPages(snap: Snapshot, docs: Doc[], urlMap: UrlMap) {
                 const name = slugifyFile(basename(sitePath(url))).replace(/\.[a-z]+$/, '');
                 const out = await saveImage((await download(url)).body, join(dir, name), true);
                 const href = `${MEDIA_URL}/${relative(CONTENT, out).split('\\').join('/')}`;
-                saved.add(basename(out));
+                written.now.add(out);
                 urlMap.files[sitePath(url)] = href;
                 return href;
             },
@@ -293,12 +309,11 @@ async function importPages(snap: Snapshot, docs: Doc[], urlMap: UrlMap) {
                 return target ? sitePath(target.link) : null;
             }
         });
-        if (existsSync(dir)) removeStaleImages(dir, saved);
         const front = { title: decodeEntities(page.title.rendered), updated: page.modified.slice(0, 10), wp_url: page.link };
         writeFileIfChanged(join(CONTENT, 'pages', `${page.slug}.bg.md`), `---\n${YAML.stringify(front, { lineWidth: 0 })}---\n\n${body}`);
-        urlMap.pages[sitePath(page.link)] = page.slug;
+        urlMap.pages[sitePath(page.link)] = `/${page.slug}`;
     }
-    for (const page of snap.pages) if (!newPage(page) && SLOT_PAGES[page.id]) urlMap.pages[sitePath(page.link)] = SLOT_PAGES[page.id]!.split(' ')[0]!;
+    for (const page of snap.pages) if (!newPage(page) && SLOT_TARGETS[page.id]) urlMap.pages[sitePath(page.link)] = SLOT_TARGETS[page.id]!;
     console.log(`pages: ${MARKDOWN_PAGES.length} Markdown pages`);
 }
 
@@ -332,7 +347,7 @@ const isThemeAsset = (path: string) =>
  * certificates) in archive/wordpress-media/<yyyy>/<mm>/ under its WordPress name. Theme assets, document previews, old
  * logos and byte-identical copies of an imported file are left out. Nothing in archive/ is published.
  */
-async function archiveUnused(snap: Snapshot, docs: Doc[], urlMap: UrlMap) {
+async function archiveUnused(snap: Snapshot, docs: Doc[], urlMap: UrlMap, written: Written) {
     const key = (url: string) => imageKey(sitePath(url));
     const imported = new Set(Object.keys(urlMap.files).map(key));
     for (const d of docs) for (const u of d.urls) if (u.startsWith(SITE)) imported.add(key(u));
@@ -356,9 +371,9 @@ async function archiveUnused(snap: Snapshot, docs: Doc[], urlMap: UrlMap) {
         const out = m.mime_type.startsWith('image/') ? await saveImage(body, join(dir, name.replace(/\.[a-z]+$/i, ''))) : join(dir, name);
         if (!m.mime_type.startsWith('image/')) writeFileIfChanged(out, body);
         keep.add(out);
+        written.now.add(out);
         urlMap.archive[path] = relative(REPO_ROOT, out).split('\\').join('/');
     }
-    for (const file of listFiles(ARCHIVE)) if (!keep.has(file)) rmSync(file);
     console.log(`archive: ${keep.size} files in archive/wordpress-media`);
 }
 
@@ -367,12 +382,14 @@ function archiveNote(entry: string | undefined): string | null {
     return entry.startsWith(DUPLICATE) ? `not used: byte-identical copy of #${entry.slice(DUPLICATE.length)}` : `archived: ${entry}`;
 }
 
-function listFiles(dir: string): string[] {
-    if (!existsSync(dir)) return [];
-    return readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? listFiles(join(dir, e.name)) : [join(dir, e.name)]));
-}
-
 // ---------- inventory
+
+/** The newest `modified` date of the snapshot, so the inventory only changes when the site did. */
+const snapshotDate = (snap: Snapshot) =>
+    [...snap.pages, ...snap.portfolio, ...snap.media]
+        .map((x) => ((x as { modified?: string }).modified ?? (x as { date: string }).date).slice(0, 10))
+        .sort()
+        .at(-1);
 
 function inventory(snap: Snapshot, docs: Doc[], urlMap: UrlMap): string {
     const key = (url: string) => imageKey(sitePath(url));
@@ -448,7 +465,7 @@ function inventory(snap: Snapshot, docs: Doc[], urlMap: UrlMap): string {
 
     return `# WordPress inventory
 
-Generated by \`pnpm import:wp\` from https://www.tekomltd.com/wp-json/wp/v2/ on ${new Date().toISOString().slice(0, 10)}. Every page, portfolio item and media file of the
+Generated by \`pnpm import:wp\` from https://www.tekomltd.com/wp-json/wp/v2/ as of ${snapshotDate(snap)} (newest change on the site). Every page, portfolio item and media file of the
 live site has a row with its new home in \`content/\` or the reason it is not used. The raw REST data is kept next to this file
 (\`pages.json\`, \`avada_portfolio.json\`, \`media.json\`, \`categories.json\`, \`portfolio_category.json\`, \`posts.json\`), and
 \`url-map.json\` maps every imported old URL to its new public URL for the redirects.
@@ -495,6 +512,17 @@ ${eumis.join('\n') || '| none | |'}
 }
 
 // ---------- files
+
+/** Absolute paths of the project images, page images and archive files a previous run recorded in url-map.json. */
+function writtenFiles(map: UrlMap): Set<string> {
+    const files = Object.values(map.files)
+        .filter((to) => !to.startsWith(`${MEDIA_URL}/publications/`) && !to.startsWith(`${MEDIA_URL}/eu-programmes/`))
+        .map((to) => join(CONTENT, to.slice(MEDIA_URL.length + 1)));
+    const archived = Object.values(map.archive)
+        .filter((to) => !to.startsWith(DUPLICATE))
+        .map((to) => join(REPO_ROOT, to));
+    return new Set([...files, ...archived]);
+}
 
 function readUrlMap(): UrlMap {
     const empty: UrlMap = { files: {}, pages: {}, archive: {} };

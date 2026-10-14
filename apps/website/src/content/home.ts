@@ -18,7 +18,7 @@ export type HomeData = {
     rail: ProjectCard[];
     panels: Panel[];
     promises: { title: string; body: string }[];
-    stats: { value: string; label: string; unconfirmed: boolean }[];
+    stats: { value: number | string; label: string; unconfirmed: boolean }[];
     crews: Crew[];
     partnerServices: { icon: string; title: string; body: string }[];
     brands: { name: string; url: string | null; logo: Img }[];
@@ -49,7 +49,7 @@ export function getHome(locale: Locale, root: string = defaultRoot()): HomeData 
                   }
         ),
         promises: home.promises.map((p) => ({ title: t(p.title), body: t(p.body) })),
-        stats: home.stats.map((s) => ({ value: value(s.value), label: t(s.label), unconfirmed: s.unconfirmed })),
+        stats: home.stats.map((s) => ({ value: typeof s.value === 'number' ? s.value : value(s.value), label: t(s.label), unconfirmed: s.unconfirmed })),
         crews: home.crews.map((c) => ({
             key: c.key,
             scene: c.scene,

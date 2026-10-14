@@ -74,7 +74,7 @@ describe('getHome', () => {
         expect(home.panels[1]).toMatchObject({ kind: 'crew_stat', statValue: years, unit: 'years on site', unconfirmed: false });
         expect(home.stats).toEqual([
             { value: years, label: 'години строим в Стара Загора', unconfirmed: false },
-            { value: '1', label: 'семейство, две поколения на обекта', unconfirmed: true }
+            { value: 1, label: 'семейство, две поколения на обекта', unconfirmed: true }
         ]);
         expect(home.crews[0]).toMatchObject({ key: 'site', scene: 'site', title: 'The crew on site' });
         expect(home.crews[0]!.roles[0]).toMatchObject({ tool: 'plumb', role: 'Foreman', years: 22 });

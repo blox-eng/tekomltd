@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { LEGAL_SLUGS } from './paths';
 
 export const SCOPES = ['full', 'restore', 'facade', 'interior', 'stone'] as const;
-export const SUMMARY_MAX = 420;
+export const SUMMARY_MAX = 460;
 
 const text = z.string().trim().min(1);
 
@@ -92,7 +92,8 @@ export const RailPanel = z.discriminatedUnion('kind', [capabilityPanel, crewStat
 
 export const PromiseItem = z.strictObject({ title: L, body: L });
 
-export const Stat = z.strictObject({ value: text, label: L, unconfirmed: z.boolean().default(false) });
+/** A number the renderer formats per locale, or text such as `{years}` (years since `founded`). */
+export const Stat = z.strictObject({ value: z.union([z.number(), text]), label: L, unconfirmed: z.boolean().default(false) });
 
 export const CrewRole = z.strictObject({
     tool: z.enum(CREW_GLYPH_KEYS),

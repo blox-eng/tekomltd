@@ -184,17 +184,17 @@
     "/wp-content/uploads/2026/07/Методика-за-оценка_Т_раб.pdf": "/media/publications/2026-07-metodika-za-otsenka-t-rab-1.pdf"
   },
   "pages": {
-    "/": "content/home.yaml",
-    "/about/": "about",
-    "/contact/": "content/settings.yaml",
-    "/free-positions/": "free-positions",
-    "/privacy-policy/": "content/legal/privacy.*.md",
-    "/projects/": "content/projects/",
-    "/publications/": "content/publications.yaml",
-    "/publications/invitations/": "invitations",
-    "/services/": "services",
-    "/services/business-services/": "business-services",
-    "/services/private-services/": "private-services"
+    "/": "/",
+    "/about/": "/about",
+    "/contact/": "/contact",
+    "/free-positions/": "/free-positions",
+    "/privacy-policy/": "/privacy",
+    "/projects/": "/projects",
+    "/publications/": "/publications",
+    "/publications/invitations/": "/invitations",
+    "/services/": "/services",
+    "/services/business-services/": "/business-services",
+    "/services/private-services/": "/private-services"
   },
   "archive": {
     "/wp-content/uploads/2015/12/IMG_7639-1.jpg": "archive/wordpress-media/2015/12/IMG_7639-1.jpg",

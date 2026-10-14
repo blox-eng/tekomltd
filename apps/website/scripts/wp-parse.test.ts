@@ -24,12 +24,12 @@ describe('parseDetails', () => {
 describe('excerpt', () => {
     it('cuts the excerpt at a real sentence end', () => {
         const e = excerpt(byId(fixture, 1866).content.rendered);
-        expect(e.length).toBeLessThanOrEqual(420);
+        expect(e.length).toBeLessThanOrEqual(460);
         expect(e.endsWith('инж.')).toBe(false);
         expect(e.endsWith('.')).toBe(true);
     });
     it('parses every project in the fixture', () => expect(fixture.map((x) => excerpt(x.content.rendered)).every(Boolean)).toBe(true));
-    it('keeps every excerpt within 420 characters', () => expect(fixture.every((x) => excerpt(x.content.rendered).length <= 420)).toBe(true));
+    it('keeps every excerpt within 460 characters', () => expect(fixture.every((x) => excerpt(x.content.rendered).length <= 460)).toBe(true));
     it('never cuts after an abbreviation', () => {
         const ends = fixture.map((x) => excerpt(x.content.rendered));
         expect(ends.filter((e) => /(?<!\p{L})(ул|инж|арх|гр|с|кв|г|Х|Д)\.$/u.test(e))).toEqual([]);

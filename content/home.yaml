@@ -153,19 +153,19 @@ stats:
       en: years building in Stara Zagora
       de: Jahre Bauen in Stara Sagora
     unconfirmed: false
-  - value: 24 000
+  - value: 24000
     label:
       bg: м² РЗП в показаните проекти
       en: m² built on the projects shown here
       de: m² Fläche der gezeigten Projekte
     unconfirmed: false
-  - value: "17"
+  - value: 17
     label:
       bg: сгради, къщи и параклис, всички в употреба
       en: buildings, houses and a chapel, all still in use
       de: Gebäude, Häuser und eine Kapelle, alle in Nutzung
     unconfirmed: false
-  - value: "1"
+  - value: 1
     label:
       bg: семейство, две поколения на обекта
       en: family, two generations on site

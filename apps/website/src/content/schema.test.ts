@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { checkContent, main } from './check';
-import { CrewRole, EuProgramme, Home, L, LegalPage, Page, Partner, Project, PromiseItem, Publication, RailPanel, Settings } from './schema';
+import { CrewRole, EuProgramme, Home, L, LegalPage, Page, Partner, Project, PromiseItem, Publication, RailPanel, Settings, Stat } from './schema';
 
 const fixture = (name: string) => join(__dirname, '__fixtures__', name);
 
@@ -26,10 +26,10 @@ describe('Project', () => {
     it('rejects a slug with capitals or spaces', () => {
         expect(Project.safeParse({ ...minimal, slug: 'Green Bath' }).success).toBe(false);
     });
-    it('caps a summary at 420 characters', () => {
-        expect(Project.safeParse({ ...minimal, summary: { bg: 'я'.repeat(420) } }).success).toBe(true);
-        expect(Project.safeParse({ ...minimal, summary: { bg: 'я'.repeat(421) } }).success).toBe(false);
-        expect(Project.safeParse({ ...minimal, summary: { bg: 'ok', en: 'x'.repeat(421) } }).success).toBe(false);
+    it('caps a summary at 460 characters', () => {
+        expect(Project.safeParse({ ...minimal, summary: { bg: 'я'.repeat(460) } }).success).toBe(true);
+        expect(Project.safeParse({ ...minimal, summary: { bg: 'я'.repeat(461) } }).success).toBe(false);
+        expect(Project.safeParse({ ...minimal, summary: { bg: 'ok', en: 'x'.repeat(461) } }).success).toBe(false);
     });
     it('rejects coordinates outside the globe', () => {
         expect(Project.safeParse({ ...minimal, lat: 91, lng: 25 }).success).toBe(false);
@@ -107,6 +107,11 @@ describe('smaller types', () => {
         const s = { legal_name: 'Т', founded: 1991, address: { bg: 'а' }, phone: '1', email: 'a@b.bg', privacy_email: 'p@b.bg' };
         expect(Settings.safeParse({ ...s, crew_headline: { bg: ['Хората зад мазилката'] } }).success).toBe(false);
         expect(Settings.safeParse({ ...s, crew_headline: { bg: ['Хората зад мазилката', 'Хората зад мечтата'] } }).success).toBe(true);
+    });
+    it('Stat value is a number, or text for a placeholder like {years}', () => {
+        expect(Stat.parse({ value: 24000, label: { bg: 'м²' } }).value).toBe(24000);
+        expect(Stat.parse({ value: '{years}', label: { bg: 'години' } }).value).toBe('{years}');
+        expect(Stat.safeParse({ value: ' ', label: { bg: 'x' } }).success).toBe(false);
     });
     it('Settings needs the founding year', () => {
         const s = { legal_name: 'Т', address: { bg: 'а' }, phone: '1', email: 'a@b.bg', privacy_email: 'p@b.bg', crew_headline: { bg: ['А б', 'А в'] } };

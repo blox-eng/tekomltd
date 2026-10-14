@@ -1,0 +1,36 @@
+slug: ravda-conversion
+title:
+  bg: Хотел, преустроен във ваканционни апартаменти
+  en: Hotel converted to holiday apartments
+  de: Hotel zu Ferienwohnungen umgebaut
+summary:
+  bg: Сградата е преустроена от хотелска в жилищна с ваканционни апартаменти и заведение за бързо хранене. Хотелските стаи са обединени така, че след преустройството са получени 8 студия, 12 двустайни и един тристаен апартамент. Всички апартаменти са напълно реновирани и завършени до ключ, а някои от тях и напълно обзаведени.
+place:
+  bg: Равда
+  en: Ravda
+  de: Rawda
+address: с. Равда
+lat: 42.6445091
+lng: 27.6783594
+show_on_map: true
+year: 2013
+built_area_m2: 1220
+scopes:
+  - interior
+  - stone
+sort: 9
+wide: false
+on_rail: true
+wp_id: 1630
+wp_slug: vacancy-residential-complex-ravda
+images:
+  - file: img-76396546-2.jpg
+    alt:
+      bg: Хотел, преустроен във ваканционни апартаменти
+    is_cover: true
+  - file: ravda-fasada-2-1.jpg
+    alt:
+      bg: Хотел, преустроен във ваканционни апартаменти
+  - file: ravda-imoti-1.jpg
+    alt:
+      bg: Хотел, преустроен във ваканционни апартаменти

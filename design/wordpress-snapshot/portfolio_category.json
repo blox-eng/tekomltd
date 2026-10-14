@@ -1,0 +1,657 @@
+[
+  {
+    "id": 58,
+    "count": 9,
+    "description": "",
+    "link": "https://www.tekomltd.com/portfolio_category/%d0%b6%d0%b8%d0%bb%d0%b8%d1%89%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/",
+    "name": "Жилищни",
+    "slug": "%d0%b6%d0%b8%d0%bb%d0%b8%d1%89%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0",
+    "taxonomy": "portfolio_category",
+    "parent": 0,
+    "meta": [],
+    "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v26.8 - https://yoast.com/product/yoast-seo-wordpress/ -->\n<title>Жилищни - ТЕКОМ ООД</title>\n<meta name=\"robots\" content=\"noindex, follow\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"Жилищни - ТЕКОМ ООД\" />\n<meta property=\"og:url\" content=\"https://www.tekomltd.com/portfolio_category/жилищна-сграда/\" />\n<meta property=\"og:site_name\" content=\"ТЕКОМ ООД\" />\n<meta property=\"og:image\" content=\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\" />\n\t<meta property=\"og:image:width\" content=\"400\" />\n\t<meta property=\"og:image:height\" content=\"64\" />\n\t<meta property=\"og:image:type\" content=\"image/png\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https://www.tekomltd.com/portfolio_category/%d0%b6%d0%b8%d0%bb%d0%b8%d1%89%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/\",\"url\":\"https://www.tekomltd.com/portfolio_category/%d0%b6%d0%b8%d0%bb%d0%b8%d1%89%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/\",\"name\":\"Жилищни - ТЕКОМ ООД\",\"isPartOf\":{\"@id\":\"https://www.tekomltd.com/#website\"},\"inLanguage\":\"en-US\"},{\"@type\":\"WebSite\",\"@id\":\"https://www.tekomltd.com/#website\",\"url\":\"https://www.tekomltd.com/\",\"name\":\"ТЕКОМ ООД\",\"description\":\"ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО\",\"publisher\":{\"@id\":\"https://www.tekomltd.com/#organization\"},\"alternateName\":\"TEKOM OOD\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://www.tekomltd.com/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Organization\",\"@id\":\"https://www.tekomltd.com/#organization\",\"name\":\"ТЕКОМ ООД\",\"alternateName\":\"TEKOM OOD\",\"url\":\"https://www.tekomltd.com/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\",\"url\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"contentUrl\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"width\":400,\"height\":64,\"caption\":\"ТЕКОМ ООД\"},\"image\":{\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\"},\"sameAs\":[\"https://www.linkedin.com/company/tekom-engineering/\"]}]}</script>\n<!-- / Yoast SEO plugin. -->",
+    "yoast_head_json": {
+      "title": "Жилищни - ТЕКОМ ООД",
+      "robots": {
+        "index": "noindex",
+        "follow": "follow"
+      },
+      "og_locale": "en_US",
+      "og_type": "article",
+      "og_title": "Жилищни - ТЕКОМ ООД",
+      "og_url": "https://www.tekomltd.com/portfolio_category/жилищна-сграда/",
+      "og_site_name": "ТЕКОМ ООД",
+      "og_image": [
+        {
+          "width": 400,
+          "height": 64,
+          "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+          "type": "image/png"
+        }
+      ],
+      "twitter_card": "summary_large_image",
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://www.tekomltd.com/portfolio_category/%d0%b6%d0%b8%d0%bb%d0%b8%d1%89%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/",
+            "url": "https://www.tekomltd.com/portfolio_category/%d0%b6%d0%b8%d0%bb%d0%b8%d1%89%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/",
+            "name": "Жилищни - ТЕКОМ ООД",
+            "isPartOf": {
+              "@id": "https://www.tekomltd.com/#website"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tekomltd.com/#website",
+            "url": "https://www.tekomltd.com/",
+            "name": "ТЕКОМ ООД",
+            "description": "ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО",
+            "publisher": {
+              "@id": "https://www.tekomltd.com/#organization"
+            },
+            "alternateName": "TEKOM OOD",
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.tekomltd.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.tekomltd.com/#organization",
+            "name": "ТЕКОМ ООД",
+            "alternateName": "TEKOM OOD",
+            "url": "https://www.tekomltd.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/",
+              "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "contentUrl": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "width": 400,
+              "height": 64,
+              "caption": "ТЕКОМ ООД"
+            },
+            "image": {
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/tekom-engineering/"
+            ]
+          }
+        ]
+      }
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category/58",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/taxonomies/portfolio_category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/avada_portfolio?portfolio_category=58"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 59,
+    "count": 3,
+    "description": "",
+    "link": "https://www.tekomltd.com/portfolio_category/%d0%b0%d0%b4%d0%bc%d0%b8%d0%bd%d0%b8%d1%81%d1%82%d1%80%d0%b0%d1%82%d0%b8%d0%b2%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/",
+    "name": "Административни",
+    "slug": "%d0%b0%d0%b4%d0%bc%d0%b8%d0%bd%d0%b8%d1%81%d1%82%d1%80%d0%b0%d1%82%d0%b8%d0%b2%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0",
+    "taxonomy": "portfolio_category",
+    "parent": 0,
+    "meta": [],
+    "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v26.8 - https://yoast.com/product/yoast-seo-wordpress/ -->\n<title>Административни - ТЕКОМ ООД</title>\n<meta name=\"robots\" content=\"noindex, follow\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"Административни - ТЕКОМ ООД\" />\n<meta property=\"og:url\" content=\"https://www.tekomltd.com/portfolio_category/административна-сграда/\" />\n<meta property=\"og:site_name\" content=\"ТЕКОМ ООД\" />\n<meta property=\"og:image\" content=\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\" />\n\t<meta property=\"og:image:width\" content=\"400\" />\n\t<meta property=\"og:image:height\" content=\"64\" />\n\t<meta property=\"og:image:type\" content=\"image/png\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https://www.tekomltd.com/portfolio_category/%d0%b0%d0%b4%d0%bc%d0%b8%d0%bd%d0%b8%d1%81%d1%82%d1%80%d0%b0%d1%82%d0%b8%d0%b2%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/\",\"url\":\"https://www.tekomltd.com/portfolio_category/%d0%b0%d0%b4%d0%bc%d0%b8%d0%bd%d0%b8%d1%81%d1%82%d1%80%d0%b0%d1%82%d0%b8%d0%b2%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/\",\"name\":\"Административни - ТЕКОМ ООД\",\"isPartOf\":{\"@id\":\"https://www.tekomltd.com/#website\"},\"inLanguage\":\"en-US\"},{\"@type\":\"WebSite\",\"@id\":\"https://www.tekomltd.com/#website\",\"url\":\"https://www.tekomltd.com/\",\"name\":\"ТЕКОМ ООД\",\"description\":\"ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО\",\"publisher\":{\"@id\":\"https://www.tekomltd.com/#organization\"},\"alternateName\":\"TEKOM OOD\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://www.tekomltd.com/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Organization\",\"@id\":\"https://www.tekomltd.com/#organization\",\"name\":\"ТЕКОМ ООД\",\"alternateName\":\"TEKOM OOD\",\"url\":\"https://www.tekomltd.com/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\",\"url\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"contentUrl\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"width\":400,\"height\":64,\"caption\":\"ТЕКОМ ООД\"},\"image\":{\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\"},\"sameAs\":[\"https://www.linkedin.com/company/tekom-engineering/\"]}]}</script>\n<!-- / Yoast SEO plugin. -->",
+    "yoast_head_json": {
+      "title": "Административни - ТЕКОМ ООД",
+      "robots": {
+        "index": "noindex",
+        "follow": "follow"
+      },
+      "og_locale": "en_US",
+      "og_type": "article",
+      "og_title": "Административни - ТЕКОМ ООД",
+      "og_url": "https://www.tekomltd.com/portfolio_category/административна-сграда/",
+      "og_site_name": "ТЕКОМ ООД",
+      "og_image": [
+        {
+          "width": 400,
+          "height": 64,
+          "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+          "type": "image/png"
+        }
+      ],
+      "twitter_card": "summary_large_image",
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://www.tekomltd.com/portfolio_category/%d0%b0%d0%b4%d0%bc%d0%b8%d0%bd%d0%b8%d1%81%d1%82%d1%80%d0%b0%d1%82%d0%b8%d0%b2%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/",
+            "url": "https://www.tekomltd.com/portfolio_category/%d0%b0%d0%b4%d0%bc%d0%b8%d0%bd%d0%b8%d1%81%d1%82%d1%80%d0%b0%d1%82%d0%b8%d0%b2%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/",
+            "name": "Административни - ТЕКОМ ООД",
+            "isPartOf": {
+              "@id": "https://www.tekomltd.com/#website"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tekomltd.com/#website",
+            "url": "https://www.tekomltd.com/",
+            "name": "ТЕКОМ ООД",
+            "description": "ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО",
+            "publisher": {
+              "@id": "https://www.tekomltd.com/#organization"
+            },
+            "alternateName": "TEKOM OOD",
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.tekomltd.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.tekomltd.com/#organization",
+            "name": "ТЕКОМ ООД",
+            "alternateName": "TEKOM OOD",
+            "url": "https://www.tekomltd.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/",
+              "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "contentUrl": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "width": 400,
+              "height": 64,
+              "caption": "ТЕКОМ ООД"
+            },
+            "image": {
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/tekom-engineering/"
+            ]
+          }
+        ]
+      }
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category/59",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/taxonomies/portfolio_category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/avada_portfolio?portfolio_category=59"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 61,
+    "count": 3,
+    "description": "",
+    "link": "https://www.tekomltd.com/portfolio_category/%d0%b5%d0%b4%d0%bd%d0%be%d1%84%d0%b0%d0%bc%d0%b8%d0%bb%d0%bd%d0%b0-%d0%ba%d1%8a%d1%89%d0%b0/",
+    "name": "Къщи",
+    "slug": "%d0%b5%d0%b4%d0%bd%d0%be%d1%84%d0%b0%d0%bc%d0%b8%d0%bb%d0%bd%d0%b0-%d0%ba%d1%8a%d1%89%d0%b0",
+    "taxonomy": "portfolio_category",
+    "parent": 0,
+    "meta": [],
+    "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v26.8 - https://yoast.com/product/yoast-seo-wordpress/ -->\n<title>Къщи - ТЕКОМ ООД</title>\n<meta name=\"robots\" content=\"noindex, follow\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"Къщи - ТЕКОМ ООД\" />\n<meta property=\"og:url\" content=\"https://www.tekomltd.com/portfolio_category/еднофамилна-къща/\" />\n<meta property=\"og:site_name\" content=\"ТЕКОМ ООД\" />\n<meta property=\"og:image\" content=\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\" />\n\t<meta property=\"og:image:width\" content=\"400\" />\n\t<meta property=\"og:image:height\" content=\"64\" />\n\t<meta property=\"og:image:type\" content=\"image/png\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https://www.tekomltd.com/portfolio_category/%d0%b5%d0%b4%d0%bd%d0%be%d1%84%d0%b0%d0%bc%d0%b8%d0%bb%d0%bd%d0%b0-%d0%ba%d1%8a%d1%89%d0%b0/\",\"url\":\"https://www.tekomltd.com/portfolio_category/%d0%b5%d0%b4%d0%bd%d0%be%d1%84%d0%b0%d0%bc%d0%b8%d0%bb%d0%bd%d0%b0-%d0%ba%d1%8a%d1%89%d0%b0/\",\"name\":\"Къщи - ТЕКОМ ООД\",\"isPartOf\":{\"@id\":\"https://www.tekomltd.com/#website\"},\"inLanguage\":\"en-US\"},{\"@type\":\"WebSite\",\"@id\":\"https://www.tekomltd.com/#website\",\"url\":\"https://www.tekomltd.com/\",\"name\":\"ТЕКОМ ООД\",\"description\":\"ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО\",\"publisher\":{\"@id\":\"https://www.tekomltd.com/#organization\"},\"alternateName\":\"TEKOM OOD\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://www.tekomltd.com/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Organization\",\"@id\":\"https://www.tekomltd.com/#organization\",\"name\":\"ТЕКОМ ООД\",\"alternateName\":\"TEKOM OOD\",\"url\":\"https://www.tekomltd.com/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\",\"url\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"contentUrl\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"width\":400,\"height\":64,\"caption\":\"ТЕКОМ ООД\"},\"image\":{\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\"},\"sameAs\":[\"https://www.linkedin.com/company/tekom-engineering/\"]}]}</script>\n<!-- / Yoast SEO plugin. -->",
+    "yoast_head_json": {
+      "title": "Къщи - ТЕКОМ ООД",
+      "robots": {
+        "index": "noindex",
+        "follow": "follow"
+      },
+      "og_locale": "en_US",
+      "og_type": "article",
+      "og_title": "Къщи - ТЕКОМ ООД",
+      "og_url": "https://www.tekomltd.com/portfolio_category/еднофамилна-къща/",
+      "og_site_name": "ТЕКОМ ООД",
+      "og_image": [
+        {
+          "width": 400,
+          "height": 64,
+          "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+          "type": "image/png"
+        }
+      ],
+      "twitter_card": "summary_large_image",
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://www.tekomltd.com/portfolio_category/%d0%b5%d0%b4%d0%bd%d0%be%d1%84%d0%b0%d0%bc%d0%b8%d0%bb%d0%bd%d0%b0-%d0%ba%d1%8a%d1%89%d0%b0/",
+            "url": "https://www.tekomltd.com/portfolio_category/%d0%b5%d0%b4%d0%bd%d0%be%d1%84%d0%b0%d0%bc%d0%b8%d0%bb%d0%bd%d0%b0-%d0%ba%d1%8a%d1%89%d0%b0/",
+            "name": "Къщи - ТЕКОМ ООД",
+            "isPartOf": {
+              "@id": "https://www.tekomltd.com/#website"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tekomltd.com/#website",
+            "url": "https://www.tekomltd.com/",
+            "name": "ТЕКОМ ООД",
+            "description": "ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО",
+            "publisher": {
+              "@id": "https://www.tekomltd.com/#organization"
+            },
+            "alternateName": "TEKOM OOD",
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.tekomltd.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.tekomltd.com/#organization",
+            "name": "ТЕКОМ ООД",
+            "alternateName": "TEKOM OOD",
+            "url": "https://www.tekomltd.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/",
+              "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "contentUrl": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "width": 400,
+              "height": 64,
+              "caption": "ТЕКОМ ООД"
+            },
+            "image": {
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/tekom-engineering/"
+            ]
+          }
+        ]
+      }
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category/61",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/taxonomies/portfolio_category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/avada_portfolio?portfolio_category=61"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 62,
+    "count": 2,
+    "description": "",
+    "link": "https://www.tekomltd.com/portfolio_category/%d0%be%d0%b1%d1%89%d0%b5%d1%81%d1%82%d0%b2%d0%b5%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/",
+    "name": "Обществени",
+    "slug": "%d0%be%d0%b1%d1%89%d0%b5%d1%81%d1%82%d0%b2%d0%b5%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0",
+    "taxonomy": "portfolio_category",
+    "parent": 0,
+    "meta": [],
+    "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v26.8 - https://yoast.com/product/yoast-seo-wordpress/ -->\n<title>Обществени - ТЕКОМ ООД</title>\n<meta name=\"robots\" content=\"noindex, follow\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"Обществени - ТЕКОМ ООД\" />\n<meta property=\"og:url\" content=\"https://www.tekomltd.com/portfolio_category/обществена-сграда/\" />\n<meta property=\"og:site_name\" content=\"ТЕКОМ ООД\" />\n<meta property=\"og:image\" content=\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\" />\n\t<meta property=\"og:image:width\" content=\"400\" />\n\t<meta property=\"og:image:height\" content=\"64\" />\n\t<meta property=\"og:image:type\" content=\"image/png\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https://www.tekomltd.com/portfolio_category/%d0%be%d0%b1%d1%89%d0%b5%d1%81%d1%82%d0%b2%d0%b5%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/\",\"url\":\"https://www.tekomltd.com/portfolio_category/%d0%be%d0%b1%d1%89%d0%b5%d1%81%d1%82%d0%b2%d0%b5%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/\",\"name\":\"Обществени - ТЕКОМ ООД\",\"isPartOf\":{\"@id\":\"https://www.tekomltd.com/#website\"},\"inLanguage\":\"en-US\"},{\"@type\":\"WebSite\",\"@id\":\"https://www.tekomltd.com/#website\",\"url\":\"https://www.tekomltd.com/\",\"name\":\"ТЕКОМ ООД\",\"description\":\"ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО\",\"publisher\":{\"@id\":\"https://www.tekomltd.com/#organization\"},\"alternateName\":\"TEKOM OOD\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://www.tekomltd.com/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Organization\",\"@id\":\"https://www.tekomltd.com/#organization\",\"name\":\"ТЕКОМ ООД\",\"alternateName\":\"TEKOM OOD\",\"url\":\"https://www.tekomltd.com/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\",\"url\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"contentUrl\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"width\":400,\"height\":64,\"caption\":\"ТЕКОМ ООД\"},\"image\":{\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\"},\"sameAs\":[\"https://www.linkedin.com/company/tekom-engineering/\"]}]}</script>\n<!-- / Yoast SEO plugin. -->",
+    "yoast_head_json": {
+      "title": "Обществени - ТЕКОМ ООД",
+      "robots": {
+        "index": "noindex",
+        "follow": "follow"
+      },
+      "og_locale": "en_US",
+      "og_type": "article",
+      "og_title": "Обществени - ТЕКОМ ООД",
+      "og_url": "https://www.tekomltd.com/portfolio_category/обществена-сграда/",
+      "og_site_name": "ТЕКОМ ООД",
+      "og_image": [
+        {
+          "width": 400,
+          "height": 64,
+          "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+          "type": "image/png"
+        }
+      ],
+      "twitter_card": "summary_large_image",
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://www.tekomltd.com/portfolio_category/%d0%be%d0%b1%d1%89%d0%b5%d1%81%d1%82%d0%b2%d0%b5%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/",
+            "url": "https://www.tekomltd.com/portfolio_category/%d0%be%d0%b1%d1%89%d0%b5%d1%81%d1%82%d0%b2%d0%b5%d0%bd%d0%b0-%d1%81%d0%b3%d1%80%d0%b0%d0%b4%d0%b0/",
+            "name": "Обществени - ТЕКОМ ООД",
+            "isPartOf": {
+              "@id": "https://www.tekomltd.com/#website"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tekomltd.com/#website",
+            "url": "https://www.tekomltd.com/",
+            "name": "ТЕКОМ ООД",
+            "description": "ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО",
+            "publisher": {
+              "@id": "https://www.tekomltd.com/#organization"
+            },
+            "alternateName": "TEKOM OOD",
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.tekomltd.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.tekomltd.com/#organization",
+            "name": "ТЕКОМ ООД",
+            "alternateName": "TEKOM OOD",
+            "url": "https://www.tekomltd.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/",
+              "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "contentUrl": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "width": 400,
+              "height": 64,
+              "caption": "ТЕКОМ ООД"
+            },
+            "image": {
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/tekom-engineering/"
+            ]
+          }
+        ]
+      }
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category/62",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/taxonomies/portfolio_category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/avada_portfolio?portfolio_category=62"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 72,
+    "count": 0,
+    "description": "",
+    "link": "https://www.tekomltd.com/portfolio_category/%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%bd%d0%b0-%d0%bf%d0%be%d0%b7%d0%b8%d1%86%d0%b8%d1%8f/",
+    "name": "Работна позиция",
+    "slug": "%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%bd%d0%b0-%d0%bf%d0%be%d0%b7%d0%b8%d1%86%d0%b8%d1%8f",
+    "taxonomy": "portfolio_category",
+    "parent": 0,
+    "meta": [],
+    "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v26.8 - https://yoast.com/product/yoast-seo-wordpress/ -->\n<title>Работна позиция - ТЕКОМ ООД</title>\n<meta name=\"robots\" content=\"noindex, follow\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"Работна позиция - ТЕКОМ ООД\" />\n<meta property=\"og:url\" content=\"https://www.tekomltd.com/portfolio_category/работна-позиция/\" />\n<meta property=\"og:site_name\" content=\"ТЕКОМ ООД\" />\n<meta property=\"og:image\" content=\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\" />\n\t<meta property=\"og:image:width\" content=\"400\" />\n\t<meta property=\"og:image:height\" content=\"64\" />\n\t<meta property=\"og:image:type\" content=\"image/png\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"CollectionPage\",\"@id\":\"https://www.tekomltd.com/portfolio_category/%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%bd%d0%b0-%d0%bf%d0%be%d0%b7%d0%b8%d1%86%d0%b8%d1%8f/\",\"url\":\"https://www.tekomltd.com/portfolio_category/%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%bd%d0%b0-%d0%bf%d0%be%d0%b7%d0%b8%d1%86%d0%b8%d1%8f/\",\"name\":\"Работна позиция - ТЕКОМ ООД\",\"isPartOf\":{\"@id\":\"https://www.tekomltd.com/#website\"},\"inLanguage\":\"en-US\"},{\"@type\":\"WebSite\",\"@id\":\"https://www.tekomltd.com/#website\",\"url\":\"https://www.tekomltd.com/\",\"name\":\"ТЕКОМ ООД\",\"description\":\"ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО\",\"publisher\":{\"@id\":\"https://www.tekomltd.com/#organization\"},\"alternateName\":\"TEKOM OOD\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://www.tekomltd.com/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Organization\",\"@id\":\"https://www.tekomltd.com/#organization\",\"name\":\"ТЕКОМ ООД\",\"alternateName\":\"TEKOM OOD\",\"url\":\"https://www.tekomltd.com/\",\"logo\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\",\"url\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"contentUrl\":\"https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png\",\"width\":400,\"height\":64,\"caption\":\"ТЕКОМ ООД\"},\"image\":{\"@id\":\"https://www.tekomltd.com/#/schema/logo/image/\"},\"sameAs\":[\"https://www.linkedin.com/company/tekom-engineering/\"]}]}</script>\n<!-- / Yoast SEO plugin. -->",
+    "yoast_head_json": {
+      "title": "Работна позиция - ТЕКОМ ООД",
+      "robots": {
+        "index": "noindex",
+        "follow": "follow"
+      },
+      "og_locale": "en_US",
+      "og_type": "article",
+      "og_title": "Работна позиция - ТЕКОМ ООД",
+      "og_url": "https://www.tekomltd.com/portfolio_category/работна-позиция/",
+      "og_site_name": "ТЕКОМ ООД",
+      "og_image": [
+        {
+          "width": 400,
+          "height": 64,
+          "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+          "type": "image/png"
+        }
+      ],
+      "twitter_card": "summary_large_image",
+      "schema": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://www.tekomltd.com/portfolio_category/%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%bd%d0%b0-%d0%bf%d0%be%d0%b7%d0%b8%d1%86%d0%b8%d1%8f/",
+            "url": "https://www.tekomltd.com/portfolio_category/%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%bd%d0%b0-%d0%bf%d0%be%d0%b7%d0%b8%d1%86%d0%b8%d1%8f/",
+            "name": "Работна позиция - ТЕКОМ ООД",
+            "isPartOf": {
+              "@id": "https://www.tekomltd.com/#website"
+            },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.tekomltd.com/#website",
+            "url": "https://www.tekomltd.com/",
+            "name": "ТЕКОМ ООД",
+            "description": "ВАШИЯТ ПРОФЕСИОНАЛЕН ПАРТНЬОР В СТРОИТЕЛСТВОТО",
+            "publisher": {
+              "@id": "https://www.tekomltd.com/#organization"
+            },
+            "alternateName": "TEKOM OOD",
+            "potentialAction": [
+              {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://www.tekomltd.com/?s={search_term_string}"
+                },
+                "query-input": {
+                  "@type": "PropertyValueSpecification",
+                  "valueRequired": true,
+                  "valueName": "search_term_string"
+                }
+              }
+            ],
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://www.tekomltd.com/#organization",
+            "name": "ТЕКОМ ООД",
+            "alternateName": "TEKOM OOD",
+            "url": "https://www.tekomltd.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "inLanguage": "en-US",
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/",
+              "url": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "contentUrl": "https://www.tekomltd.com/wp-content/uploads/2022/01/Tekom_Logo.png",
+              "width": 400,
+              "height": 64,
+              "caption": "ТЕКОМ ООД"
+            },
+            "image": {
+              "@id": "https://www.tekomltd.com/#/schema/logo/image/"
+            },
+            "sameAs": [
+              "https://www.linkedin.com/company/tekom-engineering/"
+            ]
+          }
+        ]
+      }
+    },
+    "_links": {
+      "self": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category/72",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/portfolio_category"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/taxonomies/portfolio_category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "https://www.tekomltd.com/wp-json/wp/v2/avada_portfolio?portfolio_category=72"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]

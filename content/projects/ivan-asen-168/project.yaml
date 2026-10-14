@@ -1,0 +1,38 @@
+slug: ivan-asen-168
+title:
+  bg: Жилищна сграда с общ двор и магазин
+  en: Apartment building with shared courtyard
+  de: Wohnhaus mit gemeinsamem Hof
+summary:
+  bg: Сградата е проектрана на 5 етажа с терасовиден етаж. На приземния етаж има магазин за хранителни стоки, магазин за промишлени стоки, лекарски кабинет и козметично студио. В жилищната част има 6 двустайни и 4 тристайни апартамента. Всички конструкции, зидарии, мазилки, топло и хидроизолации, боядисване, специални облицовки и обзавеждане са изпълнени от ТЕКОМ ООД.
+place:
+  bg: Стара Загора
+  en: Stara Zagora
+  de: Stara Sagora
+address: ул. „Цар Иван Асен II“ 168
+lat: 42.4309117
+lng: 25.6212398
+show_on_map: true
+year: 2005
+built_area_m2: 1200
+scopes:
+  - full
+sort: 14
+wide: false
+on_rail: true
+wp_id: 1323
+wp_slug: residential-building-osd
+images:
+  - file: ivan-asen-12.jpg
+    alt:
+      bg: Жилищна сграда с общ двор и магазин
+    is_cover: true
+  - file: ivan-asen-168-3.jpg
+    alt:
+      bg: Жилищна сграда с общ двор и магазин
+  - file: ivan-asen-168-2.jpg
+    alt:
+      bg: Жилищна сграда с общ двор и магазин
+  - file: ivan-asen-168-1-1.jpg
+    alt:
+      bg: Жилищна сграда с общ двор и магазин

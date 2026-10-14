@@ -1,0 +1,39 @@
+slug: boruygrad-49
+title:
+  bg: Жилищна сграда с гаражи и магазин
+  en: Apartment building with garages and shop
+  de: Wohnhaus mit Garagen und Laden
+summary:
+  bg: Сградата е проектирана на 5 етажа с терасовиден етаж. На приземния етаж има гаражи, козметично ателие, склад и паркинг . В жилищната част има 1 двустаен, 3 тристайни и 3 четиристайни апартаменти. Всички конструкции, зидарии, мазилки, топло и хидроизолации, боядисване, специални облицовки и обзавеждане са изпълнени от ТЕКОМ ООД.
+place:
+  bg: Стара Загора
+  en: Stara Zagora
+  de: Stara Sagora
+address: ул. „Боруйград“ 49
+lat: 42.4304858
+lng: 25.6232017
+show_on_map: true
+year: 2013
+built_area_m2: 1500
+scopes:
+  - full
+  - facade
+sort: 11
+wide: false
+on_rail: true
+wp_id: 1569
+wp_slug: residential-building-garages-boruigrad
+images:
+  - file: boruigrad-1.jpg
+    alt:
+      bg: Жилищна сграда с гаражи и магазин
+    is_cover: true
+  - file: b-49-01.jpg
+    alt:
+      bg: Жилищна сграда с гаражи и магазин
+  - file: b-49-02.jpg
+    alt:
+      bg: Жилищна сграда с гаражи и магазин
+  - file: b-49-03.jpg
+    alt:
+      bg: Жилищна сграда с гаражи и магазин

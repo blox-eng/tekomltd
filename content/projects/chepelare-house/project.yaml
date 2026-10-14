@@ -1,0 +1,47 @@
+slug: chepelare-house
+title:
+  bg: Реставрация на къща от кирпич
+  en: Restored adobe family house
+  de: Restauriertes Lehmziegelhaus
+summary:
+  bg: Този проект в сърцето на планинския курортен град Чепеларе е луксозна реновация на автентична семейна къща, а не ново строителство. Старата постройка е издигната от кирпич — традиционен градивен материал за региона, който изисква специфичен и внимателен реставрационен подход заради чувствителността му към влага и нуждата от структурно укрепване.
+place:
+  bg: Чепеларе
+  en: Chepelare
+  de: Tschepelare
+address: ул. „Дичо Петров“
+lat: 41.7263405
+lng: 24.6785925
+show_on_map: true
+year: 2004
+scopes:
+  - restore
+  - interior
+sort: 4
+wide: false
+on_rail: true
+wp_id: 1601
+wp_slug: private-house-yard-chepelare
+images:
+  - file: chepelare.jpg
+    alt:
+      bg: Реставрация на къща от кирпич
+    is_cover: true
+  - file: chepelare-1.jpg
+    alt:
+      bg: Реставрация на къща от кирпич
+  - file: chepelare-kamina-2.jpg
+    alt:
+      bg: Реставрация на къща от кирпич
+  - file: chepelare-kamina-1.jpg
+    alt:
+      bg: Реставрация на къща от кирпич
+  - file: chepelare-2.jpg
+    alt:
+      bg: Реставрация на къща от кирпич
+  - file: design-6.jpg
+    alt:
+      bg: Реставрация на къща от кирпич
+  - file: design-7.jpg
+    alt:
+      bg: Реставрация на къща от кирпич

@@ -1,4 +1,5 @@
-export const EXCERPT_MAX = 420;
+export const EXCERPT_MAX = 460;
+const FALLBACK_CUT = 400;
 const EXCERPT_MIN = 180;
 
 const NAMED: Record<string, string> = {
@@ -66,15 +67,14 @@ const OPENERS = /(Сградата|Къщата|Комплекс|Този|Таз
 const ABBREVIATIONS = ['ул', 'инж', 'арх', 'гр', 'с', 'кв', 'Х', 'Д', 'г'];
 const SENTENCE_END = new RegExp(`${ABBREVIATIONS.map((a) => `(?<!(?<!\\p{L})${a})`).join('')}\\.[“”"]?(?=\\s+[А-ЯA-Z])`, 'gu');
 
-/** The Bulgarian description of a project, cut at the last real sentence end within 420 characters (the rule of the mockup's build.py). */
+/** The Bulgarian description of a project, cut at the last real sentence end within 460 characters (the rule of the mockup's build.py). */
 export function excerpt(html: string): string {
     let text = htmlToText(html).split(/\s(?:ДАТА|Детайли)\s/)[0]!;
     const opener = OPENERS.exec(text);
     if (opener) text = text.slice(opener.index);
     const ends = [...text.matchAll(SENTENCE_END)].map((m) => m.index + m[0].length).filter((end) => end >= EXCERPT_MIN && end <= EXCERPT_MAX);
     if (ends.length) return text.slice(0, ends.at(-1));
-    if (text.length <= EXCERPT_MAX) return text;
-    const cut = text.slice(0, EXCERPT_MAX - 1);
+    const cut = text.slice(0, FALLBACK_CUT);
     return `${cut.slice(0, cut.lastIndexOf(' '))}…`;
 }
 

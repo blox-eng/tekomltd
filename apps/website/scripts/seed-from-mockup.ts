@@ -68,9 +68,10 @@ function home() {
     const label = (key: string) => T[key] as T3;
     const stats = [
         { value: YEARS, label: unstar(label('n1')), unconfirmed: false },
-        { value: String(Math.round(area / 1000) * 1000).replace(/\B(?=(\d{3})+$)/g, ' '), label: l(label('n2')), unconfirmed: false },
-        { value: String(projects.length), label: l(label('n3')), unconfirmed: false },
-        { value: '1', label: unstar(label('n4')), unconfirmed: true }
+        // Numbers stay numbers; the renderer formats them per locale, as the mockup does with toLocaleString.
+        { value: Math.round(area / 1000) * 1000, label: l(label('n2')), unconfirmed: false },
+        { value: projects.length, label: l(label('n3')), unconfirmed: false },
+        { value: 1, label: unstar(label('n4')), unconfirmed: true }
     ];
     const crews = CREWS.map((c) => ({
         key: c.scene,

@@ -8,5 +8,5 @@ Nothing in this folder is published. It is outside `content/`, so the website bu
 - `wordpress-media/<year>/<month>/` keeps the WordPress file names. Photos are downscaled to at most 2400 px and saved
   as JPEG quality 82; other files are kept as they were.
 - `design/wordpress-snapshot/INVENTORY.md` lists every file of the old site and says where it went ("archived: …").
-- `pnpm import:wp` rewrites this folder; theme demo images, document previews, old logos and byte-identical copies are
-  left out.
+- `pnpm import:wp --force` refreshes the files it wrote here and never deletes other files; theme demo images, document
+  previews, old logos and byte-identical copies are left out.

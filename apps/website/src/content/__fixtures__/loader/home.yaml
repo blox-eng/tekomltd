@@ -16,7 +16,7 @@ promises:
 stats:
   - value: '{years}'
     label: { bg: години строим в Стара Загора }
-  - value: '1'
+  - value: 1
     label: { bg: 'семейство, две поколения на обекта' }
     unconfirmed: true
 crews:

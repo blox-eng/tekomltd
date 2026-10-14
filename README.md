@@ -12,7 +12,7 @@ pnpm dev              # http://localhost:3000
 pnpm content:check    # validate everything in content/
 pnpm lint && pnpm typecheck && pnpm test
 pnpm build            # production build
-pnpm --filter @tekom/tests test:e2e                                   # full browser suite (builds and serves the site)
+pnpm --filter @tekom/tests test:e2e                                   # full browser suite (builds and serves tests/fixtures/content)
 SITE_URL=http://localhost:3000 pnpm --filter @tekom/tests test:smoke  # smoke test against a running site
 ```
 

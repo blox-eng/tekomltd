@@ -1,0 +1,273 @@
+/* Ported from the rail block of design/mockup/mockup.tpl.html; values come from tokens.css. */
+
+.rail {
+    padding-top: 12px;
+}
+
+.track {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    height: clamp(420px, calc(100svh - 150px), 880px);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    scroll-padding-inline: max(16px, env(safe-area-inset-left, 0px));
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+}
+
+.track::-webkit-scrollbar {
+    display: none;
+}
+
+.slide {
+    flex: none;
+    height: 100%;
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    background: var(--wall);
+}
+
+.project {
+    display: block;
+    aspect-ratio: 4 / 5;
+}
+
+.project.wide {
+    aspect-ratio: 3 / 2;
+}
+
+.project img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--dur-reveal) var(--ease);
+}
+
+.project:hover img {
+    transform: scale(1.025);
+}
+
+.cap {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 72px 22px 20px;
+    background: linear-gradient(transparent, color-mix(in srgb, var(--panel) 80%, transparent));
+    color: var(--on-photo);
+    display: grid;
+    gap: 6px;
+}
+
+.cap h3 {
+    font: 500 clamp(18px, 1.8vw, 21px) / 1.25 var(--f-body);
+}
+
+.where {
+    opacity: 0.78;
+}
+
+.scope {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.scope span {
+    font: 500 11px var(--f-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.scope span:first-child {
+    background: var(--accent);
+    color: var(--on-accent);
+    padding: 2px 6px;
+}
+
+.panel {
+    width: min(400px, 86vw);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+    background: var(--panel);
+    color: var(--on-panel);
+}
+
+.panel.red {
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+.panel h3 {
+    font: 400 calc(1.22 * clamp(22px, 2.2vw, 28px)) / 1.15 var(--f-display);
+    letter-spacing: -0.01em;
+}
+
+.panel p {
+    margin: 0;
+    opacity: 0.85;
+    font-size: 15px;
+    max-width: 34ch;
+}
+
+.panel .micro {
+    color: inherit;
+    opacity: 0.7;
+}
+
+.go {
+    font-weight: 500;
+    font-size: 14px;
+    justify-self: start;
+    color: inherit;
+}
+
+.crew {
+    width: min(560px, 92vw);
+    padding: 0;
+    background: var(--panel);
+    color: var(--on-panel);
+}
+
+.crew .body {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 28px;
+    display: grid;
+    gap: 8px;
+    background: linear-gradient(transparent, var(--panel) 38%);
+}
+
+.big {
+    font: 400 calc(1.22 * clamp(72px, 9vw, 128px)) / 0.9 var(--f-display);
+    letter-spacing: -0.01em;
+    color: var(--on-panel);
+}
+
+.big small {
+    font: 500 13px var(--f-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 22px;
+    opacity: 0.75;
+}
+
+.crew p {
+    margin: 0;
+    opacity: 0.85;
+    max-width: 38ch;
+}
+
+.collage {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+    background: var(--panel);
+}
+
+.collage span {
+    display: grid;
+    place-items: center;
+    border-right: 1px solid color-mix(in srgb, var(--on-panel) 8%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--on-panel) 8%, transparent);
+    color: color-mix(in srgb, var(--on-panel) 55%, transparent);
+}
+
+.collage :global(.glyph) {
+    width: 34%;
+    height: auto;
+}
+
+.crew :global(.stamp) {
+    top: 22px;
+    right: 22px;
+    bottom: auto;
+    background: var(--panel);
+}
+
+.crew:hover :global(.stamp) {
+    opacity: 1;
+    transform: rotate(-7deg) scale(1);
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-block: 14px 0;
+}
+
+.count {
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+}
+
+.arrows {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.arrows button {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    font-size: 16px;
+    display: grid;
+    place-items: center;
+    transition: border-color var(--dur-micro) var(--ease);
+}
+
+.arrows button:hover {
+    border-color: var(--text);
+}
+
+.arrows button[aria-disabled='true'] {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.arrows button[aria-disabled='true']:hover {
+    border-color: var(--line);
+}
+
+@media (max-width: 640px) {
+    .rail {
+        padding-top: 0;
+    }
+
+    .track {
+        gap: 0;
+        padding-inline: 0;
+        scroll-padding-inline: 0;
+        height: calc(100svh - 132px);
+    }
+
+    .project,
+    .project.wide,
+    .panel,
+    .crew {
+        aspect-ratio: auto;
+        width: 100%;
+    }
+
+    .arrows {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .track {
+        scroll-behavior: auto;
+    }
+}

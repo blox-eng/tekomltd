@@ -9,6 +9,17 @@
         "title": "Tekom: premium construction and finishing works, Stara Zagora",
         "allProjects": "All projects"
     },
+    "scope": {
+        "full": "Full build",
+        "restore": "Restoration",
+        "facade": "Facade",
+        "interior": "Interior finishing",
+        "stone": "Stone & tile"
+    },
+    "rail": {
+        "prev": "Previous",
+        "next": "Next"
+    },
     "why": {
         "h": "Build it right. <em>Take the risk out.</em>",
         "p": "Most building problems start as small shortcuts nobody sees. We work so that nothing on your site goes unseen.",

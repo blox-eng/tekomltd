@@ -1,0 +1,115 @@
+{
+    "nav": {
+        "projects": "Projects",
+        "eu": "EU programmes",
+        "contact": "Contact",
+        "cta": "Request a quote"
+    },
+    "home": {
+        "title": "Tekom: premium construction and finishing works, Stara Zagora",
+        "allProjects": "All projects"
+    },
+    "why": {
+        "h": "Build it right. <em>Take the risk out.</em>",
+        "p": "Most building problems start as small shortcuts nobody sees. We work so that nothing on your site goes unseen.",
+        "risks": {
+            "r1": {
+                "title": "A price you can plan on",
+                "text": "Quantities taken from the drawings and agreed before work starts, not discovered on site."
+            },
+            "r2": {
+                "title": "Done the right way",
+                "text": "Every layer to the manufacturer's system and Bulgarian standards, with materials you can trace."
+            },
+            "r3": {
+                "title": "Nothing hidden",
+                "text": "Daily photos and protocols of everything that gets covered up: insulation, waterproofing, installations."
+            },
+            "r4": {
+                "title": "Handover without surprises",
+                "text": "Signed off room by room, with documents and warranties in one place."
+            }
+        }
+    },
+    "numbers": {
+        "years": "years building in Stara Zagora*",
+        "area": "m² built on the projects shown here",
+        "buildings": "buildings, houses and a chapel, all still in use",
+        "family": "family, two generations on site*"
+    },
+    "map": {
+        "h": "Where we have built",
+        "p": "Most of our work stands within two kilometres of our office. Tap a pin to open the project.",
+        "bg": "Bulgaria",
+        "sz": "Stara Zagora, centre"
+    },
+    "materials": {
+        "h": "Materials we build with",
+        "p": "Systems from manufacturers who stand behind them, applied the way they specify."
+    },
+    "partners": {
+        "h": "Partners"
+    },
+    "crew": {
+        "photoPending": "Photo pending",
+        "heading": {
+            "lead": "The people behind",
+            "word1": "the plaster",
+            "word2": "your dream home",
+            "word3": "your trust"
+        },
+        "p": "Our own people, on site and in the office. We tried to take their photo, but they were busy working.",
+        "y": "years at Tekom"
+    },
+    "partnerServices": {
+        "h": "For everything else, we rely on our partners",
+        "p": "Specialists we have built with for years. We bring them in, coordinate them on your site and answer for the result.",
+        "k": "Through our partners"
+    },
+    "project": {
+        "back": "← All projects",
+        "address": "Address",
+        "completed": "Completed",
+        "area": "Built area",
+        "scope": "Our scope",
+        "next": "Next:",
+        "inBulgarian": "Description in Bulgarian. Translation to follow.",
+        "cta": "Planning something similar? Talk to us"
+    },
+    "eu": {
+        "h": "EU programmes and publications",
+        "p": "Projects Tekom carries out with EU co-funding, with the notices each programme requires us to publish.",
+        "notices": "Notices"
+    },
+    "contact": {
+        "h": "Tell us about your project",
+        "p": "We reply within one working day and visit the site before we quote.",
+        "form": {
+            "name": "Name",
+            "message": "Message",
+            "consent": "I agree that ТЕКОМ ООД uses my details only to answer this enquiry.",
+            "submit": "Send enquiry",
+            "email": "Email"
+        },
+        "phone": "Phone",
+        "office": "Office"
+    },
+    "footer": {
+        "company": "Company",
+        "addr": "Stara Zagora, Bulgaria",
+        "work": "Work",
+        "services": "Services",
+        "public": "Public information",
+        "pubs": "Publications",
+        "procure": "Procurement notices",
+        "privacy": "Privacy",
+        "policy": "Privacy policy (GDPR)",
+        "cookies": "Cookies: none for tracking",
+        "rights": "Your data rights",
+        "terms": "Terms",
+        "follow": "Follow the work",
+        "eu": "Projects co-funded by the European Union under BG05SFPR002-1.004-1772-C01 and BG16RFPR001-1.004.",
+        "made": "Data controller: ТЕКОМ ООД · privacy@tekomltd.com"
+    },
+    "note": "Translation to follow"
+}

@@ -34,11 +34,7 @@
 
 .project {
     display: block;
-    aspect-ratio: 4 / 5;
-}
-
-.project.wide {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 1 / 1;
 }
 
 .project img {
@@ -251,19 +247,19 @@
         padding-top: 0;
     }
 
+    /* Square slides narrower than the screen, so the next one peeks in and shows the rail moves. */
     .track {
-        gap: 0;
-        padding-inline: 0;
-        scroll-padding-inline: 0;
-        height: calc(100svh - 132px);
+        --slide: calc(100vw - 56px);
+        height: var(--slide);
     }
 
-    .project,
-    .project.wide,
     .panel,
     .crew {
-        aspect-ratio: auto;
-        width: 100%;
+        width: var(--slide);
+    }
+
+    .panel {
+        padding: 22px;
     }
 
     .arrows {

@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
+import { SquareImage } from '@/components/projects/SquareImage';
 import type { ProjectCard } from '@/content/cards';
 import styles from './rail.module.css';
 
@@ -10,8 +10,8 @@ export function ProjectSlide({ project, scopeLabels, first }: Props) {
     const where = [project.place, project.year].filter(Boolean).join(' · ');
 
     return (
-        <Link href={`/projects/${project.slug}`} className={`${styles.slide} ${styles.project}${project.wide ? ` ${styles.wide}` : ''}`}>
-            <Image src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} sizes="(max-width: 640px) 100vw, 60vh" priority={first} />
+        <Link href={`/projects/${project.slug}`} className={`${styles.slide} ${styles.project}`}>
+            <SquareImage image={cover} sizes="(max-width: 640px) 100vw, min(880px, 100vh)" eager={first} />
             <div className={styles.cap}>
                 <div className={styles.scope}>
                     {project.scopes.map((scope) => (

@@ -31,7 +31,6 @@ describe('toProjectCard', () => {
             areaM2: 872,
             scopes: ['restore'],
             cover,
-            wide: true,
             pin: { lat: 42.4, lng: 25.6 }
         });
     });

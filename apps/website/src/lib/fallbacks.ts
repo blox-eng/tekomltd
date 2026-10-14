@@ -1,12 +1,10 @@
-import { LOCALES, type Locale } from '@tekom/i18n';
+import { DEFAULT_LOCALE, LOCALES, type Locale } from '@tekom/i18n';
 import { getProject } from '../content/projects';
 import { defaultRoot } from '../content/load';
 import { getLegalPage, getPage, listProgrammes, listPublications } from '../content/public-info';
-import { LEGAL_SLUGS, type LegalSlug } from '../content/paths';
+import { isLegalSlug } from '../content/paths';
 
-const isLegalSlug = (s: string): s is LegalSlug => (LEGAL_SLUGS as readonly string[]).includes(s);
-
-const NON_DEFAULT = LOCALES.filter((l) => l !== 'bg');
+const NON_DEFAULT = LOCALES.filter((l) => l !== DEFAULT_LOCALE);
 
 /**
  * Locales in which the page at `path` shows Bulgarian text instead of a translation.

@@ -19,4 +19,8 @@ describe('routing', () => {
         expect(routing.localeDetection).toBe(false);
         expect(routing.localePrefix).toBe('as-needed');
     });
+
+    it('sends no hreflang Link header: the HTML alternates are the only ones, and they leave out fallback pages', () => {
+        expect(routing.alternateLinks).toBe(false);
+    });
 });

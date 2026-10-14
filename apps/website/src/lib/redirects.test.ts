@@ -3,12 +3,12 @@ import { buildRedirects } from './redirects';
 
 const slugs = [{ slug: 'asenov-129', wpSlug: 'жилищна-сграда-с-магазини-и-гаражи', wpId: 1310, oldSlugs: ['old-asenov'] }];
 const pages = [
-    ['/about/', '/about'],
-    ['/contact/', '/contact'],
-    ['/privacy-policy/', '/privacy'],
-    ['/services/private-services/', '/private-services'],
-    ['/publications/invitations/', '/invitations']
-] as const;
+    { slug: 'about', wpUrl: 'https://www.tekomltd.com/about/' },
+    { slug: 'private-services', wpUrl: 'https://www.tekomltd.com/services/private-services/' },
+    { slug: 'invitations', wpUrl: 'https://www.tekomltd.com/publications/invitations/' },
+    { slug: 'careers', wpUrl: 'https://www.tekomltd.com/%D0%BA%D0%B0%D1%80%D0%B8%D0%B5%D1%80%D0%B0/' },
+    { slug: 'new-page', wpUrl: null }
+];
 const files = [
     ['/wp-content/uploads/2026/04/x.pdf', '/media/publications/x.pdf'],
     ['/wp-content/uploads/2015/06/ГЛАДСТОН-IMG_1.jpg', '/media/projects/gladstone-44/gladston-img-1.jpg']
@@ -28,7 +28,7 @@ describe('buildRedirects', () => {
     it('redirects the numeric WordPress URL', () =>
         expect(r).toContainEqual(expect.objectContaining({ source: '/project-view/1310/:rest*', destination: '/projects/asenov-129', statusCode: 301 })));
 
-    it('covers the static list and the old pages', () => {
+    it('covers the static list and the old pages named by wp_url in the page files', () => {
         const sources = r.map((x) => x.source);
         expect(sources).toContain('/portfolio_category/:p*');
         expect(sources).toContain('/home/privacy-policy');
@@ -36,6 +36,8 @@ describe('buildRedirects', () => {
         expect(r).toContainEqual(expect.objectContaining({ source: '/privacy-policy', destination: '/privacy' }));
         expect(r).toContainEqual(expect.objectContaining({ source: '/services/private-services', destination: '/private-services' }));
         expect(r).toContainEqual(expect.objectContaining({ source: '/publications/invitations', destination: '/invitations' }));
+        expect(r).toContainEqual(expect.objectContaining({ source: '/%D0%BA%D0%B0%D1%80%D0%B8%D0%B5%D1%80%D0%B0', destination: '/careers' }));
+        expect(r.some((x) => x.destination === '/new-page')).toBe(false);
     });
 
     it('redirects an imported upload to its new URL, percent-encoding Cyrillic', () => {
@@ -63,7 +65,11 @@ describe('buildRedirects', () => {
     });
 
     it('skips projects without a WordPress identity and never redirects a path onto itself', () => {
-        const only = buildRedirects([{ slug: 'x', wpSlug: null, wpId: null, oldSlugs: [] }], [], [['/projects/', '/projects']]);
+        const only = buildRedirects(
+            [{ slug: 'x', wpSlug: null, wpId: null, oldSlugs: [] }],
+            [],
+            [{ slug: 'projects', wpUrl: 'https://www.tekomltd.com/projects/' }]
+        );
         expect(only.some((x) => x.source.startsWith('/project-view/') && x.destination === '/projects/x')).toBe(false);
         expect(only.every((x) => x.source.replace(/\/$/, '') !== x.destination)).toBe(true);
     });

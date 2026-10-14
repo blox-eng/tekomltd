@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { basename, join, relative, resolve, sep } from 'node:path';
-import { LOCALES } from '@tekom/i18n';
+import { basename, dirname, join, relative, resolve, sep } from 'node:path';
+import { DEFAULT_LOCALE, LOCALES } from '@tekom/i18n';
 import { splitTurn, TurnError } from '@tekom/ui/turn';
 import YAML from 'yaml';
 import { z } from 'zod';
@@ -15,17 +15,23 @@ import {
     PROJECT_FILE,
     PROJECTS_DIR,
     PUBLICATIONS_FILE,
+    RESERVED_PAGE_SLUGS,
     resolveRef,
-    SETTINGS_FILE
+    SETTINGS_FILE,
+    urlMapFrom
 } from './paths';
 import { EuProgramme, Home, LegalPage, Page, Project, Publication, Settings } from './schema';
 
 export type ContentError = { file: string; path: string; message: string };
 export type CheckResult = { ok: true } | { ok: false; errors: ContentError[] };
+export type CheckOptions = { /** url-map.json of the WordPress import: every file it redirects to must still exist. */ urlMap?: string };
 
 const WHOLE_FILE = '(file)';
 
-export function checkContent(root: string): CheckResult {
+/** Roughly Bulgaria; a pin outside it is a typo or swapped coordinates. */
+const BULGARIA = { lat: [41, 44.5], lng: [22, 29] } as const;
+
+export function checkContent(root: string, options: CheckOptions = {}): CheckResult {
     const absRoot = resolve(root);
     const errors: ContentError[] = [];
     const fail = (file: string, path: string, message: string) => errors.push({ file, path: path || WHOLE_FILE, message });
@@ -48,11 +54,11 @@ export function checkContent(root: string): CheckResult {
         }
     }
 
+    const isContentFile = (target: string) => target.startsWith(absRoot + sep) && existsSync(target) && statSync(target).isFile();
+
     function requireFile(contentFile: string, path: string, ref: string | undefined) {
         if (ref === undefined) return;
-        const target = resolveRef(absRoot, contentFile, ref);
-        const inside = target.startsWith(absRoot + sep);
-        if (!inside || !existsSync(target) || !statSync(target).isFile()) fail(contentFile, path, `file not found: ${ref}`);
+        if (!isContentFile(resolveRef(absRoot, contentFile, ref))) fail(contentFile, path, `file not found: ${ref}`);
     }
 
     if (!existsSync(absRoot) || !statSync(absRoot).isDirectory()) {
@@ -61,7 +67,8 @@ export function checkContent(root: string): CheckResult {
 
     const has = (file: string) => existsSync(join(absRoot, file));
 
-    for (const required of [SETTINGS_FILE, HOME_FILE]) if (!has(required)) fail(required, '', 'required file is missing');
+    for (const required of [SETTINGS_FILE, HOME_FILE, EU_PROGRAMMES_FILE, PUBLICATIONS_FILE])
+        if (!has(required)) fail(required, '', 'required file is missing');
 
     if (has(SETTINGS_FILE)) {
         const settings = parse(Settings, readYaml(SETTINGS_FILE), SETTINGS_FILE);
@@ -98,7 +105,8 @@ export function checkContent(root: string): CheckResult {
     const programmeCodes = checkProgrammes();
     checkPublications(programmeCodes);
     checkMarkdown(LEGAL_DIR, parseLegalFile, LegalPage, '<privacy|cookies|data-rights|terms>.<bg|en|de>.md');
-    checkMarkdown(PAGES_DIR, parsePageFile, Page, '<slug>.<bg|en|de>.md');
+    checkMarkdown(PAGES_DIR, parsePageFile, Page, '<slug>.<bg|en|de>.md', RESERVED_PAGE_SLUGS);
+    if (options.urlMap) checkUrlMap(options.urlMap);
 
     return errors.length === 0 ? { ok: true } : { ok: false, errors };
 
@@ -112,6 +120,8 @@ export function checkContent(root: string): CheckResult {
         const slugOwner = new Map<string, string>(folders.map((f) => [f, f]));
         const oldSlugOwner = new Map<string, string>();
         const wpIds = new Map<number, string>();
+        const wpSlugs = new Map<string, string>();
+        const takenBy = (owner: string) => `is already used by ${PROJECTS_DIR}/${owner} — delete this line in a new project`;
 
         for (const folder of folders) {
             const file = `${PROJECTS_DIR}/${folder}/${PROJECT_FILE}`;
@@ -131,8 +141,22 @@ export function checkContent(root: string): CheckResult {
                 oldSlugOwner.set(old, oldSlugOwner.get(old) ?? folder);
             });
             if (project.wp_id !== undefined) {
-                if (wpIds.has(project.wp_id)) fail(file, 'wp_id', `wp_id ${project.wp_id} is already used by ${wpIds.get(project.wp_id)}`);
-                wpIds.set(project.wp_id, folder);
+                const owner = wpIds.get(project.wp_id);
+                if (owner) fail(file, 'wp_id', `wp_id ${project.wp_id} ${takenBy(owner)}`);
+                else wpIds.set(project.wp_id, folder);
+            }
+            if (project.wp_slug !== undefined) {
+                const owner = wpSlugs.get(project.wp_slug);
+                if (owner) fail(file, 'wp_slug', `wp_slug "${project.wp_slug}" ${takenBy(owner)}`);
+                else wpSlugs.set(project.wp_slug, folder);
+            }
+            const { lat, lng } = project;
+            if (lat !== undefined && lng !== undefined && (lat < BULGARIA.lat[0] || lat > BULGARIA.lat[1] || lng < BULGARIA.lng[0] || lng > BULGARIA.lng[1])) {
+                fail(
+                    file,
+                    'lat',
+                    `lat ${lat}, lng ${lng} is outside Bulgaria (lat 41–44.5, lng 22–29); check the numbers and that lat and lng are not swapped`
+                );
             }
             if (!project.draft && project.images.length === 0) fail(file, 'images', 'project has no photos; add at least one image or set draft: true');
             project.images.forEach((image, i) => requireFile(file, `images.${i}.file`, image.file));
@@ -166,8 +190,14 @@ export function checkContent(root: string): CheckResult {
         });
     }
 
-    /** A folder of `<slug>.<locale>.md` files; every `/media/…` link in a body must point at a content file. */
-    function checkMarkdown(folder: string, parseName: (name: string) => { slug: string; locale: string } | null, schema: z.ZodType, pattern: string) {
+    /** A folder of `<slug>.<locale>.md` files; every `/media/…` link in a body must point at a content file, and every image must be one. */
+    function checkMarkdown(
+        folder: string,
+        parseName: (name: string) => { slug: string; locale: string } | null,
+        schema: z.ZodType,
+        pattern: string,
+        reserved: readonly string[] = []
+    ) {
         const dir = join(absRoot, folder);
         if (!existsSync(dir)) return;
         const pages = new Set<string>();
@@ -180,6 +210,7 @@ export function checkContent(root: string): CheckResult {
                 continue;
             }
             pages.add(`${id.slug}.${id.locale}`);
+            if (reserved.includes(id.slug)) fail(file, '', `"${id.slug}" is already an address of the site; give the page another name`);
             let front: ReturnType<typeof parseFrontMatter>;
             try {
                 front = parseFrontMatter(readFileSync(join(dir, name), 'utf8'));
@@ -188,14 +219,40 @@ export function checkContent(root: string): CheckResult {
                 continue;
             }
             parse(schema, { ...front.data, ...id, body: front.body }, file);
+            for (const src of imageSources(front.body)) {
+                if (!src.startsWith(`${MEDIA_URL}/`))
+                    fail(file, 'body', `image must be a file under ${MEDIA_URL}/: ${src} (the site loads nothing from other sites)`);
+            }
             for (const link of mediaLinks(front.body)) {
-                const target = resolve(absRoot, decodeURI(link.slice(MEDIA_URL.length + 1)));
-                if (!target.startsWith(absRoot + sep) || !existsSync(target) || !statSync(target).isFile()) fail(file, 'body', `file not found: ${link}`);
+                let ref: string;
+                try {
+                    ref = decodeURI(link.slice(MEDIA_URL.length + 1));
+                } catch {
+                    fail(file, 'body', `broken link: ${link} (a % sign must be followed by two hex digits; rename the file without %)`);
+                    continue;
+                }
+                if (!isContentFile(resolve(absRoot, ref))) fail(file, 'body', `file not found: ${link}`);
             }
         }
         for (const key of pages) {
             const [slug, locale] = key.split('.');
-            if (locale !== 'bg' && !pages.has(`${slug}.bg`)) fail(`${folder}/${key}.md`, '', `needs the Bulgarian page ${folder}/${slug}.bg.md`);
+            if (locale !== DEFAULT_LOCALE && !pages.has(`${slug}.${DEFAULT_LOCALE}`))
+                fail(`${folder}/${key}.md`, '', `needs the Bulgarian page ${folder}/${slug}.${DEFAULT_LOCALE}.md`);
+        }
+    }
+
+    function checkUrlMap(urlMap: string) {
+        const name = relative(dirname(absRoot), urlMap).split(sep).join('/');
+        const files: Record<string, string> = JSON.parse(readFileSync(urlMap, 'utf8')).files ?? {};
+        for (const [from, to] of Object.entries(files)) {
+            const ref = to.startsWith(`${MEDIA_URL}/`) ? to.slice(MEDIA_URL.length + 1) : to;
+            if (!isContentFile(resolve(absRoot, ref))) {
+                fail(
+                    ref,
+                    '',
+                    `file not found: the old address ${from} leads here (${name}); put the file back under this name, or ask a developer to change the redirect`
+                );
+            }
         }
     }
 }
@@ -203,9 +260,22 @@ export function checkContent(root: string): CheckResult {
 /** Markdown link and image targets that start with the media URL. */
 const mediaLinks = (markdown: string) => [...markdown.matchAll(/\]\((\/media\/[^)\s]+)/g)].map((m) => m[1]!);
 
+/** Targets of Markdown images, inline `![a](src)` and by reference `![a][ref]` / `![ref]` with `[ref]: src`. */
+function imageSources(markdown: string): string[] {
+    const definitions = new Map([...markdown.matchAll(/^ {0,3}\[([^\]]+)\]:\s*<?([^\s>]+)>?/gm)].map((m) => [m[1]!.toLowerCase(), m[2]!]));
+    const inline = [...markdown.matchAll(/!\[[^\]]*\]\(\s*<?([^)\s>]+)/g)].map((m) => m[1]!);
+    const byReference = [...markdown.matchAll(/!\[([^\]]*)\](?:\[([^\]]*)\])?(?!\()/g)]
+        .map((m) => definitions.get((m[2] || m[1]!).toLowerCase()))
+        .filter((src): src is string => src !== undefined);
+    return [...inline, ...byReference];
+}
+
 export function main(argv: string[]) {
-    const root = resolve(argv[2] ?? join(process.cwd(), '..', '..', 'content'));
-    const result = checkContent(root);
+    const repoRoot = join(process.cwd(), '..', '..');
+    const root = resolve(argv[2] ?? join(repoRoot, 'content'));
+    // The url-map belongs to the repo's own content; a fixture tree passed as an argument has none.
+    const urlMap = argv[2] === undefined && existsSync(urlMapFrom(repoRoot)) ? urlMapFrom(repoRoot) : undefined;
+    const result = checkContent(root, { urlMap });
     if (result.ok) {
         console.log('content:check: all content files are valid');
         return 0;

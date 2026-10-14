@@ -15,6 +15,7 @@ import { ProjectSlide } from '@/components/rail/ProjectSlide';
 import { Rail } from '@/components/rail/Rail';
 import { buildRail, collageTools } from '@/components/rail/rail';
 import { getHome } from '@/content/home';
+import { SCOPES } from '@/content/schema';
 import { Link } from '@/i18n/navigation';
 import { getSettings } from '@/content/settings';
 import { pageMetadata } from '@/lib/seo';
@@ -40,11 +41,11 @@ export default async function HomePage({ params }: Props) {
         getTranslations({ locale, namespace: 'crew' }),
         getTranslations({ locale, namespace: 'rail' })
     ]);
-    const { rail, panels, promises, stats, crews, partnerServices, brands, partners, settings } = getHome(locale);
+    const { rail, map, panels, promises, stats, crews, partnerServices, brands, partners, settings } = getHome(locale);
 
     const items = buildRail(rail, panels);
     const tools = crews.flatMap((crew) => crew.roles.map((role) => role.tool)).filter(isGlyph);
-    const scopeLabels = Object.fromEntries((['full', 'restore', 'facade', 'interior', 'stone'] as const).map((key) => [key, scope(key)]));
+    const scopeLabels = Object.fromEntries(SCOPES.map((key) => [key, scope(key)]));
     let crewSlides = 0;
 
     return (
@@ -88,7 +89,7 @@ export default async function HomePage({ params }: Props) {
                 <Stats locale={locale} stats={stats} />
                 <Crews locale={locale} crews={crews} headline={settings.crewHeadline} />
                 <PartnerServices locale={locale} services={partnerServices} prevLabel={railT('prev')} nextLabel={railT('next')} />
-                <MapSection locale={locale} cards={rail} />
+                <MapSection locale={locale} cards={map} />
                 <Trust locale={locale} brands={brands} partners={partners} />
             </div>
         </>

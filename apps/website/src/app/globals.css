@@ -92,20 +92,25 @@ h3 {
     padding-block: 16px;
 }
 
-.logo img {
-    height: 24px;
-    width: auto;
-    display: block;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
 }
 
-:root[data-theme='dark'] .logo img {
-    filter: invert(1) hue-rotate(180deg) brightness(1.1);
+.logo-mark {
+    width: 28px;
+    height: 28px;
+    flex: none;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .logo img {
-        filter: invert(1) hue-rotate(180deg) brightness(1.1);
-    }
+.logo-word {
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.22em;
+    line-height: 1;
 }
 
 .site-nav {

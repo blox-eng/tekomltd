@@ -10,7 +10,8 @@
         "./turn": "./src/turn.ts",
         "./tokens.css": "./src/styles/tokens.css",
         "./tailwind-preset": "./tailwind-preset.ts",
-        "./assets/eu-emblem.svg": "./src/assets/eu-emblem.svg"
+        "./assets/eu-emblem.svg": "./src/assets/eu-emblem.svg",
+        "./assets/tekom-mark.svg": "./src/assets/tekom-mark.svg"
     },
     "scripts": {
         "lint": "prettier --check .",

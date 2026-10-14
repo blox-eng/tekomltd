@@ -24,8 +24,10 @@
 - Supabase region: `eu-central-1`. Storage bucket: `site-media` (public read).
 - Netlify sites: `tekomltd-website`, `tekomltd-control`. Each app has its own `netlify.toml` with `@netlify/plugin-nextjs`.
 - Enquiry retention: 12 months.
-- Roles: `owner` and `editor` (spec §7).
-- Do not use the service-role key in a request path of the website. Use it only in member invites and in `scripts/`.
+- Access: one shared Tekom account in Supabase Auth (e-mail + password, TOTP MFA). Sign-ups are disabled. RLS writes are for `authenticated`. There are no roles.
+- Do not use the service-role key in a request path of either app. Use it only in `scripts/`, `backup.yml` and `daily-pulse.yml`.
+- Supabase organisation: `cfpyqpxyrupjnfactjko`. Use the Supabase MCP (`.mcp.json`) to create the project, apply migrations, create the bucket and generate types.
+- Netlify: two sites in Tekom's Netlify team, built from git like vamyart. Use the Netlify MCP to create the sites and set the environment variables.
 - Control app UI language: Bulgarian by default, English catalogue available (next-intl).
 - This plan ends at the demo on Tekom-owned Netlify and Supabase accounts.
 - Glyph keys (crew): `plumb trowel boards roller tiles spatula hat brick truss key ledger square laptop`.
@@ -39,7 +41,7 @@
 2. **A project has no year, no built area or no coordinates.** The page hides each missing fact row. The page never shows "null m²". The map does not show the project. Test: Task 5 `toProjectCard` test and Task 9 `mapPins` test.
 3. **An old WordPress URL has a percent-encoded Cyrillic slug.** The site sends a 301 to the new project page. Test: Task 11 `buildRedirects` test.
 4. **A visitor sends the contact form without consent, with a bad e-mail, or twice.** The form shows the error next to the field. The database keeps one row per real submission. Test: Task 10 `parseEnquiry` test and the honeypot test.
-5. **An editor saves a turning headline where the start text differs between phrases.** The control app rejects the save and names the bad phrase. Test: Task 2 `splitTurn` test and Task 15 settings validation test.
+5. **Tekom saves a turning headline where the start text differs between phrases.** The control app rejects the save and names the bad phrase. Test: Task 2 `splitTurn` test and Task 15 settings validation test.
 
 ## Reuse from vamyart
 
@@ -197,8 +199,7 @@ it("treats blank text as missing", () => expect(pick({ ...row, title_en: "  " },
 - Test: `packages/db/src/schema.test.ts`, `packages/db/test/rls.test.ts`
 
 **Interfaces:**
-- Produces: Drizzle tables with the names and columns of spec §7. Enums `scope`, `panel_kind`, `crew_key`, `scene`, `publication_kind`, `member_role`. `createTestDb(): Promise<{ db; close }>` (PGlite with all migrations).
-- SQL function `public.is_member(min_role member_role) returns boolean`.
+- Produces: Drizzle tables with the names and columns of spec §7. Enums `scope`, `panel_kind`, `crew_key`, `scene`, `publication_kind`. `createTestDb(): Promise<{ db; close }>` (PGlite with all migrations).
 - SQL function `public.purge_old_enquiries()` (deletes rows older than 12 months). Schedule it daily with `pg_cron`.
 
 - [ ] **Step 1: Write the schema tests.** Use `createTestDb()`.
@@ -218,12 +219,12 @@ it("allows one site_settings row", async () => { /* second insert throws */ });
   - The anon role reads published `projects` and does not read draft rows.
   - The anon role cannot insert into any table except `enquiries`.
   - The anon role cannot read `enquiries`.
-  - A user without a `control_members` row cannot write.
-  - An `editor` cannot update `site_settings`, `legal_pages`, `eu_programmes` or `control_members`.
+  - An `authenticated` user can insert, update and delete every content table.
+  - Nobody can sign up (`auth.signup` disabled in `supabase/config.toml`; the test calls `signUp` and expects an error).
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
 - [ ] **Step 3b: Copy `drizzle.config.ts` and the `migrate`, `generate` and `studio` scripts from vamyart.** Run `supabase init` to add `supabase/config.toml` for the local stack.
 - [ ] **Step 4: Write `schema.ts` and generate `0000_init.sql`.** Run `pnpm --filter @tekom/db drizzle-kit generate`. Add `check (char_length(summary_bg) <= 420)`.
-- [ ] **Step 5: Write `0001_rls.sql`.** Enable RLS on every table. Add `select` for `anon` on rows with `published = true`. Add `insert` for `anon` on `enquiries` only. Use `is_member('editor')` and `is_member('owner')` for writes, as in the role column of `docs/control-pane-mapping.md`.
+- [ ] **Step 5: Write `0001_rls.sql`.** Enable RLS on every table. Add `select` for `anon` on rows with `published = true`. Add `insert` for `anon` on `enquiries` only. Add `all` for `authenticated` on every content table and on `enquiries`. Follow the policy style of vamyart `0014_collections_rls.sql`.
 - [ ] **Step 6: Write `0002_retention.sql`.** Create `purge_old_enquiries()` and the `pg_cron` schedule `0 3 * * *`.
 - [ ] **Step 7: Add the CI job for RLS.** Use `supabase/setup-cli`, then `supabase start`, then `pnpm --filter @tekom/db test:rls`.
 - [ ] **Step 8: Run all tests.** Expected: PASS.
@@ -447,7 +448,7 @@ it("drops honeypot submissions", async () => { /* submitEnquiry with company_sit
 - [ ] **Step 2: Write the revalidate tests.** Without the secret the route returns 401. With the secret it calls `revalidatePath` for each normalised path in all three locales.
 - [ ] **Step 3: Write the e2e tests.** The detail page of a project without `title_en` shows the Bulgarian title and "Translation to follow" under `/en`. A project without `year` shows no "Completed" row. The contact form shows the consent error next to the checkbox. The submit button is disabled while the action runs.
 - [ ] **Step 4: Run the tests.** Expected: FAIL.
-- [ ] **Step 5: Write the pages and the action.** Follow the mockup views `projects`, `detail`, `eu`, `contact`.
+- [ ] **Step 5: Write the pages and the action.** Follow the mockup views `projects`, `detail`, `eu`, `contact`. The EU page shows, for each programme: the EU emblem with "Co-funded by the European Union" (localised), the summary, objectives, results, total budget, EU contribution and period (spec §8b). Put the official emblem SVG in `packages/ui/src/assets/eu-emblem.svg`.
 - [ ] **Step 6: Run the tests.** Expected: PASS.
 - [ ] **Step 7: Commit.** `git commit -m "feat(website): project pages, EU programmes, publications, contact"`
 
@@ -485,25 +486,25 @@ it("redirects an old slug from history", () => { /* old-slug → /projects/new-s
 
 ---
 
-### Task 12: Control app shell, auth and roles
+### Task 12: Control app shell and sign-in
 
 **Files:**
 - Create: `apps/control/` (Next.js App Router), `apps/control/middleware.ts`, `apps/control/lib/supabase/{client,server}.ts`, `apps/control/lib/auth.ts`, `apps/control/messages/{bg,en}.json` (next-intl, Bulgarian default)
-- Create: `apps/control/app/login/page.tsx`, `apps/control/app/(dashboard)/layout.tsx`, `apps/control/app/(dashboard)/members/page.tsx`
+- Create: `apps/control/app/login/page.tsx`, `apps/control/app/(dashboard)/layout.tsx`, `apps/control/app/(dashboard)/account/page.tsx` (change password, set up TOTP)
 - Create: `apps/control/netlify.toml`
 - Test: `apps/control/lib/auth.test.ts`, `tests/e2e/control/auth.spec.ts`
 
 **Interfaces:**
-- Consumes: Task 4 `control_members`, `is_member`.
-- Produces: `requireRole(min: "editor" | "owner"): Promise<{ userId: string; role: Role }>` (redirects to `/login` or throws `ForbiddenError`). `canEdit(role, screen): boolean` with the role column of `docs/control-pane-mapping.md`.
+- Consumes: Task 4 RLS (`authenticated` writes).
+- Produces: `requireUser(): Promise<{ userId: string }>` (redirects to `/login` when there is no session; asks for the TOTP code when the session is AAL1 and a factor exists).
 
-- [ ] **Step 1: Write the role tests.** `canEdit("editor", "settings")` is `false`. `canEdit("editor", "projects")` is `true`. `canEdit("owner", x)` is `true` for each screen.
-- [ ] **Step 2: Write the e2e tests.** A signed-out visit to `/` goes to `/login`. An editor does not see Settings, Legal pages, EU programmes, Enquiries or Members in the navigation.
+- [ ] **Step 1: Write the auth tests.** `requireUser` redirects to `/login` without a session. It redirects to `/login/mfa` when the session is AAL1 and a verified factor exists.
+- [ ] **Step 2: Write the e2e tests.** A signed-out visit to `/` goes to `/login`. A signed-in visit shows every screen of `docs/control-pane-mapping.md` in the navigation.
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
 - [ ] **Step 4: Copy the `apps/admin` shell from vamyart (see the Task 12 row in "Reuse from vamyart").** Rename it to `apps/control`. Remove tRPC. Keep `middleware.ts` and `lib/supabase/*` without change except the redirect target.
-- [ ] **Step 5: Write `requireRole`, `canEdit`, the login page and the members screen.** Members: invite by e-mail with `auth.admin.inviteUserByEmail`, set role, remove.
+- [ ] **Step 5: Write `requireUser`, the login page, the TOTP step and the account screen.** Use `supabase.auth.mfa` for TOTP.
 - [ ] **Step 6: Run the tests.** Expected: PASS.
-- [ ] **Step 7: Commit.** `git commit -m "feat(control): auth, roles and members"`
+- [ ] **Step 7: Commit.** `git commit -m "feat(control): shared sign-in with TOTP"`
 
 ---
 
@@ -516,7 +517,7 @@ it("redirects an old slug from history", () => { /* old-slug → /projects/new-s
 - Test: `apps/control/lib/{slug,geocode}.test.ts`, `apps/control/app/(dashboard)/projects/actions.test.ts`, `tests/e2e/control/projects.spec.ts`
 
 **Interfaces:**
-- Consumes: Task 12 `requireRole`. Task 9 `projectCountry`, `projectCity` (import from `@tekom/ui` after you move `geo.ts` there in this task).
+- Consumes: Task 12 `requireUser`. Task 9 `projectCountry`, `projectCity` (import from `@tekom/ui` after you move `geo.ts` there in this task).
 - Produces:
   - `slugify(bg: string): string` (Bulgarian transliteration by the official 2009 law system, lower case, hyphens).
   - `geocode(address: string): Promise<{ lat: number; lng: number } | null>` (server-only, Nominatim, `User-Agent: tekomltd-control`, 1 request per second).
@@ -532,7 +533,7 @@ it("handles щ and ъ", () => expect(slugify("Щастие ъгъл")).toBe("sht
 ```
 
 - [ ] **Step 2: Write the action tests.** `publishProject` refuses a project without `title_bg` or without a cover. A slug change writes the old slug to `project_slug_history`, so the old URL keeps a 301. A save calls `revalidateWebsite` with `/`, `/projects` and `/projects/<slug>`. When revalidation fails, the save still succeeds and returns `{ revalidated: false }`.
-- [ ] **Step 3: Write the e2e test.** An editor creates a project, uploads two images, sets the cover, presses "Find on map", publishes, and sees the toast "Project published".
+- [ ] **Step 3: Write the e2e test.** Tekom creates a project, uploads two images, sets the cover, presses "Find on map", publishes, and sees the toast "Project published".
 - [ ] **Step 4: Run the tests.** Expected: FAIL.
 - [ ] **Step 5: Write the code.** Downscale images in the browser to 2400 px with `resize.ts`. Upload to `site-media/projects/<slug>/`. Show per-file progress.
 - [ ] **Step 6: Run the tests.** Expected: PASS.
@@ -548,11 +549,11 @@ it("handles щ and ъ", () => expect(slugify("Щастие ъгъл")).toBe("sht
 - Test: `apps/control/lib/screens.test.ts`, `tests/e2e/control/content.spec.ts`
 
 **Interfaces:**
-- Consumes: Task 12 `requireRole`, Task 13 `LangFields`, `SortableList`, `revalidateWebsite`. Task 2 `GLYPHS`.
-- Produces: `SCREENS: Record<ScreenKey, { table; fields: FieldSpec[]; minRole; revalidate: string[] }>` that drives `ListEditor`. `FieldSpec` kinds: `lang`, `text`, `number`, `switch`, `glyph`, `image`, `file`, `markdown`, `select`.
+- Consumes: Task 12 `requireUser`, Task 13 `LangFields`, `SortableList`, `revalidateWebsite`. Task 2 `GLYPHS`.
+- Produces: `SCREENS: Record<ScreenKey, { table; fields: FieldSpec[]; revalidate: string[] }>` that drives `ListEditor`. `FieldSpec` kinds: `lang`, `text`, `number`, `switch`, `glyph`, `image`, `file`, `markdown`, `select`.
 
 - [ ] **Step 1: Write the screen tests.** Every row of `docs/control-pane-mapping.md` (rows 3–13, 16, 17, 19) has a `SCREENS` entry. `rail-panels` allows one `accent` panel only. `crews.roles.tool` accepts only the 13 crew glyph keys. `partner-services.icon` accepts only the 13 service glyph keys.
-- [ ] **Step 2: Write the e2e test.** An editor adds a partner. The public partners section appears after revalidation. The editor removes it. The section disappears.
+- [ ] **Step 2: Write the e2e test.** Tekom adds a partner. The public partners section appears after revalidation. Tekom removes it. The section disappears.
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
 - [ ] **Step 4: Write `ListEditor` and the screens.** Use optimistic reorder and Undo on delete (`DESIGN.md` §10).
 - [ ] **Step 5: Run the tests.** Expected: PASS.
@@ -567,11 +568,11 @@ it("handles щ and ъ", () => expect(slugify("Щастие ъгъл")).toBe("sht
 - Test: `apps/control/app/(dashboard)/settings/actions.test.ts`, `apps/control/app/(dashboard)/enquiries/actions.test.ts`
 
 **Interfaces:**
-- Consumes: Task 2 `splitTurn`. Task 12 `requireRole("owner")`.
+- Consumes: Task 2 `splitTurn`. Task 12 `requireUser`.
 - Produces: `saveSettings(form)`, `saveHeadline(locale, phrases: string[])`, `markHandled(id)`, `deleteEnquiry(id)`.
 
 - [ ] **Step 1: Write the headline test.** `saveHeadline("bg", ["Хората зад мазилката", "Екипът зад мечтата"])` returns an error that names "Екипът зад мечтата".
-- [ ] **Step 2: Write the enquiry tests.** An editor cannot call `deleteEnquiry`. Each listed row shows its auto-delete date (`created_at` + 12 months).
+- [ ] **Step 2: Write the enquiry tests.** A signed-out call to `deleteEnquiry` fails. Each listed row shows its auto-delete date (`created_at` + 12 months).
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
 - [ ] **Step 4: Write the screens.** The headline field shows a live `TurningWord` preview.
 - [ ] **Step 5: Run the tests.** Expected: PASS.
@@ -590,13 +591,14 @@ it("handles щ and ъ", () => expect(slugify("Щастие ъгъл")).toBe("sht
 - Consumes: all tasks.
 - Produces: two live Netlify sites and a filled Supabase project.
 
-- [ ] **Step 1: Create the Supabase project.** Region `eu-central-1`. Create the bucket `site-media` with public read. Run the migrations. Run `pnpm seed && pnpm import:wp`.
-- [ ] **Step 2: Create the Netlify sites.** Link `tekomltd-website` to `apps/website/netlify.toml` and `tekomltd-control` to `apps/control/netlify.toml`.
+- [ ] **Step 1: Create the Supabase project with the Supabase MCP.** Organisation `cfpyqpxyrupjnfactjko`, name `tekomltd`, region `eu-central-1`, plan free. Apply the migrations with `apply_migration`. Create the bucket `site-media` with public read (SQL on `storage.buckets`). Run `generate_typescript_types` and commit the result. Copy the service-role key and the database password from the dashboard into `.env.local` (the MCP does not return them). Run `pnpm seed && pnpm import:wp`. Run `get_advisors` and fix every security finding.
+- [ ] **Step 2: Create the Netlify sites with the Netlify MCP.** Use Tekom's team. Create `tekomltd-website` (package directory `apps/website`) and `tekomltd-control` (package directory `apps/control`), both from `blox-eng/tekomltd`, branch `main`. Approve the Netlify GitHub app on the `blox-eng` org for this repo when Netlify asks.
 - [ ] **Step 3: Set the environment variables.** Website: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `REVALIDATE_SECRET`, `SITE_URL`. Set `RESEND_API_KEY` and `MAIL_FROM` only after the sender domain is verified. Without them, the site stores enquiries and sends no mail. Control: the two Supabase public values, `SUPABASE_SERVICE_ROLE_KEY`, `REVALIDATE_SECRET`, `WEBSITE_URL`.
-- [ ] **Step 4: Invite the first owner.** Use the Members screen or the Supabase dashboard.
-- [ ] **Step 5: Write the smoke test.** It opens `/`, `/en/projects`, one project page, `/contact` and `/privacy` on the deployed URL and expects HTTP 200 and no console error.
+- [ ] **Step 4: Create the shared Tekom account.** In the Supabase dashboard: Authentication → Sign In / Providers → turn off "Allow new users to sign up". Then Users → Add user with Tekom's e-mail and a generated password. Keep the password in Tekom's password manager. Sign in once and set up TOTP on the Account screen.
+- [ ] **Step 5: Write the smoke test.** It opens `/`, `/en/projects`, one project page, `/eu-programmes`, `/contact` and `/privacy` on the deployed URL and expects HTTP 200, no console error and no `@axe-core/playwright` violation of level `serious` or `critical`.
 - [ ] **Step 6: Run the smoke test.** Run: `SITE_URL=https://tekomltd-website.netlify.app pnpm --filter @tekom/tests test:e2e website/smoke`. Expected: PASS.
 - [ ] **Step 6b: Copy and adapt `daily-pulse.yml`.** Set the secrets `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY` and `PULSE_TO` in the GitHub repo.
+- [ ] **Step 6b2: Write `backup.yml`.** Run weekly (Sunday 02:00 UTC) and on `workflow_dispatch`. Run `pg_dump` with secret `DATABASE_URL`, list `site-media` objects, encrypt both with `age` to the public key in secret `BACKUP_AGE_RECIPIENT`, and upload them as an artifact with `retention-days: 90`. Set the GitHub secrets with `gh secret set` from `.env.local`.
 - [ ] **Step 6c: Turn on deploy previews.** In each Netlify site, set "Deploy previews" to "Any pull request" and the production branch to `main`.
 - [ ] **Step 7: Copy `DEPLOYMENT.md` from vamyart and adapt it.** Describe the DNS move from SuperHosting: apex and `www` to Netlify, `control` CNAME to the control site, and keep the MX records unchanged.
 - [ ] **Step 8: Commit.** `git commit -m "docs: deployment guide and smoke test"`

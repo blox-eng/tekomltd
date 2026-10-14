@@ -19,7 +19,7 @@ const redirects: [string, string][] = [
 for (const [from, to] of redirects) {
     test(`old URL ${decodeURIComponent(from)} redirects permanently to ${to}`, async ({ request }) => {
         const res = await get(request, from);
-        expect([301, 308]).toContain(res.status());
+        expect(res.status()).toBe(301);
         expect(new URL(res.headers().location!, 'http://x').pathname).toBe(to);
     });
 }
@@ -64,4 +64,18 @@ test('a project page carries canonical, hreflang, Open Graph image and JSON-LD',
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/media\/projects\/gladstone-44\//);
     const types = await page.locator('script[type="application/ld+json"]').evaluateAll((nodes) => nodes.map((n) => JSON.parse(n.textContent!)['@type']));
     expect(types).toEqual(expect.arrayContaining(['HomeAndConstructionBusiness', 'CreativeWork', 'BreadcrumbList']));
+});
+
+test('a fallback-locale page canonicalises to the Bulgarian page and leaves hreflang', async ({ page }) => {
+    await page.goto('/en/about');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/about$/);
+    await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveCount(0);
+    await expect(page.locator('link[rel="alternate"][hreflang="bg"]')).toHaveCount(1);
+});
+
+test('the home page carries the approved Bulgarian description, and /en none', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /^Строителна фирма с дългогодишен опит/);
+    await page.goto('/en');
+    await expect(page.locator('meta[name="description"]')).toHaveCount(0);
 });

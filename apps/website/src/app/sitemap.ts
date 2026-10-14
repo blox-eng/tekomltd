@@ -1,9 +1,9 @@
 import type { MetadataRoute } from 'next';
-import { LOCALES } from '@tekom/i18n';
 import { allProjectSlugs } from '@/content/projects';
 import { allPageSlugs } from '@/content/public-info';
 import { LEGAL_SLUGS } from '@/content/paths';
-import { languageUrls, urlFor } from '@/lib/seo';
+import { fallbackLocalesOf } from '@/lib/fallbacks';
+import { languageUrls, publishedLocales, urlFor } from '@/lib/seo';
 
 export const dynamic = 'force-static';
 
@@ -16,5 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ...LEGAL_SLUGS.map((slug) => `/${slug}`),
         ...allPageSlugs().map(({ slug }) => `/${slug}`)
     ];
-    return paths.flatMap((path) => LOCALES.map((locale) => ({ url: urlFor(path, locale), alternates: { languages: languageUrls(path) } })));
+    return paths.flatMap((path) => {
+        const fallback = fallbackLocalesOf(path);
+        return publishedLocales(fallback).map((locale) => ({ url: urlFor(path, locale), alternates: { languages: languageUrls(path, fallback) } }));
+    });
 }

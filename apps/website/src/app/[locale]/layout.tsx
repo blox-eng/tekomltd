@@ -33,7 +33,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
                 <ThemeScript />
             </head>
             <body>
-                <JsonLd data={businessJsonLd(getSettings(locale))} />
+                <JsonLd data={businessJsonLd(getSettings(locale), locale)} />
                 <NextIntlClientProvider>
                     <Header locale={locale} />
                     <main id="main">{children}</main>

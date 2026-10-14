@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { ProjectDetail } from '../content/projects';
 import { businessJsonLd, projectJsonLd } from './jsonld';
-import { alternates, SITE_URL, urlFor } from './seo';
+import { alternates, languageUrls, pageMetadata, publishedLocales, SITE_URL, urlFor } from './seo';
 
 describe('alternates', () => {
     it('lists bg, en, de and x-default, with bg unprefixed', () => {
@@ -28,11 +28,31 @@ describe('alternates', () => {
 
 const settings = {
     legalName: 'ТЕКОМ ООД',
-    address: 'ул. Асенов 119, Стара Загора',
+    address: 'ул. Асенов 119, Стара Загора, 6000',
     phone: '+359 88 506 9099',
     email: 'info@tekomltd.com',
     socials: { linkedin: 'https://www.linkedin.com/company/x/' }
 };
+
+describe('fallback locales', () => {
+    it('point the canonical at the Bulgarian page and drop out of hreflang', () => {
+        const alt = alternates('/about', 'de', ['en', 'de']);
+        expect(alt?.canonical).toBe(`${SITE_URL}/about`);
+        expect(Object.keys(alt?.languages ?? {})).toEqual(['bg', 'x-default']);
+    });
+    it('keep the own canonical for a locale with real content', () => {
+        const alt = alternates('/projects/x', 'en', ['de']);
+        expect(alt?.canonical).toBe(`${SITE_URL}/en/projects/x`);
+        expect(Object.keys(alt?.languages ?? {})).toEqual(['bg', 'en', 'x-default']);
+    });
+    it('leave fallback locales out of the sitemap', () => {
+        expect(publishedLocales(['en', 'de'])).toEqual(['bg']);
+        expect(Object.keys(languageUrls('/p', ['de']))).not.toContain('de');
+    });
+    it('use full OG locale codes', () => {
+        expect(pageMetadata({ locale: 'de', path: '/contact', title: 'x' }).openGraph).toMatchObject({ locale: 'de_DE', url: `${SITE_URL}/de/contact` });
+    });
+});
 
 describe('businessJsonLd', () => {
     const ld = businessJsonLd(settings as never);
@@ -41,10 +61,19 @@ describe('businessJsonLd', () => {
         expect(ld).toMatchObject({
             name: 'ТЕКОМ ООД',
             telephone: '+359 88 506 9099',
-            address: { streetAddress: settings.address },
+            address: { streetAddress: 'ул. Асенов 119' },
             sameAs: [settings.socials.linkedin]
         });
         expect(ld.geo).toMatchObject({ '@type': 'GeoCoordinates' });
+    });
+    it('splits the address and localises the city', () => {
+        expect(ld.address).toMatchObject({ postalCode: '6000', addressLocality: 'Стара Загора', streetAddress: 'ул. Асенов 119' });
+        const en = businessJsonLd({ ...settings, address: '119 Asenov St, Tekom Centre, 6000 Stara Zagora, Bulgaria' } as never, 'en');
+        expect(en.address).toMatchObject({ streetAddress: '119 Asenov St, Tekom Centre', addressLocality: 'Stara Zagora' });
+    });
+    it('omits an empty phone or e-mail', () => {
+        const bare = businessJsonLd({ ...settings, phone: '', email: '' } as never);
+        expect('telephone' in bare || 'email' in bare).toBe(false);
     });
     it('leaves sameAs out when there are no socials', () => {
         expect('sameAs' in businessJsonLd({ ...settings, socials: {} } as never)).toBe(false);

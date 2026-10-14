@@ -6,6 +6,8 @@ import { PublicationList } from '@/components/public/PublicationList';
 import styles from '@/components/public/public.module.css';
 import { listPublications } from '@/content/public-info';
 import { PUBLICATION_KINDS } from '@/content/schema';
+import { getSettings } from '@/content/settings';
+import { fallbackLocalesOf } from '@/lib/fallbacks';
 import { pageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -13,7 +15,13 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'publications' });
-    return pageMetadata({ locale: locale as Locale, path: '/publications', title: t('h') });
+    return pageMetadata({
+        locale: locale as Locale,
+        path: '/publications',
+        title: t('h'),
+        description: getSettings(locale as Locale).pageDescriptions.publications,
+        fallbackLocales: fallbackLocalesOf('/publications')
+    });
 }
 
 export default async function PublicationsPage({ params }: Props) {

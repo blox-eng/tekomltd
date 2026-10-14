@@ -4,14 +4,20 @@ import type { Locale } from '@tekom/i18n';
 import { ProjectTile } from '@/components/projects/ProjectTile';
 import styles from '@/components/projects/projects.module.css';
 import { listProjects } from '@/content/projects';
+import { getSettings } from '@/content/settings';
 import { pageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
-    const [t, map] = await Promise.all([getTranslations({ locale, namespace: 'nav' }), getTranslations({ locale, namespace: 'map' })]);
-    return pageMetadata({ locale: locale as Locale, path: '/projects', title: t('projects'), description: map('p') });
+    const t = await getTranslations({ locale, namespace: 'nav' });
+    return pageMetadata({
+        locale: locale as Locale,
+        path: '/projects',
+        title: t('projects'),
+        description: getSettings(locale as Locale).pageDescriptions.projects
+    });
 }
 
 export default async function ProjectsPage({ params }: Props) {

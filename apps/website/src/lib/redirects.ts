@@ -11,7 +11,7 @@ const encodePath = (path: string) =>
         .map((segment) => encodeURIComponent(segment).replace(/[()*+?:{}]/g, '\\$&'))
         .join('/');
 
-const permanent = (source: string, destination: string): Redirect => ({ source, destination, permanent: true });
+const permanent = (source: string, destination: string): Redirect => ({ source, destination, statusCode: 301 });
 const stripSlash = (path: string) => (path.length > 1 ? path.replace(/\/+$/, '') : path);
 
 /** Next.js redirects for every old WordPress address worth keeping. Built once, at build time. */
@@ -35,5 +35,6 @@ export function buildRedirects(projects: readonly ProjectIdentity[], files: read
     }
 
     for (const [from, to] of files) redirects.push(permanent(encodePath(from), to));
-    return redirects;
+    const seen = new Set<string>();
+    return redirects.filter(({ source }) => !seen.has(source) && seen.add(source));
 }

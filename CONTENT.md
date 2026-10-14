@@ -40,6 +40,10 @@ projects/kazanlak-house/project.yaml: images.0.file file not found: kazanlak-1.j
 - `slug "..." must match its folder` — полето `slug` трябва да е същото като името на папката.
 - `use lowercase letters, digits and single hyphens` — в `slug` само малки латински букви, цифри и тирета: `nova-kashta`.
 - `cannot read YAML` — объркан отстъп или липсващи кавички (вижте „Правила за YAML“).
+- `wp_id ... is already used by ...` или `wp_slug ... is already used by ...` — редът е копиран от друг проект. В нов проект изтрийте реда.
+- `... is outside Bulgaria` — координатите `lat`/`lng` са сгрешени или разменени (вижте „Нов проект“).
+- `image must be a file under /media/` — снимка в страница сочи към друг сайт или към грешен път. Качете снимката в `content/` и я пишете с `/media/…` (вижте „Смяна на текст“).
+- `file not found: the old address ... leads here` — файл, към който води адрес от стария сайт, е преименуван или изтрит. Върнете го със същото име или питайте разработчика.
 
 ## Правила за YAML (важно)
 
@@ -53,9 +57,9 @@ projects/kazanlak-house/project.yaml: images.0.file file not found: kazanlak-1.j
 
 Пример: нов проект „Къща в Казанлък“.
 
-1. В GitHub отворете `content/projects/`, влезте в готов проект (например `ravda-conversion`) и отворете `project.yaml`. Копирайте съдържанието (бутон за копиране горе вдясно).
-2. Върнете се в `content/projects/`, натиснете **Add file → Create new file** и в полето за име напишете `kazanlak-house/project.yaml`. (Наклонената черта създава папката.) Името на папката е само малки латински букви, цифри и тирета.
-3. Поставете копираното и го променете:
+1. В GitHub отворете `content/projects/`, натиснете **Add file → Create new file** и в полето за име напишете `kazanlak-house/project.yaml`. (Наклонената черта създава папката.) Името на папката е само малки латински букви, цифри и тирета.
+2. Поставете този блок и го променете. Не копирайте `project.yaml` на друг проект: той носи редове, които важат само за него.
+3. Ако искате, добавете още полета от списъка под блока.
 
 ```yaml
 slug: kazanlak-house
@@ -75,6 +79,14 @@ draft: true
 
 `slug` е същото като името на папката. `scopes` е едно или повече от: `full` (ново строителство), `restore` (реставрация), `facade` (фасада), `interior` (интериор), `stone` (камък).
 
+Полета по желание (на най-горното ниво, без отстъп):
+
+- `on_rail` — проектът е в лентата с проекти на началната страница. Така е по подразбиране; за да не е там, напишете `on_rail: false`.
+- `sort` — място в списъка: `sort: 1` е първи. Проектите без `sort` идват след номерираните, по-новите (`year`) първи.
+- `show_on_map: true` заедно с `lat` и `lng` — точка на картата на началната страница. Координатите: в Google Maps десен бутон върху мястото, първото число е `lat`, второто `lng`. Пишат се и двете или нито едно. В България `lat` е между 41 и 44,5, а `lng` между 22 и 29.
+- `built_area_m2` — разгъната застроена площ в м², само числото.
+- `wp_id`, `wp_slug` — само за проектите, пренесени от стария сайт. В нов проект не ги пишете.
+
 4. Качете снимките в **същата папка**: отворете `content/projects/kazanlak-house/` → **Add file → Upload files**. Имената трябва да съвпадат с тези в `images`.
 5. **Първата снимка в списъка `images` е заглавната (cover).** Редът в списъка е редът на сайта.
 6. Докато проектът не е готов, оставете `draft: true`: проектът не се вижда. Когато е готов, изтрийте реда `draft: true` (или напишете `draft: false`).
@@ -91,6 +103,8 @@ hours:
 ```
 
 Текстовете на страниците са в `content/pages/` (например `about.bg.md`). Това са обикновен текст със заглавия, започващи с `##`. Първите редове между `---` (заглавие, дата) не се пипат, освен ако не искате да сменяте заглавието.
+
+Снимка в страница: качете я в `content/pages/<страница>/` (например `content/pages/about/ekip.jpg`) и я пишете с `/media/` отпред: `![Екипът на обекта](/media/pages/about/ekip.jpg)`. Снимки от други сайтове не се приемат: сайтът не зарежда нищо от чужди адреси. Обикновена връзка към друг сайт (`[текст](https://...)`) е позволена.
 
 ## 3. Превод на английски или немски
 
@@ -152,14 +166,14 @@ partners:
 
 ## 7. Контактни данни
 
-Всичко е в `content/settings.yaml`: адрес (`address`), телефони, час на работа, имейл.
+Всичко е в `content/settings.yaml`: адрес (`address`), телефон (`phone`), час на работа (`hours`), имейл (`email`).
 
 ```yaml
 phone: '+359 88 863 6034'
 email: info@tekomltd.com
 ```
 
-Телефоните и ЕИК (`eik`) са в кавички.
+Телефонът и ЕИК (`eik`) са в кавички.
 
 ## Преди да изпратите
 
@@ -203,6 +217,10 @@ Common errors:
 - `slug "..." must match its folder` — the `slug` field must equal the folder name.
 - `use lowercase letters, digits and single hyphens` — `slug` uses only lowercase Latin letters, digits and hyphens: `nova-kashta`.
 - `cannot read YAML` — wrong indentation or missing quotes (see "YAML rules").
+- `wp_id ... is already used by ...` or `wp_slug ... is already used by ...` — the line was copied from another project. Delete it in a new project.
+- `... is outside Bulgaria` — `lat`/`lng` are wrong or swapped (see "Add a project").
+- `image must be a file under /media/` — an image in a page points at another site or a wrong path. Upload the image into `content/` and write it with `/media/…` (see "Change a text").
+- `file not found: the old address ... leads here` — a file that an address of the old site leads to was renamed or deleted. Put it back under the same name, or ask the developer.
 
 ## YAML rules (important)
 
@@ -216,9 +234,9 @@ Common errors:
 
 Example: a new project "House in Kazanlak".
 
-1. On GitHub open `content/projects/`, open an existing project (for example `ravda-conversion`) and its `project.yaml`. Copy the content (copy button, top right).
-2. Back in `content/projects/`, click **Add file → Create new file** and type `kazanlak-house/project.yaml` as the name. (The slash creates the folder.) The folder name uses only lowercase Latin letters, digits and hyphens.
-3. Paste and edit:
+1. On GitHub open `content/projects/`, click **Add file → Create new file** and type `kazanlak-house/project.yaml` as the name. (The slash creates the folder.) The folder name uses only lowercase Latin letters, digits and hyphens.
+2. Paste this block and edit it. Do not copy another project's `project.yaml`: it carries lines that belong to that project only.
+3. If you like, add more fields from the list below the block.
 
 ```yaml
 slug: kazanlak-house
@@ -240,6 +258,14 @@ draft: true
 
 `slug` equals the folder name. `scopes` is one or more of: `full` (new build), `restore`, `facade`, `interior`, `stone`.
 
+Optional fields (top level, no indentation):
+
+- `on_rail` — the project is in the project rail on the home page. That is the default; to leave it out, write `on_rail: false`.
+- `sort` — place in the list: `sort: 1` comes first. Projects without `sort` follow the numbered ones, newest `year` first.
+- `show_on_map: true` together with `lat` and `lng` — a pin on the home page map. To get the numbers: in Google Maps right-click the place; the first number is `lat`, the second `lng`. Write both or neither. In Bulgaria `lat` is between 41 and 44.5 and `lng` between 22 and 29.
+- `built_area_m2` — built area in m², the number only.
+- `wp_id`, `wp_slug` — only for projects carried over from the old site. Never write them in a new project.
+
 4. Upload the photos into the **same folder**: open `content/projects/kazanlak-house/` → **Add file → Upload files**. The names must match the ones in `images`.
 5. **The first photo in `images` is the cover.** The list order is the order on the site.
 6. While the project is not ready keep `draft: true`: it stays hidden. When ready, delete the line (or write `draft: false`).
@@ -257,6 +283,8 @@ hours:
 ```
 
 Page texts are in `content/pages/` (for example `about.bg.md`): plain text with headings that start with `##`. Leave the lines between the first `---` marks (title, date) alone unless you want to change the title.
+
+An image in a page: upload it to `content/pages/<page>/` (for example `content/pages/about/crew.jpg`) and write it with `/media/` in front: `![The crew on site](/media/pages/about/crew.jpg)`. Images from other sites are rejected: the site loads nothing from other addresses. A plain link to another site (`[text](https://...)`) is fine.
 
 ## 3. Add an English or German translation
 
@@ -320,14 +348,14 @@ List only partners that agreed to it.
 
 ## 7. Change contact details
 
-All in `content/settings.yaml`: address (`address`), phones, opening hours, e-mail.
+All in `content/settings.yaml`: address (`address`), phone (`phone`), opening hours (`hours`), e-mail (`email`).
 
 ```yaml
 phone: '+359 88 863 6034'
 email: info@tekomltd.com
 ```
 
-Phones and the EIK (`eik`) go in quotes.
+The phone and the EIK (`eik`) go in quotes.
 
 ## Before you submit
 

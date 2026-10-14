@@ -30,7 +30,9 @@ Against any running copy of the site:
 SITE_URL=https://tekomltd-website.netlify.app pnpm --filter @tekom/tests test:smoke
 ```
 
-It opens `/`, `/en/projects`, one project, `/eu-programmes`, `/contact` and `/privacy` and expects HTTP 200, no console error, no request to another host and no serious or critical accessibility violation (axe). The full suite (`pnpm --filter @tekom/tests test:e2e`) starts its own production build.
+It opens `/`, `/en/projects`, the first project, `/eu-programmes`, `/publications`, `/contact` and `/privacy` and expects HTTP 200, no console error, no request to another host and no serious or critical accessibility violation (axe). It also checks that one old WordPress upload address still serves its file. It asserts no content values, so it holds for whatever `content/` contains.
+
+The full suite (`pnpm --filter @tekom/tests test:e2e`) starts its own production build of the fixed fixture content in `tests/fixtures/content/` (through `CONTENT_ROOT`), never of `content/`, so a content-only pull request cannot break it. When you change what a spec asserts, change the fixture with it.
 
 ## 4. DNS move from SuperHosting
 

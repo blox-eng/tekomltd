@@ -63,11 +63,11 @@ The locked reference is the clickable mockup in `design/mockup/index.html` (open
 - Content max width 1280px. Side gutter `max(16px, env(safe-area-inset-*))`.
 - Body text max ~65 characters.
 - The project rail is the only full-bleed element. Desktop height `clamp(420px, 100svh − 150px, 880px)`; on phones every slide is full width and full height, snapping one per swipe.
-- The red rail panel keeps its text at full opacity. The mockup dimmed it to 0.7; that fails WCAG AA on the red.
+- The red rail panel keeps its text at full opacity. The mockup dimmed its body text to 0.85 and its micro label to 0.7; both fail WCAG AA on the red.
 
 ## 4. Radius
 
-0 everywhere: photos, buttons, inputs, panels, cards. 2px only on tiny chips in the control app.
+0 everywhere: photos, buttons, inputs, panels, cards.
 
 ## 5. Motion
 
@@ -113,11 +113,11 @@ The locked reference is the clickable mockup in `design/mockup/index.html` (open
 - Boutique, not corporate. Numbers are about craft and time (years, m² still standing), never revenue.
 - One dry joke per crew role while the photo is pending (dbrand tone). The joke disappears when the photo is uploaded.
 - Bulgarian is the source language. Match grammatical gender to the real person. English and German are translations; when one is missing, show the Bulgarian with "Translation to follow" / „Übersetzung folgt“.
-- Sentence case in both apps. Control-app buttons are verbs ("Save project", "Publish"); toasts are past-tense facts ("Project published").
+- Sentence case everywhere: headings, buttons, labels.
 
-## 10. States (both apps)
+## 10. States
 
-Every data view handles loading (layout-matching skeleton), empty (one sentence + next action), error (what failed + Retry) and success. An empty public list hides its section completely (partners, materials, partner services, crews).
+The site is static, so it has no loading or error states. An empty public list hides its section completely (partners, materials, partner services, crews).
 
 ## 11. Anti-patterns (flag in review)
 
@@ -127,4 +127,4 @@ Every data view handles loading (layout-matching skeleton), empty (one sentence 
 - Shadows, rounded corners, boxed sections.
 - A cookie banner (the site sets no tracking cookies, so it needs none) or any third-party request at runtime (fonts, maps, analytics).
 - A heading or label that changes the length of the line around the turning word.
-- Partner or supplier names that Tekom has not entered in the control app.
+- Partner or supplier names that Tekom has not added to the content files through a pull request.

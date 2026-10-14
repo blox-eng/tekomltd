@@ -1,35 +1,32 @@
-# tekomltd.com Website and Control App Implementation Plan
+# tekomltd.com Website Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 > **Language:** The text of this plan follows ASD-STE100 Simplified Technical English. Procedural sentences are 20 words or fewer. Each sentence gives one instruction. Code, test names and copy strings are not STE text.
 
-**Goal:** Build the public site tekomltd.com and the control app control.tekomltd.com from the locked mockup.
+> **Amended 2026-10-14 (Martin):** the control app, Supabase and the contact form are out of scope. All content lives in this repo as files. Tekom (or anyone) changes content with a pull request. The site is fully static. Tasks 1–3 are done. Tasks 4–12 replace the old Tasks 4–16. The spec stays the design authority; where it describes the control app, Supabase, enquiries, Resend, revalidation, backups or the daily pulse, this amendment overrides it.
 
-**Architecture:** One pnpm + Turborepo monorepo with two Next.js apps and three shared packages. One Supabase project (EU region) keeps the content and the files. Each app is a separate Netlify site. Both apps use `supabase-js`, never a privileged Postgres connection. The website reads with the anon key. The control app writes with the session of the signed-in user, so RLS applies. Drizzle owns the schema, the migrations and the row types only.
+**Goal:** Build the public site tekomltd.com from the locked mockup, with every piece of content in versioned files that a pull request can change.
 
-**Tech Stack:** pnpm 10, Turborepo 2, Next.js 15.5 (App Router), React 19, TypeScript 5.9 strict, Tailwind 3.4, Drizzle ORM 0.45, Supabase (Postgres, Auth, Storage), next-intl 4, Resend, Vitest 3, PGlite, Playwright.
+**Architecture:** One pnpm + Turborepo monorepo with one Next.js app (`apps/website`) and two shared packages (`packages/ui`, `packages/i18n`). Content is YAML and Markdown under `content/`, with images and PDFs next to it. A typed loader (`apps/website/src/content/`) reads and validates the content at build time with zod. A bad content file fails CI and the build. The site is statically generated and deployed to one Netlify site. There is no database, no runtime API and no secret.
 
-**Spec:** `docs/superpowers/specs/2026-10-14-tekomltd-site-design.md`. Also read `DESIGN.md` and `docs/control-pane-mapping.md`. The visual reference is `design/mockup/index.html`. The template source is `design/mockup/mockup.tpl.html`.
+**Tech Stack:** pnpm 10, Turborepo 2, Next.js 15.5 (App Router, static generation), React 19, TypeScript 5.9 strict, Tailwind 3.4, next-intl 4, zod, yaml, Vitest 3, Playwright.
+
+**Spec:** `docs/superpowers/specs/2026-10-14-tekomltd-site-design.md` (design, pages, SEO, EU visibility, GDPR). Also read `DESIGN.md`. `docs/control-pane-mapping.md` now only lists which content each public feature needs (the "Table(s)" column becomes a content file). The visual reference is `design/mockup/index.html`. The template source is `design/mockup/mockup.tpl.html`.
 
 ## Global Constraints
 
 - Repo: `blox-eng/tekomltd`. Package scope: `@tekom/*`. Node ≥ 20. pnpm 10.
-- Apps: `apps/website` (`@tekom/website`), `apps/control` (`@tekom/control`). Packages: `packages/db`, `packages/ui`, `packages/i18n`.
+- App: `apps/website` (`@tekom/website`). Packages: `packages/ui`, `packages/i18n`. There is no `packages/db` and no `apps/control`.
+- Content: `content/` at the repo root. Every text field has `bg` (required), `en` and `de` (optional). Field shape: `title: { bg: "…", en: "…", de: "…" }`.
 - Locales: `bg` (default, no URL prefix), `en`, `de`. Bulgarian text is required. English and German are optional.
 - Missing translation: show the Bulgarian text and the note "Translation to follow" (en) / "Übersetzung folgt" (de).
+- Bulgarian copy from the mockup is copied exactly. Do not rephrase it.
 - Colour, type, radius and motion values come only from `DESIGN.md` §1–§6. Do not use raw hex values in components.
 - Fonts: Cormorant Garamond, Sofia Sans, IBM Plex Mono through `next/font/google` (self-hosted at build). Subsets `latin` and `cyrillic`.
-- No runtime request to a third-party host from the public site. No cookies. No cookie banner.
-- Supabase region: `eu-central-1`. Storage bucket: `site-media` (public read).
-- Netlify sites: `tekomltd-website`, `tekomltd-control`. Each app has its own `netlify.toml` with `@netlify/plugin-nextjs`.
-- Enquiry retention: 12 months.
-- Access: one shared Tekom account in Supabase Auth (e-mail + password, TOTP MFA). Sign-ups are disabled. RLS writes are for `authenticated`. There are no roles.
-- Do not use the service-role key in a request path of either app. Use it only in `scripts/`, `backup.yml` and `daily-pulse.yml`.
-- Supabase organisation: `cfpyqpxyrupjnfactjko`. Use the Supabase MCP (`.mcp.json`) to create the project, apply migrations, create the bucket and generate types.
-- Netlify: two sites in Tekom's Netlify team, built from git like vamyart. Use the Netlify MCP to create the sites and set the environment variables.
-- Control app UI language: Bulgarian by default, English catalogue available (next-intl).
-- This plan ends at the demo on Tekom-owned Netlify and Supabase accounts.
+- No runtime request to a third-party host. No cookies. No cookie banner. No form. No personal data is collected.
+- Images: local files under `content/`, served through `next/image` and the Netlify Image CDN.
+- Netlify site: `tekomltd-website` only, with `@netlify/plugin-nextjs`. No DNS change in this plan.
 - Glyph keys (crew): `plumb trowel boards roller tiles spatula hat brick truss key ledger square laptop`.
 - Glyph keys (services): `blueprint square beam permit survey bolt drop air window kitchen leaf solar tree`.
 - Scopes: `full restore facade interior stone`.
@@ -40,41 +37,29 @@
 1. **A project has no English or German text.** The visitor sees the Bulgarian text with the note. The visitor never sees an empty heading. Test: Task 3 `pick` tests and Task 10 detail-page test.
 2. **A project has no year, no built area or no coordinates.** The page hides each missing fact row. The page never shows "null m²". The map does not show the project. Test: Task 5 `toProjectCard` test and Task 9 `mapPins` test.
 3. **An old WordPress URL has a percent-encoded Cyrillic slug.** The site sends a 301 to the new project page. Test: Task 11 `buildRedirects` test.
-4. **A visitor sends the contact form without consent, with a bad e-mail, or twice.** The form shows the error next to the field. The database keeps one row per real submission. Test: Task 10 `parseEnquiry` test and the honeypot test.
-5. **Tekom saves a turning headline where the start text differs between phrases.** The control app rejects the save and names the bad phrase. Test: Task 2 `splitTurn` test and Task 15 settings validation test.
+4. **A contributor adds a project file with a missing Bulgarian title, an unknown scope or a missing image.** `pnpm content:check` fails with the file name and the field. Test: Task 5 schema tests.
+5. **The crew headline phrases do not share a start.** The content check fails and names the bad phrase. Test: Task 2 `splitTurn` test and Task 4 `checkContent` test.
 
 ## Reuse from vamyart
 
-The source is `blox-eng/vamyart` at `main` (commit `c61c8b6` or later). Clone it next to this repo: `gh repo clone blox-eng/vamyart ../vamyart`. Copy each file in this table. Then make only the change in the third column. Rename every `@vamy/` package scope to `@tekom/`. Remove all Stripe, auction, product, certificate, shipping, Algolia, Stackbit and newsletter code that comes with a copied file.
+The source is `blox-eng/vamyart` at `main` (commit `c61c8b6` or later), cloned at `../vamyart`. Copy each file in this table. Then make only the change in the third column. Rename every `@vamy/` package scope to `@tekom/`. Remove all Stripe, auction, product, certificate, shipping, Algolia, Stackbit, newsletter, Supabase and tRPC code that comes with a copied file.
 
 | vamyart source | tekomltd target | Change | Task |
 |---|---|---|---|
-| `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.nvmrc`, `.prettierrc`, `.gitignore`, `.vscode/` | same paths | name `tekomltd`; remove the `slop` scripts; keep the Prettier settings without change | 1 |
-| `tests/` (`package.json`, `playwright.config.ts`, `vitest.config.ts`, `e2e/smoke.test.ts`, `api/helpers.ts`) | `tests/` | filter `@tekom/website`; replace the vamy specs with Tekom specs | 1 |
-| `.github/workflows/release.yml` | same path | none (semantic-release on `main`, Node 22) | 1 |
-| `.github/workflows/daily-pulse.yml` | same path | count `projects`, `enquiries`, `publications`; subject "tekomltd.com daily pulse"; recipient from secret `PULSE_TO` | 16 |
-| (vamyart has no test workflow) | `.github/workflows/ci.yml` | new: lint, typecheck, unit tests, RLS tests | 1, 4 |
-| `.env-example` | `.env-example` | rewrite with the variables of Task 16 only | 1 |
-| `packages/ui/package.json`, `tailwind-preset.js`, `src/index.ts`, `src/lib/utils.ts`, `src/styles/tokens.css` | `packages/ui/` | replace the token values with `DESIGN.md` §1 and §5; keep the file shape and the exports `./tokens.css` and `./tailwind-preset` | 2 |
-| `DESIGN.md` | `DESIGN.md` | done (already adapted in this repo) | — |
-| `packages/db/package.json` scripts, `drizzle.config.ts`, `src/client.ts` | `packages/db/` | keep `migrate`, `generate`, `studio`; `DATABASE_URL` is for migrations only; the request-path clients use `supabase-js` (spec §6) | 4 |
-| `packages/db/migrations/*_rls.sql` (for example `0014_collections_rls.sql`) | pattern for `0001_rls.sql` | same policy style; anon read on `published = true` | 4 |
-| `packages/db/scripts/backfill-image-dimensions.ts` | `scripts/lib/image-dimensions.ts` | reuse to read width and height during the WordPress import | 6 |
-| `packages/i18n/` | `packages/i18n/` | keep the package shape; replace the messages with the mockup `T` strings | 3 |
-| `apps/website/netlify.toml` | `apps/website/netlify.toml` | filter `@tekom/website`; `remote_images` = the Tekom Supabase URL | 7 |
+| `package.json`, `pnpm-workspace.yaml`, `turbo.json`, `.nvmrc`, `.prettierrc`, `.gitignore`, `.vscode/` | same paths | done | 1 |
+| `tests/` config | `tests/` | done | 1 |
+| `.github/workflows/release.yml` | same path | done | 1 |
+| `packages/ui/*` | `packages/ui/` | done | 2 |
+| `packages/i18n/` | `packages/i18n/` | done | 3 |
+| `apps/website/netlify.toml` | `apps/website/netlify.toml` | filter `@tekom/website`; no `remote_images` (images are local) | 7 |
 | `apps/website/src/components/gallery/LandingSlider.tsx` + `.test.tsx`, `src/utils/slider-loop.ts` | `apps/website/src/components/rail/Rail.tsx` | start from it; remove the clone loop (the rail has a counter and an end); accept mixed slide kinds | 8 |
-| `apps/website/src/utils/revalidate-path.ts` + test | `apps/website/src/lib/revalidate-path.ts` | none | 10 |
-| `apps/admin/` shell: `middleware.ts`, `lib/supabase/{client,server}.ts`, `app/layout.tsx`, `app/providers.tsx`, `app/login/`, `app/(dashboard)/layout.tsx`, `components/ui/{skeleton,toast}.tsx`, `netlify.toml`, `vitest.config.ts`, `tailwind.config.ts`, `next.config.ts` | `apps/control/` | rename the app; replace the dashboard navigation with the screens of `docs/control-pane-mapping.md`; remove tRPC | 12 |
-| `apps/admin/lib/image/resize.ts` + test | `apps/control/lib/image/resize.ts` | none | 13 |
-| `apps/admin/lib/revalidate.ts`, `lib/revalidate-paths.ts` + test, `app/api/revalidate/` | `apps/control/lib/`, `apps/control/app/api/revalidate/` | path helpers for projects, crews, publications, legal pages | 13 |
-| `DEPLOYMENT.md` | `DEPLOYMENT.md` | keep sections 1 (Supabase) and 3 (Resend); remove Stripe; add the two Netlify sites and the DNS move | 16 |
+| `packages/db/scripts/backfill-image-dimensions.ts` | `scripts/lib/image-dimensions.ts` | reuse to read width and height during the WordPress import | 6 |
+| `DEPLOYMENT.md` | `DEPLOYMENT.md` | keep the Netlify parts; remove Supabase, Stripe and Resend; add the DNS move | 12 |
 
-**CI/CD after the copy:**
-- Netlify builds each app from its own `netlify.toml`. Each pull request gets a deploy preview for each app. A merge to `main` deploys both apps to production.
-- `ci.yml` runs on each pull request: lint, typecheck, unit tests, and the RLS tests against local Supabase.
-- `release.yml` creates a GitHub release with semantic-release after each merge to `main`. Conventional Commits drive the version.
-- `daily-pulse.yml` sends one digest e-mail per day at 08:00 UTC.
-- Migrations do not run in CI/CD. Run `pnpm --filter @tekom/db migrate` with `DATABASE_URL` before you merge a schema change (`DEPLOYMENT.md` §1).
+**CI/CD:**
+- Netlify builds `apps/website` from its `netlify.toml`. Each pull request gets a deploy preview. A merge to `main` deploys to production.
+- `ci.yml` runs on each pull request: lint, typecheck, unit tests, `pnpm content:check`, and `pnpm build`.
+- `release.yml` creates a GitHub release with semantic-release after each merge to `main`.
 
 ---
 
@@ -189,96 +174,106 @@ it("treats blank text as missing", () => expect(pick({ ...row, title_en: "  " },
 - [ ] **Step 5: Run the tests.** Expected: PASS.
 - [ ] **Step 6: Commit.** `git commit -m "feat(i18n): locales, catalogues and Bulgarian fallback"`
 
+
 ---
 
-### Task 4: Database schema, migrations and RLS (`packages/db`)
+### Task 4: Drop the database layer, add the content schema
 
 **Files:**
-- Create: `packages/db/src/schema.ts`, `packages/db/drizzle.config.ts`, `packages/db/migrations/0000_init.sql`, `packages/db/migrations/0001_rls.sql`, `packages/db/migrations/0002_retention.sql`
-- Create: `packages/db/src/client.ts` (`anonClient()`, `sessionClient(cookies)`, `serviceClient()` for scripts), `packages/db/src/types.ts` (row types from Drizzle), `packages/db/src/testing.ts` (PGlite helper for schema tests)
-- Test: `packages/db/src/schema.test.ts`, `packages/db/test/rls.test.ts`
+- Delete: `packages/db/`, `supabase/`, the `rls` job in `.github/workflows/ci.yml`, the root `supabase` devDependency, the Supabase and Resend variables in `.env-example`
+- Create: `apps/website/src/content/schema.ts`, `apps/website/src/content/check.ts`, `apps/website/src/content/paths.ts`
+- Modify: `apps/website/package.json` (script `content:check`), root `package.json` (script `content:check` through turbo), `.github/workflows/ci.yml` (run `pnpm content:check`)
+- Test: `apps/website/src/content/schema.test.ts`
 
 **Interfaces:**
-- Produces: Drizzle tables with the names and columns of spec §7. Enums `scope`, `panel_kind`, `crew_key`, `scene`, `publication_kind`. `createTestDb(): Promise<{ db; close }>` (PGlite with all migrations).
-- SQL function `public.purge_old_enquiries()` (deletes rows older than 12 months). Schedule it daily with `pg_cron`.
+- Consumes: Task 2 `GLYPHS` keys and `splitTurn`. Task 3 `LOCALES`.
+- Produces:
+  - `const L = z.object({ bg: z.string().trim().min(1), en: z.string().optional(), de: z.string().optional() })` (localised text).
+  - zod schemas and inferred types: `Project`, `ProjectImage`, `RailPanel`, `Promise`, `Stat`, `Crew`, `CrewRole`, `PartnerService`, `Partner`, `MaterialBrand`, `EuProgramme`, `Publication`, `LegalPage`, `Settings`. Fields follow spec §7, with these changes: no `published`, `created_at`, `updated_at`, `enquiries`, `og_image_path` or `*_path` storage columns. A file path is relative to its content file. A project keeps `old_slugs: string[]` instead of `project_slug_history`. A project has `draft: boolean` (default false): a draft is not built.
+  - Content layout (`paths.ts`):
+    - `content/settings.yaml` (company, contacts, socials, crew headline phrases per locale, SEO defaults)
+    - `content/home.yaml` (rail panels, promises, stats, crews with roles, partner services, materials, partners)
+    - `content/projects/<slug>/project.yaml` + the images of that project in the same folder
+    - `content/eu-programmes.yaml`, `content/publications.yaml` + `content/publications/<file>.pdf`
+    - `content/legal/<slug>.<locale>.md` with front matter `title`, `updated`, `reviewed`
+    - `content/brands/<file>.png|svg`, `content/partners/<file>.png|svg`
+  - `checkContent(root): { ok: true } | { ok: false; errors: { file: string; path: string; message: string }[] }`. It validates every file, checks that every referenced image or PDF exists, that project slugs are unique and match their folder name, that `old_slugs` do not collide with a slug, and that the crew headline phrases pass `splitTurn`.
+  - `pnpm content:check` prints each error as `<file>: <field> <message>` and exits 1 on any error.
 
-- [ ] **Step 1: Write the schema tests.** Use `createTestDb()`.
+- [ ] **Step 1: Delete the database layer.** Remove the files listed above. Run `pnpm install`, `pnpm lint`, `pnpm typecheck`, `pnpm test`. Expected: PASS.
+- [ ] **Step 2: Write the schema tests.** Use small fixture trees under `apps/website/src/content/__fixtures__/`.
 
 ```ts
-it("needs Bulgarian title", async () => {
-  await expect(db.insert(projects).values({ slug: "x", titleBg: null as never })).rejects.toThrow();
+it("needs a Bulgarian title", () => expect(Project.safeParse({ ...minimal, title: { en: "x" } }).success).toBe(false));
+it("allows only known scopes", () => expect(Project.safeParse({ ...minimal, scopes: ["roofing"] }).success).toBe(false));
+it("allows only known glyph keys", () => expect(CrewRole.safeParse({ ...role, tool: "hammer" }).success).toBe(false));
+it("reports a missing image with its file", () => {
+  const r = checkContent(fixture("missing-image"));
+  expect(r.ok).toBe(false); expect(r.errors[0].file).toMatch(/project\.yaml$/);
 });
-it("keeps slugs unique", async () => { /* insert twice, expect the second to throw */ });
-it("allows only known scopes", async () => {
-  await expect(db.insert(projects).values({ ...minimal, scopes: ["roofing" as never] })).rejects.toThrow();
+it("rejects headline phrases with a different start", () => {
+  expect(checkContent(fixture("bad-headline")).errors[0].message).toMatch(/Екипът зад мечтата/);
 });
-it("allows one site_settings row", async () => { /* second insert throws */ });
+it("rejects a slug that does not match its folder", () => { /* … */ });
 ```
 
-- [ ] **Step 2: Write the RLS tests.** These tests need a local Supabase. Run them with `pnpm --filter @tekom/db test:rls`. Assert:
-  - The anon role reads published `projects` and does not read draft rows.
-  - The anon role cannot insert into any table except `enquiries`.
-  - The anon role cannot read `enquiries`.
-  - An `authenticated` user can insert, update and delete every content table.
-  - Nobody can sign up (`auth.signup` disabled in `supabase/config.toml`; the test calls `signUp` and expects an error).
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
-- [ ] **Step 3b: Copy `drizzle.config.ts` and the `migrate`, `generate` and `studio` scripts from vamyart.** Run `supabase init` to add `supabase/config.toml` for the local stack.
-- [ ] **Step 4: Write `schema.ts` and generate `0000_init.sql`.** Run `pnpm --filter @tekom/db drizzle-kit generate`. Add `check (char_length(summary_bg) <= 420)`.
-- [ ] **Step 5: Write `0001_rls.sql`.** Enable RLS on every table. Add `select` for `anon` on rows with `published = true`. Add `insert` for `anon` on `enquiries` only. Add `all` for `authenticated` on every content table and on `enquiries`. Follow the policy style of vamyart `0014_collections_rls.sql`.
-- [ ] **Step 6: Write `0002_retention.sql`.** Create `purge_old_enquiries()` and the `pg_cron` schedule `0 3 * * *`.
-- [ ] **Step 7: Add the CI job for RLS.** Use `supabase/setup-cli`, then `supabase start`, then `pnpm --filter @tekom/db test:rls`.
-- [ ] **Step 8: Run all tests.** Expected: PASS.
-- [ ] **Step 9: Commit.** `git commit -m "feat(db): schema, RLS and enquiry retention"`
+- [ ] **Step 4: Write `schema.ts`, `paths.ts` and `check.ts`.** Use `yaml` to parse YAML and `gray-matter` for Markdown front matter. Keep summaries to 420 characters or fewer.
+- [ ] **Step 5: Add `content:check` to CI.** It runs before the build.
+- [ ] **Step 6: Run the tests.** Expected: PASS.
+- [ ] **Step 7: Commit.** `git commit -m "feat(website): content schema and check; drop the database layer"`
 
 ---
 
-### Task 5: Read queries for the website (`packages/db`)
+### Task 5: Content loader (read model)
 
 **Files:**
-- Create: `packages/db/src/read/home.ts`, `packages/db/src/read/projects.ts`, `packages/db/src/read/public-info.ts`, `packages/db/src/read/settings.ts`, `packages/db/src/read/cards.ts`
-- Test: `packages/db/src/read/*.test.ts`
+- Create: `apps/website/src/content/load.ts`, `apps/website/src/content/cards.ts`, `apps/website/src/content/home.ts`, `apps/website/src/content/projects.ts`, `apps/website/src/content/public-info.ts`, `apps/website/src/content/settings.ts`
+- Test: `apps/website/src/content/*.test.ts`
 
 **Interfaces:**
-- Consumes: Task 3 `pick`, `Locale`. Task 4 `anonClient`, row types.
-- Produces:
+- Consumes: Task 3 `pick`, `Locale`. Task 4 schemas and paths.
+- Produces (all synchronous or async file reads at build time; `root` defaults to the repo `content/` folder, tests pass a fixture root):
+  - `type Img = { src: StaticImport-compatible public path; width: number; height: number; alt: string }`
   - `type ProjectCard = { slug; title; titleFallback: boolean; place; year: number | null; areaM2: number | null; scopes: Scope[]; cover: Img; wide: boolean; pin: { lat: number; lng: number } | null }`
-  - `toProjectCard(row, cover, locale): ProjectCard`
-  - `getHome(locale): Promise<HomeData>` where `HomeData = { rail: ProjectCard[]; panels: Panel[]; promises; stats; crews: Crew[]; partnerServices; brands; partners; settings }`
-  - `listProjects(locale): Promise<ProjectCard[]>`
-  - `getProject(slug, locale): Promise<ProjectDetail | null>` with `next: { slug; title }`
-  - `listProgrammes(locale)`, `listPublications(locale, kind?)`, `getLegalPage(slug, locale)`, `getSettings(locale)`
-  - `allProjectSlugs(): Promise<{ slug: string; wpSlug: string | null }[]>`
+  - `toProjectCard(project, cover, locale): ProjectCard`
+  - `getHome(locale, root?): HomeData` where `HomeData = { rail: ProjectCard[]; panels: Panel[]; promises; stats; crews: Crew[]; partnerServices; brands; partners; settings }`
+  - `listProjects(locale, root?): ProjectCard[]`
+  - `getProject(slug, locale, root?): ProjectDetail | null` with `next: { slug; title }`
+  - `listProgrammes(locale, root?)`, `listPublications(locale, kind?, root?)`, `getLegalPage(slug, locale, root?)`, `getSettings(locale, root?)`
+  - `allProjectSlugs(root?): { slug: string; wpSlug: string | null; wpId: number | null; oldSlugs: string[] }[]`
+  - Media: a prebuild step `scripts/sync-media.ts` copies every image and PDF from `content/` to `apps/website/public/media/` (gitignored), keeping the relative path. `Img.src` is `/media/<path>`. Width and height are read from the file at load time with `image-size`.
 
 - [ ] **Step 1: Write the card tests.**
 
 ```ts
 it("hides missing facts as null", () => {
-  const c = toProjectCard({ ...row, year: null, builtAreaM2: null, lat: null, lng: null }, cover, "en");
+  const c = toProjectCard({ ...project, year: undefined, built_area_m2: undefined, lat: undefined, lng: undefined }, cover, "en");
   expect(c.year).toBeNull(); expect(c.areaM2).toBeNull(); expect(c.pin).toBeNull();
 });
 it("marks Bulgarian fallback", () => {
-  expect(toProjectCard({ ...row, titleEn: null }, cover, "en").titleFallback).toBe(true);
+  expect(toProjectCard({ ...project, title: { bg: "Очен център" } }, cover, "en").titleFallback).toBe(true);
 });
 ```
 
-- [ ] **Step 2: Write the query tests against local Supabase (`test:integration`, seeded fixtures).** Each query takes a `SupabaseClient` as its first argument. Assert: `getHome` returns rail projects in `sort` order with `on_rail = true` only. Draft rows never appear. `partners` is `[]` when none is published. `getProject` returns `next` and wraps from the last project to the first.
+- [ ] **Step 2: Write the loader tests against a fixture root.** Assert: `getHome` returns rail projects in `sort` order with `on_rail = true` only. Drafts never appear. `partners` is `[]` when the list is empty. `getProject` returns `next` and wraps from the last project to the first. `sync-media` copies a nested image to the same relative path.
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
-- [ ] **Step 4: Write the queries with `supabase-js`.** Use one request per section. Do not query inside a loop.
+- [ ] **Step 4: Write the loader.** Read each file once per build (memoise per root). Do not read files inside a render loop.
 - [ ] **Step 5: Run the tests.** Expected: PASS.
-- [ ] **Step 6: Commit.** `git commit -m "feat(db): read model for the website"`
+- [ ] **Step 6: Commit.** `git commit -m "feat(website): typed content loader"`
 
 ---
 
-### Task 6: Seed and WordPress import
+### Task 6: Content from the mockup and the WordPress import
 
 **Files:**
-- Create: `packages/db/seed/content.ts`, `packages/db/seed/run.ts`
-- Create: `scripts/import-wordpress.ts`, `scripts/wp-parse.ts`
+- Create: `scripts/import-wordpress.ts`, `scripts/wp-parse.ts`, `scripts/lib/image-dimensions.ts` (from vamyart, if still useful), `scripts/seed-from-mockup.ts`
+- Create: the `content/` tree (generated, then committed)
 - Test: `scripts/wp-parse.test.ts` (fixture: `design/mockup/data/portfolio.json`)
 
 **Interfaces:**
-- Consumes: Task 4 tables and service client.
-- Produces: `parseDetails(html: string): { date: string | null; address: string | null; areaM2: number | null }`, `excerpt(html: string): string` (≤ 420 chars, cut at a sentence end, not after `ул.`, `инж.`, `арх.`, `гр.`, `с.`, `кв.`, `г.`), `galleryUrls(html: string): string[]` (full-size only, no `-NNNxNNN` thumbnails, deduped), `pnpm seed`, `pnpm import:wp`, `pnpm import:wp --publications`.
+- Consumes: Task 4 schemas and `checkContent`.
+- Produces: `parseDetails(html: string): { date: string | null; address: string | null; areaM2: number | null }`, `excerpt(html: string): string` (≤ 420 chars, cut at a sentence end, not after `ул.`, `инж.`, `арх.`, `гр.`, `с.`, `кв.`, `г.`), `galleryUrls(html: string): string[]` (full-size only, no `-NNNxNNN` thumbnails, deduped), `pnpm import:wp`, `pnpm import:wp --publications`. A filled `content/` tree that passes `pnpm content:check`.
 
 - [ ] **Step 1: Write the parser tests.**
 
@@ -300,13 +295,12 @@ it("keeps full-size gallery images only", () => {
 
 - [ ] **Step 2: Run the tests.** Expected: FAIL.
 - [ ] **Step 3: Write `wp-parse.ts`.** Port the excerpt rule from `design/mockup/build.py`.
-- [ ] **Step 4: Write `import-wordpress.ts`.** Read the WordPress REST URL of spec §11. Take titles, scopes, `wide` and the order from `design/mockup/data/projects.json`. Take coordinates from `design/mockup/data/geo.json`. Upload each cover and each gallery image to `site-media/projects/<slug>/`. Write `project_images` with width, height and the Bulgarian title as `alt_bg`. Set `wp_id` and `wp_slug`. Make the script idempotent (upsert on `slug` and on `storage_path`).
-- [ ] **Step 4b: Write the `--publications` mode.** Read `/publications/` and the two EU programme pages. Download each linked PDF or DOC to `site-media/publications/`. Write `publications` rows with `wp_url` and the programme link.
-- [ ] **Step 4c: Seed `legal_pages`.** Port the WordPress privacy policy into `privacy.body_bg`. Draft the other three pages in Bulgarian from spec §10. Translate all four to English and German. Set `reviewed = false` on all four.
-- [ ] **Step 5: Write `seed/content.ts`.** Transcribe from the mockup: `SVC` → `rail_panels`, `CREW` → `rail_panels` (`crew_stat`), the four promises, the stats, `CREWS` → `crews` + `crew_roles`, `PSVC` → `partner_services`, the eight brands (logos from `design/mockup/logos/`), the two EU programmes, `site_settings`. Leave `partners` empty.
-- [ ] **Step 6: Run the tests.** Expected: PASS.
-- [ ] **Step 7: Run the import against local Supabase.** Run: `pnpm seed && pnpm import:wp`. Expected: 17 projects, every gallery image, 9 + 4 crew roles, the old publications with their files.
-- [ ] **Step 8: Commit.** `git commit -m "feat(db): seed content and WordPress import"`
+- [ ] **Step 4: Write `import-wordpress.ts`.** Read the WordPress REST URL of spec §11. Take titles, scopes, `wide` and the order from `design/mockup/data/projects.json`. Take coordinates from `design/mockup/data/geo.json`. Download each cover and each gallery image into `content/projects/<slug>/`. Downscale each image to 2400 px on the long side and re-encode as JPEG quality 82 with `sharp`, so the repo stays small. Write `project.yaml` with the Bulgarian title as `alt.bg` of each image. Set `wp_id` and `wp_slug`. Make the script idempotent: it overwrites generated fields and keeps the files.
+- [ ] **Step 4b: Write the `--publications` mode.** Read `/publications/` and the two EU programme pages. Download each linked PDF or DOC to `content/publications/`. Write `content/publications.yaml` with `wp_url` and the programme code.
+- [ ] **Step 4c: Write the legal pages.** Port the WordPress privacy policy into `content/legal/privacy.bg.md`. Rewrite it for a static site with no form and no data collection: Netlify is the only processor. Draft the cookies, data-rights and terms pages in Bulgarian from spec §10 with the same facts. Translate all four to English and German. Set `reviewed: false` on all twelve files.
+- [ ] **Step 5: Write `seed-from-mockup.ts` and run it once.** Transcribe from the mockup into `content/home.yaml` and `content/settings.yaml`: `SVC` → rail panels, `CREW` → crew stat panels, the four promises, the stats, `CREWS` → crews and roles, `PSVC` → partner services, the eight brands (copy the logos from `design/mockup/logos/` to `content/brands/`), the two EU programmes, the settings. Leave `partners` empty. Copy all copy strings exactly.
+- [ ] **Step 6: Run the tests and the check.** Run: `pnpm test && pnpm content:check`. Expected: PASS. Expected content: 17 projects, every gallery image, 9 + 4 crew roles, the old publications with their files.
+- [ ] **Step 7: Commit.** Commit the scripts first, then the generated `content/` in a second commit. `git commit -m "feat(content): WordPress import and mockup seed"`, `git commit -m "chore(content): import 17 projects, publications and legal pages"`
 
 ---
 
@@ -316,11 +310,11 @@ it("keeps full-size gallery images only", () => {
 - Create: `apps/website/next.config.ts`, `apps/website/middleware.ts` (next-intl), `apps/website/src/i18n/routing.ts`
 - Create: `apps/website/src/app/[locale]/layout.tsx`, `apps/website/src/components/Header.tsx`, `Footer.tsx`, `ThemeToggle.tsx`, `ThemeScript.tsx`, `LangSwitch.tsx`
 - Create: `apps/website/src/app/[locale]/[legal]/page.tsx` (privacy, cookies, data-rights, terms)
-- Create: `apps/website/netlify.toml`
+- Create: `apps/website/netlify.toml`, `apps/website/tailwind.config.ts`
 - Test: `tests/e2e/website/shell.spec.ts`
 
 **Interfaces:**
-- Consumes: Task 2 tokens, fonts, `Button`. Task 3 catalogues. Task 5 `getSettings`, `getLegalPage`.
+- Consumes: Task 2 tokens, fonts, Tailwind preset, `Button`. Task 3 catalogues. Task 5 `getSettings`, `getLegalPage`.
 - Produces: `Header`, `Footer`, the `[locale]` layout with `<html lang>`, and `localePath(path, locale)`.
 
 - [ ] **Step 1: Write the e2e tests.**
@@ -341,14 +335,17 @@ test("no request leaves the site", async ({ page }) => {
   const hosts = new Set<string>(); page.on("request", (r) => hosts.add(new URL(r.url()).host));
   await page.goto("/"); expect([...hosts].every((h) => h === new URL(page.url()).host)).toBe(true);
 });
+test("no cookie is set", async ({ page, context }) => {
+  await page.goto("/"); expect(await context.cookies()).toHaveLength(0);
+});
 ```
 
 - [ ] **Step 2: Run the tests.** Run: `pnpm --filter @tekom/tests test:e2e`. Expected: FAIL.
-- [ ] **Step 3: Write the routing.** Use next-intl `localePrefix: "as-needed"` with `defaultLocale: "bg"`.
+- [ ] **Step 3: Write the routing.** Use next-intl `localePrefix: "as-needed"` with `defaultLocale: "bg"`. Generate every locale and page statically (`generateStaticParams`). Make sure next-intl sets no locale cookie (`localeCookie: false`).
 - [ ] **Step 4: Write `ThemeScript`.** Put an inline script in `<head>`. It reads `localStorage["tekom-theme"]` in `try/catch` and sets `data-theme` before paint.
-- [ ] **Step 5: Write `Header` and `Footer`.** Follow `DESIGN.md` §7 and the mockup markup. Hide each social icon when its URL is empty.
-- [ ] **Step 6: Write the legal page route.** Render Markdown with `react-markdown`. Show "last updated".
-- [ ] **Step 7: Write `netlify.toml`.** Copy `apps/website/netlify.toml` from vamyart. Set the filter to `@tekom/website`. Set `remote_images` to the Supabase project URL.
+- [ ] **Step 5: Write `Header` and `Footer`.** Follow `DESIGN.md` §7 and the mockup markup. The header keeps the "Request a quote" button; it links to `/contact`. Hide each social icon when its URL is empty.
+- [ ] **Step 6: Write the legal page route.** Render Markdown with `react-markdown`. Show "last updated" from the front matter.
+- [ ] **Step 7: Write `netlify.toml` and `tailwind.config.ts`.** Copy `apps/website/netlify.toml` from vamyart. Set the filter to `@tekom/website`. Run `sync-media` before `next build`. The Tailwind config uses the `@tekom/ui` preset.
 - [ ] **Step 8: Run the tests.** Expected: PASS.
 - [ ] **Step 9: Commit.** `git commit -m "feat(website): locale routing, header, footer, theme"`
 
@@ -410,11 +407,11 @@ it("leaves out projects without coordinates", () => expect(mapPins([{ ...card, p
 it("draws a 500 m scale bar to scale", () => expect(scaleBarPx(500)).toBeCloseTo(98.3, 0));
 ```
 
-- [ ] **Step 2: Write the e2e tests.** The crews heading shows a dotted turning phrase that changes within 4 s. With `reducedMotion: "reduce"` it does not change. A hover on a crew role turns the matching scene glyph to the accent colour. The partners section is absent when no partner is published. A click on a map pin opens the project page.
+- [ ] **Step 2: Write the e2e tests.** The crews heading shows a dotted turning phrase that changes within 4 s. With `reducedMotion: "reduce"` it does not change. A hover on a crew role turns the matching scene glyph to the accent colour. The partners section is absent when no partner exists. A click on a map pin opens the project page.
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
 - [ ] **Step 4: Write `geo.ts` and the two map components.** Port `bgMap` and `szMap` from the mockup. Each pin is an `<a>` with `aria-label` = project title.
-- [ ] **Step 5: Write `CrewScene`.** Port `sceneSite`, `sceneOffice` and `AT` from the mockup. Show the group photo instead when `group_photo_path` is set. Hide quips and stamp when the photo is set.
-- [ ] **Step 6: Write the other sections.** Return `null` when the list is empty. Copy the CSS from the mockup.
+- [ ] **Step 5: Write `CrewScene`.** Port `sceneSite`, `sceneOffice` and `AT` from the mockup. Show the group photo instead when the crew has a `group_photo`. Hide quips and stamp when the photo is set.
+- [ ] **Step 6: Write the other sections.** Return `null` when the list is empty. Copy the CSS from the mockup. Render `TurningWord` with `key={locale}`.
 - [ ] **Step 7: Run the tests.** Expected: PASS.
 - [ ] **Step 8: Commit.** `git commit -m "feat(website): promise, stats, crews, partner services, map, materials"`
 
@@ -425,32 +422,18 @@ it("draws a 500 m scale bar to scale", () => expect(scaleBarPx(500)).toBeCloseTo
 **Files:**
 - Create: `apps/website/src/app/[locale]/projects/page.tsx`, `projects/[slug]/page.tsx`
 - Create: `apps/website/src/app/[locale]/eu-programmes/page.tsx`, `publications/page.tsx`, `contact/page.tsx`
-- Create: `apps/website/src/app/[locale]/contact/actions.ts`, `apps/website/src/lib/enquiry.ts`, `apps/website/src/lib/mail.ts`
-- Create: `apps/website/src/app/api/revalidate/route.ts`
-- Test: `apps/website/src/lib/enquiry.test.ts`, `apps/website/src/app/api/revalidate/route.test.ts`, `tests/e2e/website/pages.spec.ts`
+- Create: `packages/ui/src/assets/eu-emblem.svg`
+- Test: `tests/e2e/website/pages.spec.ts`
 
 **Interfaces:**
-- Consumes: Task 5 queries. Task 3 `pick`.
-- Produces:
-  - `parseEnquiry(form: FormData): { ok: true; value: Enquiry } | { ok: false; errors: Partial<Record<keyof Enquiry | "consent", string>> }`
-  - `submitEnquiry(prev, form)` server action: honeypot field `company_site`; insert with the anon client; send the mail with Resend to `site_settings.email`.
-  - `POST /api/revalidate` body `{ paths: string[] }`, header `x-revalidate-secret`. Port `normalizeRevalidatePath` from vamyart.
+- Consumes: Task 5 loaders. Task 3 `pick`.
+- Produces: the five routes, statically generated for every locale and project.
 
-- [ ] **Step 1: Write the enquiry tests.**
-
-```ts
-it("needs consent", () => expect(parseEnquiry(fd({ ...valid, consent: "" })).ok).toBe(false));
-it("rejects a bad e-mail", () => expect(parseEnquiry(fd({ ...valid, email: "x@" })).errors?.email).toBeDefined());
-it("trims and limits the message to 4000 chars", () => { /* … */ });
-it("drops honeypot submissions", async () => { /* submitEnquiry with company_site set returns ok and inserts nothing */ });
-```
-
-- [ ] **Step 2: Write the revalidate tests.** Without the secret the route returns 401. With the secret it calls `revalidatePath` for each normalised path in all three locales.
-- [ ] **Step 3: Write the e2e tests.** The detail page of a project without `title_en` shows the Bulgarian title and "Translation to follow" under `/en`. A project without `year` shows no "Completed" row. The contact form shows the consent error next to the checkbox. The submit button is disabled while the action runs.
-- [ ] **Step 4: Run the tests.** Expected: FAIL.
-- [ ] **Step 5: Write the pages and the action.** Follow the mockup views `projects`, `detail`, `eu`, `contact`. The EU page shows, for each programme: the EU emblem with "Co-funded by the European Union" (localised), the summary, objectives, results, total budget, EU contribution and period (spec §8b). Put the official emblem SVG in `packages/ui/src/assets/eu-emblem.svg`.
-- [ ] **Step 6: Run the tests.** Expected: PASS.
-- [ ] **Step 7: Commit.** `git commit -m "feat(website): project pages, EU programmes, publications, contact"`
+- [ ] **Step 1: Write the e2e tests.** The detail page of a project without an English title shows the Bulgarian title and "Translation to follow" under `/en`. A project without `year` shows no "Completed" row. The contact page shows the phone, the e-mail as a `mailto:` link and the office address, and has no `<form>`. Under `/` (bg) the page never shows "Translation to follow" or „Превод предстои“.
+- [ ] **Step 2: Run the tests.** Expected: FAIL.
+- [ ] **Step 3: Write the pages.** Follow the mockup views `projects`, `detail`, `eu`, `contact`. The contact view keeps the mockup's heading, copy and contact block, and drops the form. The EU page shows, for each programme: the EU emblem with "Co-funded by the European Union" (localised), the summary, objectives, results, total budget, EU contribution and period (spec §8b). Use the official emblem SVG.
+- [ ] **Step 4: Run the tests.** Expected: PASS.
+- [ ] **Step 5: Commit.** `git commit -m "feat(website): project pages, EU programmes, publications, contact"`
 
 ---
 
@@ -458,147 +441,49 @@ it("drops honeypot submissions", async () => { /* submitEnquiry with company_sit
 
 **Files:**
 - Create: `apps/website/src/lib/seo.ts`, `apps/website/src/lib/jsonld.ts`, `apps/website/src/app/sitemap.ts`, `apps/website/src/app/robots.ts`
-- Create: `apps/website/src/lib/redirects.ts`; modify `apps/website/next.config.ts`
+- Create: `apps/website/src/lib/redirects.ts`; modify `apps/website/next.config.ts` and `apps/website/middleware.ts`
 - Test: `apps/website/src/lib/redirects.test.ts`, `apps/website/src/lib/seo.test.ts`
 
 **Interfaces:**
-- Consumes: Task 5 `allProjectSlugs`, `getSettings`.
-- Produces: `buildRedirects(slugs, history, files): Redirect[]` (Next.js redirect objects, `permanent: true`; `history` = `project_slug_history`, `files` = `publications.wp_url` and imported image URLs), `alternates(path): Metadata["alternates"]`, `businessJsonLd(settings)`, `projectJsonLd(detail, locale)`.
+- Consumes: Task 5 `allProjectSlugs`, `getSettings`, `listPublications`.
+- Produces: `buildRedirects(slugs, files): Redirect[]` (Next.js redirect objects, `permanent: true`; `slugs` include `oldSlugs`; `files` = `publications.wp_url` and imported image URLs mapped to `/media/...`), `alternates(path): Metadata["alternates"]`, `businessJsonLd(settings)`, `projectJsonLd(detail, locale)`.
 
 - [ ] **Step 1: Write the redirect tests.**
 
 ```ts
-const r = buildRedirects([{ slug: "asenov-129", wpSlug: "жилищна-сграда-с-магазини-и-гаражи" }]);
+const r = buildRedirects([{ slug: "asenov-129", wpSlug: "жилищна-сграда-с-магазини-и-гаражи", wpId: 1310, oldSlugs: [] }], []);
 it("redirects the encoded WordPress project URL", () => expect(r).toContainEqual(expect.objectContaining({
   source: "/project-view/%D0%B6%D0%B8%D0%BB%D0%B8%D1%89%D0%BD%D0%B0-%D1%81%D0%B3%D1%80%D0%B0%D0%B4%D0%B0-%D1%81-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B8-%D0%B8-%D0%B3%D0%B0%D1%80%D0%B0%D0%B6%D0%B8/:rest*",
   destination: "/projects/asenov-129", permanent: true })));
-it("redirects the numeric WordPress URL", () => { /* /project-view/1952/:rest* → /projects/green-bath-eye-clinic */ });
+it("redirects the numeric WordPress URL", () => { /* /project-view/1310/:rest* → /projects/asenov-129 */ });
 it("covers the static list of spec §9", () => { /* /about/, /contact/, /publications/, /services/:p*, /home/privacy-policy/, /portfolio_category/:p* */ });
-it("redirects an imported upload to its new URL", () => { /* /wp-content/uploads/2026/04/x.pdf → public storage URL */ });
-it("redirects an old slug from history", () => { /* old-slug → /projects/new-slug */ });
+it("redirects an imported upload to its new URL", () => { /* /wp-content/uploads/2026/04/x.pdf → /media/publications/x.pdf */ });
+it("redirects an old slug", () => { /* /projects/old-slug → /projects/new-slug */ });
 ```
 
 - [ ] **Step 2: Write the SEO tests.** `alternates("/projects/x")` returns `bg`, `en`, `de` and `x-default` URLs. `projectJsonLd` has `locationCreated.geo` only when the pin exists.
 - [ ] **Step 3: Run the tests.** Expected: FAIL.
-- [ ] **Step 4: Write the code.** Read the slugs at build time in `next.config.ts` `redirects()`. Return HTTP 410 for `/wp-admin*`, `/wp-login.php` and `/xmlrpc.php` in `middleware.ts`. Do not return 410 for other `/wp-content/*` URLs.
+- [ ] **Step 4: Write the code.** Build the redirects at build time in `next.config.ts` `redirects()`. Return HTTP 410 for `/wp-admin*`, `/wp-login.php` and `/xmlrpc.php` in `middleware.ts`. Do not return 410 for other `/wp-content/*` URLs.
 - [ ] **Step 5: Run the tests.** Expected: PASS.
 - [ ] **Step 6: Commit.** `git commit -m "feat(website): metadata, JSON-LD, sitemap and WordPress redirects"`
 
 ---
 
-### Task 12: Control app shell and sign-in
+### Task 12: Contributor guide and the demo deploy
 
 **Files:**
-- Create: `apps/control/` (Next.js App Router), `apps/control/middleware.ts`, `apps/control/lib/supabase/{client,server}.ts`, `apps/control/lib/auth.ts`, `apps/control/messages/{bg,en}.json` (next-intl, Bulgarian default)
-- Create: `apps/control/app/login/page.tsx`, `apps/control/app/(dashboard)/layout.tsx`, `apps/control/app/(dashboard)/account/page.tsx` (change password, set up TOTP)
-- Create: `apps/control/netlify.toml`
-- Test: `apps/control/lib/auth.test.ts`, `tests/e2e/control/auth.spec.ts`
-
-**Interfaces:**
-- Consumes: Task 4 RLS (`authenticated` writes).
-- Produces: `requireUser(): Promise<{ userId: string }>` (redirects to `/login` when there is no session; asks for the TOTP code when the session is AAL1 and a factor exists).
-
-- [ ] **Step 1: Write the auth tests.** `requireUser` redirects to `/login` without a session. It redirects to `/login/mfa` when the session is AAL1 and a verified factor exists.
-- [ ] **Step 2: Write the e2e tests.** A signed-out visit to `/` goes to `/login`. A signed-in visit shows every screen of `docs/control-pane-mapping.md` in the navigation.
-- [ ] **Step 3: Run the tests.** Expected: FAIL.
-- [ ] **Step 4: Copy the `apps/admin` shell from vamyart (see the Task 12 row in "Reuse from vamyart").** Rename it to `apps/control`. Remove tRPC. Keep `middleware.ts` and `lib/supabase/*` without change except the redirect target.
-- [ ] **Step 5: Write `requireUser`, the login page, the TOTP step and the account screen.** Use `supabase.auth.mfa` for TOTP.
-- [ ] **Step 6: Run the tests.** Expected: PASS.
-- [ ] **Step 7: Commit.** `git commit -m "feat(control): shared sign-in with TOTP"`
-
----
-
-### Task 13: Control projects editor
-
-**Files:**
-- Create: `apps/control/app/(dashboard)/projects/{page.tsx,[id]/page.tsx,actions.ts}`
-- Create: `apps/control/lib/image/resize.ts` (copy from vamyart), `apps/control/lib/geocode.ts`, `apps/control/lib/slug.ts`, `apps/control/lib/revalidate.ts`
-- Create: `apps/control/components/{LangFields,ImageUploader,PinPreview,SortableList}.tsx`
-- Test: `apps/control/lib/{slug,geocode}.test.ts`, `apps/control/app/(dashboard)/projects/actions.test.ts`, `tests/e2e/control/projects.spec.ts`
-
-**Interfaces:**
-- Consumes: Task 12 `requireUser`. Task 9 `projectCountry`, `projectCity` (import from `@tekom/ui` after you move `geo.ts` there in this task).
-- Produces:
-  - `slugify(bg: string): string` (Bulgarian transliteration by the official 2009 law system, lower case, hyphens).
-  - `geocode(address: string): Promise<{ lat: number; lng: number } | null>` (server-only, Nominatim, `User-Agent: tekomltd-control`, 1 request per second).
-  - Server actions `saveProject`, `publishProject`, `deleteProject`, `reorderProjects`, `uploadProjectImage`, `setCover`.
-  - `revalidateWebsite(paths: string[]): Promise<{ ok: boolean }>`.
-  - `<LangFields name="title" required="bg" />` (three inputs with a "translation missing" chip).
-
-- [ ] **Step 1: Write the slug tests.**
-
-```ts
-it("transliterates Bulgarian", () => expect(slugify("Жилищна сграда с гаражи")).toBe("zhilishtna-sgrada-s-garazhi"));
-it("handles щ and ъ", () => expect(slugify("Щастие ъгъл")).toBe("shtastie-agal"));
-```
-
-- [ ] **Step 2: Write the action tests.** `publishProject` refuses a project without `title_bg` or without a cover. A slug change writes the old slug to `project_slug_history`, so the old URL keeps a 301. A save calls `revalidateWebsite` with `/`, `/projects` and `/projects/<slug>`. When revalidation fails, the save still succeeds and returns `{ revalidated: false }`.
-- [ ] **Step 3: Write the e2e test.** Tekom creates a project, uploads two images, sets the cover, presses "Find on map", publishes, and sees the toast "Project published".
-- [ ] **Step 4: Run the tests.** Expected: FAIL.
-- [ ] **Step 5: Write the code.** Downscale images in the browser to 2400 px with `resize.ts`. Upload to `site-media/projects/<slug>/`. Show per-file progress.
-- [ ] **Step 6: Run the tests.** Expected: PASS.
-- [ ] **Step 7: Commit.** `git commit -m "feat(control): projects editor with images, location and publish"`
-
----
-
-### Task 14: Control content screens
-
-**Files:**
-- Create: `apps/control/components/ListEditor.tsx`, `apps/control/lib/screens.ts`
-- Create: `apps/control/app/(dashboard)/{rail-panels,promises,stats,crews,partner-services,materials,partners,eu-programmes,publications,legal}/page.tsx` and `actions.ts` for each
-- Test: `apps/control/lib/screens.test.ts`, `tests/e2e/control/content.spec.ts`
-
-**Interfaces:**
-- Consumes: Task 12 `requireUser`, Task 13 `LangFields`, `SortableList`, `revalidateWebsite`. Task 2 `GLYPHS`.
-- Produces: `SCREENS: Record<ScreenKey, { table; fields: FieldSpec[]; revalidate: string[] }>` that drives `ListEditor`. `FieldSpec` kinds: `lang`, `text`, `number`, `switch`, `glyph`, `image`, `file`, `markdown`, `select`.
-
-- [ ] **Step 1: Write the screen tests.** Every row of `docs/control-pane-mapping.md` (rows 3–13, 16, 17, 19) has a `SCREENS` entry. `rail-panels` allows one `accent` panel only. `crews.roles.tool` accepts only the 13 crew glyph keys. `partner-services.icon` accepts only the 13 service glyph keys.
-- [ ] **Step 2: Write the e2e test.** Tekom adds a partner. The public partners section appears after revalidation. Tekom removes it. The section disappears.
-- [ ] **Step 3: Run the tests.** Expected: FAIL.
-- [ ] **Step 4: Write `ListEditor` and the screens.** Use optimistic reorder and Undo on delete (`DESIGN.md` §10).
-- [ ] **Step 5: Run the tests.** Expected: PASS.
-- [ ] **Step 6: Commit.** `git commit -m "feat(control): content screens for every landing section"`
-
----
-
-### Task 15: Control settings, headline and enquiries
-
-**Files:**
-- Create: `apps/control/app/(dashboard)/settings/{page.tsx,actions.ts}`, `apps/control/app/(dashboard)/enquiries/{page.tsx,actions.ts}`
-- Test: `apps/control/app/(dashboard)/settings/actions.test.ts`, `apps/control/app/(dashboard)/enquiries/actions.test.ts`
-
-**Interfaces:**
-- Consumes: Task 2 `splitTurn`. Task 12 `requireUser`.
-- Produces: `saveSettings(form)`, `saveHeadline(locale, phrases: string[])`, `markHandled(id)`, `deleteEnquiry(id)`.
-
-- [ ] **Step 1: Write the headline test.** `saveHeadline("bg", ["Хората зад мазилката", "Екипът зад мечтата"])` returns an error that names "Екипът зад мечтата".
-- [ ] **Step 2: Write the enquiry tests.** A signed-out call to `deleteEnquiry` fails. Each listed row shows its auto-delete date (`created_at` + 12 months).
-- [ ] **Step 3: Run the tests.** Expected: FAIL.
-- [ ] **Step 4: Write the screens.** The headline field shows a live `TurningWord` preview.
-- [ ] **Step 5: Run the tests.** Expected: PASS.
-- [ ] **Step 6: Commit.** `git commit -m "feat(control): settings, crew headline and enquiries"`
-
----
-
-### Task 16: Deploy the demo
-
-**Files:**
-- Copy from vamyart: `DEPLOYMENT.md`, `.github/workflows/daily-pulse.yml`
-- Create: `tests/e2e/website/smoke.spec.ts`
-- Modify: `README.md`
+- Create: `CONTENT.md`, `.github/pull_request_template.md`, `tests/e2e/website/smoke.spec.ts`
+- Copy from vamyart and adapt: `DEPLOYMENT.md`
+- Modify: `README.md`, `tests/api/helpers.ts` (remove the unused tRPC helpers)
 
 **Interfaces:**
 - Consumes: all tasks.
-- Produces: two live Netlify sites and a filled Supabase project.
+- Produces: a live Netlify site and a guide that lets a non-developer change content with a pull request.
 
-- [ ] **Step 1: Create the Supabase project with the Supabase MCP.** Organisation `cfpyqpxyrupjnfactjko`, name `tekomltd`, region `eu-central-1`, plan free. Apply the migrations with `apply_migration`. Create the bucket `site-media` with public read (SQL on `storage.buckets`). Run `generate_typescript_types` and commit the result. Copy the service-role key and the database password from the dashboard into `.env.local` (the MCP does not return them). Run `pnpm seed && pnpm import:wp`. Run `get_advisors` and fix every security finding.
-- [ ] **Step 2: Create the Netlify sites with the Netlify MCP.** Use Tekom's team. Create `tekomltd-website` (package directory `apps/website`) and `tekomltd-control` (package directory `apps/control`), both from `blox-eng/tekomltd`, branch `main`. Approve the Netlify GitHub app on the `blox-eng` org for this repo when Netlify asks.
-- [ ] **Step 3: Set the environment variables.** Website: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `REVALIDATE_SECRET`, `SITE_URL`. Set `RESEND_API_KEY` and `MAIL_FROM` only after the sender domain is verified. Without them, the site stores enquiries and sends no mail. Control: the two Supabase public values, `SUPABASE_SERVICE_ROLE_KEY`, `REVALIDATE_SECRET`, `WEBSITE_URL`.
-- [ ] **Step 4: Create the shared Tekom account.** In the Supabase dashboard: Authentication → Sign In / Providers → turn off "Allow new users to sign up". Then Users → Add user with Tekom's e-mail and a generated password. Keep the password in Tekom's password manager. Sign in once and set up TOTP on the Account screen.
-- [ ] **Step 5: Write the smoke test.** It opens `/`, `/en/projects`, one project page, `/eu-programmes`, `/contact` and `/privacy` on the deployed URL and expects HTTP 200, no console error and no `@axe-core/playwright` violation of level `serious` or `critical`.
-- [ ] **Step 6: Run the smoke test.** Run: `SITE_URL=https://tekomltd-website.netlify.app pnpm --filter @tekom/tests test:e2e website/smoke`. Expected: PASS.
-- [ ] **Step 6b: Copy and adapt `daily-pulse.yml`.** Set the secrets `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY` and `PULSE_TO` in the GitHub repo.
-- [ ] **Step 6b2: Write `backup.yml`.** Run weekly (Sunday 02:00 UTC) and on `workflow_dispatch`. Run `pg_dump` with secret `DATABASE_URL`, list `site-media` objects, encrypt both with `age` to the public key in secret `BACKUP_AGE_RECIPIENT`, and upload them as an artifact with `retention-days: 90`. Set the GitHub secrets with `gh secret set` from `.env.local`.
-- [ ] **Step 6c: Turn on deploy previews.** In each Netlify site, set "Deploy previews" to "Any pull request" and the production branch to `main`.
-- [ ] **Step 7: Copy `DEPLOYMENT.md` from vamyart and adapt it.** Describe the DNS move from SuperHosting: apex and `www` to Netlify, `control` CNAME to the control site, and keep the MX records unchanged.
-- [ ] **Step 8: Commit.** `git commit -m "docs: deployment guide and smoke test"`
+- [ ] **Step 1: Write `CONTENT.md`.** In Bulgarian first, then English. Explain, with one example each: add a project (copy a folder, edit `project.yaml`, drop photos in), change a text, add a translation, hide a project (`draft: true`), add a publication PDF, add a partner. Explain how to do it in the GitHub web editor ("Add file → Upload files", "Edit", "Propose changes"), and that the deploy preview link in the pull request shows the result before the merge.
+- [ ] **Step 2: Write the pull request template.** It asks for the preview link check and runs through `content:check` in CI.
+- [ ] **Step 3: Write the smoke test.** It opens `/`, `/en/projects`, one project page, `/eu-programmes`, `/contact` and `/privacy` on `SITE_URL` and expects HTTP 200, no console error, no request to another host, and no `@axe-core/playwright` violation of level `serious` or `critical`.
+- [ ] **Step 4: Link the Netlify site.** Site `tekomltd-website` in Tekom's team: base directory `apps/website`, repo `blox-eng/tekomltd`, production branch `main`, deploy previews for any pull request. Turn off the visitor access control ("Team login") on this site so the demo is public. The Netlify GitHub app on `blox-eng` must allow the repo.
+- [ ] **Step 5: Deploy and run the smoke test.** Run: `SITE_URL=https://tekomltd-website.netlify.app pnpm --filter @tekom/tests test:e2e website/smoke`. Expected: PASS.
+- [ ] **Step 6: Copy `DEPLOYMENT.md` from vamyart and adapt it.** Keep only Netlify. Describe the DNS move from SuperHosting: apex and `www` to Netlify; keep the MX records unchanged. Do not change DNS.
+- [ ] **Step 7: Commit.** `git commit -m "docs: content guide, deployment guide and smoke test"`

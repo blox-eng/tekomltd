@@ -3,6 +3,8 @@
 Status: design locked 2026-10-14 (Martin). Reference build: `design/mockup/index.html` (open in a browser; the dark strip on top is mockup-only).
 Design canon: `DESIGN.md`. Feature → control mapping: `docs/control-pane-mapping.md`.
 
+> **Amendment 2026-10-14 (Martin):** the control app, Supabase, the contact form, Resend, revalidation, backups and the daily pulse are out of scope. All content lives in this repo (`content/`) and changes through pull requests. The site is fully static on one Netlify site. The contact page shows phone, e-mail and address only, so the site collects no personal data. Sections below that describe the control app, `control.tekomltd.com`, Supabase tables, RLS, enquiries or Resend are superseded by the amended plan; §7's field lists still define the content fields.
+
 ## 1. Intent
 
 Tekom (ТЕКОМ ООД, Stara Zagora) is a family-owned builder. The current WordPress site on SuperHosting is generic, slow and partly unindexed. The new site positions Tekom as **the premium construction and finishing-works partner in the local market**: a boutique firm whose own crew builds it right the first time, and which brings in trusted partners for everything else.

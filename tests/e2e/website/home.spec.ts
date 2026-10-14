@@ -64,6 +64,12 @@ test.describe('landing page', () => {
         await pin.dispatchEvent('click');
         await expect(page).toHaveURL(new RegExp(`${href}$`));
     });
+
+    test('the map pins a published project that is not on the rail', async ({ page }) => {
+        await page.goto('/en');
+        await expect(page.locator('[data-rail-track] a[href="/en/projects/stone-chapel"]')).toHaveCount(0);
+        await expect(page.locator('[data-map] a[href="/en/projects/stone-chapel"]').first()).toBeAttached();
+    });
 });
 
 test.describe('landing page, reduced motion', () => {

@@ -1,0 +1,21 @@
+# Translated title, Bulgarian-only summary, every fact, a WordPress identity and an old slug.
+slug: river-house
+title: { bg: Къща край реката, en: House by the river, de: Haus am Fluss }
+summary: { bg: Двуетажна къща с градина край реката. }
+place: { bg: Стара Загора, en: Stara Zagora, de: Stara Sagora }
+address: ул. „Тестова“ 2
+lat: 42.4258
+lng: 25.6345
+show_on_map: true
+year: 2024
+built_area_m2: 1200
+scopes: [full, facade]
+sort: 1
+wp_id: 1001
+wp_slug: къща-край-реката
+old_slugs: [old-river-house]
+images:
+  - file: front.jpg
+    is_cover: true
+    alt: { bg: Фасадата на къщата, en: The front of the house }
+  - file: garden.jpg

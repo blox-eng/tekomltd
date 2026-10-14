@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -22,9 +25,13 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm content:check
+      - name: Content check of the e2e fixture tree
+        run: pnpm --filter @tekom/website content:check ../../tests/fixtures/content
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
+      - name: Build the real content
+        run: pnpm build
 
   e2e:
     runs-on: ubuntu-latest
@@ -38,6 +45,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @tekom/tests exec playwright install --with-deps chromium
+      # The Playwright web server builds and serves tests/fixtures/content (CONTENT_ROOT), not content/.
       - run: pnpm --filter @tekom/tests test:e2e
         env:
           CI: 'true'

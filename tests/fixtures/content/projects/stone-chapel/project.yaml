@@ -1,0 +1,13 @@
+# No English title; on the map but not on the rail.
+slug: stone-chapel
+title: { bg: Параклис от камък }
+place: { bg: Казанлък }
+lat: 42.6191
+lng: 25.3931
+show_on_map: true
+year: 2019
+scopes: [restore, stone]
+sort: 2
+on_rail: false
+images:
+  - file: chapel.jpg

@@ -1,0 +1,8 @@
+# No year, no area, no coordinates.
+slug: town-flat
+title: { bg: Апартамент в центъра, en: Flat in the centre }
+place: { bg: Стара Загора, en: Stara Zagora }
+scopes: [interior]
+sort: 3
+images:
+  - file: kitchen.jpg

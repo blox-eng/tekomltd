@@ -29,7 +29,7 @@ test('no request leaves the site', async ({ page, baseURL }) => {
         foreign.push(request.url());
         return route.abort();
     });
-    for (const path of ['/', '/en', '/de', '/en/privacy', '/projects/art-gallery-centre', '/eu-programmes', '/publications', '/contact']) {
+    for (const path of ['/', '/en', '/de', '/en/privacy', '/projects/river-house', '/eu-programmes', '/publications', '/contact']) {
         await page.goto(path, { waitUntil: 'load' });
         await page.evaluate(() => {
             window.scrollTo(0, document.body.scrollHeight);
@@ -58,7 +58,7 @@ test('the Translation to follow note shows only on a fallback page', async ({ pa
 test('a legal page renders its title and last-updated date', async ({ page }) => {
     await page.goto('/en/privacy');
     await expect(page.getByRole('heading', { level: 1, name: 'Privacy policy' })).toBeVisible();
-    await expect(page.getByText('2026-10-14')).toBeVisible();
+    await expect(page.getByText('2026-01-15')).toBeVisible();
 });
 
 test('the quote button links to the localised contact page', async ({ page }) => {

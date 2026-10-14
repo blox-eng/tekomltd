@@ -106,7 +106,7 @@ function contactFacts() {
     const city = /Стара Загора, \d{4}/.exec(text)?.[0];
     const hours = /Пон – Пет .+?\d{1,2}\.\d{2} – \d{1,2}\.\d{2}/.exec(text)?.[0];
     const email = /[\w.]+@tekomltd\.com/.exec(text)?.[0];
-    if (phones.length < 2 || !street || !city || !hours || !email) throw new Error(`cannot read the contact facts from: ${text}`);
+    if (phones.length === 0 || !street || !city || !hours || !email) throw new Error(`cannot read the contact facts from: ${text}`);
     return { phones, address: `${street}, ${city}`, hours, email };
 }
 
@@ -126,7 +126,6 @@ function settings() {
             de: 'ul. Hadzhi Dimitar Asenov 119, Businesszentrum Tekom, 6000 Stara Sagora, Bulgarien'
         },
         phone: contact.phones[0],
-        phone_alt: contact.phones[1],
         hours: { bg: contact.hours, en: 'Mon–Fri 9:00–18:00', de: 'Mo–Fr 9:00–18:00' },
         email: contact.email,
         privacy_email: privacyEmail,

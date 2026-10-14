@@ -22,31 +22,7 @@
     },
     "why": {
         "h": "Build it right. <em>Take the risk out.</em>",
-        "p": "Most building problems start as small shortcuts nobody sees. We work so that nothing on your site goes unseen.",
-        "risks": {
-            "r1": {
-                "title": "A price you can plan on",
-                "text": "Quantities taken from the drawings and agreed before work starts, not discovered on site."
-            },
-            "r2": {
-                "title": "Done the right way",
-                "text": "Every layer to the manufacturer's system and Bulgarian standards, with materials you can trace."
-            },
-            "r3": {
-                "title": "Nothing hidden",
-                "text": "Daily photos and protocols of everything that gets covered up: insulation, waterproofing, installations."
-            },
-            "r4": {
-                "title": "Handover without surprises",
-                "text": "Signed off room by room, with documents and warranties in one place."
-            }
-        }
-    },
-    "numbers": {
-        "years": "years building in Stara Zagora*",
-        "area": "m² built on the projects shown here",
-        "buildings": "buildings, houses and a chapel, all still in use",
-        "family": "family, two generations on site*"
+        "p": "Most building problems start as small shortcuts nobody sees. We work so that nothing on your site goes unseen."
     },
     "map": {
         "h": "Where we have built",
@@ -63,12 +39,6 @@
     },
     "crew": {
         "photoPending": "Photo pending",
-        "heading": {
-            "lead": "The people behind",
-            "word1": "the plaster",
-            "word2": "your dream home",
-            "word3": "your trust"
-        },
         "p": "Our own people, on site and in the office. We tried to take their photo, but they were busy working.",
         "y": "years at Tekom"
     },
@@ -103,20 +73,12 @@
     "contact": {
         "h": "Tell us about your project",
         "p": "We reply within one working day and visit the site before we quote.",
-        "form": {
-            "name": "Name",
-            "message": "Message",
-            "consent": "I agree that ТЕКОМ ООД uses my details only to answer this enquiry.",
-            "submit": "Send enquiry",
-            "email": "Email"
-        },
         "phone": "Phone",
         "office": "Office",
         "email": "Email"
     },
     "footer": {
         "company": "Company",
-        "addr": "Stara Zagora, Bulgaria",
         "work": "Work",
         "services": "Services",
         "public": "Public information",

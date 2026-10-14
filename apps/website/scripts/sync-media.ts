@@ -1,15 +1,13 @@
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { basename, dirname, extname, join, relative, resolve } from 'node:path';
-import { parse } from 'yaml';
-import { defaultRoot } from '../src/content/load';
-import { PROJECT_FILE, PROJECTS_DIR } from '../src/content/paths';
+import { defaultRoot, readYaml } from '../src/content/load';
+import { PROJECT_FILE, projectFile, PROJECTS_DIR } from '../src/content/paths';
+import { Project } from '../src/content/schema';
 
 const MEDIA_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.svg', '.pdf', '.doc', '.docx', '.xls', '.xlsx']);
 
-const isDraftProject = (dir: string) => {
-    const file = join(dir, PROJECT_FILE);
-    return existsSync(file) && parse(readFileSync(file, 'utf8'))?.draft === true;
-};
+const isDraftProject = (root: string, folder: string) =>
+    existsSync(join(root, PROJECTS_DIR, folder, PROJECT_FILE)) && readYaml(root, projectFile(folder), Project).draft;
 
 /** Replaces `outDir` with every image and document under `contentRoot` (draft projects excluded), keeping the relative path. Returns the file count. */
 export function syncMedia(contentRoot: string, outDir: string): number {
@@ -21,7 +19,7 @@ export function syncMedia(contentRoot: string, outDir: string): number {
         for (const entry of readdirSync(dir, { withFileTypes: true })) {
             const path = join(dir, entry.name);
             if (entry.isDirectory()) {
-                if (dirname(path) === join(root, PROJECTS_DIR) && isDraftProject(path)) continue;
+                if (dirname(path) === join(root, PROJECTS_DIR) && isDraftProject(root, entry.name)) continue;
                 walk(path);
             } else if (MEDIA_EXTENSIONS.has(extname(entry.name).toLowerCase())) {
                 const target = join(outDir, relative(root, path));

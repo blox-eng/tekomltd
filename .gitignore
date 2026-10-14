@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+dist/
+.turbo/
+.netlify/
+.vercel/
+coverage/
+playwright-report/
+test-results/
+supabase/.temp/
+supabase/.branches/
+.env
+.env.*
+!.env-example
+*.local
+.DS_Store

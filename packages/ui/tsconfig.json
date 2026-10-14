@@ -1,4 +1,5 @@
 {
     "extends": "../../tsconfig.base.json",
-    "include": ["src"]
+    "include": ["src", "tailwind-preset.ts"],
+    "compilerOptions": { "jsx": "preserve" }
 }

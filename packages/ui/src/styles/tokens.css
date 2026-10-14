@@ -1,0 +1,259 @@
+/*
+ * Tekom design tokens: the only place colour, radius and motion values live.
+ * Rules and rationale: DESIGN.md at the repo root (sections 1 and 5).
+ *
+ * Theme selection: light by default; dark via [data-theme="dark"], or the OS preference
+ * unless the page pins [data-theme="light"].
+ */
+
+:root {
+    --bg: #f3f1ed;
+    --field: #fbfaf7;
+    --wall: #e8e4de;
+    --text: #1f1a17;
+    --muted: #5e5751;
+    --faint: #8a827b;
+    --line: rgba(31, 26, 23, 0.12);
+    --line-2: rgba(31, 26, 23, 0.06);
+    --accent: #ce2f23;
+    --on-accent: #ffffff;
+    --panel: #1f1a17;
+    --on-panel: #eee8e2;
+    --on-photo: #ffffff;
+    --neg: #8a3b2b;
+
+    --radius: 0;
+    --radius-chip: 2px;
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --dur-micro: 180ms;
+    --dur-standard: 240ms;
+    --dur-reveal: 600ms;
+
+    color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+    --bg: #161210;
+    --field: #1f1a17;
+    --wall: #1b1714;
+    --text: #eee8e2;
+    --muted: #ada49d;
+    --faint: #7f7670;
+    --line: rgba(238, 232, 226, 0.12);
+    --line-2: rgba(238, 232, 226, 0.06);
+    --accent: #e84046;
+    --on-accent: #161210;
+    --panel: #26201c;
+    --on-panel: #eee8e2;
+    --neg: #d07a63;
+    color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+        --bg: #161210;
+        --field: #1f1a17;
+        --wall: #1b1714;
+        --text: #eee8e2;
+        --muted: #ada49d;
+        --faint: #7f7670;
+        --line: rgba(238, 232, 226, 0.12);
+        --line-2: rgba(238, 232, 226, 0.06);
+        --accent: #e84046;
+        --on-accent: #161210;
+        --panel: #26201c;
+        --on-panel: #eee8e2;
+        --neg: #d07a63;
+        color-scheme: dark;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --dur-micro: 0ms;
+        --dur-standard: 0ms;
+        --dur-reveal: 0ms;
+    }
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* Primitives. Ported from design/mockup/mockup.tpl.html. */
+
+.glyph {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.link {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.btn,
+.ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 20px;
+    font: 500 15px var(--f-body);
+    letter-spacing: 0.01em;
+    border-radius: 0;
+    transition:
+        background-color var(--dur-micro) var(--ease),
+        border-color var(--dur-micro) var(--ease);
+}
+
+.btn {
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+.btn:hover {
+    background: color-mix(in srgb, var(--accent) 88%, var(--text));
+}
+
+.ghost {
+    border: 1px solid var(--line);
+    color: var(--text);
+}
+
+.ghost:hover {
+    border-color: var(--text);
+}
+
+.btn .ar,
+.ghost .ar,
+.link .ar {
+    display: inline-block;
+    transition: transform var(--dur-standard) var(--ease);
+}
+
+.btn:hover .ar,
+.ghost:hover .ar,
+.link:hover .ar {
+    transform: translateX(4px);
+}
+
+.stamp {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    opacity: 0;
+    transform: rotate(-7deg) scale(1.15);
+    transition:
+        opacity var(--dur-micro) var(--ease),
+        transform var(--dur-standard) var(--ease);
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    font: 600 10px/1.25 var(--f-mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 8px;
+    text-align: center;
+    background: color-mix(in srgb, var(--field) 70%, transparent);
+}
+
+.stamp small {
+    display: block;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    opacity: 0.8;
+}
+
+/* The host frame reveals the stamp: give it class "stamped" (or hover/focus-within it directly). */
+.stamped:hover .stamp,
+.stamped:focus-within .stamp {
+    opacity: 1;
+    transform: rotate(-7deg) scale(1);
+}
+
+/* The word that turns: dotted, falls in from above, the rest of the line never moves. */
+.turn {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: underline dotted;
+    text-decoration-color: var(--faint);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
+    transition: text-decoration-color 0.15s ease-out;
+    color: var(--accent);
+}
+
+.turn:hover,
+.turn:focus-visible {
+    text-decoration-color: currentColor;
+    outline: none;
+}
+
+.turn-in {
+    display: inline-block;
+    transform-origin: 50% 100%;
+}
+
+.turn-in.drop {
+    animation: turn-in 520ms cubic-bezier(0.55, 0, 1, 0.45) both;
+}
+
+.turn-out {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: turn-out 420ms cubic-bezier(0.55, 0, 1, 0.45) both;
+}
+
+@keyframes turn-in {
+    0% {
+        transform: translateY(-0.9em);
+        opacity: 0;
+    }
+    62% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    80% {
+        transform: scaleY(0.82);
+    }
+    100% {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@keyframes turn-out {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0.9em);
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .turn-in.drop,
+    .turn-out {
+        animation: none;
+    }
+
+    .turn-out {
+        display: none;
+    }
+}

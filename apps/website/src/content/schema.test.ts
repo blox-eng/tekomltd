@@ -108,6 +108,13 @@ describe('smaller types', () => {
 describe('checkContent', () => {
     it('passes a complete valid tree', () => expect(checkContent(fixture('valid'))).toEqual({ ok: true }));
 
+    it('reports a published project without photos, but allows a draft', () => {
+        const r = checkContent(fixture('no-photos'));
+        expect(r.ok).toBe(false);
+        if (r.ok) return;
+        expect(r.errors).toEqual([{ file: 'projects/bare-site/project.yaml', path: 'images', message: expect.stringMatching(/no photos/) }]);
+    });
+
     it('reports a missing image with its file', () => {
         const r = checkContent(fixture('missing-image'));
         expect(r.ok).toBe(false);

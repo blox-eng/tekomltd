@@ -15,6 +15,20 @@ describe('L', () => {
     it('rejects another locale', () => expect(L.safeParse({ bg: 'x', fr: 'y' }).success).toBe(false));
 });
 
+describe('RailPanel invite', () => {
+    const invite = {
+        kind: 'invite',
+        after_project_index: 3,
+        label: { bg: 'Следващият обект' },
+        lead: { bg: 'Тук може да е' },
+        turns: [{ bg: 'вашият дом' }, { bg: 'вашата мечта' }],
+        body: { bg: 'Разкажете ни.' }
+    };
+    it('accepts an invite slide', () => expect(RailPanel.safeParse(invite).success).toBe(true));
+    it('needs at least one turning word', () => expect(RailPanel.safeParse({ ...invite, turns: [] }).success).toBe(false));
+    it('needs Bulgarian for every turning word', () => expect(RailPanel.safeParse({ ...invite, turns: [{ en: 'your home' }] }).success).toBe(false));
+});
+
 describe('Project', () => {
     it('accepts the minimal project and fills defaults', () => {
         const r = Project.parse(minimal);

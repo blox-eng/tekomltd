@@ -10,6 +10,7 @@ import { Stats } from '@/components/home/Stats';
 import { Trust } from '@/components/home/Trust';
 import { MapSection } from '@/components/map/MapSection';
 import { CrewStatSlide } from '@/components/rail/CrewStatSlide';
+import { InviteSlide } from '@/components/rail/InviteSlide';
 import { PanelSlide } from '@/components/rail/PanelSlide';
 import { ProjectSlide } from '@/components/rail/ProjectSlide';
 import { Rail } from '@/components/rail/Rail';
@@ -71,6 +72,10 @@ export default async function HomePage({ params }: Props) {
                     if (item.kind === 'panel') {
                         const { label, title, body, accent } = item.panel;
                         return <PanelSlide key={`panel-${i}`} label={label} title={title} body={body} accent={accent} contactLabel={nav('contact')} />;
+                    }
+                    if (item.kind === 'invite') {
+                        const { label, lead, turns, body } = item.panel;
+                        return <InviteSlide key={`invite-${i}`} label={label} lead={lead} turns={turns} body={body} contactLabel={nav('contact')} />;
                     }
                     return (
                         <CrewStatSlide

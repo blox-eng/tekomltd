@@ -72,6 +72,6 @@ test.describe('landing rail on desktop', () => {
 
     test('shows square project photos at full rail height', async ({ page }) => {
         await page.goto('/');
-        await expectSquare(page.locator('[data-rail-track] a[href^="/projects/"] img'));
+        await expectSquare(page.locator('[data-rail-copy="real"] a[href^="/projects/"] img'));
     });
 });

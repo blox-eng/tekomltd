@@ -9,7 +9,8 @@ import { getSettings, type SiteSettings } from './settings';
 
 export type Panel =
     | { kind: 'capability'; afterProjectIndex: number; accent: boolean; label: string; title: string; body: string }
-    | { kind: 'crew_stat'; afterProjectIndex: number; statValue: string; unit: string; body: string; unconfirmed: boolean };
+    | { kind: 'crew_stat'; afterProjectIndex: number; statValue: string; unit: string; body: string; unconfirmed: boolean }
+    | { kind: 'invite'; afterProjectIndex: number; label: string; lead: string; turns: string[]; body: string };
 
 export type CrewRoleView = { tool: string; role: string; years: number; quip: string };
 export type Crew = { key: 'site' | 'office'; scene: 'site' | 'office'; title: string; body: string; groupPhoto: Img | null; roles: CrewRoleView[] };
@@ -39,18 +40,20 @@ export function getHome(locale: Locale, root: string = defaultRoot()): HomeData 
     return {
         rail: listRailProjects(locale, root),
         map: listProjects(locale, root).filter((card) => card.pin !== null),
-        panels: home.rail_panels.map((p) =>
-            p.kind === 'capability'
-                ? { kind: p.kind, afterProjectIndex: p.after_project_index, accent: p.accent, label: t(p.label), title: t(p.title), body: t(p.body) }
-                : {
-                      kind: p.kind,
-                      afterProjectIndex: p.after_project_index,
-                      statValue: value(p.stat_value),
-                      unit: t(p.unit),
-                      body: t(p.body),
-                      unconfirmed: p.unconfirmed
-                  }
-        ),
+        panels: home.rail_panels.map((p): Panel => {
+            if (p.kind === 'capability')
+                return { kind: p.kind, afterProjectIndex: p.after_project_index, accent: p.accent, label: t(p.label), title: t(p.title), body: t(p.body) };
+            if (p.kind === 'invite')
+                return { kind: p.kind, afterProjectIndex: p.after_project_index, label: t(p.label), lead: t(p.lead), turns: p.turns.map(t), body: t(p.body) };
+            return {
+                kind: p.kind,
+                afterProjectIndex: p.after_project_index,
+                statValue: value(p.stat_value),
+                unit: t(p.unit),
+                body: t(p.body),
+                unconfirmed: p.unconfirmed
+            };
+        }),
         promises: home.promises.map((p) => ({ title: t(p.title), body: t(p.body) })),
         stats: home.stats.map((s) => ({ value: typeof s.value === 'number' ? s.value : value(s.value), label: t(s.label), unconfirmed: s.unconfirmed })),
         crews: home.crews.map((c) => ({

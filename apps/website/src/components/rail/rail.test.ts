@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import type { ProjectCard } from '@/content/cards';
 import type { Panel } from '@/content/home';
-import { activeIndex, buildRail, collageTools } from './rail';
+import { activeIndex, buildRail, collageTools, recenter } from './rail';
 
 const project = (slug: string) => ({ slug }) as ProjectCard;
 const [p0, p1, p2] = [project('a'), project('b'), project('c')] as [ProjectCard, ProjectCard, ProjectCard];
 const cap = (afterProjectIndex: number, title = 'cap'): Panel => ({ kind: 'capability', afterProjectIndex, accent: false, label: '', title, body: '' });
+const invite = (afterProjectIndex: number): Panel => ({ kind: 'invite', afterProjectIndex, label: '', lead: 'Тук може да е', turns: ['вашият дом'], body: '' });
 const crew = (afterProjectIndex: number): Panel => ({ kind: 'crew_stat', afterProjectIndex, statValue: '35', unit: '', body: '', unconfirmed: false });
 
 describe('buildRail', () => {
@@ -22,6 +23,10 @@ describe('buildRail', () => {
         const items = buildRail([p0, p1], [cap(0, 'first'), crew(0), cap(0, 'third')]);
         expect(items.map((i) => i.kind)).toEqual(['project', 'panel', 'crew', 'panel', 'project']);
         expect(items.flatMap((i) => (i.kind === 'panel' ? [i.panel.kind === 'capability' ? i.panel.title : ''] : []))).toEqual(['first', 'third']);
+    });
+
+    it('places an invite slide like any other panel', () => {
+        expect(buildRail([p0, p1], [invite(0), invite(9)]).map((i) => i.kind)).toEqual(['project', 'invite', 'project', 'invite']);
     });
 
     it('returns only panels when there are no projects', () => {
@@ -54,4 +59,19 @@ describe('collageTools', () => {
     it('is empty without tools', () => {
         expect(collageTools([], 0)).toEqual([]);
     });
+});
+
+describe('recenter', () => {
+    const loop = 1000;
+    it('keeps a position inside the middle copy', () => {
+        expect(recenter(500, loop)).toBe(500);
+        expect(recenter(1000, loop)).toBe(1000);
+        expect(recenter(1499, loop)).toBe(1499);
+    });
+
+    it('moves a position in the first copy forward by one copy', () => expect(recenter(120, loop)).toBe(1120));
+
+    it('moves a position in the last copy back by one copy', () => expect(recenter(1600, loop)).toBe(600));
+
+    it('does nothing when the rail does not loop', () => expect(recenter(120, 0)).toBe(120));
 });

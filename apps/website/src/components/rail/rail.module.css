@@ -34,11 +34,7 @@
 
 .project {
     display: block;
-    aspect-ratio: 4 / 5;
-}
-
-.project.wide {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 1 / 1;
 }
 
 .project img {
@@ -259,7 +255,6 @@
     }
 
     .project,
-    .project.wide,
     .panel,
     .crew {
         aspect-ratio: auto;

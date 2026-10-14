@@ -34,6 +34,15 @@ describe('Project', () => {
     it('rejects coordinates outside the globe', () => {
         expect(Project.safeParse({ ...minimal, lat: 91, lng: 25 }).success).toBe(false);
     });
+    it('defaults an image focus to center and accepts the five focus words', () => {
+        expect(Project.parse({ ...minimal, images: [{ file: 'a.jpg' }] }).images[0]!.focus).toBe('center');
+        for (const focus of ['center', 'top', 'bottom', 'left', 'right']) {
+            expect(Project.safeParse({ ...minimal, images: [{ file: 'a.jpg', focus }] }).success).toBe(true);
+        }
+    });
+    it('rejects an unknown image focus', () => {
+        expect(Project.safeParse({ ...minimal, images: [{ file: 'a.jpg', focus: 'middle' }] }).success).toBe(false);
+    });
     it('needs lat and lng together', () => expect(Project.safeParse({ ...minimal, lat: 42 }).success).toBe(false));
     it('rejects a file path that leaves the content folder', () => {
         const image = { file: '../secret.jpg' };

@@ -62,6 +62,18 @@ describe('checkContent: projects', () => {
     });
 });
 
+describe('checkContent: image focus', () => {
+    it('names the image and the allowed words when a focus is wrong', () => {
+        const root = tree((r) => edit(r, PROJECT, (text) => text.replace('    is_cover: true', '    is_cover: true\n    focus: middle')));
+        expect(errorsOf(root)).toEqual([{ file: PROJECT, path: 'images.0.focus', message: expect.stringMatching(/center.*top.*bottom.*left.*right/) }]);
+    });
+
+    it('accepts a valid focus', () => {
+        const root = tree((r) => edit(r, PROJECT, (text) => text.replace('    is_cover: true', '    is_cover: true\n    focus: top')));
+        expect(errorsOf(root)).toEqual([]);
+    });
+});
+
 describe('checkContent: required files', () => {
     it('requires eu-programmes.yaml and publications.yaml, which the site reads', () => {
         const root = tree((r) => {

@@ -19,7 +19,10 @@ export default defineConfig({
         {
             name: 'chromium',
             use: { ...devices['Desktop Chrome'] }
-        }
+        },
+        // Layout that browsers render differently (square thumbnails) also runs in Firefox and WebKit.
+        { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testMatch: /thumbnails\.spec\.ts/ },
+        { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: /thumbnails\.spec\.ts/ }
     ],
     // Builds and serves the fixture content in production mode: the site is static, so the e2e run tests what ships.
     // A server that is already running may serve other content, so it is never reused.

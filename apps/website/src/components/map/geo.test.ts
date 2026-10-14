@@ -10,8 +10,7 @@ const card: ProjectCard = {
     year: 2020,
     areaM2: 100,
     scopes: ['full'],
-    cover: { src: '/media/a.jpg', width: 10, height: 10, alt: '' },
-    wide: false,
+    cover: { src: '/media/a.jpg', width: 10, height: 10, alt: '', focus: 'center' },
     pin: { lat: 42.4256, lng: 25.6241 }
 };
 

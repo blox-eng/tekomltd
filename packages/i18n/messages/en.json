@@ -55,7 +55,8 @@
         "scope": "Our scope",
         "next": "Next:",
         "inBulgarian": "Description in Bulgarian. Translation to follow.",
-        "cta": "Planning something similar? Talk to us"
+        "cta": "Planning something similar? Talk to us",
+        "fullPhoto": "Full photo: {alt}"
     },
     "eu": {
         "h": "EU programmes and publications",

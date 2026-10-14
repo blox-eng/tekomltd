@@ -1,9 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { toProjectCard } from './cards';
-import type { Img } from './load';
+import { toProjectCard, type ProjectImg } from './cards';
 import type { Project } from './schema';
 
-const cover: Img = { src: '/media/projects/a/cover.jpg', width: 4, height: 3, alt: 'Cover' };
+const cover: ProjectImg = { src: '/media/projects/a/cover.jpg', width: 4, height: 3, alt: 'Cover', focus: 'center' };
 const project: Project = {
     slug: 'green-bath-eye-clinic',
     title: { bg: 'Очен център', en: 'Eye clinic' },
@@ -32,7 +31,6 @@ describe('toProjectCard', () => {
             areaM2: 872,
             scopes: ['restore'],
             cover,
-            wide: true,
             pin: { lat: 42.4, lng: 25.6 }
         });
     });

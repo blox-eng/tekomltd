@@ -38,8 +38,8 @@ export default async function ProjectsPage({ params }: Props) {
                 <p>{map('p')}</p>
             </section>
             <ul className={styles.grid}>
-                {listProjects(locale).map((project) => (
-                    <ProjectTile key={project.slug} project={project} scopeLabels={scopeLabels} note={root('note')} />
+                {listProjects(locale).map((project, index) => (
+                    <ProjectTile key={project.slug} project={project} scopeLabels={scopeLabels} note={root('note')} eager={index < 3} />
                 ))}
             </ul>
         </div>

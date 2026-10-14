@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { LOCALES, type Locale } from '@tekom/i18n';
 import { fallbackNote, projectFacts } from '@/components/projects/facts';
+import { SquareImage } from '@/components/projects/SquareImage';
 import styles from '@/components/projects/projects.module.css';
 import { allProjectSlugs, getProject } from '@/content/projects';
 import { JsonLd } from '@/components/JsonLd';
@@ -69,9 +70,9 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 {t('back')}
             </Link>
             <div className={styles.dhead}>
-                <div className={styles.dhero}>
+                <a href={cover.src} className={styles.dhero} aria-label={t('fullPhoto', { alt: cover.alt })}>
                     <Image src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} sizes="(max-width: 860px) 100vw, 60vw" priority />
-                </div>
+                </a>
                 <div>
                     <div className={styles.scope}>
                         {project.scopes.map((key) => (
@@ -103,14 +104,9 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 <ul className={styles.gallery}>
                     {gallery.map((image) => (
                         <li key={image.src}>
-                            <Image
-                                src={image.src}
-                                alt={image.alt}
-                                width={image.width}
-                                height={image.height}
-                                sizes="(max-width: 520px) 100vw, (max-width: 860px) 50vw, 33vw"
-                                loading="lazy"
-                            />
+                            <a href={image.src} aria-label={t('fullPhoto', { alt: image.alt })}>
+                                <SquareImage image={image} sizes="(max-width: 520px) 100vw, (max-width: 860px) 50vw, 420px" />
+                            </a>
                         </li>
                     ))}
                 </ul>

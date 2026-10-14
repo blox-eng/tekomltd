@@ -1,7 +1,7 @@
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Locale } from '@tekom/i18n';
-import { toProjectCard, type ProjectCard } from './cards';
+import { toProjectCard, type ProjectCard, type ProjectImg } from './cards';
 import { defaultRoot, imgOrNull, loadImg, once, readYaml, t, text, textOrNull, type Img } from './load';
 import { PROJECTS_DIR, projectFile } from './paths';
 import { Project } from './schema';
@@ -12,7 +12,7 @@ export type ProjectDetail = ProjectCard & {
     address: string | null;
     summary: string | null;
     summaryFallback: boolean;
-    images: Img[];
+    images: ProjectImg[];
     position: number;
     total: number;
     next: { slug: string; title: string };
@@ -38,11 +38,11 @@ function loadProjects(root: string): Loaded[] {
     });
 }
 
-function images({ project, file }: Loaded, root: string, locale: Locale): Img[] {
-    return project.images.map((i) => loadImg(root, file, i.file, text(i.alt ?? project.title, locale)));
+function images({ project, file }: Loaded, root: string, locale: Locale): ProjectImg[] {
+    return project.images.map((i) => ({ ...loadImg(root, file, i.file, text(i.alt ?? project.title, locale)), focus: i.focus }));
 }
 
-function coverOf(loaded: Loaded, root: string, locale: Locale): Img {
+function coverOf(loaded: Loaded, root: string, locale: Locale): ProjectImg {
     const index = Math.max(
         0,
         loaded.project.images.findIndex((i) => i.is_cover)

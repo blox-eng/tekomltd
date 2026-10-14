@@ -1,5 +1,7 @@
 # Landing features → control app
 
+> **Superseded 2026-10-14:** there is no control app. Each "Table(s)" below is now a file under `content/` (see the plan, Task 4), edited through a pull request. The "Controls" column lists the fields that content file holds.
+
 Each row is a feature visible on tekomltd.com (see `design/mockup/index.html`), the table that feeds it (spec §7), and the screen and controls Tekom needs in `control.tekomltd.com`. "BG/EN/DE" means three text fields with the Bulgarian one required and a "translation missing" chip on the others. Every list screen has drag-to-reorder (`sort`), a Published switch, and Undo on delete. Every save revalidates the affected public paths.
 
 Access: one shared Tekom login (spec §7). Anyone signed in can use every screen.

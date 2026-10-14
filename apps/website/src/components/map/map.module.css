@@ -64,6 +64,11 @@ a:focus-visible > .pin {
     r: 9;
 }
 
+a:focus-visible > .pin {
+    stroke: var(--text);
+    stroke-width: 3;
+}
+
 .cluster {
     fill: var(--accent);
     stroke: var(--field);

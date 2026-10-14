@@ -19,16 +19,26 @@ test('theme choice survives a reload without a flash', async ({ page }) => {
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 
-test('no request leaves the site', async ({ page }) => {
-    const hosts = new Set<string>();
-    page.on('request', (r) => {
-        if (r.url().startsWith('http')) hosts.add(new URL(r.url()).host);
+test('no request leaves the site', async ({ page, baseURL }) => {
+    const siteOrigin = new URL(baseURL!).origin;
+    const foreign: string[] = [];
+    await page.route('**/*', (route) => {
+        const request = route.request();
+        const origin = new URL(request.url()).origin;
+        if (!request.url().startsWith('http') || origin === siteOrigin) return route.continue();
+        foreign.push(request.url());
+        return route.abort();
     });
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
-    await page.goto('/en/privacy');
-    await page.waitForTimeout(1500);
-    expect([...hosts].every((h) => h === new URL(page.url()).host)).toBe(true);
+    for (const path of ['/', '/en', '/de', '/en/privacy']) {
+        await page.goto(path, { waitUntil: 'load' });
+        await page.evaluate(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+            document.querySelectorAll('img[loading=lazy]').forEach((img) => img.setAttribute('loading', 'eager'));
+        });
+        await page.waitForFunction(() => [...document.images].every((img) => img.complete));
+        await page.waitForLoadState('load');
+    }
+    expect(foreign).toEqual([]);
 });
 
 test('no cookie is set', async ({ page, context }) => {

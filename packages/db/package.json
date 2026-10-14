@@ -2,12 +2,30 @@
     "name": "@tekom/db",
     "version": "0.1.0",
     "private": true,
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts",
+        "./schema": "./src/schema.ts",
+        "./testing": "./src/testing.ts"
+    },
     "scripts": {
         "lint": "prettier --check .",
         "typecheck": "tsc --noEmit",
-        "test": "vitest run --passWithNoTests"
+        "test": "vitest run",
+        "test:rls": "vitest run --config vitest.rls.config.ts",
+        "migrate": "drizzle-kit migrate",
+        "generate": "drizzle-kit generate",
+        "studio": "drizzle-kit studio"
+    },
+    "dependencies": {
+        "@supabase/supabase-js": "^2.117.3",
+        "drizzle-orm": "^0.45.4"
     },
     "devDependencies": {
+        "@electric-sql/pglite": "^0.5.10",
+        "dotenv": "^16.6.1",
+        "drizzle-kit": "^0.31.11",
+        "postgres": "^3.4.9",
         "prettier": "^3.8.3",
         "typescript": "^5.9.3",
         "vitest": "^2.1.9"

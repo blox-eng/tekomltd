@@ -1,11 +1,9 @@
-import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import { Button } from '@tekom/ui';
+import { Button, TekomMark } from '@tekom/ui';
 import type { Locale } from '@tekom/i18n';
 import { getSettings } from '@/content/settings';
 import { localePath } from '@/i18n/routing';
 import { Link } from '@/i18n/navigation';
-import logo from '@/assets/tekom-logo.png';
 import { LangSwitch } from './LangSwitch';
 import { NavLinks } from './NavLinks';
 import { ThemeToggle } from './ThemeToggle';
@@ -18,7 +16,8 @@ export async function Header({ locale }: { locale: Locale }) {
         <header className="site-header">
             <div className="wrap">
                 <Link href="/" className="logo" aria-label="Tekom home">
-                    <Image src={logo} alt="Tekom" priority />
+                    <TekomMark className="logo-mark" />
+                    <span className="logo-word">{locale === 'bg' ? 'ТЕКОМ' : 'TEKOM'}</span>
                 </Link>
                 <NavLinks
                     items={[

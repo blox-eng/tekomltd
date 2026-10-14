@@ -10,7 +10,7 @@ export type SiteSettings = {
     vat: string | null;
     address: string;
     phone: string;
-    phoneAlt: string | null;
+    phoneHref: string;
     hours: string | null;
     email: string;
     privacyEmail: string;
@@ -32,7 +32,7 @@ export function getSettings(locale: Locale, root: string = defaultRoot()): SiteS
         vat: s.vat ?? null,
         address: text(s.address, locale),
         phone: s.phone,
-        phoneAlt: s.phone_alt ?? null,
+        phoneHref: `tel:${s.phone.replace(/[^\d+]/g, '')}`,
         hours: textOrNull(s.hours, locale),
         email: s.email,
         privacyEmail: s.privacy_email,

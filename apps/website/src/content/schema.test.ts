@@ -18,7 +18,7 @@ describe('L', () => {
 describe('Project', () => {
     it('accepts the minimal project and fills defaults', () => {
         const r = Project.parse(minimal);
-        expect(r).toMatchObject({ show_on_map: false, wide: false, on_rail: false, draft: false, old_slugs: [], scopes: [], images: [] });
+        expect(r).toMatchObject({ show_on_map: false, wide: false, on_rail: true, draft: false, old_slugs: [], scopes: [], images: [] });
     });
     it('needs a Bulgarian title', () => expect(Project.safeParse({ ...minimal, title: { en: 'x' } }).success).toBe(false));
     it('allows only known scopes', () => expect(Project.safeParse({ ...minimal, scopes: ['roofing'] }).success).toBe(false));
@@ -116,7 +116,7 @@ describe('smaller types', () => {
     it('Settings needs the founding year', () => {
         const s = { legal_name: 'Т', address: { bg: 'а' }, phone: '1', email: 'a@b.bg', privacy_email: 'p@b.bg', crew_headline: { bg: ['А б', 'А в'] } };
         expect(Settings.safeParse(s).success).toBe(false);
-        expect(Settings.safeParse({ ...s, founded: 1991, phone_alt: '2', hours: { bg: 'Пон – Пет' } }).success).toBe(true);
+        expect(Settings.safeParse({ ...s, founded: 1991, hours: { bg: 'Пон – Пет' } }).success).toBe(true);
     });
     it('Publication takes office documents and scans, not programs', () => {
         const p = { kind: 'procurement', title: { bg: 'Покана' }, published_on: '2026-03-17' };
@@ -214,11 +214,11 @@ describe('checkContent', () => {
         );
     });
 
-    it('requires settings.yaml and home.yaml when the root exists', () => {
+    it('requires settings.yaml, home.yaml, eu-programmes.yaml and publications.yaml when the root exists', () => {
         const r = checkContent(fixture('no-required-files'));
         expect(r.ok).toBe(false);
         if (r.ok) return;
-        expect(r.errors.map((e) => e.file)).toEqual(['settings.yaml', 'home.yaml']);
+        expect(r.errors.map((e) => e.file)).toEqual(['settings.yaml', 'home.yaml', 'publications.yaml']);
     });
 
     it('rejects image sizes in content files', () => {

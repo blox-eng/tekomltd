@@ -3,7 +3,7 @@ import type { ProjectCard } from './cards';
 import { defaultRoot, imgOrNull, loadImg, once, readYaml, text } from './load';
 import type { Img } from './load';
 import { HOME_FILE } from './paths';
-import { listRailProjects } from './projects';
+import { listProjects, listRailProjects } from './projects';
 import { Home } from './schema';
 import { getSettings, type SiteSettings } from './settings';
 
@@ -16,6 +16,8 @@ export type Crew = { key: 'site' | 'office'; scene: 'site' | 'office'; title: st
 
 export type HomeData = {
     rail: ProjectCard[];
+    /** Every published project that has a pin, on the rail or not. */
+    map: ProjectCard[];
     panels: Panel[];
     promises: { title: string; body: string }[];
     stats: { value: number | string; label: string; unconfirmed: boolean }[];
@@ -36,6 +38,7 @@ export function getHome(locale: Locale, root: string = defaultRoot()): HomeData 
     const value = (v: string) => fillYears(v, settings.founded);
     return {
         rail: listRailProjects(locale, root),
+        map: listProjects(locale, root).filter((card) => card.pin !== null),
         panels: home.rail_panels.map((p) =>
             p.kind === 'capability'
                 ? { kind: p.kind, afterProjectIndex: p.after_project_index, accent: p.accent, label: t(p.label), title: t(p.title), body: t(p.body) }

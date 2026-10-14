@@ -7,7 +7,9 @@ export const routing = defineRouting({
     localePrefix: 'as-needed',
     // The site sets no cookie and never redirects on Accept-Language.
     localeCookie: false,
-    localeDetection: false
+    localeDetection: false,
+    // Pages set their own hreflang alternates, which leave out locales that only show the Bulgarian fallback.
+    alternateLinks: false
 });
 
 /** Public path of `path` in `locale`: Bulgarian has no prefix. */

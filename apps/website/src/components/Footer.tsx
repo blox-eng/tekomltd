@@ -33,7 +33,7 @@ export async function Footer({ locale }: { locale: Locale }) {
                             {registration && <li>{registration}</li>}
                             <li>{settings.address}</li>
                             <li className="mono">
-                                <a href={`tel:${settings.phone.replace(/\s/g, '')}`}>{settings.phone}</a>
+                                <a href={settings.phoneHref}>{settings.phone}</a>
                             </li>
                         </ul>
                     </div>

@@ -3,6 +3,9 @@ title: { bg: Трети обект, en: Third site }
 place: { bg: Казанлък }
 sort: 3
 on_rail: false
+lat: 42.6191
+lng: 25.3931
+show_on_map: true
 year: 2020
 images:
   - file: a.png

@@ -7,8 +7,6 @@ import { pageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
-const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, '')}`;
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const [t, contact] = await Promise.all([getTranslations({ locale, namespace: 'nav' }), getTranslations({ locale, namespace: 'contact' })]);
@@ -20,7 +18,6 @@ export default async function ContactPage({ params }: Props) {
     setRequestLocale(locale);
     const t = await getTranslations({ locale, namespace: 'contact' });
     const settings = getSettings(locale);
-    const phones = [settings.phone, settings.phoneAlt].filter((phone): phone is string => phone !== null);
 
     return (
         <div className={`wrap ${styles.page}`}>
@@ -29,11 +26,7 @@ export default async function ContactPage({ params }: Props) {
             <dl className={`facts ${styles.contact}`}>
                 <dt>{t('phone')}</dt>
                 <dd>
-                    {phones.map((phone) => (
-                        <a key={phone} href={telHref(phone)}>
-                            {phone}
-                        </a>
-                    ))}
+                    <a href={settings.phoneHref}>{settings.phone}</a>
                 </dd>
                 <dt>{t('email')}</dt>
                 <dd>

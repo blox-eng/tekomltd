@@ -68,6 +68,9 @@ describe('getHome', () => {
     it('puts only published on-rail projects on the rail, in sort order', () => {
         expect(getHome('bg', root).rail.map((c) => c.slug)).toEqual(['old-town-house', 'green-bath-eye-clinic']);
     });
+    it('pins every published project with show_on_map and coordinates, on the rail or not', () => {
+        expect(getHome('bg', root).map.map((c) => c.slug)).toEqual(['green-bath-eye-clinic', 'third-site']);
+    });
     it('returns an empty partners list', () => expect(getHome('bg', root).partners).toEqual([]));
     it('localises panels, stats and crews', () => {
         const home = getHome('en', root);
@@ -99,7 +102,7 @@ describe('getSettings', () => {
         expect(getSettings('en', root)).toMatchObject({ legalName: 'ТЕКОМ ООД', address: 'Stara Zagora, Bulgaria', email: 'office@example.com' });
     });
     it('carries the founding year, the second phone and the office hours', () => {
-        expect(getSettings('en', root)).toMatchObject({ founded: 1991, phoneAlt: '+359 88 000 000', hours: 'Пон – Пет 9.00 – 18.00' });
+        expect(getSettings('en', root)).toMatchObject({ founded: 1991, hours: 'Пон – Пет 9.00 – 18.00', phoneHref: 'tel:+35942000000' });
     });
 });
 

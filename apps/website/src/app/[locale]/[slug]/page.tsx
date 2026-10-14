@@ -7,13 +7,11 @@ import { allPageSlugs, getLegalPage, getPage } from '@/content/public-info';
 import { Link } from '@/i18n/navigation';
 import { fallbackLocalesOf } from '@/lib/fallbacks';
 import { describe, pageMetadata } from '@/lib/seo';
-import { LEGAL_SLUGS, type LegalSlug } from '@/content/paths';
+import { isLegalSlug, LEGAL_SLUGS } from '@/content/paths';
 
 export const dynamicParams = false;
 
 type Params = { locale: Locale; slug: string };
-
-const isLegalSlug = (s: string): s is LegalSlug => (LEGAL_SLUGS as readonly string[]).includes(s);
 
 /** Legal pages and the pages carried over from the old site share one layout and one route segment. */
 const load = (slug: string, locale: Locale) => (isLegalSlug(slug) ? getLegalPage(slug, locale) : getPage(slug, locale));

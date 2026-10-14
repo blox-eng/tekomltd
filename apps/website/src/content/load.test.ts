@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { checkContent } from './check';
 import { getHome } from './home';
 import { allProjectSlugs, getProject, listProjects } from './projects';
-import { getLegalPage, listProgrammes, listPublications } from './public-info';
+import { allPageSlugs, getLegalPage, getPage, listProgrammes, listPublications } from './public-info';
 import { getSettings } from './settings';
 
 const root = join(__dirname, '__fixtures__', 'loader');
@@ -70,8 +70,12 @@ describe('getHome', () => {
     it('localises panels, stats and crews', () => {
         const home = getHome('en', root);
         expect(home.panels[0]).toMatchObject({ kind: 'capability', afterProjectIndex: 0, accent: true, label: 'Our own crew', title: 'Facades' });
-        expect(home.panels[1]).toMatchObject({ kind: 'crew_stat', statValue: '25', unit: 'years on site' });
-        expect(home.stats).toEqual([{ value: '25', label: 'години строим в Стара Загора', unconfirmed: true }]);
+        const years = String(new Date().getFullYear() - 1991);
+        expect(home.panels[1]).toMatchObject({ kind: 'crew_stat', statValue: years, unit: 'years on site', unconfirmed: false });
+        expect(home.stats).toEqual([
+            { value: years, label: 'години строим в Стара Загора', unconfirmed: false },
+            { value: '1', label: 'семейство, две поколения на обекта', unconfirmed: true }
+        ]);
         expect(home.crews[0]).toMatchObject({ key: 'site', scene: 'site', title: 'The crew on site' });
         expect(home.crews[0]!.roles[0]).toMatchObject({ tool: 'plumb', role: 'Foreman', years: 22 });
         expect(home.crews[1]!.title).toBe('Екипът в офиса');
@@ -92,6 +96,9 @@ describe('getSettings', () => {
     it('localises address and meta', () => {
         expect(getSettings('en', root)).toMatchObject({ legalName: 'ТЕКОМ ООД', address: 'Stara Zagora, Bulgaria', email: 'office@example.com' });
     });
+    it('carries the founding year, the second phone and the office hours', () => {
+        expect(getSettings('en', root)).toMatchObject({ founded: 1991, phoneAlt: '+359 88 000 000', hours: 'Пон – Пет 9.00 – 18.00' });
+    });
 });
 
 describe('public information', () => {
@@ -110,5 +117,15 @@ describe('public information', () => {
         expect(getLegalPage('privacy', 'en', root)).toMatchObject({ title: 'Privacy policy', fallback: false });
         expect(getLegalPage('privacy', 'de', root)).toMatchObject({ title: 'Политика за поверителност', body: 'Текст.', fallback: true });
         expect(getLegalPage('terms', 'bg', root)).toBeNull();
+    });
+    it('returns a WordPress page with its old address and falls back to Bulgarian', () => {
+        expect(getPage('free-positions', 'en', root)).toMatchObject({
+            title: 'Свободни позиции',
+            wpUrl: 'https://www.tekomltd.com/free-positions/',
+            body: 'Все още нямаме официално обявени свободни позиции.',
+            fallback: true
+        });
+        expect(getPage('nope', 'bg', root)).toBeNull();
+        expect(allPageSlugs(root)).toEqual([{ slug: 'free-positions', wpUrl: 'https://www.tekomltd.com/free-positions/' }]);
     });
 });

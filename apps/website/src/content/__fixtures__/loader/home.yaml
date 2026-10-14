@@ -7,15 +7,17 @@ rail_panels:
     body: { bg: Топлоизолации и декоративни мазилки., en: Insulation and plaster. }
   - kind: crew_stat
     after_project_index: 3
-    stat_value: '25'
+    stat_value: '{years}'
     unit: { bg: години на обекта, en: years on site }
     body: { bg: Семейна фирма от Стара Загора. }
 promises:
   - title: { bg: 'Цена, на която можете да разчитате' }
     body: { bg: Количествата се вземат от проекта. }
 stats:
-  - value: '25'
+  - value: '{years}'
     label: { bg: години строим в Стара Загора }
+  - value: '1'
+    label: { bg: 'семейство, две поколения на обекта' }
     unconfirmed: true
 crews:
   - key: site

@@ -9,12 +9,18 @@
         "content:check": "tsx src/content/check.ts",
         "sync-media": "tsx scripts/sync-media.ts",
         "prebuild": "pnpm sync-media",
-        "predev": "pnpm sync-media"
+        "predev": "pnpm sync-media",
+        "import:wp": "tsx scripts/import-wordpress.ts",
+        "seed:mockup": "tsx scripts/seed-from-mockup.ts"
     },
     "devDependencies": {
         "@types/node": "^22.20.5",
+        "@types/turndown": "^5.0.6",
+        "node-html-parser": "^9.0.4",
         "prettier": "^3.8.3",
+        "sharp": "^0.35.5",
         "tsx": "^4.23.15",
+        "turndown": "^7.2.4",
         "typescript": "^5.9.3",
         "vitest": "^2.1.9"
     },

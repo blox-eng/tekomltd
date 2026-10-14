@@ -1,7 +1,7 @@
 import { join } from 'node:path';
-import { describe, expect, it } from 'vitest';
-import { checkContent } from './check';
-import { CrewRole, EuProgramme, Home, L, LegalPage, Partner, Project, PromiseItem, RailPanel, Settings } from './schema';
+import { describe, expect, it, vi } from 'vitest';
+import { checkContent, main } from './check';
+import { CrewRole, EuProgramme, Home, L, LegalPage, Page, Partner, Project, PromiseItem, Publication, RailPanel, Settings } from './schema';
 
 const fixture = (name: string) => join(__dirname, '__fixtures__', name);
 
@@ -61,6 +61,11 @@ describe('RailPanel', () => {
     it('accepts a crew stat panel', () => {
         expect(RailPanel.safeParse({ ...base, kind: 'crew_stat', stat_value: '25', unit: { bg: 'години' } }).success).toBe(true);
     });
+    it('marks a crew stat confirmed unless flagged', () => {
+        const stat = { ...base, kind: 'crew_stat', stat_value: '35', unit: { bg: 'години' } };
+        expect(RailPanel.parse(stat)).toMatchObject({ unconfirmed: false });
+        expect(RailPanel.parse({ ...stat, unconfirmed: true })).toMatchObject({ unconfirmed: true });
+    });
     it('needs a stat value on a crew stat', () => {
         expect(RailPanel.safeParse({ ...base, kind: 'crew_stat', unit: { bg: 'години' } }).success).toBe(false);
     });
@@ -99,9 +104,34 @@ describe('smaller types', () => {
         expect(LegalPage.safeParse({ ...page, slug: 'imprint' }).success).toBe(false);
     });
     it('Settings needs two Bulgarian headline phrases', () => {
-        const s = { legal_name: 'Т', address: { bg: 'а' }, phone: '1', email: 'a@b.bg', privacy_email: 'p@b.bg' };
+        const s = { legal_name: 'Т', founded: 1991, address: { bg: 'а' }, phone: '1', email: 'a@b.bg', privacy_email: 'p@b.bg' };
         expect(Settings.safeParse({ ...s, crew_headline: { bg: ['Хората зад мазилката'] } }).success).toBe(false);
         expect(Settings.safeParse({ ...s, crew_headline: { bg: ['Хората зад мазилката', 'Хората зад мечтата'] } }).success).toBe(true);
+    });
+    it('Settings needs the founding year', () => {
+        const s = { legal_name: 'Т', address: { bg: 'а' }, phone: '1', email: 'a@b.bg', privacy_email: 'p@b.bg', crew_headline: { bg: ['А б', 'А в'] } };
+        expect(Settings.safeParse(s).success).toBe(false);
+        expect(Settings.safeParse({ ...s, founded: 1991, phone_alt: '2', hours: { bg: 'Пон – Пет' } }).success).toBe(true);
+    });
+    it('Publication takes office documents and scans, not programs', () => {
+        const p = { kind: 'procurement', title: { bg: 'Покана' }, published_on: '2026-03-17' };
+        for (const file of [
+            'publications/a.pdf',
+            'publications/a.docx',
+            'publications/a.doc',
+            'publications/a.xlsx',
+            'publications/a.png',
+            'publications/a.jpg'
+        ]) {
+            expect(Publication.safeParse({ ...p, file }).success).toBe(true);
+        }
+        expect(Publication.safeParse({ ...p, file: 'publications/a.exe' }).success).toBe(false);
+    });
+    it('Page needs a title and a real date', () => {
+        const page = { slug: 'about', locale: 'bg', title: 'За нас', updated: '2025-03-24', wp_url: 'https://www.tekomltd.com/about/', body: 'Текст.' };
+        expect(Page.safeParse(page).success).toBe(true);
+        expect(Page.safeParse({ ...page, title: ' ' }).success).toBe(false);
+        expect(Page.safeParse({ ...page, slug: 'За нас' }).success).toBe(false);
     });
 });
 
@@ -193,5 +223,25 @@ describe('checkContent', () => {
     it('fails on a missing root', () => {
         const r = checkContent(fixture('does-not-exist'));
         expect(r.ok).toBe(false);
+    });
+
+    it('exits 1 from the CLI when the content folder is missing', () => {
+        const errors: unknown[] = [];
+        const spy = vi.spyOn(console, 'error').mockImplementation((...args) => void errors.push(args));
+        expect(main(['node', 'check.ts', fixture('does-not-exist')])).toBe(1);
+        spy.mockRestore();
+        expect(String(errors[0])).toContain('content folder not found');
+    });
+
+    it('checks pages and their links to media files', () => {
+        const r = checkContent(fixture('bad-page'));
+        expect(r.ok).toBe(false);
+        if (r.ok) return;
+        expect(r.errors).toEqual([
+            { file: 'pages/About Us.bg.md', path: '(file)', message: 'name must be <slug>.<bg|en|de>.md' },
+            { file: 'pages/about.bg.md', path: 'title', message: expect.any(String) },
+            { file: 'pages/about.bg.md', path: 'body', message: 'file not found: /media/pages/about/missing.jpg' },
+            { file: 'pages/free-positions.en.md', path: '(file)', message: 'needs the Bulgarian page pages/free-positions.bg.md' }
+        ]);
     });
 });

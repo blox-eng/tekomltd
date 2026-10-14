@@ -1,9 +1,9 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { DEFAULT_LOCALE, type Locale } from '@tekom/i18n';
 import { defaultRoot, imgOrNull, mediaUrl, once, parseFrontMatter, readYaml, text } from './load';
-import { EU_PROGRAMMES_FILE, legalFile, PUBLICATIONS_FILE, type LegalSlug } from './paths';
-import { EuProgramme, LegalPage, Publication, PUBLICATION_KINDS } from './schema';
+import { EU_PROGRAMMES_FILE, legalFile, pageFile, PAGES_DIR, parsePageFile, PUBLICATIONS_FILE, type LegalSlug } from './paths';
+import { EuProgramme, LegalPage, Page, Publication, PUBLICATION_KINDS } from './schema';
 import { z } from 'zod';
 import type { Img } from './load';
 
@@ -28,6 +28,8 @@ export type PublicationView = {
     publishedOn: string;
     wpUrl: string | null;
 };
+
+export type PageView = { slug: string; locale: Locale; title: string; updated: string; wpUrl: string | null; body: string; fallback: boolean };
 
 export type LegalView = { slug: LegalSlug; locale: Locale; title: string; updated: string; reviewed: boolean; body: string; fallback: boolean };
 
@@ -74,4 +76,31 @@ export function getLegalPage(slug: LegalSlug, locale: Locale, root: string = def
     const page = read(locale) ?? read(DEFAULT_LOCALE);
     if (!page) return null;
     return { slug, locale, title: page.title, updated: page.updated, reviewed: page.reviewed, body: page.body, fallback: page.locale !== locale };
+}
+
+function readPage(slug: string, locale: Locale, root: string) {
+    return once(root, `page:${slug}.${locale}`, () => {
+        const path = join(root, pageFile(slug, locale));
+        if (!existsSync(path)) return null;
+        const { data, body } = parseFrontMatter(readFileSync(path, 'utf8'));
+        return Page.parse({ ...data, slug, locale, body });
+    });
+}
+
+/** A page carried over from the WordPress site; non-Bulgarian locales fall back to the Bulgarian page. */
+export function getPage(slug: string, locale: Locale, root: string = defaultRoot()): PageView | null {
+    const page = readPage(slug, locale, root) ?? readPage(slug, DEFAULT_LOCALE, root);
+    if (!page) return null;
+    return { slug, locale, title: page.title, updated: page.updated, wpUrl: page.wp_url ?? null, body: page.body, fallback: page.locale !== locale };
+}
+
+/** Every page with a Bulgarian file, with its old WordPress address for the redirect. */
+export function allPageSlugs(root: string = defaultRoot()): { slug: string; wpUrl: string | null }[] {
+    const dir = join(root, PAGES_DIR);
+    if (!existsSync(dir)) return [];
+    return readdirSync(dir)
+        .map(parsePageFile)
+        .filter((id) => id?.locale === DEFAULT_LOCALE)
+        .map((id) => ({ slug: id!.slug, wpUrl: readPage(id!.slug, DEFAULT_LOCALE, root)!.wp_url ?? null }))
+        .sort((a, b) => a.slug.localeCompare(b.slug));
 }

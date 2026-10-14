@@ -15,6 +15,7 @@ describe('syncMedia', () => {
         expect(copied).toBeGreaterThan(0);
     });
     it('copies pdfs', () => expect(existsSync(join(out, 'publications', 'notice.pdf'))).toBe(true));
+    it('copies office documents', () => expect(existsSync(join(out, 'publications', 'form.docx'))).toBe(true));
     it('does not copy yaml or markdown', () => {
         expect(readdirSync(out)).not.toContain('home.yaml');
         expect(existsSync(join(out, 'legal'))).toBe(false);

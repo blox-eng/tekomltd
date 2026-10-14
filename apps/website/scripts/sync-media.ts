@@ -1,9 +1,9 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { basename, dirname, extname, join, relative, resolve } from 'node:path';
 
-const MEDIA_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.svg', '.pdf']);
+const MEDIA_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.svg', '.pdf', '.doc', '.docx', '.xls', '.xlsx']);
 
-/** Copies every image and PDF under `contentRoot` to `outDir`, keeping the relative path. Returns the file count. */
+/** Copies every image and document under `contentRoot` to `outDir`, keeping the relative path. Returns the file count. */
 export function syncMedia(contentRoot: string, outDir: string): number {
     if (!existsSync(contentRoot)) return 0;
     const root = resolve(contentRoot);

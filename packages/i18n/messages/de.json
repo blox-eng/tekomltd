@@ -9,6 +9,17 @@
         "title": "Tekom: hochwertiger Bau und Innenausbau, Stara Sagora",
         "allProjects": "Alle Projekte"
     },
+    "scope": {
+        "full": "Schlüsselfertig",
+        "restore": "Restaurierung",
+        "facade": "Fassade",
+        "interior": "Innenausbau",
+        "stone": "Stein & Fliesen"
+    },
+    "rail": {
+        "prev": "Previous",
+        "next": "Next"
+    },
     "why": {
         "h": "Richtig bauen. <em>Ohne Risiko.</em>",
         "p": "Die meisten Bauprobleme beginnen mit kleinen Abkürzungen, die niemand sieht. Bei uns bleibt auf Ihrer Baustelle nichts unsichtbar.",

@@ -9,7 +9,7 @@ This policy explains which personal data is processed when you visit tekomltd.co
 ## Data controller
 
 ТЕКОМ ООД (Tekom Ltd), 119 Hadzhi Dimitar Asenov St, Tekom Business Centre, 6000 Stara Zagora, Bulgaria.
-E-mail for questions about personal data: [privacy@tekomltd.com](mailto:privacy@tekomltd.com). Phone: +359 88 506 9099.
+E-mail for questions about personal data: [privacy@tekomltd.com](mailto:privacy@tekomltd.com). Phone: +359 88 863 6034.
 
 ## What we do not do
 

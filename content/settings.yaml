@@ -4,8 +4,7 @@ address:
   bg: ул. “Хаджи Димитър Асенов” № 119 – Бизнес център ТЕКОМ, Стара Загора, 6000
   en: 119 Hadzhi Dimitar Asenov St, Tekom Business Centre, 6000 Stara Zagora, Bulgaria
   de: ul. Hadzhi Dimitar Asenov 119, Businesszentrum Tekom, 6000 Stara Sagora, Bulgarien
-phone: "+359 88 506 9099"
-phone_alt: "+359 88 863 6034"
+phone: '+359 88 863 6034'
 hours:
   bg: Пон – Пет . 9.00 – 18.00
   en: Mon–Fri 9:00–18:00

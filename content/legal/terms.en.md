@@ -8,7 +8,7 @@ These terms govern the use of tekomltd.com. By browsing the site you accept them
 
 ## Who runs the site
 
-ТЕКОМ ООД (Tekom Ltd), 119 Hadzhi Dimitar Asenov St, Tekom Business Centre, 6000 Stara Zagora, Bulgaria. E-mail: [info@tekomltd.com](mailto:info@tekomltd.com). Phone: +359 88 506 9099.
+ТЕКОМ ООД (Tekom Ltd), 119 Hadzhi Dimitar Asenov St, Tekom Business Centre, 6000 Stara Zagora, Bulgaria. E-mail: [info@tekomltd.com](mailto:info@tekomltd.com). Phone: +359 88 863 6034.
 
 ## What the site is for
 

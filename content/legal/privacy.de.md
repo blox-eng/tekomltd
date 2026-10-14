@@ -9,7 +9,7 @@ Diese Erklärung beschreibt, welche personenbezogenen Daten verarbeitet werden, 
 ## Verantwortlicher
 
 ТЕКОМ ООД (Tekom GmbH), ul. Hadzhi Dimitar Asenov 119, Businesszentrum Tekom, 6000 Stara Sagora, Bulgarien.
-E-Mail für Fragen zum Datenschutz: [privacy@tekomltd.com](mailto:privacy@tekomltd.com). Telefon: +359 88 506 9099.
+E-Mail für Fragen zum Datenschutz: [privacy@tekomltd.com](mailto:privacy@tekomltd.com). Telefon: +359 88 863 6034.
 
 ## Was wir nicht tun
 

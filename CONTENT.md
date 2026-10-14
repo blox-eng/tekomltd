@@ -44,7 +44,7 @@ projects/kazanlak-house/project.yaml: images.0.file file not found: kazanlak-1.j
 ## Правила за YAML (важно)
 
 - **Отстъпите са интервали**, не табулатор. Две интервала на ниво. Не променяйте отстъпите на съседните редове.
-- **Телефони, ЕИК и други номера: в кавички.** Пишете `phone: "+359 88 506 9099"` и `eik: "123456789"`. Без кавички YAML може да изяде нула отпред или да го прочете като число.
+- **Телефони, ЕИК и други номера: в кавички.** Пишете `phone: "+359 88 863 6034"` и `eik: "123456789"`. Без кавички YAML може да изяде нула отпред или да го прочете като число.
 - Текст с двоеточие, кавичка в началото или `#` също слагайте в кавички: `bg: "Теком: строителство"`.
 - Български текст е задължителен (`bg`). Английски (`en`) и немски (`de`) са по желание.
 - Не пипайте името на полето (`title`, `place`, `images`). Променяйте само текста след двоеточието.
@@ -155,8 +155,7 @@ partners:
 Всичко е в `content/settings.yaml`: адрес (`address`), телефони, час на работа, имейл.
 
 ```yaml
-phone: '+359 88 506 9099'
-phone_alt: '+359 88 863 6034'
+phone: '+359 88 863 6034'
 email: info@tekomltd.com
 ```
 
@@ -208,7 +207,7 @@ Common errors:
 ## YAML rules (important)
 
 - **Indent with spaces**, never tabs. Two spaces per level. Do not change the indentation of neighbouring lines.
-- **Phone numbers, company IDs (EIK) and other numbers: in quotes.** Write `phone: "+359 88 506 9099"` and `eik: "123456789"`. Without quotes YAML can drop a leading zero or read it as a number.
+- **Phone numbers, company IDs (EIK) and other numbers: in quotes.** Write `phone: "+359 88 863 6034"` and `eik: "123456789"`. Without quotes YAML can drop a leading zero or read it as a number.
 - Put text that contains a colon, starts with a quote or contains `#` in quotes too: `bg: "Теком: строителство"`.
 - Bulgarian (`bg`) is required. English (`en`) and German (`de`) are optional.
 - Never rename a field (`title`, `place`, `images`). Change only the text after the colon.
@@ -324,8 +323,7 @@ List only partners that agreed to it.
 All in `content/settings.yaml`: address (`address`), phones, opening hours, e-mail.
 
 ```yaml
-phone: '+359 88 506 9099'
-phone_alt: '+359 88 863 6034'
+phone: '+359 88 863 6034'
 email: info@tekomltd.com
 ```
 

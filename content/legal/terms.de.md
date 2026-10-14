@@ -8,7 +8,7 @@ Diese Bedingungen regeln die Nutzung von tekomltd.com. Mit dem Besuch der Websit
 
 ## Wer die Website betreibt
 
-ТЕКОМ ООД (Tekom GmbH), ul. Hadzhi Dimitar Asenov 119, Businesszentrum Tekom, 6000 Stara Sagora, Bulgarien. E-Mail: [info@tekomltd.com](mailto:info@tekomltd.com). Telefon: +359 88 506 9099.
+ТЕКОМ ООД (Tekom GmbH), ul. Hadzhi Dimitar Asenov 119, Businesszentrum Tekom, 6000 Stara Sagora, Bulgarien. E-Mail: [info@tekomltd.com](mailto:info@tekomltd.com). Telefon: +359 88 863 6034.
 
 ## Wozu die Website dient
 

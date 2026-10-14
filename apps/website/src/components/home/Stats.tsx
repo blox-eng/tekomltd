@@ -9,7 +9,10 @@ export function Stats({ locale, stats }: { locale: Locale; stats: HomeData['stat
         <div className={styles.nums}>
             {stats.map((stat) => (
                 <div key={stat.label} data-stat>
-                    <b>{formatStat(stat.value, locale, stat.unconfirmed)}</b>
+                    <b>
+                        {formatStat(stat.value, locale, false)}
+                        {stat.unconfirmed && <sup>*</sup>}
+                    </b>
                     <span>{stat.label}</span>
                 </div>
             ))}

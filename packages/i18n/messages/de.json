@@ -22,31 +22,7 @@
     },
     "why": {
         "h": "Richtig bauen. <em>Ohne Risiko.</em>",
-        "p": "Die meisten Bauprobleme beginnen mit kleinen Abkürzungen, die niemand sieht. Bei uns bleibt auf Ihrer Baustelle nichts unsichtbar.",
-        "risks": {
-            "r1": {
-                "title": "Ein Preis, mit dem Sie planen können",
-                "text": "Mengen aus den Plänen, vor Baubeginn vereinbart, nicht erst auf der Baustelle entdeckt."
-            },
-            "r2": {
-                "title": "Richtig ausgeführt",
-                "text": "Jede Schicht nach Herstellersystem und bulgarischer Norm, mit nachverfolgbarem Material."
-            },
-            "r3": {
-                "title": "Nichts verdeckt",
-                "text": "Tägliche Fotos und Protokolle von allem, was später verdeckt wird: Dämmung, Abdichtung, Installationen."
-            },
-            "r4": {
-                "title": "Übergabe ohne Überraschungen",
-                "text": "Raumweise Abnahme, Unterlagen und Garantien an einem Ort."
-            }
-        }
-    },
-    "numbers": {
-        "years": "Jahre Bauen in Stara Sagora*",
-        "area": "m² Fläche der gezeigten Projekte",
-        "buildings": "Gebäude, Häuser und eine Kapelle, alle in Nutzung",
-        "family": "Familie, zwei Generationen auf der Baustelle*"
+        "p": "Die meisten Bauprobleme beginnen mit kleinen Abkürzungen, die niemand sieht. Bei uns bleibt auf Ihrer Baustelle nichts unsichtbar."
     },
     "map": {
         "h": "Wo wir gebaut haben",
@@ -63,12 +39,6 @@
     },
     "crew": {
         "photoPending": "Foto folgt",
-        "heading": {
-            "lead": "Die Menschen hinter",
-            "word1": "dem Putz",
-            "word2": "Ihrem Traumhaus",
-            "word3": "Ihrem Vertrauen"
-        },
         "p": "Eigene Leute, auf der Baustelle und im Büro. Wir wollten sie fotografieren, aber sie waren mit Arbeiten beschäftigt.",
         "y": "J. bei Tekom"
     },
@@ -103,20 +73,12 @@
     "contact": {
         "h": "Erzählen Sie uns von Ihrem Projekt",
         "p": "Wir antworten innerhalb eines Werktags und besichtigen vor dem Angebot.",
-        "form": {
-            "name": "Name",
-            "message": "Nachricht",
-            "consent": "Ich stimme zu, dass ТЕКОМ ООД meine Daten nur zur Beantwortung dieser Anfrage nutzt.",
-            "submit": "Anfrage senden",
-            "email": "Email"
-        },
         "phone": "Phone",
         "office": "Office",
         "email": "Email"
     },
     "footer": {
         "company": "Unternehmen",
-        "addr": "Stara Sagora, Bulgarien",
         "work": "Arbeit",
         "services": "Leistungen",
         "public": "Öffentliche Informationen",

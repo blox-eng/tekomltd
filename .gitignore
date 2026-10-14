@@ -30,7 +30,7 @@ yarn-debug.log*
 yarn-error.log*
 *.code-workspace
 .idea
-tmp*
+/tmp*
 
 # local tooling
 .playwright-mcp/

@@ -1,0 +1,28 @@
+{
+  "name": "tekomltd",
+  "private": true,
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.8.3",
+    "supabase": "^2.0.0",
+    "turbo": "^2.9.6",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "pnpm@10.28.1",
+  "pnpm": {
+    "overrides": {
+      "picomatch": "^4.0.4",
+      "brace-expansion": "^2.0.2"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

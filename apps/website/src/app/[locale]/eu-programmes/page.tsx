@@ -41,7 +41,9 @@ export default async function EuProgrammesPage({ params }: Props) {
                             <strong>{t('cofunded')}</strong>
                         </div>
                         <div>
-                            <h2 id={`programme-${programme.code}`}>{programme.title}</h2>
+                            <h2 id={`programme-${programme.code}`} lang={programme.titleFallback ? 'bg' : undefined}>
+                                {programme.title}
+                            </h2>
                             <p className="mono">{programme.code}</p>
                         </div>
                         {programme.logo && (
@@ -50,25 +52,25 @@ export default async function EuProgrammesPage({ params }: Props) {
                                 src={programme.logo.src}
                                 width={programme.logo.width}
                                 height={programme.logo.height}
-                                alt={programme.logo.alt}
+                                alt={programme.title}
                             />
                         )}
-                        {programme.fallback && <p className="lang-note">{root('note')}</p>}
+                        {(programme.fallback || programme.titleFallback) && <p className="lang-note">{root('note')}</p>}
                         <div className={styles.block}>
                             <h3>{t('summary')}</h3>
-                            <div className="prose">
+                            <div className="prose" lang={programme.fallback ? 'bg' : undefined}>
                                 <Markdown>{programme.summary}</Markdown>
                             </div>
                         </div>
                         <div className={styles.block}>
                             <h3>{t('objectives')}</h3>
-                            <div className="prose">
+                            <div className="prose" lang={programme.fallback ? 'bg' : undefined}>
                                 <Markdown>{programme.objectives}</Markdown>
                             </div>
                         </div>
                         <div className={styles.block}>
                             <h3>{t('results')}</h3>
-                            <div className="prose">
+                            <div className="prose" lang={programme.fallback ? 'bg' : undefined}>
                                 <Markdown>{programme.results}</Markdown>
                             </div>
                         </div>

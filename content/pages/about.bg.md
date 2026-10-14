@@ -66,4 +66,4 @@ wp_url: https://www.tekomltd.com/about/
 
 ## Нашите проекти
 
-[ВИЖТЕ ВСИЧКИТЕ НИ ПРОЕКТИ](/projects/)
+[ВИЖТЕ ВСИЧКИТЕ НИ ПРОЕКТИ](/projects)

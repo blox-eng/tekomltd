@@ -60,8 +60,8 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                             <span key={key}>{scopeLabels[key]}</span>
                         ))}
                     </div>
-                    <h1>{project.title}</h1>
-                    {project.summary && <p>{project.summary}</p>}
+                    <h1 lang={project.titleFallback ? 'bg' : undefined}>{project.title}</h1>
+                    {project.summary && <p lang={project.summaryFallback ? 'bg' : undefined}>{project.summary}</p>}
                     {note && <p className={`lang-note ${styles.note}`}>{note}</p>}
                     <dl className="facts">
                         {facts.map(({ key, label, value }) => (
@@ -101,7 +101,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 <span className="mono">
                     {position} / {String(project.total).padStart(2, '0')}
                 </span>
-                <Link href={`/projects/${project.next.slug}`} className="link">
+                <Link href={`/projects/${project.next.slug}`} className={styles.nextLink}>
                     {t('next')} {project.next.title}
                     <span className="ar" aria-hidden="true">
                         →

@@ -74,12 +74,16 @@
     gap: 4px 10px;
 }
 
-.scope span,
-.dhead .scope span {
-    color: var(--accent);
+.scope span {
+    color: var(--muted);
     font: 500 11px var(--f-mono);
     letter-spacing: 0.08em;
     text-transform: uppercase;
+}
+
+.tile .scope span:first-child,
+.dhead .scope span {
+    color: var(--accent);
 }
 
 .tile h3 {
@@ -181,6 +185,19 @@
     height: auto;
     display: block;
     background: var(--wall);
+}
+.nextLink {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.nextLink .ar {
+    display: inline-block;
+    transition: transform var(--dur-standard) var(--ease);
+}
+
+.nextLink:hover .ar {
+    transform: translateX(4px);
 }
 
 .next {

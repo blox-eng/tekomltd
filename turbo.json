@@ -4,7 +4,8 @@
         "build": {
             "dependsOn": ["^build"],
             "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-            "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/content/**"]
+            "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/content/**", "$TURBO_ROOT$/design/wordpress-snapshot/url-map.json"],
+            "env": ["CONTENT_ROOT", "SITE_URL"]
         },
         "dev": {
             "cache": false,
@@ -20,7 +21,7 @@
             "dependsOn": ["^build"]
         },
         "content:check": {
-            "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/content/**"]
+            "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/content/**", "$TURBO_ROOT$/design/wordpress-snapshot/url-map.json"]
         }
     }
 }

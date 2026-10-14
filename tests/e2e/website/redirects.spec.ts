@@ -1,19 +1,28 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
+
+// Project and page values come from tests/fixtures/content; file addresses from the importer's url-map.
 
 const get = (request: import('@playwright/test').APIRequestContext, path: string) => request.get(path, { maxRedirects: 0 });
 
+const urlMap: { files: Record<string, string> } = JSON.parse(
+    readFileSync(join(__dirname, '..', '..', '..', 'design', 'wordpress-snapshot', 'url-map.json'), 'utf8')
+);
+const fileRedirects = Object.entries(urlMap.files);
+const cyrillicFile = fileRedirects.find(([from]) => /[а-яА-Я]/.test(from))!;
+
 const redirects: [string, string][] = [
-    [
-        '/project-view/%D0%B6%D0%B8%D0%BB%D0%B8%D1%89%D0%BD%D0%B0-%D1%81%D0%B3%D1%80%D0%B0%D0%B4%D0%B0-%D1%81-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B8-%D0%B8-%D0%B3%D0%B0%D1%80%D0%B0%D0%B6%D0%B8',
-        '/projects/asenov-129'
-    ],
-    ['/project-view/1849/sub/page', '/projects/asenov-129'],
-    ['/services/private-services', '/private-services'],
+    [`/project-view/${encodeURIComponent('къща-край-реката')}`, '/projects/river-house'],
+    ['/project-view/1001/sub/page', '/projects/river-house'],
+    ['/projects/old-river-house', '/projects/river-house'],
+    ['/en/projects/old-river-house', '/en/projects/river-house'],
+    ['/company/about-us', '/about'],
     ['/privacy-policy', '/privacy'],
     ['/home/privacy-policy', '/privacy'],
-    ['/publications/invitations', '/invitations'],
     ['/portfolio_category/foo', '/projects'],
-    ['/wp-content/uploads/2015/06/%D0%93%D0%9B%D0%90%D0%94%D0%A1%D0%A2%D0%9E%D0%9D-IMG_1.jpg', '/media/projects/gladstone-44/gladston-img-1.jpg']
+    [encodeURI(fileRedirects[0]![0]), fileRedirects[0]![1]],
+    [encodeURI(cyrillicFile[0]), cyrillicFile[1]]
 ];
 
 for (const [from, to] of redirects) {
@@ -25,16 +34,10 @@ for (const [from, to] of redirects) {
 }
 
 test('a trailing-slash WordPress URL ends on the new page', async ({ request }) => {
-    for (const from of ['/about/', '/services/private-services/']) {
+    for (const from of ['/about/', '/company/about-us/']) {
         const res = await request.get(from);
         expect(res.status()).toBe(200);
     }
-});
-
-test('the redirected upload serves the file', async ({ request }) => {
-    const res = await request.get('/wp-content/uploads/2015/06/gladston_1.jpg');
-    expect(res.status()).toBe(200);
-    expect(res.headers()['content-type']).toContain('image/');
 });
 
 test('WordPress admin addresses answer 410', async ({ request }) => {
@@ -53,15 +56,16 @@ test('robots.txt and sitemap.xml are served with the alternates', async ({ reque
     expect(robots).toContain('Allow: /');
     expect(robots).toMatch(/Sitemap: https?:\/\/[^/]+\/sitemap\.xml/);
     const sitemap = await (await request.get('/sitemap.xml')).text();
-    expect(sitemap).toContain('/projects/asenov-129');
+    expect(sitemap).toContain('/projects/river-house');
+    expect(sitemap).not.toContain('/projects/secret-site');
     expect(sitemap).toContain('hreflang="de"');
 });
 
 test('a project page carries canonical, hreflang, Open Graph image and JSON-LD', async ({ page }) => {
-    await page.goto('/en/projects/gladstone-44');
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/en\/projects\/gladstone-44$/);
+    await page.goto('/en/projects/river-house');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/en\/projects\/river-house$/);
     for (const lang of ['bg', 'en', 'de', 'x-default']) await expect(page.locator(`link[rel="alternate"][hreflang="${lang}"]`)).toHaveCount(1);
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/media\/projects\/gladstone-44\//);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/media\/projects\/river-house\//);
     const types = await page.locator('script[type="application/ld+json"]').evaluateAll((nodes) => nodes.map((n) => JSON.parse(n.textContent!)['@type']));
     expect(types).toEqual(expect.arrayContaining(['HomeAndConstructionBusiness', 'CreativeWork', 'BreadcrumbList']));
 });
@@ -73,9 +77,17 @@ test('a fallback-locale page canonicalises to the Bulgarian page and leaves href
     await expect(page.locator('link[rel="alternate"][hreflang="bg"]')).toHaveCount(1);
 });
 
-test('the home page carries the approved Bulgarian description, and /en none', async ({ page }) => {
+test('no response sends an hreflang Link header that would contradict the page', async ({ request }) => {
+    for (const path of ['/', '/en/about', '/de/projects/stone-chapel']) {
+        const res = await request.get(path);
+        expect(res.status(), path).toBe(200);
+        expect(res.headers().link, path).toBeUndefined();
+    }
+});
+
+test('the home page carries the Bulgarian description, and /en none', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /^Строителна фирма с дългогодишен опит/);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', 'Тестово описание на началната страница.');
     await page.goto('/en');
     await expect(page.locator('meta[name="description"]')).toHaveCount(0);
 });

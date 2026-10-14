@@ -1,0 +1,19 @@
+- programme: BG00TEST-1.001
+  kind: eu_notice
+  title: { bg: Съобщение за проекта, en: Project notice }
+  file: publications/eu-notice.pdf
+  published_on: 2025-02-10
+- programme: BG00TEST-1.001
+  kind: procurement
+  title: { bg: Публична покана }
+  file: publications/procurement-invitation.pdf
+  published_on: 2026-07-15
+- programme: BG00TEST-1.001
+  kind: procurement
+  title: { bg: Проект на договор }
+  file: publications/procurement-contract.pdf
+  published_on: 2026-07-14
+- kind: other
+  title: { bg: Сертификат }
+  file: publications/other-certificate.pdf
+  published_on: 2024-07-01

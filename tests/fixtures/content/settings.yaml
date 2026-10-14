@@ -1,0 +1,27 @@
+# Fixed content for the e2e suite. The specs assert these values; change both together.
+legal_name: ТЕКОМ ООД
+founded: 1991
+eik: '000000000'
+address:
+  bg: ул. „Тестова“ № 1, Стара Загора, 6000
+  en: 1 Testova St, 6000 Stara Zagora, Bulgaria
+phone: '+359 42 000 000'
+hours:
+  bg: Пон – Пет 9.00 – 18.00
+email: info@example.com
+privacy_email: privacy@example.com
+socials:
+  linkedin: https://www.linkedin.com/
+crew_headline:
+  bg:
+    - Хората зад мазилката
+    - Хората зад Вашата мечта
+  en:
+    - The people behind the plaster
+    - The people behind your dream home
+quote_cta: true
+meta_title:
+  bg: Теком
+  en: Tekom
+meta_description:
+  bg: Тестово описание на началната страница.

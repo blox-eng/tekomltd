@@ -1,0 +1,15 @@
+- code: BG00TEST-1.001
+  title:
+    bg: Тестова програма
+    en: Test programme
+  summary:
+    bg: Кратко описание на проекта.
+  objectives:
+    bg: Цели на проекта.
+  results:
+    bg: Резултати от проекта.
+  total_budget_eur: 120000.5
+  eu_contribution_eur: 60000.25
+  period_start: 2025-02-01
+  period_end: 2026-08-01
+  programme_logo: eu-programmes/oprchr-logo.png

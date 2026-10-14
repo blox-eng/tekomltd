@@ -1,0 +1,44 @@
+slug: sulitsa-house
+title:
+  bg: Еднофамилна къща с басейн
+  en: Family house with pool
+  de: Einfamilienhaus mit Pool
+summary:
+  bg: Къщата е проектирана от арх.Николай Ситев. Ситуирана е в северозападната част на дворното място с цел да се осигури максимален изглед към басейна и двора на югоизток. Изградена е на три нива за да се използва максимално наклонения терен. На първото ниво има дневна част, кухненски бокс, голяма веранда, санитарен възел и кабинет.
+place:
+  bg: Сулица
+  en: Sulitsa
+  de: Suliza
+address: с. Сулица
+lat: 42.43767
+lng: 25.4805399
+show_on_map: true
+year: 2003
+built_area_m2: 1100
+scopes:
+  - full
+sort: 8
+wide: false
+on_rail: true
+wp_id: 1331
+wp_slug: private-house-with-pool
+images:
+  - file: img-037843-1.jpg
+    alt:
+      bg: Еднофамилна къща с басейн
+    is_cover: true
+  - file: sulica-4.jpg
+    alt:
+      bg: Еднофамилна къща с басейн
+  - file: sulica-1.jpg
+    alt:
+      bg: Еднофамилна къща с басейн
+  - file: sulica-2.jpg
+    alt:
+      bg: Еднофамилна къща с басейн
+  - file: sulica-5.jpg
+    alt:
+      bg: Еднофамилна къща с басейн
+  - file: sulica-6.jpg
+    alt:
+      bg: Еднофамилна къща с басейн

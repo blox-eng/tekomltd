@@ -1,0 +1,34 @@
+slug: gladstone-44
+title:
+  bg: Жилища, магазини и медицински център
+  en: Homes, shops and a medical centre
+  de: Wohnungen, Läden und Arztpraxis
+summary:
+  bg: Сградата е проектирана на пет етажа с терасовиден етаж и допълващо застрояване. На първия етаж и допълващото застрояване са предвидени магазини за промишлени стоки на уличната регулация и медицински център със самостоятелен вход в двора. На втория етаж има офиси, за които е предвидено самостоятелно стълбище. В жилищните етажи има тристайни жилища.
+place:
+  bg: Стара Загора
+  en: Stara Zagora
+  de: Stara Sagora
+address: ул. „Гладстон“ 44
+lat: 42.4230939
+lng: 25.6314715
+show_on_map: true
+built_area_m2: 2300
+scopes:
+  - full
+sort: 16
+wide: false
+on_rail: true
+wp_id: 912
+wp_slug: residential-building-garages-shop-gladston
+images:
+  - file: gladston-img-1.jpg
+    alt:
+      bg: Жилища, магазини и медицински център
+    is_cover: true
+  - file: gladston-2.jpg
+    alt:
+      bg: Жилища, магазини и медицински център
+  - file: gladston-1.jpg
+    alt:
+      bg: Жилища, магазини и медицински център

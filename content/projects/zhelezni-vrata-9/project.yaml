@@ -1,0 +1,41 @@
+slug: zhelezni-vrata-9
+title:
+  bg: Жилищна сграда с гаражи
+  en: Apartment building with garages
+  de: Wohnhaus mit Garagen
+summary:
+  bg: Сградата е проектирана на 5 етажа с терасовиден етаж. На приземния етаж има гаражи. В жилищната част има 8 двустайни и 1 тристаен апартамент. Всички конструкции, зидарии, мазилки, топло и хидроизолации, боядисване, специални облицовки и обзавеждане са изпълнени от ТЕКОМ ООД. Ел.инсталациите са изпълнени от Елгруп-07 ООД, ВиК инсталациите от Инстал ЕООД, газовите инсталации от Комерторг ООД.
+place:
+  bg: Стара Загора
+  en: Stara Zagora
+  de: Stara Sagora
+address: ул. „Железни врата“ 9
+lat: 42.4294541
+lng: 25.623812
+show_on_map: true
+year: 2011
+built_area_m2: 1100
+scopes:
+  - full
+sort: 12
+wide: false
+on_rail: true
+wp_id: 1351
+wp_slug: residential-building-garages-zhelezni-9
+images:
+  - file: zhelezni-vrata-9-1.jpg
+    alt:
+      bg: Жилищна сграда с гаражи
+    is_cover: true
+  - file: jelezni-vrata-9-fasada-1.jpg
+    alt:
+      bg: Жилищна сграда с гаражи
+  - file: apartament-zhelezni-vrata-9.jpg
+    alt:
+      bg: Жилищна сграда с гаражи
+  - file: zhelezni-vrata-9-01.jpg
+    alt:
+      bg: Жилищна сграда с гаражи
+  - file: zhelezni-vrata-9-02.jpg
+    alt:
+      bg: Жилищна сграда с гаражи

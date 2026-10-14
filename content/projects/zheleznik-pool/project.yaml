@@ -1,0 +1,31 @@
+slug: zheleznik-pool
+title:
+  bg: Обществен басейн, 500 м³
+  en: Public pool, 500 m³
+  de: Öffentliches Schwimmbad, 500 m³
+summary:
+  bg: Басейнът е с обем 500 м3 и е проектиран по всички изисквания за съвременно строителство на обществени съоръжения с възможност свободно да поеме около 300 посетители. Дълбочината е от 1.20 до 1.60 м. Разполага със съвременна инсталация за дезинфекция, филтриране и пречистване на водата. Конструкцията е монолитна, изградена е от водоплътен монолитен бетон.
+place:
+  bg: Стара Загора
+  en: Stara Zagora
+  de: Stara Sagora
+address: кв. Железник
+lat: 42.3861406
+lng: 25.554359
+show_on_map: true
+year: 2011
+scopes:
+  - full
+sort: 17
+wide: false
+on_rail: true
+wp_id: 1326
+wp_slug: public-pool
+images:
+  - file: basein-1.jpg
+    alt:
+      bg: Обществен басейн, 500 м³
+    is_cover: true
+  - file: basein-2.jpg
+    alt:
+      bg: Обществен басейн, 500 м³

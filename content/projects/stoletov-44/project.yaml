@@ -1,0 +1,36 @@
+slug: stoletov-44
+title:
+  bg: Жилищна сграда с гаражи и магазини
+  en: Apartment building, Baumit facade
+  de: Wohnhaus mit Baumit-Fassade
+summary:
+  bg: Сградата е пет етажна с терасовиден етаж. На приземния етаж има магазини за промишлени стоки и гаражи. Жилищата са тристайни и четиристайни. В сутерена има складове за всяко едно жилище и склад за единия от магазините. Сградата е построена по монолитен начин със скелетно гредова конструкция и керамични тухли.
+place:
+  bg: Стара Загора
+  en: Stara Zagora
+  de: Stara Sagora
+address: ул. „Генерал Столетов“ 44
+lat: 42.4274699
+lng: 25.6232184
+show_on_map: true
+year: 2001
+built_area_m2: 1458
+scopes:
+  - full
+  - facade
+sort: 15
+wide: false
+on_rail: true
+wp_id: 75
+wp_slug: residential-building-garages-shop-stoletov
+images:
+  - file: stoletov-2-1-1.jpg
+    alt:
+      bg: Жилищна сграда с гаражи и магазини
+    is_cover: true
+  - file: stoletov44-01.jpg
+    alt:
+      bg: Жилищна сграда с гаражи и магазини
+  - file: stoletov44-02.jpg
+    alt:
+      bg: Жилищна сграда с гаражи и магазини

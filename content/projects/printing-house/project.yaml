@@ -1,0 +1,29 @@
+slug: printing-house
+title:
+  bg: Административна сграда и печатница
+  en: Offices and printing house
+  de: Bürogebäude mit Druckerei
+summary:
+  bg: Проектирана е модерна сграда с нестандартна визия, изразявайки желанието на Възложителя за атрактивност и в същото време оптимално използване на пространството, осигурявайки максимална функционалност и ергономичност . На първо ниво е проктирана печатна зала, с отделни входове/изходи за зареждане с материали/експорт на продукцията и клиенти и контрагенти.
+place:
+  bg: Стара Загора
+  en: Stara Zagora
+  de: Stara Sagora
+address: ул. „Железни врата“ 9
+lat: 42.4294541
+lng: 25.623812
+show_on_map: true
+year: 2011
+built_area_m2: 1100
+scopes:
+  - full
+sort: 10
+wide: false
+on_rail: true
+wp_id: 1339
+wp_slug: administrative-building-with-print
+images:
+  - file: img-0388.jpg
+    alt:
+      bg: Административна сграда и печатница
+    is_cover: true

@@ -1,0 +1,38 @@
+slug: st-dimitar-chapel
+title:
+  bg: Параклис „Св. Димитър“ в Бухчевата къща
+  en: St Dimitar chapel, solid brick dome
+  de: Kapelle St. Dimitar mit Ziegelkuppel
+summary:
+  bg: Параклисът носи името на Св.Димитър и е изпълнен по желание на собственика в двора на Бухчевата къща – емблематична сграда в Стара Загора. Спазени са всички изисквания на канона на Православната църква. Интересно решение има за купола на Параклиса, който е изпълнен изцяло от плътни кермични тухли със самоносеща конструкция, без да е използван стоманобетон – така както са били изпълнявани в миналото.
+place:
+  bg: Стара Загора
+  en: Stara Zagora
+  de: Stara Sagora
+address: ул. „Цар Иван Шишман“ 52
+lat: 42.4241035
+lng: 25.6301389
+show_on_map: true
+year: 2011
+scopes:
+  - full
+  - restore
+sort: 6
+wide: false
+on_rail: true
+wp_id: 1345
+wp_slug: chapel-buhchevata-kushta
+images:
+  - file: thumb-paraklis-img-1.jpg
+    alt:
+      bg: Параклис „Св. Димитър“ в Бухчевата къща
+    is_cover: true
+  - file: paraklis-img-3.jpg
+    alt:
+      bg: Параклис „Св. Димитър“ в Бухчевата къща
+  - file: paraklis-img-2.jpg
+    alt:
+      bg: Параклис „Св. Димитър“ в Бухчевата къща
+  - file: paraklis-img-0.jpg
+    alt:
+      bg: Параклис „Св. Димитър“ в Бухчевата къща

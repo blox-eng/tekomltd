@@ -247,19 +247,18 @@
         padding-top: 0;
     }
 
-    /* Square slides narrower than the screen, so the next one peeks in and shows the rail moves. */
     .track {
-        --slide: calc(100vw - 56px);
-        height: var(--slide);
+        gap: 0;
+        padding-inline: 0;
+        scroll-padding-inline: 0;
+        height: calc(100svh - 132px);
     }
 
+    .project,
     .panel,
     .crew {
-        width: var(--slide);
-    }
-
-    .panel {
-        padding: 22px;
+        aspect-ratio: auto;
+        width: 100%;
     }
 
     .arrows {

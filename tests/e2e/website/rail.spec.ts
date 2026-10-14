@@ -5,15 +5,11 @@ const counter = (page: import('@playwright/test').Page) => page.locator('[data-r
 test.describe('rail on a phone', () => {
     test.use({ viewport: { width: 390, height: 844 } });
 
-    test('every slide is a square narrower than the screen, so the next one peeks in', async ({ page }) => {
+    test('every slide is the full viewport width', async ({ page }) => {
         await page.goto('/');
-        const boxes = await page.locator('[data-rail-track] > *').evaluateAll((els) => els.map((el) => el.getBoundingClientRect()));
-        expect(boxes.length).toBeGreaterThan(3);
-        for (const box of boxes) {
-            expect(Math.round(box.width)).toBe(334);
-            expect(Math.abs(box.width - box.height)).toBeLessThanOrEqual(1);
-        }
-        expect(boxes[1]!.left).toBeLessThan(390);
+        const widths = await page.locator('[data-rail-track] > *').evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().width)));
+        expect(widths.length).toBeGreaterThan(3);
+        expect(new Set(widths)).toEqual(new Set([390]));
     });
 
     test('the counter starts at 01 and changes after a swipe', async ({ page }) => {

@@ -62,7 +62,7 @@ The locked reference is the clickable mockup in `design/mockup/index.html` (open
 - 4px grid. Sections are 112px apart on desktop, 64px on mobile.
 - Content max width 1280px. Side gutter `max(16px, env(safe-area-inset-*))`.
 - Body text max ~65 characters.
-- The project rail is the only full-bleed element. Project photos are square everywhere: in the rail, the projects grid and the galleries (crop centre set per photo with `focus`). Desktop rail height `clamp(420px, 100svh − 150px, 880px)`; on phones every slide is a square `100vw − 56px` wide, so the next one peeks in, snapping one per swipe.
+- The project rail is the only full-bleed element. Desktop height `clamp(420px, 100svh − 150px, 880px)`, with square project photos; on phones every slide is full width and full height, snapping one per swipe. The projects grid and the galleries use square thumbnails at every width. The crop centre is set per photo with `focus`.
 - The red rail panel keeps its text at full opacity. The mockup dimmed its body text to 0.85 and its micro label to 0.7; both fail WCAG AA on the red.
 
 ## 4. Radius

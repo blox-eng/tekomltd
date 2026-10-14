@@ -32,12 +32,6 @@ for (const { name, width, height } of WIDTHS) {
     test.describe(`at ${name} width`, () => {
         test.use({ viewport: { width, height } });
 
-        test('the landing rail shows square project photos', async ({ page }) => {
-            await page.goto('/');
-            const photos = page.locator('[data-rail-track] a[href^="/projects/"] img');
-            await expectSquare(photos);
-        });
-
         test('the projects grid shows square thumbnails that are cropped, never stretched', async ({ page }) => {
             await page.goto('/projects');
             await expectSquare(page.locator('main ul li img'));
@@ -71,4 +65,13 @@ test('a grid thumbnail leads to the project, whose cover opens the full photo', 
     const cover = page.getByRole('link', { name: 'Full photo: The front of the house' });
     await expect(cover).toHaveAttribute('href', '/media/projects/river-house/front.jpg');
     await fileOf(page, '/media/projects/river-house/front.jpg');
+});
+
+test.describe('landing rail on desktop', () => {
+    test.use({ viewport: { width: 1440, height: 900 } });
+
+    test('shows square project photos at full rail height', async ({ page }) => {
+        await page.goto('/');
+        await expectSquare(page.locator('[data-rail-track] a[href^="/projects/"] img'));
+    });
 });

@@ -1,5 +1,6 @@
+import Image from 'next/image';
+import { OBJECT_POSITION } from '@/components/projects/square';
 import { Link } from '@/i18n/navigation';
-import { SquareImage } from '@/components/projects/SquareImage';
 import type { ProjectCard } from '@/content/cards';
 import styles from './rail.module.css';
 
@@ -11,7 +12,15 @@ export function ProjectSlide({ project, scopeLabels, first }: Props) {
 
     return (
         <Link href={`/projects/${project.slug}`} className={`${styles.slide} ${styles.project}`}>
-            <SquareImage image={cover} sizes="(max-width: 640px) 100vw, min(880px, 100vh)" eager={first} />
+            <Image
+                src={cover.src}
+                alt={cover.alt}
+                width={cover.width}
+                height={cover.height}
+                sizes="(max-width: 640px) 100vw, min(880px, 100vh)"
+                priority={first}
+                style={{ objectPosition: OBJECT_POSITION[cover.focus] }}
+            />
             <div className={styles.cap}>
                 <div className={styles.scope}>
                     {project.scopes.map((scope) => (

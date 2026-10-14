@@ -1,0 +1,46 @@
+rail_panels:
+  - kind: capability
+    after_project_index: 0
+    accent: true
+    label: { bg: Наш екип, en: Our own crew }
+    title: { bg: Фасади, en: Facades }
+    body: { bg: Топлоизолации и декоративни мазилки., en: Insulation and plaster. }
+  - kind: crew_stat
+    after_project_index: 3
+    stat_value: '25'
+    unit: { bg: години на обекта*, en: years on site* }
+    body: { bg: Семейна фирма от Стара Загора. }
+promises:
+  - title: { bg: 'Цена, на която можете да разчитате' }
+    body: { bg: Количествата се вземат от проекта. }
+stats:
+  - value: '25'
+    label: { bg: години строим в Стара Загора* }
+    unconfirmed: true
+crews:
+  - key: site
+    scene: site
+    title: { bg: Екипът на обекта, en: The crew on site }
+    body: { bg: От основите до последния слой боя. }
+    roles:
+      - tool: hammer
+        role: { bg: Бригадир, en: Foreman }
+        years: 22
+        quip: { bg: Помолихме го да позира. Провери отвеса вместо това. }
+  - key: office
+    scene: office
+    title: { bg: Екипът в офиса }
+    body: { bg: 'Оферти, чертежи, поръчки.' }
+    roles:
+      - tool: key
+        role: { bg: Управител }
+        years: 30
+        quip: { bg: Подписва всеки протокол за предаване. }
+partner_services:
+  - icon: blueprint
+    title: { bg: Проверка на изпълнимостта }
+    body: { bg: Проверка на проекта преди строителство. }
+materials:
+  - name: Baumit
+    logo: brands/baumit.png
+partners: []

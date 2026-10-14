@@ -1,0 +1,5 @@
+- programme: NOPE
+  kind: eu_notice
+  title: { bg: Съобщение }
+  file: publications/notice.pdf
+  published_on: 2025-03-01

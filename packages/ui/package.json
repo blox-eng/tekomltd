@@ -5,6 +5,8 @@
     "main": "./src/index.ts",
     "exports": {
         ".": "./src/index.ts",
+        "./glyphs": "./src/glyphs.ts",
+        "./turn": "./src/turn.ts",
         "./tokens.css": "./src/styles/tokens.css",
         "./tailwind-preset": "./tailwind-preset.ts"
     },

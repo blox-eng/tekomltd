@@ -29,3 +29,34 @@ export const GLYPHS = {
 } as const;
 
 export type GlyphKey = keyof typeof GLYPHS;
+
+export const CREW_GLYPH_KEYS = [
+    'plumb',
+    'trowel',
+    'boards',
+    'roller',
+    'tiles',
+    'spatula',
+    'hat',
+    'brick',
+    'truss',
+    'key',
+    'ledger',
+    'square',
+    'laptop'
+] as const satisfies readonly GlyphKey[];
+export const SERVICE_GLYPH_KEYS = [
+    'blueprint',
+    'square',
+    'beam',
+    'permit',
+    'survey',
+    'bolt',
+    'drop',
+    'air',
+    'window',
+    'kitchen',
+    'leaf',
+    'solar',
+    'tree'
+] as const satisfies readonly GlyphKey[];

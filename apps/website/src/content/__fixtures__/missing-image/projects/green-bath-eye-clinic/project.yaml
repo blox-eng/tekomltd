@@ -1,0 +1,22 @@
+slug: green-bath-eye-clinic
+title: { bg: Очен медицински център в „Зелената баня“, en: Eye clinic in the 1929 “Green Bath” }
+place: { bg: Стара Загора, en: Stara Zagora }
+address: ул. „Х. Д. Асенов“ 93
+lat: 42.4255841
+lng: 25.6240982
+show_on_map: true
+year: 2025
+built_area_m2: 872
+scopes: [restore, full]
+wide: true
+on_rail: true
+wp_id: 1952
+wp_slug: green-bath-eye-clinic
+old_slugs: [eye-clinic]
+draft: false
+images:
+  - file: cover.jpg
+    width: 2400
+    height: 1600
+    is_cover: true
+    alt: { bg: Фасадата на клиниката }

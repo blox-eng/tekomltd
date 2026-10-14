@@ -1,0 +1,20 @@
+legal_name: ТЕКОМ ООД
+eik: '000000000'
+vat: BG000000000
+address:
+  bg: Стара Загора, България
+  en: Stara Zagora, Bulgaria
+phone: '+359 42 000 000'
+email: office@example.com
+privacy_email: privacy@example.com
+socials:
+  linkedin: https://www.linkedin.com/
+quote_cta: true
+crew_headline:
+  bg: [Хората зад мазилката, Хората зад Вашата мечта, Хората зад Вашето доверие]
+  en: [The people behind the plaster, The people behind your dream home]
+meta_title:
+  bg: Теком
+meta_description:
+  bg: Строителство и довършителни работи
+  en: Construction and finishing works

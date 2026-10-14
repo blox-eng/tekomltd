@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { GLYPHS } from './glyphs';
+import { CREW_GLYPH_KEYS, GLYPHS, SERVICE_GLYPH_KEYS } from './glyphs';
 
 const crew = 'plumb trowel boards roller tiles spatula hat brick truss key ledger square laptop'.split(' ');
 const services = 'blueprint square beam permit survey bolt drop air window kitchen leaf solar tree'.split(' ');
@@ -8,6 +8,11 @@ const keys = [...new Set([...crew, ...services])];
 describe('GLYPHS', () => {
     it('has 25 unique keys', () => {
         expect(keys).toHaveLength(25);
+    });
+
+    it('lists the crew and service keys', () => {
+        expect([...CREW_GLYPH_KEYS]).toEqual(crew);
+        expect([...SERVICE_GLYPH_KEYS]).toEqual(services);
     });
 
     it.each(keys)('has %s', (key) => {

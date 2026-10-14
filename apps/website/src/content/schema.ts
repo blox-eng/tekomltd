@@ -32,7 +32,7 @@ const filePath = (extensions: readonly string[]) =>
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
 const imagePath = filePath(IMAGE_EXTENSIONS);
 const logoPath = filePath(['png', 'svg']);
-const pdfPath = filePath(['pdf']);
+const documentPath = filePath(['pdf', 'doc', 'docx', 'xls', 'xlsx', 'png', 'jpg', 'jpeg']);
 
 const url = z.url({ protocol: /^https?$/ });
 
@@ -84,7 +84,8 @@ const crewStatPanel = z.strictObject({
     after_project_index: z.number().int().min(0),
     stat_value: text,
     unit: L,
-    body: L
+    body: L,
+    unconfirmed: z.boolean().default(false)
 });
 
 export const RailPanel = z.discriminatedUnion('kind', [capabilityPanel, crewStatPanel]);
@@ -149,7 +150,7 @@ export const Publication = z.strictObject({
     programme: text.optional(),
     kind: z.enum(PUBLICATION_KINDS),
     title: L,
-    file: pdfPath,
+    file: documentPath,
     published_on: z.iso.date(),
     wp_url: url.optional()
 });
@@ -163,14 +164,27 @@ export const LegalPage = z.strictObject({
     body: text
 });
 
+/** A page carried over from the WordPress site; `wp_url` is its old address, for the redirect. */
+export const Page = z.strictObject({
+    slug,
+    locale: z.enum(LOCALES),
+    title: text,
+    updated: z.iso.date(),
+    wp_url: url.optional(),
+    body: text
+});
+
 const phrases = z.array(text).min(2);
 
 export const Settings = z.strictObject({
     legal_name: text,
+    founded: z.number().int().min(1900).max(2100),
     eik: z.string().min(1).optional(),
     vat: z.string().min(1).optional(),
     address: L,
     phone: text,
+    phone_alt: text.optional(),
+    hours: L.optional(),
     email: z.email(),
     privacy_email: z.email(),
     socials: z.strictObject({ linkedin: url.optional(), instagram: url.optional(), facebook: url.optional() }).default({}),
@@ -196,6 +210,7 @@ export type Home = z.infer<typeof Home>;
 export type EuProgramme = z.infer<typeof EuProgramme>;
 export type Publication = z.infer<typeof Publication>;
 export type LegalPage = z.infer<typeof LegalPage>;
+export type Page = z.infer<typeof Page>;
 export type Settings = z.infer<typeof Settings>;
 
 // `Promise` is the name the plan uses; the alias avoids shadowing the global inside this module.

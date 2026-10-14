@@ -4,9 +4,21 @@ import { LOCALES } from '@tekom/i18n';
 import { splitTurn, TurnError } from '@tekom/ui/turn';
 import YAML from 'yaml';
 import { z } from 'zod';
-import { parseFrontMatter } from './load';
-import { EU_PROGRAMMES_FILE, HOME_FILE, LEGAL_DIR, parseLegalFile, PROJECT_FILE, PROJECTS_DIR, PUBLICATIONS_FILE, resolveRef, SETTINGS_FILE } from './paths';
-import { EuProgramme, Home, LegalPage, Project, Publication, Settings } from './schema';
+import { MEDIA_URL, parseFrontMatter } from './load';
+import {
+    EU_PROGRAMMES_FILE,
+    HOME_FILE,
+    LEGAL_DIR,
+    PAGES_DIR,
+    parseLegalFile,
+    parsePageFile,
+    PROJECT_FILE,
+    PROJECTS_DIR,
+    PUBLICATIONS_FILE,
+    resolveRef,
+    SETTINGS_FILE
+} from './paths';
+import { EuProgramme, Home, LegalPage, Page, Project, Publication, Settings } from './schema';
 
 export type ContentError = { file: string; path: string; message: string };
 export type CheckResult = { ok: true } | { ok: false; errors: ContentError[] };
@@ -85,7 +97,8 @@ export function checkContent(root: string): CheckResult {
     checkProjects();
     const programmeCodes = checkProgrammes();
     checkPublications(programmeCodes);
-    checkLegal();
+    checkMarkdown(LEGAL_DIR, parseLegalFile, LegalPage, '<privacy|cookies|data-rights|terms>.<bg|en|de>.md');
+    checkMarkdown(PAGES_DIR, parsePageFile, Page, '<slug>.<bg|en|de>.md');
 
     return errors.length === 0 ? { ok: true } : { ok: false, errors };
 
@@ -153,16 +166,17 @@ export function checkContent(root: string): CheckResult {
         });
     }
 
-    function checkLegal() {
-        const dir = join(absRoot, LEGAL_DIR);
+    /** A folder of `<slug>.<locale>.md` files; every `/media/…` link in a body must point at a content file. */
+    function checkMarkdown(folder: string, parseName: (name: string) => { slug: string; locale: string } | null, schema: z.ZodType, pattern: string) {
+        const dir = join(absRoot, folder);
         if (!existsSync(dir)) return;
-        const names = readdirSync(dir).sort();
         const pages = new Set<string>();
-        for (const name of names) {
-            const file = `${LEGAL_DIR}/${name}`;
-            const id = parseLegalFile(name);
+        for (const name of readdirSync(dir).sort()) {
+            if (statSync(join(dir, name)).isDirectory()) continue;
+            const file = `${folder}/${name}`;
+            const id = parseName(name);
             if (!id) {
-                fail(file, '', 'name must be <privacy|cookies|data-rights|terms>.<bg|en|de>.md');
+                fail(file, '', `name must be ${pattern}`);
                 continue;
             }
             pages.add(`${id.slug}.${id.locale}`);
@@ -173,21 +187,24 @@ export function checkContent(root: string): CheckResult {
                 fail(file, '', `cannot read front matter: ${(e as Error).message}`);
                 continue;
             }
-            parse(LegalPage, { ...front.data, ...id, body: front.body }, file);
+            parse(schema, { ...front.data, ...id, body: front.body }, file);
+            for (const link of mediaLinks(front.body)) {
+                const target = resolve(absRoot, decodeURI(link.slice(MEDIA_URL.length + 1)));
+                if (!target.startsWith(absRoot + sep) || !existsSync(target) || !statSync(target).isFile()) fail(file, 'body', `file not found: ${link}`);
+            }
         }
         for (const key of pages) {
             const [slug, locale] = key.split('.');
-            if (locale !== 'bg' && !pages.has(`${slug}.bg`)) fail(`${LEGAL_DIR}/${key}.md`, '', `needs the Bulgarian page ${LEGAL_DIR}/${slug}.bg.md`);
+            if (locale !== 'bg' && !pages.has(`${slug}.bg`)) fail(`${folder}/${key}.md`, '', `needs the Bulgarian page ${folder}/${slug}.bg.md`);
         }
     }
 }
 
-function main(argv: string[]) {
+/** Markdown link and image targets that start with the media URL. */
+const mediaLinks = (markdown: string) => [...markdown.matchAll(/\]\((\/media\/[^)\s]+)/g)].map((m) => m[1]!);
+
+export function main(argv: string[]) {
     const root = resolve(argv[2] ?? join(process.cwd(), '..', '..', 'content'));
-    if (!existsSync(root)) {
-        console.log(`content:check: no content folder at ${root}, nothing to check`);
-        return 0;
-    }
     const result = checkContent(root);
     if (result.ok) {
         console.log('content:check: all content files are valid');

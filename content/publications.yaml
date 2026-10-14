@@ -121,7 +121,7 @@
 - programme: BG16RFPR001-1.004
   kind: procurement
   title:
-    bg: "Приложение 1: Условия за изпълнение"
+    bg: 'Приложение 1: Условия за изпълнение'
   file: publications/2026-03-pr-1-usl-za-izpalnenie.pdf
   published_on: 2026-03-17
   wp_url: https://www.tekomltd.com/wp-content/uploads/2026/03/Пр_1_Усл.-за-изпълнение.pdf
@@ -240,7 +240,7 @@
 - programme: BG05SFPR002-1.004-1772-C01
   kind: eu_notice
   title:
-    bg: publication-human-resources
+    bg: Публикация за проекта (сайт)
   file: publications/2025-02-publ-sayt-tekom.pdf
   published_on: 2025-02-14
   wp_url: https://www.tekomltd.com/wp-content/uploads/2025/02/Публ.-сайт_Теком.pdf

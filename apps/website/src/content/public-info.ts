@@ -19,6 +19,7 @@ export type Programme = {
     periodEnd: string | null;
     logo: Img | null;
     /** The Bulgarian text stands in for a missing translation. */
+    titleFallback: boolean;
     fallback: boolean;
 };
 
@@ -49,8 +50,9 @@ export function listProgrammes(locale: Locale, root: string = defaultRoot()): Pr
         euContributionEur: p.eu_contribution_eur ?? null,
         periodStart: p.period_start ?? null,
         periodEnd: p.period_end ?? null,
-        logo: imgOrNull(root, EU_PROGRAMMES_FILE, p.programme_logo, p.code),
-        fallback: [p.title, p.summary, p.objectives, p.results].some((l) => t(l, locale).fallback)
+        logo: imgOrNull(root, EU_PROGRAMMES_FILE, p.programme_logo, text(p.title, locale)),
+        titleFallback: t(p.title, locale).fallback,
+        fallback: [p.summary, p.objectives, p.results].some((l) => t(l, locale).fallback)
     }));
 }
 

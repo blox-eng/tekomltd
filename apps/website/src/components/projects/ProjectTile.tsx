@@ -26,7 +26,7 @@ export function ProjectTile({ project, scopeLabels, note }: Props) {
                         <span key={scope}>{scopeLabels[scope]}</span>
                     ))}
                 </div>
-                <h3>{project.title}</h3>
+                <h3 lang={project.titleFallback ? 'bg' : undefined}>{project.title}</h3>
                 {project.titleFallback && <span className={styles.note}>{note}</span>}
                 <span className={`${styles.where} mono`}>{where}</span>
             </Link>

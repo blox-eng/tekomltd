@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Markdown from 'react-markdown';
 import { LOCALES, type Locale } from '@tekom/i18n';
 import { allPageSlugs, getLegalPage, getPage } from '@/content/public-info';
+import { Link } from '@/i18n/navigation';
 import { LEGAL_SLUGS, type LegalSlug } from '@/content/paths';
 
 export const dynamicParams = false;
@@ -39,8 +40,20 @@ export default async function TextPage({ params }: { params: Promise<Params> }) 
                 <time dateTime={page.updated}>{page.updated}</time>
             </p>
             {page.fallback && <p className="lang-note">{t('note')}</p>}
-            <div className="prose">
-                <Markdown components={{ img: ({ node: _node, alt, ...props }) => <img alt={alt ?? ''} loading="lazy" decoding="async" {...props} /> }}>
+            <div className="prose" lang={page.fallback ? 'bg' : undefined}>
+                <Markdown
+                    components={{
+                        a: ({ node: _node, href, children, ...props }) =>
+                            href?.startsWith('/') && !href.startsWith('/media/') ? (
+                                <Link href={href}>{children}</Link>
+                            ) : (
+                                <a href={href} {...props}>
+                                    {children}
+                                </a>
+                            ),
+                        img: ({ node: _node, alt, ...props }) => <img alt={alt ?? ''} loading="lazy" decoding="async" {...props} />
+                    }}
+                >
                     {page.body}
                 </Markdown>
             </div>

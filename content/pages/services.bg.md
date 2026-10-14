@@ -21,8 +21,8 @@ wp_url: https://www.tekomltd.com/services/
 
 ## КАК РАБОТИМ С ВАС
 
-[![Нашите бизнес услуги](/media/pages/services/services-tabs-139154408.jpg)](/services/business-services/)
+[![Нашите бизнес услуги](/media/pages/services/services-tabs-139154408.jpg)](/business-services)
 
 ## КАК РАБОТИМ ЗА ВАС
 
-[![Нашите частни услуги](/media/pages/services/services-tabs-224128822.jpg)](/services/private-services/)
+[![Нашите частни услуги](/media/pages/services/services-tabs-224128822.jpg)](/private-services)

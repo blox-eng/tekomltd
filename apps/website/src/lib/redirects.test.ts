@@ -21,12 +21,12 @@ describe('buildRedirects', () => {
             expect.objectContaining({
                 source: '/project-view/%D0%B6%D0%B8%D0%BB%D0%B8%D1%89%D0%BD%D0%B0-%D1%81%D0%B3%D1%80%D0%B0%D0%B4%D0%B0-%D1%81-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B8-%D0%B8-%D0%B3%D0%B0%D1%80%D0%B0%D0%B6%D0%B8/:rest*',
                 destination: '/projects/asenov-129',
-                permanent: true
+                statusCode: 301
             })
         ));
 
     it('redirects the numeric WordPress URL', () =>
-        expect(r).toContainEqual(expect.objectContaining({ source: '/project-view/1310/:rest*', destination: '/projects/asenov-129', permanent: true })));
+        expect(r).toContainEqual(expect.objectContaining({ source: '/project-view/1310/:rest*', destination: '/projects/asenov-129', statusCode: 301 })));
 
     it('covers the static list and the old pages', () => {
         const sources = r.map((x) => x.source);
@@ -40,7 +40,7 @@ describe('buildRedirects', () => {
 
     it('redirects an imported upload to its new URL, percent-encoding Cyrillic', () => {
         expect(r).toContainEqual(
-            expect.objectContaining({ source: '/wp-content/uploads/2026/04/x.pdf', destination: '/media/publications/x.pdf', permanent: true })
+            expect.objectContaining({ source: '/wp-content/uploads/2026/04/x.pdf', destination: '/media/publications/x.pdf', statusCode: 301 })
         );
         expect(r).toContainEqual(
             expect.objectContaining({
@@ -54,6 +54,12 @@ describe('buildRedirects', () => {
         expect(r).toContainEqual(expect.objectContaining({ source: '/projects/old-asenov', destination: '/projects/asenov-129' }));
         expect(r).toContainEqual(expect.objectContaining({ source: '/en/projects/old-asenov', destination: '/en/projects/asenov-129' }));
         expect(r).toContainEqual(expect.objectContaining({ source: '/de/projects/old-asenov', destination: '/de/projects/asenov-129' }));
+    });
+
+    it('lists each source once', () => {
+        const twice = buildRedirects(slugs, [files[0], files[0]], []);
+        const sources = twice.map((x) => x.source);
+        expect(new Set(sources).size).toBe(sources.length);
     });
 
     it('skips projects without a WordPress identity and never redirects a path onto itself', () => {

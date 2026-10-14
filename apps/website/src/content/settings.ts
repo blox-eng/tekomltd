@@ -19,6 +19,7 @@ export type SiteSettings = {
     quoteCta: boolean;
     metaTitle: string | null;
     metaDescription: string | null;
+    pageDescriptions: { projects: string | null; publications: string | null };
     ogImage: Img | null;
 };
 
@@ -39,7 +40,9 @@ export function getSettings(locale: Locale, root: string = defaultRoot()): SiteS
         crewHeadline: s.crew_headline[locale] ?? s.crew_headline.bg,
         quoteCta: s.quote_cta,
         metaTitle: textOrNull(s.meta_title, locale),
-        metaDescription: textOrNull(s.meta_description, locale),
+        // Descriptions are Tekom's own Bulgarian copy; en and de get none rather than a translation nobody reviewed.
+        metaDescription: s.meta_description?.[locale] ?? null,
+        pageDescriptions: { projects: s.page_descriptions.projects?.[locale] ?? null, publications: s.page_descriptions.publications?.[locale] ?? null },
         ogImage: imgOrNull(root, SETTINGS_FILE, s.og_image, text(s.meta_title ?? { bg: s.legal_name }, locale))
     };
 }

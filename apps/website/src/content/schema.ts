@@ -193,6 +193,8 @@ export const Settings = z.strictObject({
     quote_cta: z.boolean().default(true),
     meta_title: L.optional(),
     meta_description: L.optional(),
+    /** Descriptions for pages that have no text of their own to take one from. */
+    page_descriptions: z.strictObject({ projects: L.optional(), publications: L.optional() }).default({}),
     og_image: imagePath.optional()
 });
 

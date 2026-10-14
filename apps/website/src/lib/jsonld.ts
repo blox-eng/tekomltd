@@ -6,16 +6,32 @@ import { SITE_URL, urlFor } from './seo';
 /** The Tekom office, ул. „Хаджи Димитър Асенов“ 119. */
 const OFFICE_GEO = { '@type': 'GeoCoordinates', latitude: 42.4274839, longitude: 25.623601 } as const;
 
-export function businessJsonLd({ legalName, address, phone, email, socials }: Pick<SiteSettings, 'legalName' | 'address' | 'phone' | 'email' | 'socials'>) {
+const POSTAL_CODE = '6000';
+const CITY: Record<Locale, string> = { bg: 'Стара Загора', en: 'Stara Zagora', de: 'Stara Zagora' };
+const NOT_STREET = /\b6000\b|Стара Загора|Stara Zagora|Stara Sagora|България|Bulgaria|Bulgarien/g;
+
+/** The settings address is one line; the street part is what remains without postcode, city and country. */
+const streetOf = (address: string) =>
+    address
+        .replace(NOT_STREET, '')
+        .split(',')
+        .map((part) => part.trim())
+        .filter(Boolean)
+        .join(', ');
+
+export function businessJsonLd(
+    { legalName, address, phone, email, socials }: Pick<SiteSettings, 'legalName' | 'address' | 'phone' | 'email' | 'socials'>,
+    locale: Locale = 'bg'
+) {
     const sameAs = Object.values(socials).filter((url): url is string => Boolean(url));
     return {
         '@context': 'https://schema.org',
         '@type': 'HomeAndConstructionBusiness',
         name: legalName,
         url: SITE_URL,
-        telephone: phone,
-        email,
-        address: { '@type': 'PostalAddress', streetAddress: address, addressLocality: 'Stara Zagora', addressCountry: 'BG' },
+        ...(phone && { telephone: phone }),
+        ...(email && { email }),
+        address: { '@type': 'PostalAddress', streetAddress: streetOf(address), postalCode: POSTAL_CODE, addressLocality: CITY[locale], addressCountry: 'BG' },
         geo: OFFICE_GEO,
         ...(sameAs.length > 0 && { sameAs })
     };

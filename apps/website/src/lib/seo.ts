@@ -12,14 +12,21 @@ export const urlFor = (path: string, locale: Locale) => {
 };
 
 /** hreflang URLs of `path`: every locale plus x-default (Bulgarian). */
-export const languageUrls = (path: string): Record<string, string> => ({
-    ...Object.fromEntries(LOCALES.map((l) => [l, urlFor(path, l)])),
+export const languageUrls = (path: string, fallbackLocales: readonly Locale[] = []): Record<string, string> => ({
+    ...Object.fromEntries(publishedLocales(fallbackLocales).map((l) => [l, urlFor(path, l)])),
     'x-default': urlFor(path, DEFAULT_LOCALE)
 });
 
-export function alternates(path: string, locale: Locale = DEFAULT_LOCALE): Metadata['alternates'] {
-    return { canonical: urlFor(path, locale), languages: languageUrls(path) };
+/** Locales that carry their own content; a fallback locale only repeats the Bulgarian page. */
+export const publishedLocales = (fallbackLocales: readonly Locale[] = []) => LOCALES.filter((l) => !fallbackLocales.includes(l));
+
+/** A fallback locale points its canonical at the Bulgarian page and is left out of hreflang. */
+export function alternates(path: string, locale: Locale = DEFAULT_LOCALE, fallbackLocales: readonly Locale[] = []): Metadata['alternates'] {
+    const canonicalLocale = fallbackLocales.includes(locale) ? DEFAULT_LOCALE : locale;
+    return { canonical: urlFor(path, canonicalLocale), languages: languageUrls(path, fallbackLocales) };
 }
+
+const OG_LOCALE: Record<Locale, string> = { bg: 'bg_BG', en: 'en_US', de: 'de_DE' };
 
 const MAX_DESCRIPTION = 160;
 
@@ -44,19 +51,21 @@ type PageMeta = {
     absoluteTitle?: boolean;
     description?: string | null;
     image?: { src: string; width: number; height: number; alt: string } | null;
+    /** Locales of this page that show Bulgarian text instead of a translation. */
+    fallbackLocales?: readonly Locale[];
 };
 
-export function pageMetadata({ locale, path, title, absoluteTitle, description, image }: PageMeta): Metadata {
-    const url = urlFor(path, locale);
+export function pageMetadata({ locale, path, title, absoluteTitle, description, image, fallbackLocales = [] }: PageMeta): Metadata {
+    const alt = alternates(path, locale, fallbackLocales);
     return {
         title: absoluteTitle ? { absolute: title } : title,
         description: description ?? undefined,
-        alternates: alternates(path, locale),
+        alternates: alt,
         openGraph: {
             type: 'website',
             siteName: 'Tekom',
-            locale,
-            url,
+            locale: OG_LOCALE[locale],
+            url: alt?.canonical as string,
             title,
             description: description ?? undefined,
             images: image ? [{ url: image.src, width: image.width, height: image.height, alt: image.alt }] : undefined

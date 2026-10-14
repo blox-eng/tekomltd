@@ -27,6 +27,7 @@ export type PublicationView = {
     programme: string | null;
     kind: (typeof PUBLICATION_KINDS)[number];
     title: string;
+    titleFallback: boolean;
     file: string;
     extension: string;
     bytes: number;
@@ -65,6 +66,7 @@ export function listPublications(locale: Locale, kind?: PublicationView['kind'],
             programme: p.programme ?? null,
             kind: p.kind,
             title: text(p.title, locale),
+            titleFallback: t(p.title, locale).fallback,
             file: mediaUrl(root, PUBLICATIONS_FILE, p.file),
             extension: extname(p.file).slice(1).toLowerCase(),
             bytes: statSync(resolveRef(root, PUBLICATIONS_FILE, p.file)).size,

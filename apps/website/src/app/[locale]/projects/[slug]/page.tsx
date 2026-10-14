@@ -9,6 +9,7 @@ import { allProjectSlugs, getProject } from '@/content/projects';
 import { JsonLd } from '@/components/JsonLd';
 import { Link } from '@/i18n/navigation';
 import { breadcrumbJsonLd, projectJsonLd } from '@/lib/jsonld';
+import { fallbackLocalesOf } from '@/lib/fallbacks';
 import { describe, pageMetadata } from '@/lib/seo';
 
 export const dynamicParams = false;
@@ -28,7 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
         path: `/projects/${slug}`,
         title: project.metaTitle ?? project.title,
         description: project.metaDescription ?? (project.summary ? describe(project.summary) : null),
-        image: project.ogImage ?? project.cover
+        image: project.ogImage ?? project.cover,
+        fallbackLocales: fallbackLocalesOf(`/projects/${slug}`)
     });
 }
 

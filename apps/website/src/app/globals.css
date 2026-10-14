@@ -373,3 +373,35 @@ h3 {
         scroll-behavior: auto !important;
     }
 }
+
+.facts {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 24px;
+    margin: 0;
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+}
+
+.facts dt {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.facts dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.lead {
+    color: var(--muted);
+    max-width: 60ch;
+    margin: 0;
+}
+
+.prose img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 0 16px;
+}

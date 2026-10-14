@@ -1,8 +1,8 @@
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { extname, join } from 'node:path';
 import { DEFAULT_LOCALE, type Locale } from '@tekom/i18n';
-import { defaultRoot, imgOrNull, mediaUrl, once, parseFrontMatter, readYaml, text } from './load';
-import { EU_PROGRAMMES_FILE, legalFile, pageFile, PAGES_DIR, parsePageFile, PUBLICATIONS_FILE, type LegalSlug } from './paths';
+import { defaultRoot, imgOrNull, mediaUrl, once, parseFrontMatter, readYaml, t, text } from './load';
+import { EU_PROGRAMMES_FILE, legalFile, pageFile, PAGES_DIR, parsePageFile, PUBLICATIONS_FILE, resolveRef, type LegalSlug } from './paths';
 import { EuProgramme, LegalPage, Page, Publication, PUBLICATION_KINDS } from './schema';
 import { z } from 'zod';
 import type { Img } from './load';
@@ -18,6 +18,8 @@ export type Programme = {
     periodStart: string | null;
     periodEnd: string | null;
     logo: Img | null;
+    /** The Bulgarian text stands in for a missing translation. */
+    fallback: boolean;
 };
 
 export type PublicationView = {
@@ -25,6 +27,8 @@ export type PublicationView = {
     kind: (typeof PUBLICATION_KINDS)[number];
     title: string;
     file: string;
+    extension: string;
+    bytes: number;
     publishedOn: string;
     wpUrl: string | null;
 };
@@ -45,7 +49,8 @@ export function listProgrammes(locale: Locale, root: string = defaultRoot()): Pr
         euContributionEur: p.eu_contribution_eur ?? null,
         periodStart: p.period_start ?? null,
         periodEnd: p.period_end ?? null,
-        logo: imgOrNull(root, EU_PROGRAMMES_FILE, p.programme_logo, p.code)
+        logo: imgOrNull(root, EU_PROGRAMMES_FILE, p.programme_logo, p.code),
+        fallback: [p.title, p.summary, p.objectives, p.results].some((l) => t(l, locale).fallback)
     }));
 }
 
@@ -59,6 +64,8 @@ export function listPublications(locale: Locale, kind?: PublicationView['kind'],
             kind: p.kind,
             title: text(p.title, locale),
             file: mediaUrl(root, PUBLICATIONS_FILE, p.file),
+            extension: extname(p.file).slice(1).toLowerCase(),
+            bytes: statSync(resolveRef(root, PUBLICATIONS_FILE, p.file)).size,
             publishedOn: p.published_on,
             wpUrl: p.wp_url ?? null
         }))

@@ -3,29 +3,32 @@ import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Markdown from 'react-markdown';
 import { LOCALES, type Locale } from '@tekom/i18n';
-import { getLegalPage } from '@/content/public-info';
+import { allPageSlugs, getLegalPage, getPage } from '@/content/public-info';
 import { LEGAL_SLUGS, type LegalSlug } from '@/content/paths';
 
 export const dynamicParams = false;
 
-type Params = { locale: Locale; legal: string };
+type Params = { locale: Locale; slug: string };
 
 const isLegalSlug = (s: string): s is LegalSlug => (LEGAL_SLUGS as readonly string[]).includes(s);
 
+/** Legal pages and the pages carried over from the old site share one layout and one route segment. */
+const load = (slug: string, locale: Locale) => (isLegalSlug(slug) ? getLegalPage(slug, locale) : getPage(slug, locale));
+
 export function generateStaticParams(): Params[] {
-    return LOCALES.flatMap((locale) => LEGAL_SLUGS.map((legal) => ({ locale, legal })));
+    const slugs = [...LEGAL_SLUGS, ...allPageSlugs().map((page) => page.slug)];
+    return LOCALES.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
-    const { locale, legal } = await params;
-    const page = isLegalSlug(legal) ? getLegalPage(legal, locale) : null;
-    return { title: page?.title };
+    const { locale, slug } = await params;
+    return { title: load(slug, locale)?.title };
 }
 
-export default async function LegalPage({ params }: { params: Promise<Params> }) {
-    const { locale, legal } = await params;
+export default async function TextPage({ params }: { params: Promise<Params> }) {
+    const { locale, slug } = await params;
     setRequestLocale(locale);
-    const page = isLegalSlug(legal) ? getLegalPage(legal, locale) : null;
+    const page = load(slug, locale);
     if (!page) notFound();
     const t = await getTranslations({ locale });
 
@@ -37,7 +40,9 @@ export default async function LegalPage({ params }: { params: Promise<Params> })
             </p>
             {page.fallback && <p className="lang-note">{t('note')}</p>}
             <div className="prose">
-                <Markdown>{page.body}</Markdown>
+                <Markdown components={{ img: ({ node: _node, alt, ...props }) => <img alt={alt ?? ''} loading="lazy" decoding="async" {...props} /> }}>
+                    {page.body}
+                </Markdown>
             </div>
         </article>
     );

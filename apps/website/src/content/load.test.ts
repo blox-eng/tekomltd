@@ -1,3 +1,4 @@
+import { statSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { checkContent } from './check';
@@ -49,6 +50,7 @@ describe('getProject', () => {
         expect(getProject('nope', 'bg', root)).toBeNull();
         expect(getProject('hidden-draft', 'bg', root)).toBeNull();
     });
+    it('knows its place in the list', () => expect(getProject('third-site', 'bg', root)).toMatchObject({ position: 3, total: 3 }));
     it('flags a Bulgarian fallback title', () => expect(getProject('old-town-house', 'de', root)!.titleFallback).toBe(true));
 });
 
@@ -112,6 +114,13 @@ describe('public information', () => {
             { kind: 'eu_notice', file: '/media/publications/notice.pdf', publishedOn: '2025-03-01' }
         ]);
         expect(listPublications('bg', 'procurement', root)).toEqual([]);
+    });
+    it('gives each publication its file extension and size', () => {
+        expect(listPublications('bg', undefined, root)[0]).toMatchObject({ extension: 'pdf', bytes: statSync(join(root, 'publications/notice.pdf')).size });
+    });
+    it('flags a programme text that fell back to Bulgarian', () => {
+        expect(listProgrammes('bg', root)[0]!.fallback).toBe(false);
+        expect(listProgrammes('en', root)[0]!.fallback).toBe(true);
     });
     it('returns a legal page and falls back to Bulgarian', () => {
         expect(getLegalPage('privacy', 'en', root)).toMatchObject({ title: 'Privacy policy', fallback: false });

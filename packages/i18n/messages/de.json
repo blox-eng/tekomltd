@@ -90,7 +90,15 @@
     "eu": {
         "h": "EU-Programme und Veröffentlichungen",
         "p": "Von der EU kofinanzierte Projekte von Tekom und die vorgeschriebenen Veröffentlichungen.",
-        "notices": "Unterlagen"
+        "notices": "Unterlagen",
+        "cofunded": "Kofinanziert von der Europäischen Union",
+        "emblemAlt": "Flagge der Europäischen Union",
+        "summary": "Zum Projekt",
+        "objectives": "Ziele",
+        "results": "Ergebnisse",
+        "totalBudget": "Gesamtbudget",
+        "euContribution": "EU-Beitrag",
+        "period": "Laufzeit"
     },
     "contact": {
         "h": "Erzählen Sie uns von Ihrem Projekt",
@@ -103,7 +111,8 @@
             "email": "Email"
         },
         "phone": "Phone",
-        "office": "Office"
+        "office": "Office",
+        "email": "Email"
     },
     "footer": {
         "company": "Unternehmen",
@@ -122,5 +131,12 @@
         "eu": "Von der Europäischen Union kofinanzierte Projekte: BG05SFPR002-1.004-1772-C01 und BG16RFPR001-1.004.",
         "made": "Verantwortlicher: ТЕКОМ ООД · privacy@tekomltd.com"
     },
-    "note": "Übersetzung folgt"
+    "note": "Übersetzung folgt",
+    "publications": {
+        "h": "Veröffentlichungen",
+        "all": "Alle",
+        "procurement": "Vergabebekanntmachungen",
+        "eu_notice": "EU-Mitteilungen",
+        "other": "Weitere"
+    }
 }

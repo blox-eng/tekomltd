@@ -13,6 +13,8 @@ export type ProjectDetail = ProjectCard & {
     summary: string | null;
     summaryFallback: boolean;
     images: Img[];
+    position: number;
+    total: number;
     next: { slug: string; title: string };
     metaTitle: string | null;
     metaDescription: string | null;
@@ -75,6 +77,8 @@ export function getProject(slug: string, locale: Locale, root: string = defaultR
         summary: summary?.text ?? null,
         summaryFallback: summary?.fallback ?? false,
         images: images(loaded, root, locale),
+        position: index + 1,
+        total: all.length,
         next: { slug: nextProject.slug, title: text(nextProject.title, locale) },
         metaTitle: textOrNull(project.meta_title, locale),
         metaDescription: textOrNull(project.meta_description, locale),

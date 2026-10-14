@@ -1,0 +1,196 @@
+/* Ported from the crew block of design/mockup/mockup.tpl.html; values come from tokens.css. */
+
+.crews {
+    padding-block: 112px 0;
+}
+
+@media (max-width: 860px) {
+    .crews {
+        padding-block: 64px 0;
+    }
+}
+
+.split + .split {
+    margin-top: 72px;
+}
+
+.split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 48px;
+    border-top: 1px solid var(--line);
+    padding-top: 28px;
+    align-items: start;
+}
+
+.flip .group {
+    order: 2;
+}
+
+@media (max-width: 900px) {
+    .split {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .flip .group {
+        order: 0;
+    }
+}
+
+.group {
+    margin: 0;
+    position: sticky;
+    top: 96px;
+}
+
+@media (max-width: 900px) {
+    .group {
+        position: static;
+    }
+}
+
+.group > img,
+.lineup {
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    max-width: 100%;
+}
+
+.group > img {
+    object-fit: cover;
+    display: block;
+    height: auto;
+}
+
+.lineup {
+    position: relative;
+    background: radial-gradient(110% 90% at 50% 25%, var(--field), var(--wall));
+}
+
+.lineup::after {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 1px dashed var(--line);
+    pointer-events: none;
+}
+
+.scene {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.sk {
+    fill: none;
+    stroke: var(--faint);
+    stroke-width: 1.1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.8;
+}
+
+.paint {
+    fill: var(--accent);
+    opacity: 0.12;
+}
+
+.ic {
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke var(--dur-standard) var(--ease);
+}
+
+.ic * {
+    vector-effect: non-scaling-stroke;
+}
+
+.ic.on {
+    stroke: var(--accent);
+}
+
+.group figcaption {
+    display: grid;
+    gap: 4px;
+    margin-top: 16px;
+}
+
+.group figcaption b {
+    font: 400 calc(1.22 * 24px) / 1.15 var(--f-display);
+    letter-spacing: -0.01em;
+}
+
+.group figcaption span {
+    color: var(--muted);
+    max-width: 44ch;
+}
+
+.group :global(.stamp) {
+    bottom: auto;
+    top: 18px;
+}
+
+.roles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.roles li {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 11rem) minmax(0, 1fr);
+    gap: 16px;
+    align-items: baseline;
+    padding-block: 14px;
+    border-bottom: 1px solid var(--line-2);
+}
+
+.roles li:first-child {
+    padding-top: 0;
+}
+
+.roles :global(.glyph) {
+    width: 28px;
+    height: 28px;
+    color: var(--muted);
+    align-self: center;
+    transition: color var(--dur-standard) var(--ease);
+}
+
+.roles li:hover :global(.glyph),
+.roles li:focus :global(.glyph) {
+    color: var(--accent);
+}
+
+.roles b {
+    display: block;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.roles :global(.mono) {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.roles p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+@media (max-width: 520px) {
+    .roles li {
+        grid-template-columns: 28px minmax(0, 1fr);
+    }
+
+    .roles p {
+        grid-column: 2;
+    }
+}

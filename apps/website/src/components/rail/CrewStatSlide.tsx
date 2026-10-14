@@ -1,9 +1,8 @@
 import { Glyph, Stamp, type GlyphKey } from '@tekom/ui';
+import { STAMP_DATE } from '../stampDate';
 import styles from './rail.module.css';
 
 type Props = { value: string; unit: string; body: string; tools: GlyphKey[]; stampLabel: string };
-
-const STAMP_DATE = '10 · 2026';
 
 export function CrewStatSlide({ value, unit, body, tools, stampLabel }: Props) {
     return (

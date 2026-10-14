@@ -40,6 +40,35 @@ h3 {
     letter-spacing: 0.04em;
 }
 
+.sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.sh {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.sh h2 {
+    font: 400 calc(1.22 * clamp(24px, 2.8vw, 32px)) / 1.1 var(--f-display);
+    letter-spacing: -0.01em;
+}
+
+.sh p {
+    color: var(--muted);
+    margin: 0;
+    max-width: 52ch;
+}
+
 .micro {
     font: 500 11px var(--f-mono);
     letter-spacing: 0.08em;

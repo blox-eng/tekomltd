@@ -1,0 +1,109 @@
+/* Ported from the map block of design/mockup/mockup.tpl.html; values come from tokens.css. */
+
+.section {
+    padding-block: 112px 0;
+}
+
+@media (max-width: 860px) {
+    .section {
+        padding-block: 64px 0;
+    }
+}
+
+.maps {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 860px) {
+    .maps {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: var(--field);
+    border: 1px solid var(--line);
+    position: relative;
+}
+
+.card > :global(.micro) {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+}
+
+.map {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.land {
+    fill: var(--wall);
+    stroke: var(--line);
+    stroke-width: 1.2;
+}
+
+.grid {
+    stroke: var(--line-2);
+    stroke-width: 1;
+}
+
+.pin {
+    fill: var(--accent);
+    stroke: var(--field);
+    stroke-width: 2;
+    cursor: pointer;
+    transition: r var(--dur-micro) var(--ease);
+}
+
+a:hover > .pin,
+a:focus-visible > .pin {
+    r: 9;
+}
+
+.cluster {
+    fill: var(--accent);
+    stroke: var(--field);
+    stroke-width: 2;
+}
+
+.clusterN {
+    fill: var(--on-accent);
+    font: 600 12px var(--f-mono);
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+}
+
+.town {
+    fill: var(--muted);
+    font: 500 11px var(--f-mono);
+    letter-spacing: 0.06em;
+}
+
+.scale {
+    stroke: var(--text);
+    stroke-width: 1.5;
+}
+
+.scaleText {
+    fill: var(--muted);
+    font: 500 10px var(--f-mono);
+}
+
+.leader {
+    stroke: var(--accent);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    fill: none;
+}
+
+.tip {
+    min-height: 26px;
+    color: var(--muted);
+    font-size: 14px;
+    padding-top: 10px;
+}

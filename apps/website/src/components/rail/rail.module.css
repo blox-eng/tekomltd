@@ -117,12 +117,12 @@
     max-width: 34ch;
 }
 
-.panel .micro {
+.panel :global(.micro) {
     color: inherit;
     opacity: 0.7;
 }
 
-.go {
+.panel .go {
     font-weight: 500;
     font-size: 14px;
     justify-self: start;

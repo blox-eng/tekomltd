@@ -6,7 +6,10 @@
         "lint": "prettier --check .",
         "typecheck": "tsc --noEmit",
         "test": "vitest run --passWithNoTests",
-        "content:check": "tsx src/content/check.ts"
+        "content:check": "tsx src/content/check.ts",
+        "sync-media": "tsx scripts/sync-media.ts",
+        "prebuild": "pnpm sync-media",
+        "predev": "pnpm sync-media"
     },
     "devDependencies": {
         "@types/node": "^22.20.5",
@@ -19,6 +22,7 @@
         "@tekom/i18n": "workspace:*",
         "@tekom/ui": "workspace:*",
         "gray-matter": "^4.0.3",
+        "image-size": "^2.0.4",
         "yaml": "^2.9.1",
         "zod": "^4.6.7"
     }

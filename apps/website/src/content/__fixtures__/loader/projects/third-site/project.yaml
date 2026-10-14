@@ -1,0 +1,8 @@
+slug: third-site
+title: { bg: Трети обект, en: Third site }
+place: { bg: Казанлък }
+sort: 3
+on_rail: false
+year: 2020
+images:
+  - file: a.png

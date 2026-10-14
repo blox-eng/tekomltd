@@ -1,0 +1,8 @@
+slug: hidden-draft
+title: { bg: Чернова }
+place: { bg: Стара Загора }
+sort: 0
+on_rail: true
+draft: true
+images:
+  - file: a.jpg

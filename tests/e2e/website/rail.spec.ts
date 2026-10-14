@@ -1,13 +1,15 @@
 import { expect, test } from '@playwright/test';
 
 const counter = (page: import('@playwright/test').Page) => page.locator('[data-rail-count]');
+/** The slides themselves; the loop's copies on either side are inert. */
+const REAL = '[data-rail-copy="real"]';
 
 test.describe('rail on a phone', () => {
     test.use({ viewport: { width: 390, height: 844 } });
 
     test('every slide is the full viewport width', async ({ page }) => {
         await page.goto('/');
-        const widths = await page.locator('[data-rail-track] > *').evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().width)));
+        const widths = await page.locator(`${REAL} > *`).evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().width)));
         expect(widths.length).toBeGreaterThan(3);
         expect(new Set(widths)).toEqual(new Set([390]));
     });
@@ -15,7 +17,7 @@ test.describe('rail on a phone', () => {
     test('the counter starts at 01 and changes after a swipe', async ({ page }) => {
         await page.goto('/');
         await expect(counter(page)).toHaveText(/^01 \/ \d{2}$/);
-        await page.locator('[data-rail-track]').evaluate((el) => el.scrollTo({ left: el.clientWidth, behavior: 'instant' }));
+        await page.locator('[data-rail-track]').evaluate((el) => el.scrollBy({ left: el.clientWidth, behavior: 'instant' }));
         await expect(counter(page)).toHaveText(/^02 \/ \d{2}$/);
     });
 });
@@ -37,25 +39,47 @@ test.describe('rail on desktop', () => {
 
     test('the arrow keys scroll the rail', async ({ page }) => {
         await page.goto('/');
-        await page.locator('[data-rail-track] a').first().focus();
+        await page.locator(`${REAL} a`).first().focus();
         await page.keyboard.press('ArrowRight');
         await expect(counter(page)).toHaveText(/^02 \//);
         await page.keyboard.press('ArrowLeft');
         await expect(counter(page)).toHaveText(/^01 \//);
     });
 
-    test('the rail ends: the last slide is reachable and there is no loop', async ({ page }) => {
+    test('the rail loops: Previous from the first slide shows the last, Next from the last shows the first', async ({ page }) => {
         await page.goto('/');
-        const track = page.locator('[data-rail-track]');
-        await track.evaluate((el) => el.scrollTo({ left: el.scrollWidth, behavior: 'instant' }));
-        await expect(counter(page)).toHaveText(/^(\d+) \/ \1$/);
-        const total = Number((await counter(page).textContent())?.split(' / ')[1]);
-        expect(await page.locator('[data-rail-track] > *').count()).toBe(total);
+        const rail = page.locator('[data-rail-track]').locator('..');
+        const total = await page.locator(`${REAL} > *`).count();
+        await expect(counter(page)).toHaveText(`01 / ${String(total).padStart(2, '0')}`);
+        await rail.getByRole('button', { name: 'Previous' }).click();
+        await expect(counter(page)).toHaveText(`${String(total).padStart(2, '0')} / ${String(total).padStart(2, '0')}`);
+        await rail.getByRole('button', { name: 'Next' }).click();
+        await expect(counter(page)).toHaveText(/^01 \//);
+        await expect(rail.getByRole('button', { name: 'Next' })).toHaveAttribute('aria-disabled', 'false');
+    });
+
+    test('the page HTML lists each slide once; the loop copies are inert', async ({ page }) => {
+        const html = await (await page.request.get('/')).text();
+        expect(html.match(/data-rail-copy=/g)).toHaveLength(1);
+        await page.goto('/');
+        for (const copy of ['before', 'after']) {
+            await expect(page.locator(`[data-rail-copy="${copy}"]`)).toHaveAttribute('inert', '');
+            await expect(page.locator(`[data-rail-copy="${copy}"]`)).toHaveAttribute('aria-hidden', 'true');
+        }
+    });
+
+    test('an invite slide offers the contact page with a word that turns', async ({ page }) => {
+        await page.goto('/en');
+        const invite = page.locator(`${REAL} [data-rail-invite]`);
+        await expect(invite).toHaveCount(1);
+        await expect(invite).toContainText('This could be');
+        await expect(invite.locator('.turn')).toContainText(/your home|your dream|your office/);
+        await expect(invite.getByRole('link')).toHaveAttribute('href', '/en/contact');
     });
 
     test('a project slide opens its project page', async ({ page }) => {
         await page.goto('/');
-        const slide = page.locator('[data-rail-track] a[href^="/projects/"]').first();
+        const slide = page.locator(`${REAL} a[href^="/projects/"]`).first();
         const href = await slide.getAttribute('href');
         expect(href).toMatch(/^\/projects\/[a-z0-9-]+$/);
         await slide.click();
@@ -77,6 +101,6 @@ test.describe('rail on desktop', () => {
 
     test('english rail links keep the locale prefix', async ({ page }) => {
         await page.goto('/en');
-        await expect(page.locator('[data-rail-track] a[href^="/en/projects/"]').first()).toBeVisible();
+        await expect(page.locator(`${REAL} a[href^="/en/projects/"]`).first()).toBeVisible();
     });
 });

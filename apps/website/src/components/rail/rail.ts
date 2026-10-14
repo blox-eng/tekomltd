@@ -4,9 +4,14 @@ import type { Panel } from '@/content/home';
 export type RailItem =
     | { kind: 'project'; project: ProjectCard }
     | { kind: 'panel'; panel: Extract<Panel, { kind: 'capability' }> }
-    | { kind: 'crew'; panel: Extract<Panel, { kind: 'crew_stat' }> };
+    | { kind: 'crew'; panel: Extract<Panel, { kind: 'crew_stat' }> }
+    | { kind: 'invite'; panel: Extract<Panel, { kind: 'invite' }> };
 
-const panelItem = (panel: Panel): RailItem => (panel.kind === 'capability' ? { kind: 'panel', panel } : { kind: 'crew', panel });
+function panelItem(panel: Panel): RailItem {
+    if (panel.kind === 'capability') return { kind: 'panel', panel };
+    if (panel.kind === 'invite') return { kind: 'invite', panel };
+    return { kind: 'crew', panel };
+}
 
 /** Projects in order, each panel right after the project it names. Panels past the end close the rail. */
 export function buildRail(projects: ProjectCard[], panels: Panel[]): RailItem[] {
@@ -23,6 +28,14 @@ export function activeIndex(lefts: number[], atEnd: boolean): number {
     if (lefts.length === 0) return 0;
     if (atEnd) return lefts.length - 1;
     return lefts.reduce((active, left, i) => (left <= START_TOLERANCE ? i : active), 0);
+}
+
+/** A looped rail shows three copies of its slides; once scrolling settles, jump back into the middle copy. `loop` is one copy's width. */
+export function recenter(scrollLeft: number, loop: number): number {
+    if (loop <= 0) return scrollLeft;
+    if (scrollLeft < loop / 2) return scrollLeft + loop;
+    if (scrollLeft >= loop * 1.5) return scrollLeft - loop;
+    return scrollLeft;
 }
 
 const COLLAGE_CELLS = 9;

@@ -113,6 +113,54 @@ rail_panels:
       bg: Ежедневни снимки, протоколи и материали в общ дневник. Без изненади при предаването.
       en: Daily photos, protocols and materials in one shared log. No surprises at handover.
       de: Tägliche Fotos, Protokolle und Material in einem gemeinsamen Log. Keine Überraschungen bei der Übergabe.
+  - kind: invite
+    after_project_index: 6
+    label:
+      bg: Следващият обект
+      en: Next on site
+      de: Die nächste Baustelle
+    lead:
+      bg: Тук може да е
+      en: This could be
+      de: Als Nächstes vielleicht
+    turns:
+      - bg: Вашият дом
+        en: your home
+        de: Ihr Zuhause
+      - bg: Вашата мечта
+        en: your dream
+        de: Ihr Traumhaus
+      - bg: Вашият офис
+        en: your office
+        de: Ihr Büro
+    body:
+      bg: Разкажете ни какво искате да построите или обновите.
+      en: Tell us what you want to build or renovate.
+      de: Erzählen Sie uns, was Sie bauen oder renovieren möchten.
+  - kind: invite
+    after_project_index: 99
+    label:
+      bg: Свободно място
+      en: Room for one more
+      de: Platz für ein weiteres
+    lead:
+      bg: Тук може да е
+      en: This could be
+      de: Als Nächstes vielleicht
+    turns:
+      - bg: Вашият дом
+        en: your home
+        de: Ihr Zuhause
+      - bg: Вашата мечта
+        en: your dream
+        de: Ihr Traumhaus
+      - bg: Вашият офис
+        en: your office
+        de: Ihr Büro
+    body:
+      bg: Разкажете ни какво искате да построите или обновите.
+      en: Tell us what you want to build or renovate.
+      de: Erzählen Sie uns, was Sie bauen oder renovieren möchten.
 promises:
   - title:
       bg: Цена, на която можете да разчитате

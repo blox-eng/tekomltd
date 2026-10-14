@@ -57,6 +57,30 @@ rail_panels:
       en: A family company from Stara Zagora. The people who start your project are the people who finish it.
       de: Ein Familienunternehmen aus Stara Sagora. Wer Ihr Projekt beginnt, beendet es auch.
     unconfirmed: false
+  - kind: invite
+    after_project_index: 99
+    label:
+      bg: Свободно място
+      en: Room for one more
+      de: Platz für ein weiteres
+    lead:
+      bg: Тук може да е
+      en: This could be
+      de: Als Nächstes vielleicht
+    turns:
+      - bg: Вашият дом
+        en: your home
+        de: Ihr Zuhause
+      - bg: Вашата мечта
+        en: your dream
+        de: Ihr Traumhaus
+      - bg: Вашият офис
+        en: your office
+        de: Ihr Büro
+    body:
+      bg: Разкажете ни какво искате да построите или обновите.
+      en: Tell us what you want to build or renovate.
+      de: Erzählen Sie uns, was Sie bauen oder renovieren möchten.
 promises:
   - title:
       bg: Цена, на която можете да разчитате

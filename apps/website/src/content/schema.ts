@@ -91,7 +91,17 @@ const crewStatPanel = z.strictObject({
     unconfirmed: z.boolean().default(false)
 });
 
-export const RailPanel = z.discriminatedUnion('kind', [capabilityPanel, crewStatPanel]);
+/** A slot for the visitor's own project: „Тук може да е“ + a word that turns. */
+const invitePanel = z.strictObject({
+    kind: z.literal('invite'),
+    after_project_index: z.number().int().min(0),
+    label: L,
+    lead: L,
+    turns: z.array(L).min(1),
+    body: L
+});
+
+export const RailPanel = z.discriminatedUnion('kind', [capabilityPanel, crewStatPanel, invitePanel]);
 
 export const PromiseItem = z.strictObject({ title: L, body: L });
 

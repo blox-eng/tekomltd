@@ -23,7 +23,7 @@ on_rail: true
 wp_id: 1601
 wp_slug: private-house-yard-chepelare
 images:
-  - file: chepelare.jpg
+  - file: chepelare-retouched.jpg
     alt:
       bg: Реставрация на къща от кирпич
     is_cover: true

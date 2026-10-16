@@ -23,7 +23,7 @@ on_rail: true
 wp_id: 77
 wp_slug: residential-complex-chernomorets
 images:
-  - file: chernomorec-1.jpg
+  - file: chernomorec-1-retouched.jpg
     alt:
       bg: Ваканционен комплекс „Голдън Фиш“
     is_cover: true

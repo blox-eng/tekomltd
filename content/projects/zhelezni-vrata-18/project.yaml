@@ -23,7 +23,7 @@ on_rail: true
 wp_id: 1310
 wp_slug: residential-building-garages-osd
 images:
-  - file: zhelezni-vrata-1.jpg
+  - file: zhelezni-vrata-1-retouched.jpg
     alt:
       bg: Жилищна сграда над римски храм
     is_cover: true

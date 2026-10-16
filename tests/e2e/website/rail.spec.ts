@@ -30,10 +30,10 @@ test.describe('rail on desktop', () => {
         const track = page.locator('[data-rail-track]');
         const rail = track.locator('..');
         await expect(counter(page)).toHaveText(/^01 \//);
-        await rail.getByRole('button', { name: 'Next' }).click();
+        await rail.getByRole('button', { name: 'Следващ' }).click();
         await expect.poll(() => track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(100);
         await expect(counter(page)).toHaveText(/^02 \//);
-        await rail.getByRole('button', { name: 'Previous' }).click();
+        await rail.getByRole('button', { name: 'Предишен' }).click();
         await expect(counter(page)).toHaveText(/^01 \//);
     });
 
@@ -51,11 +51,11 @@ test.describe('rail on desktop', () => {
         const rail = page.locator('[data-rail-track]').locator('..');
         const total = await page.locator(`${REAL} > *`).count();
         await expect(counter(page)).toHaveText(`01 / ${String(total).padStart(2, '0')}`);
-        await rail.getByRole('button', { name: 'Previous' }).click();
+        await rail.getByRole('button', { name: 'Предишен' }).click();
         await expect(counter(page)).toHaveText(`${String(total).padStart(2, '0')} / ${String(total).padStart(2, '0')}`);
-        await rail.getByRole('button', { name: 'Next' }).click();
+        await rail.getByRole('button', { name: 'Следващ' }).click();
         await expect(counter(page)).toHaveText(/^01 \//);
-        await expect(rail.getByRole('button', { name: 'Next' })).toHaveAttribute('aria-disabled', 'false');
+        await expect(rail.getByRole('button', { name: 'Следващ' })).toHaveAttribute('aria-disabled', 'false');
     });
 
     test('the page HTML lists each slide once; the loop copies are inert', async ({ page }) => {

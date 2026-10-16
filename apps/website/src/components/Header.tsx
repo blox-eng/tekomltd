@@ -16,7 +16,7 @@ export async function Header({ locale }: { locale: Locale }) {
     return (
         <header className="site-header">
             <div className="wrap">
-                <Link href="/" className="logo" aria-label="Tekom home">
+                <Link href="/" className="logo" aria-label={t('home')}>
                     <TekomMark className="logo-mark" />
                     <span className="logo-word">{brandName(locale).toUpperCase()}</span>
                 </Link>

@@ -45,15 +45,21 @@ The locked reference is the clickable mockup in `design/mockup/index.html` (open
 
 ## 2. Typography
 
-| Role            | Face               | Weights              | Notes                                                                                      |
-| --------------- | ------------------ | -------------------- | ------------------------------------------------------------------------------------------ |
-| Display         | Cormorant Garamond | 400, 400 italic, 500 | headings only, set 1.22× larger than the base scale (`--dk`)                               |
-| Body / UI       | Sofia Sans         | 300–600              | Bulgarian-designed; turn on `locl` so Cyrillic uses Bulgarian letterforms when `lang="bg"` |
-| Figures / micro | IBM Plex Mono      | 400, 500             | years, m², counters, micro-labels                                                          |
+| Role            | Face               | Weights              | Notes                                                                     |
+| --------------- | ------------------ | -------------------- | ------------------------------------------------------------------------- |
+| Display         | Cormorant Garamond | 400, 400 italic, 500 | headings and project names, set 1.22× larger than the base scale (`--dk`) |
+| Body / UI       | Sofia Sans         | 300–600              | Bulgarian-designed; set in standard Cyrillic (see letterforms below)      |
+| Figures / micro | IBM Plex Mono      | 400, 500             | years, m², counters, micro-labels                                         |
 
 - Self-host all three with `next/font` (no requests to Google at runtime: GDPR). Load the `cyrillic` and `latin` subsets.
 - Scale (before `--dk`): hero statement `clamp(30px, 4.4vw, 56px)`, section `clamp(24px, 2.8vw, 32px)`, page title `clamp(28px, 3.6vw, 44px)`, body 17px / 1.6, small 14px, micro 11px uppercase tracked `.08em` (the floor).
-- No weight 700. No ALL CAPS except micro-labels. Headings use `text-wrap: balance`.
+- No weight 700. Headings use `text-wrap: balance`.
+- Project names are display type wherever they appear: rail, grid, project page. The projects are the product; they get the premium voice.
+- Letterforms: Bulgarian forms (д, г, т, к, в as in Bulgarian handwriting) in headings only (`h1`–`h3`, `.display`). Running text, UI, buttons and figures use standard Cyrillic, which reads faster in paragraphs. Sofia Sans draws the Bulgarian forms by default and the standard ones only for Russian, so `globals.css` sets `font-language-override: 'RUS'` on everything except headings; `lang` stays `bg`, so screen readers still read Bulgarian.
+- Case, in every language:
+  - Sentence case for every heading, button, link and label. Never Title Case in English; German nouns keep their capitals.
+  - UPPERCASE only for the wordmark (ТЕКОМ, tracked `.22em`) and micro-labels (Plex Mono, 10–11px, tracked `.08`–`.12em`): eyebrows, scope chips, the stamp. `BG EN DE` are codes, not words.
+  - No exclamation marks.
 - The red phrase in a display heading is italic Cormorant (`<em>`).
 - Upgrade path (paid): Suisse Int'l or PP Neue Montreal for body; both ship Cyrillic.
 

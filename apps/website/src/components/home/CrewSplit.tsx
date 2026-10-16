@@ -29,7 +29,7 @@ export function CrewSplit({ crew, flip, yearsLabel, stampLabel }: Props) {
                     </>
                 )}
                 <figcaption>
-                    <b>{crew.title}</b>
+                    <b className="display">{crew.title}</b>
                     <span>{crew.body}</span>
                 </figcaption>
             </figure>

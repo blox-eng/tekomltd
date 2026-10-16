@@ -8,7 +8,6 @@ body {
     background: var(--bg);
     color: var(--text);
     font: 400 17px/1.6 var(--f-body);
-    font-feature-settings: 'locl' 1;
     -webkit-font-smoothing: antialiased;
     min-height: 100dvh;
     display: flex;
@@ -25,6 +24,20 @@ h3 {
     text-wrap: balance;
     margin: 0;
     font-weight: 500;
+}
+
+/*
+ * Bulgarian letterforms in headings only; everything else reads in standard Cyrillic (DESIGN.md §2).
+ * Sofia Sans draws the Bulgarian forms by default and the standard ones only for Russian, so text asks for
+ * the Russian shapes while lang stays bg for screen readers. !important because every `font:` shorthand resets it.
+ */
+* {
+    font-language-override: 'RUS' !important;
+}
+
+:is(h1, h2, h3, .display),
+:is(h1, h2, h3, .display) * {
+    font-language-override: normal !important;
 }
 
 .wrap {

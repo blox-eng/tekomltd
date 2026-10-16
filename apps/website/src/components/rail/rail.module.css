@@ -65,7 +65,8 @@
 }
 
 .cap h3 {
-    font: 500 clamp(18px, 1.8vw, 21px) / 1.25 var(--f-body);
+    font: 500 calc(1.22 * clamp(19px, 1.8vw, 24px)) / 1.12 var(--f-display);
+    letter-spacing: -0.005em;
 }
 
 .where {

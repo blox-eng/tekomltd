@@ -87,7 +87,8 @@
 }
 
 .tile h3 {
-    font: 500 17px/1.3 var(--f-body);
+    font: 500 calc(1.22 * 19px) / 1.15 var(--f-display);
+    letter-spacing: -0.005em;
 }
 
 .where {

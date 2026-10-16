@@ -1,0 +1,48 @@
+slug: kalia-facade
+title:
+  bg: Модерна фасада на жилищна сграда „Калия“
+  en: Modern facade for the Kalia apartment building
+  de: Moderne Fassade für das Wohnhaus „Kalia“
+summary:
+  bg: Фасадата на нова многофамилна жилищна сграда с гаражи до парк „Аязмо“. Изпълнихме топлоизолационна система с 10 см минерална вата и хидрофобна силикатна мазилка по около 1700 м², обрамчени прозорци и около 50 м² облицовка от фиброцимент с дървесна структура. Вътре положихме машинна мазилка по стени и тавани, а терасите получиха хидроизолация и настилка от гранитогрес.
+place:
+  bg: Стара Загора
+  en: Stara Zagora
+  de: Stara Sagora
+address: ул. „Х. Д. Асенов“ 118–120
+lat: 42.4298453
+lng: 25.6232626
+show_on_map: true
+year: 2021
+scopes:
+  - facade
+sort: 18
+wide: false
+on_rail: true
+images:
+  - file: kalia-retouched.jpg
+    alt:
+      bg: Фасада от мазилка и фиброцимент с дървесна структура на жилищна сграда „Калия“
+      en: Render and wood-finish fibre-cement facade of the Kalia apartment building
+      de: Fassade aus Putz und Faserzement in Holzoptik am Wohnhaus „Kalia“
+    is_cover: true
+  - file: kalia-corner.jpg
+    alt:
+      bg: Ъгълът на сграда „Калия“ с обрамчени прозорци
+      en: Corner of the Kalia building with framed windows
+      de: Ecke des Wohnhauses „Kalia“ mit gerahmten Fenstern
+  - file: kalia-facade-1.jpg
+    alt:
+      bg: Завършената фасада на сграда „Калия“
+      en: The finished facade of the Kalia building
+      de: Die fertige Fassade des Wohnhauses „Kalia“
+  - file: kalia-facade-2.jpg
+    alt:
+      bg: Фасадата на сграда „Калия“ при предаването
+      en: The Kalia facade at handover
+      de: Die Fassade des Wohnhauses „Kalia“ bei der Übergabe
+  - file: kalia-scaffolding.jpg
+    alt:
+      bg: Скелето на ТЕКОМ по време на работата по фасадата
+      en: Tekom scaffolding during the facade works
+      de: Tekom-Gerüst während der Fassadenarbeiten

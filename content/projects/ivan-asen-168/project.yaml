@@ -23,7 +23,7 @@ on_rail: true
 wp_id: 1323
 wp_slug: residential-building-osd
 images:
-  - file: ivan-asen-12.jpg
+  - file: ivan-asen-12-retouched.jpg
     alt:
       bg: Жилищна сграда с общ двор и магазин
     is_cover: true

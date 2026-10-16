@@ -24,7 +24,7 @@ on_rail: true
 wp_id: 1569
 wp_slug: residential-building-garages-boruigrad
 images:
-  - file: boruigrad-1.jpg
+  - file: boruigrad-1-retouched.jpg
     alt:
       bg: Жилищна сграда с гаражи и магазин
     is_cover: true

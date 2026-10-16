@@ -23,7 +23,7 @@ on_rail: true
 wp_id: 1345
 wp_slug: chapel-buhchevata-kushta
 images:
-  - file: thumb-paraklis-img-1.jpg
+  - file: thumb-paraklis-img-1-retouched.jpg
     alt:
       bg: Параклис „Св. Димитър“ в Бухчевата къща
     is_cover: true

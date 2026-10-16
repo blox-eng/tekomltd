@@ -23,7 +23,7 @@ on_rail: true
 wp_id: 1339
 wp_slug: administrative-building-with-print
 images:
-  - file: img-0388.jpg
+  - file: img-0388-retouched.jpg
     alt:
       bg: Административна сграда и печатница
     is_cover: true

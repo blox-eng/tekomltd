@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import type { ProjectDetail } from '../content/projects';
 import { businessJsonLd, projectJsonLd } from './jsonld';
-import { alternates, languageUrls, pageMetadata, publishedLocales, SITE_URL, urlFor } from './seo';
+import { alternates, brandName, languageUrls, pageMetadata, publishedLocales, SITE_URL, siteUrlFrom, urlFor } from './seo';
+
+const IMAGE = { url: '/og/abc.jpg', width: 1200, height: 630, alt: 'Фасада' };
 
 describe('alternates', () => {
     it('lists bg, en, de and x-default, with bg unprefixed', () => {
@@ -50,7 +52,43 @@ describe('fallback locales', () => {
         expect(Object.keys(languageUrls('/p', ['de']))).not.toContain('de');
     });
     it('use full OG locale codes', () => {
-        expect(pageMetadata({ locale: 'de', path: '/contact', title: 'x' }).openGraph).toMatchObject({ locale: 'de_DE', url: `${SITE_URL}/de/contact` });
+        expect(pageMetadata({ locale: 'de', path: '/contact', title: 'x', image: IMAGE }).openGraph).toMatchObject({
+            locale: 'de_DE',
+            url: `${SITE_URL}/de/contact`
+        });
+    });
+    it('carry the share image', () => {
+        expect(pageMetadata({ locale: 'bg', path: '/', title: 'x', image: IMAGE }).openGraph).toMatchObject({ images: [IMAGE] });
+    });
+    it('name the site in the page language', () => {
+        expect(pageMetadata({ locale: 'bg', path: '/', title: 'x', image: IMAGE }).openGraph).toMatchObject({ siteName: 'Теком' });
+        expect(pageMetadata({ locale: 'en', path: '/', title: 'x', image: IMAGE }).openGraph).toMatchObject({ siteName: 'Tekom' });
+    });
+});
+
+describe('siteUrlFrom', () => {
+    it('prefers SITE_URL and drops a trailing slash', () => {
+        expect(siteUrlFrom({ SITE_URL: 'https://tekomltd.com/', CONTEXT: 'production', URL: 'https://x.netlify.app' })).toBe('https://tekomltd.com');
+    });
+    it('uses the Netlify site URL in production', () => {
+        expect(siteUrlFrom({ CONTEXT: 'production', URL: 'https://x.netlify.app', DEPLOY_PRIME_URL: 'https://main--x.netlify.app' })).toBe(
+            'https://x.netlify.app'
+        );
+    });
+    it('uses the deploy URL on a preview, so its links and share images point at the preview', () => {
+        expect(siteUrlFrom({ CONTEXT: 'deploy-preview', URL: 'https://x.netlify.app', DEPLOY_PRIME_URL: 'https://deploy-preview-7--x.netlify.app' })).toBe(
+            'https://deploy-preview-7--x.netlify.app'
+        );
+    });
+    it('falls back to tekomltd.com off Netlify', () => {
+        expect(siteUrlFrom({})).toBe('https://tekomltd.com');
+    });
+});
+
+describe('brandName', () => {
+    it('is Cyrillic in Bulgarian only', () => {
+        expect(brandName('bg')).toBe('Теком');
+        expect(brandName('de')).toBe('Tekom');
     });
 });
 

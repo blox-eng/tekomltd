@@ -3,6 +3,7 @@ import { Button, TekomMark } from '@tekom/ui';
 import type { Locale } from '@tekom/i18n';
 import { getSettings } from '@/content/settings';
 import { localePath } from '@/i18n/routing';
+import { brandName } from '@/lib/seo';
 import { Link } from '@/i18n/navigation';
 import { LangSwitch } from './LangSwitch';
 import { NavLinks } from './NavLinks';
@@ -17,7 +18,7 @@ export async function Header({ locale }: { locale: Locale }) {
             <div className="wrap">
                 <Link href="/" className="logo" aria-label="Tekom home">
                     <TekomMark className="logo-mark" />
-                    <span className="logo-word">{locale === 'bg' ? 'ТЕКОМ' : 'TEKOM'}</span>
+                    <span className="logo-word">{brandName(locale).toUpperCase()}</span>
                 </Link>
                 <NavLinks
                     items={[

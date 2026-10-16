@@ -12,7 +12,8 @@
         "test": "vitest run --passWithNoTests",
         "content:check": "tsx src/content/check.ts",
         "sync-media": "tsx scripts/sync-media.ts",
-        "prebuild": "pnpm sync-media",
+        "share-images": "tsx scripts/share-images.ts",
+        "prebuild": "pnpm sync-media && pnpm share-images",
         "predev": "pnpm sync-media",
         "import:wp": "tsx scripts/import-wordpress.ts",
         "seed:mockup": "tsx scripts/seed-from-mockup.ts"

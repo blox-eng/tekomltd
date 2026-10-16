@@ -1,9 +1,23 @@
 import type { Metadata } from 'next';
 import { DEFAULT_LOCALE, LOCALES, type Locale } from '@tekom/i18n';
 import { localePath } from '../i18n/routing';
+import type { ShareImage } from './share';
 
-/** Production origin; the Netlify demo overrides it with SITE_URL. */
-export const SITE_URL = (process.env.SITE_URL ?? 'https://tekomltd.com').replace(/\/+$/, '');
+type Env = Record<string, string | undefined>;
+
+/**
+ * Public origin. On Netlify it is the deploy's own URL, so canonicals and share images resolve
+ * on the site being shared; Netlify's URL becomes tekomltd.com once that domain points here.
+ */
+export function siteUrlFrom(env: Env): string {
+    const netlify = env.CONTEXT === 'production' ? env.URL : env.DEPLOY_PRIME_URL;
+    return (env.SITE_URL ?? netlify ?? 'https://tekomltd.com').replace(/\/+$/, '');
+}
+
+export const SITE_URL = siteUrlFrom(process.env);
+
+/** The company name as each audience reads it. */
+export const brandName = (locale: Locale) => (locale === 'bg' ? 'Теком' : 'Tekom');
 
 /** Absolute public URL of `path` in `locale`. */
 export const urlFor = (path: string, locale: Locale) => {
@@ -50,7 +64,7 @@ type PageMeta = {
     /** Use the title as given, without the "· Tekom" suffix. */
     absoluteTitle?: boolean;
     description?: string | null;
-    image?: { src: string; width: number; height: number; alt: string } | null;
+    image: ShareImage;
     /** Locales of this page that show Bulgarian text instead of a translation. */
     fallbackLocales?: readonly Locale[];
 };
@@ -63,12 +77,12 @@ export function pageMetadata({ locale, path, title, absoluteTitle, description, 
         alternates: alt,
         openGraph: {
             type: 'website',
-            siteName: 'Tekom',
+            siteName: brandName(locale),
             locale: OG_LOCALE[locale],
             url: alt?.canonical as string,
             title,
             description: description ?? undefined,
-            images: image ? [{ url: image.src, width: image.width, height: image.height, alt: image.alt }] : undefined
+            images: [image]
         }
     };
 }

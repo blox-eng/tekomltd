@@ -11,7 +11,8 @@
         "./tokens.css": "./src/styles/tokens.css",
         "./tailwind-preset": "./tailwind-preset.ts",
         "./assets/eu-emblem.svg": "./src/assets/eu-emblem.svg",
-        "./assets/tekom-mark.svg": "./src/assets/tekom-mark.svg"
+        "./assets/tekom-mark.svg": "./src/assets/tekom-mark.svg",
+        "./mark": "./src/TekomMark.tsx"
     },
     "scripts": {
         "lint": "prettier --check .",

@@ -39,3 +39,5 @@ yarn-error.log*
 
 # synced from content/ by apps/website/scripts/sync-media.ts
 apps/website/public/media/
+# rendered from content/ by apps/website/scripts/share-images.ts
+apps/website/public/og/

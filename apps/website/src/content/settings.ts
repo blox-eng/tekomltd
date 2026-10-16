@@ -40,7 +40,7 @@ export function getSettings(locale: Locale, root: string = defaultRoot()): SiteS
         crewHeadline: s.crew_headline[locale] ?? s.crew_headline.bg,
         quoteCta: s.quote_cta,
         metaTitle: textOrNull(s.meta_title, locale),
-        // Descriptions are Tekom's own Bulgarian copy; en and de get none rather than a translation nobody reviewed.
+        // A locale without its own description gets none: a Bulgarian snippet under an English result reads as broken.
         metaDescription: s.meta_description?.[locale] ?? null,
         pageDescriptions: { projects: s.page_descriptions.projects?.[locale] ?? null, publications: s.page_descriptions.publications?.[locale] ?? null },
         ogImage: imgOrNull(root, SETTINGS_FILE, s.og_image, text(s.meta_title ?? { bg: s.legal_name }, locale))

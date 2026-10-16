@@ -101,6 +101,8 @@ draft: true
        focus: top
    ```
 
+   Когато някой сподели линка на проекта (Viber, WhatsApp, Facebook), се показва заглавната снимка, изрязана широко, със същия `focus`. За друга снимка там добавете в `project.yaml` ред `og_image: kazanlak-3.jpg`. Снимката за началната и останалите страници е първият проект в слайдера или `og_image` в `content/settings.yaml`.
+
 6. Докато проектът не е готов, оставете `draft: true`: проектът не се вижда. Когато е готов, изтрийте реда `draft: true` (или напишете `draft: false`).
 
 Съвет: снимките до около 2 MB, поне 1600 px по-дългата страна, формат `.jpg`.
@@ -291,6 +293,8 @@ Optional fields (top level, no indentation):
      - file: kazanlak-2.jpg
        focus: top
    ```
+
+   When someone shares the project link (Viber, WhatsApp, Facebook), the preview shows the cover, cropped wide, with the same `focus`. To show another photo there, add `og_image: kazanlak-3.jpg` to `project.yaml`. The home page and the other pages show the first project on the rail, or `og_image` in `content/settings.yaml`.
 
 6. While the project is not ready keep `draft: true`: it stays hidden. When ready, delete the line (or write `draft: false`).
 

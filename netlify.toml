@@ -1,7 +1,7 @@
 # Single source of truth for the Netlify build (site: tekomltd-website).
 [build]
   base = "apps/website"
-  command = "corepack enable && pnpm install --frozen-lockfile && pnpm content:check && pnpm sync-media && pnpm exec next build"
+  command = "corepack enable && pnpm install --frozen-lockfile && pnpm content:check && pnpm sync-media && pnpm share-images && pnpm exec next build"
   publish = ".next"
 
 [build.environment]
@@ -9,3 +9,9 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Share images are named by their content (scripts/share-images.ts): a new image gets a new URL.
+[[headers]]
+  for = "/og/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

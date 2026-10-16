@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
+import type { Locale } from '@tekom/i18n';
 import { body, display, mono } from '@tekom/ui';
 import '@tekom/ui/tokens.css';
 import '../globals.css';
@@ -12,7 +13,7 @@ import { ThemeScript } from '@/components/ThemeScript';
 import { getSettings } from '@/content/settings';
 import { routing } from '@/i18n/routing';
 import { businessJsonLd } from '@/lib/jsonld';
-import { SITE_URL } from '@/lib/seo';
+import { brandName, SITE_URL } from '@/lib/seo';
 
 export const dynamicParams = false;
 
@@ -20,7 +21,10 @@ export function generateStaticParams() {
     return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata: Metadata = { metadataBase: new URL(SITE_URL), title: { default: 'Tekom', template: '%s · Tekom' } };
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const brand = brandName((await params).locale as Locale);
+    return { metadataBase: new URL(SITE_URL), title: { default: brand, template: `%s · ${brand}` } };
+}
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
     const { locale } = await params;

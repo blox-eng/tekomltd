@@ -65,7 +65,7 @@ test('a project page carries canonical, hreflang, Open Graph image and JSON-LD',
     await page.goto('/en/projects/river-house');
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/en\/projects\/river-house$/);
     for (const lang of ['bg', 'en', 'de', 'x-default']) await expect(page.locator(`link[rel="alternate"][hreflang="${lang}"]`)).toHaveCount(1);
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/media\/projects\/river-house\//);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/[0-9a-f]{12}\.jpg$/);
     const types = await page.locator('script[type="application/ld+json"]').evaluateAll((nodes) => nodes.map((n) => JSON.parse(n.textContent!)['@type']));
     expect(types).toEqual(expect.arrayContaining(['HomeAndConstructionBusiness', 'CreativeWork', 'BreadcrumbList']));
 });

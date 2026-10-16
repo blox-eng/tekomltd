@@ -8,6 +8,7 @@ import styles from '@/components/public/public.module.css';
 import { listProgrammes, listPublications } from '@/content/public-info';
 import { fallbackLocalesOf } from '@/lib/fallbacks';
 import { pageMetadata } from '@/lib/seo';
+import { siteShareImage } from '@/lib/share';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -16,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const t = await getTranslations({ locale, namespace: 'eu' });
     return pageMetadata({
         locale: locale as Locale,
+        image: siteShareImage(locale as Locale),
         path: '/eu-programmes',
         title: t('h'),
         description: t('p'),

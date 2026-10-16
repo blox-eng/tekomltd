@@ -7,6 +7,7 @@ import { allPageSlugs, getLegalPage, getPage } from '@/content/public-info';
 import { Link } from '@/i18n/navigation';
 import { fallbackLocalesOf } from '@/lib/fallbacks';
 import { describe, pageMetadata } from '@/lib/seo';
+import { siteShareImage } from '@/lib/share';
 import { isLegalSlug, LEGAL_SLUGS } from '@/content/paths';
 
 export const dynamicParams = false;
@@ -25,7 +26,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     const { locale, slug } = await params;
     const page = load(slug, locale);
     if (!page) return {};
-    return pageMetadata({ locale, path: `/${slug}`, title: page.title, description: describe(page.body), fallbackLocales: fallbackLocalesOf(`/${slug}`) });
+    return pageMetadata({
+        locale,
+        path: `/${slug}`,
+        title: page.title,
+        description: describe(page.body),
+        image: siteShareImage(locale),
+        fallbackLocales: fallbackLocalesOf(`/${slug}`)
+    });
 }
 
 export default async function TextPage({ params }: { params: Promise<Params> }) {

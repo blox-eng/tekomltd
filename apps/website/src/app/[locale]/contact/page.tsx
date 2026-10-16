@@ -4,13 +4,20 @@ import type { Locale } from '@tekom/i18n';
 import styles from '@/components/public/public.module.css';
 import { getSettings } from '@/content/settings';
 import { pageMetadata } from '@/lib/seo';
+import { siteShareImage } from '@/lib/share';
 
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const [t, contact] = await Promise.all([getTranslations({ locale, namespace: 'nav' }), getTranslations({ locale, namespace: 'contact' })]);
-    return pageMetadata({ locale: locale as Locale, path: '/contact', title: t('contact'), description: contact('p') });
+    return pageMetadata({
+        locale: locale as Locale,
+        path: '/contact',
+        title: t('contact'),
+        description: contact('p'),
+        image: siteShareImage(locale as Locale)
+    });
 }
 
 export default async function ContactPage({ params }: Props) {

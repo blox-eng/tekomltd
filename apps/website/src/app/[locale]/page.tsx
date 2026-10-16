@@ -20,6 +20,7 @@ import { SCOPES } from '@/content/schema';
 import { Link } from '@/i18n/navigation';
 import { getSettings } from '@/content/settings';
 import { pageMetadata } from '@/lib/seo';
+import { siteShareImage } from '@/lib/share';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -28,8 +29,15 @@ const isGlyph = (tool: string): tool is GlyphKey => (CREW_GLYPH_KEYS as readonly
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'home' });
-    const { metaDescription, ogImage } = getSettings(locale as Locale);
-    return pageMetadata({ locale: locale as Locale, path: '/', title: t('title'), absoluteTitle: true, description: metaDescription, image: ogImage });
+    const { metaDescription } = getSettings(locale as Locale);
+    return pageMetadata({
+        locale: locale as Locale,
+        path: '/',
+        title: t('title'),
+        absoluteTitle: true,
+        description: metaDescription,
+        image: siteShareImage(locale as Locale)
+    });
 }
 
 export default async function HomePage({ params }: Props) {

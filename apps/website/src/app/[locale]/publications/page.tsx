@@ -9,6 +9,7 @@ import { PUBLICATION_KINDS } from '@/content/schema';
 import { getSettings } from '@/content/settings';
 import { fallbackLocalesOf } from '@/lib/fallbacks';
 import { pageMetadata } from '@/lib/seo';
+import { siteShareImage } from '@/lib/share';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -17,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const t = await getTranslations({ locale, namespace: 'publications' });
     return pageMetadata({
         locale: locale as Locale,
+        image: siteShareImage(locale as Locale),
         path: '/publications',
         title: t('h'),
         description: getSettings(locale as Locale).pageDescriptions.publications,

@@ -23,6 +23,14 @@ wide: false
 on_rail: true
 wp_id: 75
 wp_slug: residential-building-garages-shop-stoletov
+meta_title:
+  bg: Жилищна сграда на ул. „Ген. Столетов“ в Стара Загора
+  en: Apartment building on Gen. Stoletov St, Stara Zagora
+  de: Wohnhaus in der Stoletow-Straße, Stara Sagora
+meta_description:
+  bg: Монолитна сграда с 13 апартамента, 5 гаража и 3 магазина на партера, със сутерен и терасовиден етаж. Изградена от ТЕКОМ през 2000–2001 г.
+  en: Concrete-frame building with 13 flats, 5 garages and 3 ground-floor shops, a basement and a terraced top floor. Built by Tekom in 2000–2001.
+  de: Stahlbetonbau mit 13 Wohnungen, 5 Garagen und 3 Läden im Erdgeschoss, Keller und Terrassengeschoss. Von Tekom gebaut 2000–2001.
 images:
   - file: stoletov-2-1-1-retouched.jpg
     alt:

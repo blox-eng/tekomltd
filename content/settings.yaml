@@ -28,18 +28,37 @@ crew_headline:
     - Die Menschen hinter Ihrem Vertrauen
 quote_cta: true
 meta_title:
-  bg: "Теком: строителство и довършителни работи от висок клас, Стара Загора"
-  en: "Tekom: premium construction and finishing works, Stara Zagora"
-  de: "Tekom: hochwertiger Bau und Innenausbau, Stara Sagora"
+  bg: "Теком: строителна фирма в Стара Загора от 1991 г."
+  en: "Tekom: building contractor in Stara Zagora since 1991"
+  de: "Tekom: Baufirma in Stara Sagora seit 1991"
 meta_description:
   bg: Семейна строителна фирма от Стара Загора, от 1991 г. Строим до ключ, обновяваме фасади и интериори, реставрираме. Вижте завършените ни сгради.
   en: A family building firm in Stara Zagora since 1991. Turnkey construction, façades, interiors and restoration. See the buildings we have finished.
   de: Familienbaufirma in Stara Sagora seit 1991. Schlüsselfertiger Bau, Fassaden, Innenausbau und Restaurierung. Sehen Sie unsere fertigen Bauten.
+page_titles:
+  projects:
+    bg: Завършени строителни проекти в Стара Загора
+    en: Completed building projects in Stara Zagora
+    de: Fertige Bauprojekte in Stara Sagora und Umgebung
+  contact:
+    bg: Контакт и оферта за строителство в Стара Загора
+    en: Contact us for a building quote in Stara Zagora
+    de: Kontakt und Bauangebot in Stara Sagora
+  eu_programmes:
+    bg: Проекти на Теком с европейско съфинансиране
+  publications:
+    bg: Публикации по проекти с европейско съфинансиране
 page_descriptions:
   projects:
     bg: Къщи, жилищни сгради, хотели и офиси, които сме построили или обновили. Всеки проект с адрес, година и обхват на работата.
     en: Houses, apartment buildings, hotels and offices we have built or renovated. Each project with its address, year and scope of work.
     de: Häuser, Wohngebäude, Hotels und Büros, die wir gebaut oder saniert haben. Jedes Projekt mit Adresse, Baujahr und Leistungsumfang.
+  contact:
+    bg: Разкажете ни за проекта си. Отговаряме до един работен ден и оглеждаме обекта, преди да дадем оферта. Офис в Стара Загора.
+    en: Tell us about your project. We reply within one working day and visit the site before we quote. Office in Stara Zagora.
+    de: Erzählen Sie uns von Ihrem Projekt. Wir antworten innerhalb eines Werktags und besichtigen vor dem Angebot. Büro in Stara Sagora.
+  eu_programmes:
+    bg: Проекти на ТЕКОМ ООД по програми на ЕС, като „Развитие на човешките ресурси“ 2021–2027, и публикациите, които всяка програма изисква.
   publications:
     bg: Обявления, покани и образци на документи на ТЕКОМ ООД по проекти с европейско съфинансиране.
     en: Notices, invitations and document templates published by TEKOM Ltd for EU co-funded projects.

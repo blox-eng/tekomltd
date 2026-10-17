@@ -22,6 +22,14 @@ wide: false
 on_rail: true
 wp_id: 1310
 wp_slug: residential-building-garages-osd
+meta_title:
+  bg: Жилищна сграда над римски храм в Стара Загора
+  en: Apartments above a Roman temple, Stara Zagora
+  de: Wohnhaus über einem römischen Tempel, Stara Sagora
+meta_description:
+  bg: "17 апартамента, офиси и гаражи в резервата „Августа Траяна“. Римски храм от II век, открит при разкопките, е запазен под защитно покритие. 2006 г."
+  en: "17 flats, offices and garages in the Augusta Traiana reserve. A 2nd-century Roman temple found during the dig is preserved under a protective cover. 2006."
+  de: "17 Wohnungen, Büros und Garagen im Reservat Augusta Traiana. Ein römischer Tempel aus dem 2. Jh. blieb unter einer Schutzabdeckung erhalten. 2006."
 images:
   - file: zhelezni-vrata-1-retouched.jpg
     alt:

@@ -20,6 +20,14 @@ wide: false
 on_rail: true
 wp_id: 1339
 wp_slug: administrative-building-with-print
+meta_title:
+  bg: Административна сграда и печатница в Стара Загора
+  en: Offices and printing house in Stara Zagora
+  de: Bürogebäude mit Druckerei in Stara Sagora
+meta_description:
+  bg: Офиси и печатна зала в промишлената зона, построени 2002–2003 г. Фасада от видим бетон с наклонен панел и кръгъл прозорец, излят в криволинеен кофраж.
+  en: Offices and a print hall in the industrial zone, built 2002–2003. The exposed-concrete facade has a sloping panel and round window cast in curved formwork.
+  de: Büros und Druckhalle im Industriegebiet, gebaut 2002–2003. Die Sichtbetonfassade hat eine geneigte Wand mit Rundfenster aus gebogener Schalung.
 images:
   - file: img-0388-retouched.jpg
     alt:

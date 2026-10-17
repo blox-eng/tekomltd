@@ -19,6 +19,14 @@ scopes:
 sort: 18
 wide: false
 on_rail: true
+meta_title:
+  bg: Фасада на жилищна сграда „Калия“ в Стара Загора
+  en: Facade of the Kalia apartment building, Stara Zagora
+  de: Fassade für das Wohnhaus „Kalia“ in Stara Sagora
+meta_description:
+  bg: Топлоизолация с минерална вата и силикатна мазилка по 1700 м² фасада, облицовка от фиброцимент с дървесна структура и тераси с гранитогрес.
+  en: Mineral wool insulation and silicate render over 1,700 m² of facade, wood-textured fibre cement cladding and porcelain-tiled terraces.
+  de: Mineralwolldämmung und Silikatputz auf 1.700 m² Fassade, Faserzementverkleidung in Holzoptik und Terrassen mit Feinsteinzeug.
 images:
   - file: kalia-retouched.jpg
     alt:

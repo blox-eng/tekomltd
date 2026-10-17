@@ -21,6 +21,14 @@ wide: false
 on_rail: true
 wp_id: 1331
 wp_slug: private-house-with-pool
+meta_title:
+  bg: Надстройка на еднофамилна къща в Сулица
+  en: Extension of a family house in Sulitsa
+  de: Aufstockung eines Einfamilienhauses in Suliza
+meta_description:
+  bg: Нов етаж от газобетон и стоманобетон, нов дървен покрив, топлоизолация Баумит, бани, сауна и вътрешни довършителни работи. Изпълнено през 2002 г.
+  en: A new aerated-concrete storey, a new timber roof, Baumit insulation, bathrooms, a sauna and interior finishes. Completed in 2002.
+  de: Neues Geschoss aus Porenbeton, neues Holzdach, Baumit-Dämmung, Bäder, Sauna und Innenausbau. Fertiggestellt 2002.
 images:
   - file: img-037843-1.jpg
     alt:

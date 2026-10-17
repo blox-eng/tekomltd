@@ -1,7 +1,18 @@
 import type { Locale } from '@tekom/i18n';
 import { defaultRoot, imgOrNull, once, readYaml, text, textOrNull, type Img } from './load';
 import { SETTINGS_FILE } from './paths';
-import { Settings } from './schema';
+import { Settings, type L } from './schema';
+
+type PageKey = 'projects' | 'contact' | 'eu_programmes' | 'publications';
+/** Only the locale's own text: the page falls back to its heading or lead instead of Bulgarian. */
+type PageText = Record<PageKey, string | null>;
+
+const pageText = (texts: Partial<Record<PageKey, L>>, locale: Locale): PageText => ({
+    projects: texts.projects?.[locale] ?? null,
+    contact: texts.contact?.[locale] ?? null,
+    eu_programmes: texts.eu_programmes?.[locale] ?? null,
+    publications: texts.publications?.[locale] ?? null
+});
 
 export type SiteSettings = {
     legalName: string;
@@ -19,7 +30,8 @@ export type SiteSettings = {
     quoteCta: boolean;
     metaTitle: string | null;
     metaDescription: string | null;
-    pageDescriptions: { projects: string | null; publications: string | null };
+    pageTitles: PageText;
+    pageDescriptions: PageText;
     ogImage: Img | null;
 };
 
@@ -42,7 +54,8 @@ export function getSettings(locale: Locale, root: string = defaultRoot()): SiteS
         metaTitle: textOrNull(s.meta_title, locale),
         // A locale without its own description gets none: a Bulgarian snippet under an English result reads as broken.
         metaDescription: s.meta_description?.[locale] ?? null,
-        pageDescriptions: { projects: s.page_descriptions.projects?.[locale] ?? null, publications: s.page_descriptions.publications?.[locale] ?? null },
+        pageTitles: pageText(s.page_titles, locale),
+        pageDescriptions: pageText(s.page_descriptions, locale),
         ogImage: imgOrNull(root, SETTINGS_FILE, s.og_image, text(s.meta_title ?? { bg: s.legal_name }, locale))
     };
 }

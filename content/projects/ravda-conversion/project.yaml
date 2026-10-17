@@ -22,6 +22,14 @@ wide: false
 on_rail: true
 wp_id: 1630
 wp_slug: vacancy-residential-complex-ravda
+meta_title:
+  bg: Преустройство на хотел в апартаменти в Равда
+  en: Hotel converted into holiday flats in Ravda
+  de: Hotelumbau zu Ferienwohnungen in Rawda
+meta_description:
+  bg: Хотел, превърнат в 22 студиа и двустайни апартамента на четири етажа, завършени до ключ. На партера са запазени бистро и кафе.
+  en: A hotel turned into 22 studios and one-bedroom flats over four floors, finished turnkey. The ground-floor bistro and café stay.
+  de: Ein Hotel, umgebaut zu 22 Studios und Zweizimmerwohnungen auf vier Etagen, schlüsselfertig. Bistro und Café im Erdgeschoss bleiben.
 images:
   - file: img-76396546-2-retouched.jpg
     alt:

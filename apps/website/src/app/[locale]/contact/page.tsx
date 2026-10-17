@@ -11,11 +11,12 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const [t, contact] = await Promise.all([getTranslations({ locale, namespace: 'nav' }), getTranslations({ locale, namespace: 'contact' })]);
+    const { pageTitles, pageDescriptions } = getSettings(locale as Locale);
     return pageMetadata({
         locale: locale as Locale,
         path: '/contact',
-        title: t('contact'),
-        description: contact('p'),
+        title: pageTitles.contact ?? t('contact'),
+        description: pageDescriptions.contact ?? contact('p'),
         image: siteShareImage(locale as Locale)
     });
 }

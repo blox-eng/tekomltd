@@ -21,6 +21,14 @@ wide: false
 on_rail: true
 wp_id: 1326
 wp_slug: public-pool
+meta_title:
+  bg: Открит басейн в кв. „Железник“, Стара Загора
+  en: Outdoor public pool in Zheleznik, Stara Zagora
+  de: Freibad im Viertel Scheleznik, Stara Sagora
+meta_description:
+  bg: Плажен комплекс с басейн от 500 м³ с преливник, бар във водата и подводно осветление, плюс съблекални, бар и базалтови настилки. Изграден 2001 г.
+  en: A 500 m³ lido with an overflow edge, swim-up bar and underwater lighting, plus changing rooms, a bar and basalt paving. Built in 2001.
+  de: Freibad mit 500 m³, Überlaufrinne, Poolbar und Unterwasserlicht, dazu Umkleiden, Bar und Basaltpflaster. Gebaut 2001.
 images:
   - file: basein-1.jpg
     alt:

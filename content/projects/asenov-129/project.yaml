@@ -22,6 +22,14 @@ wide: false
 on_rail: true
 wp_id: 1849
 wp_slug: жилищна-сграда-с-магазини-и-гаражи
+meta_title:
+  bg: Жилищна сграда с 25 апартамента в Стара Загора
+  en: "25-flat apartment building in Stara Zagora"
+  de: Wohnhaus mit 25 Wohnungen in Stara Sagora
+meta_description:
+  bg: Седеметажна сграда с 25 апартамента, 5 магазина и гаражи на ул. „Хаджи Димитър Асенов“. ТЕКОМ я построи от основите; въведена е през 2021 г.
+  en: Seven-storey building with 25 flats, 5 shops and garages on Hadzhi Dimitar Asenov Street. Built by Tekom from the ground up and completed in 2021.
+  de: Siebengeschossiges Haus mit 25 Wohnungen, 5 Läden und Garagen in der Hadschi-Dimitar-Asenow-Straße. Von Tekom komplett gebaut, fertig 2021.
 images:
   - file: street-retouched.jpg
     alt:

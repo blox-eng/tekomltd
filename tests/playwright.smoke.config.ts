@@ -6,7 +6,7 @@ if (!SITE_URL) throw new Error('Set SITE_URL, for example SITE_URL=https://tekom
 // Runs against a site that is already up: no local server is started.
 export default defineConfig({
     testDir: './e2e/website',
-    testMatch: 'smoke.spec.ts',
+    testMatch: ['smoke.spec.ts', 'seo.spec.ts'],
     fullyParallel: true,
     retries: 1,
     reporter: 'line',

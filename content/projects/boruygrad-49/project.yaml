@@ -23,6 +23,14 @@ wide: false
 on_rail: true
 wp_id: 1569
 wp_slug: residential-building-garages-boruigrad
+meta_title:
+  bg: Жилищна сграда на ул. „Боруйград“ в Стара Загора
+  en: Apartment building on Boruygrad St, Stara Zagora
+  de: Wohnhaus in der Boruigrad-Straße, Stara Sagora
+meta_description:
+  bg: Сграда на пет етажа със седем апартамента, гараж, офиси и магазин. ТЕКОМ изпълни конструкцията, изолациите и фасадата с Баумит Нанопор през 2011–2013 г.
+  en: Five-storey building with seven flats, a garage, offices and a shop. Tekom built the structure, insulation and Baumit Nanopor facade in 2011–2013.
+  de: Fünfgeschossiges Haus mit sieben Wohnungen, Garage, Büros und Laden. Tekom baute Rohbau, Dämmung und Baumit-Nanopor-Fassade 2011–2013.
 images:
   - file: boruigrad-1-retouched.jpg
     alt:

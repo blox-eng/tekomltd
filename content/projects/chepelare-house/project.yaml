@@ -23,6 +23,14 @@ wide: false
 on_rail: true
 wp_id: 1601
 wp_slug: private-house-yard-chepelare
+meta_title:
+  bg: Реставрация на родова къща в Чепеларе
+  en: Restored 19th-century family house in Chepelare
+  de: Restauriertes Familienhaus in Tschepelare
+meta_description:
+  bg: Родова къща от XIX век, възстановена по стари снимки и преустроена в къща за гости. Каменни стени, дървен гредоред, четири стаи и механа с камина.
+  en: A 19th-century family house rebuilt from old photographs and turned into a guest house. Stone walls, timber floors, four rooms and a tavern with fireplace.
+  de: Familienhaus aus dem 19. Jahrhundert, nach alten Fotos wiederaufgebaut und zum Gästehaus umgebaut. Steinmauern, Holzbalkendecken, vier Zimmer, Kamin.
 images:
   - file: chepelare-retouched.jpg
     alt:

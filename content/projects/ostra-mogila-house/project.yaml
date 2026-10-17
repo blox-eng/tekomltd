@@ -23,6 +23,14 @@ wide: false
 on_rail: true
 wp_id: 1578
 wp_slug: private-house-garage-ostra
+meta_title:
+  bg: Еднофамилна къща с каменна фасада в Остра могила
+  en: Stone-clad family house in Ostra Mogila
+  de: Einfamilienhaus mit Steinfassade in Ostra Mogila
+meta_description:
+  bg: Къща на две нива на наклонен терен над долината на Сазлийка. Стени Porotherm, фасада от гнайс и врачански варовик, подпорна стена и тераса с декинг.
+  en: A two-level house on a slope above the Sazliyka valley. Porotherm walls, gneiss and Vratsa limestone facades, a retaining wall and a decked terrace.
+  de: Haus auf zwei Ebenen am Hang über dem Tal der Sazliyka. Porotherm-Mauerwerk, Fassaden aus Gneis und Kalkstein, Stützmauer und Holzterrasse.
 images:
   - file: img-8086-1-retouched.jpg
     alt:

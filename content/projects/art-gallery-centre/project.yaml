@@ -23,6 +23,14 @@ wide: false
 on_rail: true
 wp_id: 1866
 wp_slug: административен-и-търговски-център-с
+meta_title:
+  bg: Търговски център над римски стени в Стара Загора
+  en: Office building over Roman walls in Stara Zagora
+  de: Geschäftshaus über römischen Mauern in Stara Sagora
+meta_description:
+  bg: Офис и търговска сграда на шест етажа в резервата „Августа Траяна“. Римските крепостни стени от изкопа са запазени и показани в галерия в сутерена.
+  en: Six-storey office and retail building in the Augusta Traiana reserve. The Roman fortress walls found on site are preserved in a basement gallery.
+  de: Sechsgeschossiges Büro- und Geschäftshaus im Reservat Augusta Traiana. Die beim Aushub gefundenen römischen Mauern sind im Untergeschoss zu sehen.
 images:
   - file: thumb-img-0619-1-small-retouched.jpg
     alt:

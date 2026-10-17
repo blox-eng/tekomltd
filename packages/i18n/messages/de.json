@@ -4,7 +4,10 @@
         "eu": "EU-Programme",
         "contact": "Kontakt",
         "cta": "Angebot anfragen",
-        "home": "Tekom, Startseite"
+        "home": "Tekom, Startseite",
+        "services": "Leistungen",
+        "servicesMenu": "Unsere Leistungen",
+        "euShort": "EU"
     },
     "home": {
         "title": "Tekom: hochwertiger Bau und Innenausbau, Stara Sagora",
@@ -102,5 +105,17 @@
         "procurement": "Vergabebekanntmachungen",
         "eu_notice": "EU-Mitteilungen",
         "other": "Weitere"
+    },
+    "service": {
+        "label": "Leistung",
+        "benefits": "Was Sie bekommen",
+        "faq": "Fragen",
+        "table": "Die Projekte im Überblick",
+        "project": "Projekt",
+        "year": "Jahr",
+        "place": "Ort",
+        "scope": "Umfang",
+        "more": "Weitere Leistungen",
+        "ofProject": "Diese Arbeit gehört zur Leistung"
     }
 }

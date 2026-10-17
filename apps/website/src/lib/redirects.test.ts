@@ -16,6 +16,13 @@ const files = [
 const r = buildRedirects(slugs, files, pages);
 
 describe('buildRedirects', () => {
+    it("sends a service page's old paths, in every locale, straight to the Bulgarian service page", () => {
+        const withServices = buildRedirects([], [], [], [{ slug: 'fasadi', oldPaths: ['/services/business-services', '/business-services'] }]);
+        for (const source of ['/services/business-services', '/business-services', '/en/business-services', '/de/services/business-services'])
+            expect(withServices).toContainEqual({ source, destination: '/fasadi', statusCode: 301 });
+        expect(withServices.every(({ destination }) => !withServices.some((x) => x.source === destination))).toBe(true);
+    });
+
     it('redirects the encoded WordPress project URL', () =>
         expect(r).toContainEqual(
             expect.objectContaining({

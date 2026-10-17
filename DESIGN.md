@@ -102,8 +102,10 @@ The locked reference is the clickable mockup in `design/mockup/index.html` (open
 
 ## 7. Header and footer
 
-- **Header:** sticky, 92% `--bg` with blur, hairline below. Left: the mark and the wordmark (§12). Right: Projects, EU programmes, Contact, language switch, "Request a quote" (desktop only), theme switch. On phones the nav wraps to a second row.
-- **Footer:** `--panel` band. Five columns: Company (legal name, EIK/VAT, address, phone), Work, Public information (EU programmes, Publications, Procurement notices), Privacy (policy, cookies statement, data rights, terms), Follow the work (LinkedIn, Instagram, Facebook as 36px outlined squares). Then the EU funding line with programme codes, then © and the data-controller line.
+- **Header:** sticky, 92% `--bg` with blur, hairline below. Left: the mark and the wordmark (§12). Right: Projects, Services, Contact, the EU mark, language switch, "Request a quote" (desktop only), theme switch. On phones the nav wraps to a second row.
+- **Services menu:** a disclosure button, not a hover menu. It opens a `--bg` list with a hairline border and no shadow: each service by name, with one muted line on what the visitor gets. Escape closes it and returns focus to the button; the button carries the active underline on a service page. On phones the list spans the nav row. A locale without its own service pages shows a plain Services link to the home page's services instead.
+- **EU mark:** the twelve EU stars as a muted line glyph plus „ЕС“ / "EU", linking to EU programmes. It acknowledges the funding without a menu slot or a second colour; the footer keeps the full funding line.
+- **Footer:** `--panel` band. Five columns: Company (legal name, EIK/VAT, address, phone), Work (Projects, each service page, Contact), Public information (EU programmes, Publications, Procurement notices), Privacy (policy, cookies statement, data rights, terms), Follow the work (LinkedIn, Instagram, Facebook as 36px outlined squares). Then the EU funding line with programme codes, then © and the data-controller line.
 
 ## 8. Line icons ("glyphs")
 

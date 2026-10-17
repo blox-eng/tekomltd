@@ -5,6 +5,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 import { urlMapFrom } from './src/content/paths';
 import { allProjectSlugs } from './src/content/projects';
 import { allPageSlugs } from './src/content/public-info';
+import { allServiceSlugs } from './src/content/services';
 import { buildRedirects } from './src/lib/redirects';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
@@ -18,7 +19,7 @@ const nextConfig: NextConfig = {
     // Workspace packages ship TypeScript source.
     transpilePackages: ['@tekom/ui', '@tekom/i18n'],
     async redirects() {
-        return buildRedirects(allProjectSlugs(), Object.entries(urlMap.files), allPageSlugs());
+        return buildRedirects(allProjectSlugs(), Object.entries(urlMap.files), allPageSlugs(), allServiceSlugs());
     }
 };
 

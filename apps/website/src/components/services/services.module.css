@@ -1,0 +1,174 @@
+/* Service pages reuse the project hero, the home page's hairline list and the project tiles; only the text blocks are new. */
+
+.page {
+    padding-block: 28px 112px;
+}
+
+.h1 {
+    font: 400 calc(1.22 * clamp(28px, 3.4vw, 44px)) / 1.08 var(--f-display);
+    margin: 10px 0 18px;
+}
+
+.intro {
+    color: var(--muted);
+    margin: 0 0 24px;
+    max-width: 52ch;
+}
+
+.section {
+    padding-top: 112px;
+}
+
+/* Heading on the left, text on the right, like the promise section on the home page. */
+.split {
+    padding-top: 112px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 48px;
+    align-items: start;
+}
+
+.split > h2 {
+    font: 400 calc(1.22 * clamp(24px, 2.8vw, 32px)) / 1.1 var(--f-display);
+    letter-spacing: -0.01em;
+}
+
+@media (max-width: 860px) {
+    .section,
+    .split {
+        padding-top: 64px;
+    }
+
+    .split {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+.text {
+    margin: 0;
+    max-width: 65ch;
+}
+
+.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+}
+
+.steps li {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 16px;
+    padding-block: 20px;
+    border-bottom: 1px solid var(--line);
+}
+
+.steps li > span {
+    color: var(--muted);
+    padding-top: 3px;
+}
+
+.steps h3 {
+    font: 500 16px / 1.4 var(--f-body);
+    margin: 0 0 4px;
+}
+
+.steps p {
+    color: var(--muted);
+    margin: 0;
+    max-width: 65ch;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.table caption {
+    text-align: left;
+    padding-bottom: 12px;
+}
+
+.table th {
+    text-align: left;
+    font: 500 11px var(--f-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 16px 10px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.table td {
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+}
+
+.table a:hover {
+    color: var(--accent);
+}
+
+@media (max-width: 520px) {
+    .wide {
+        display: none;
+    }
+}
+
+.faq {
+    margin: 0;
+    border-top: 1px solid var(--line);
+}
+
+.faq > div {
+    padding-block: 20px;
+    border-bottom: 1px solid var(--line);
+}
+
+.faq dt {
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.faq dd {
+    margin: 0;
+    color: var(--muted);
+    max-width: 65ch;
+}
+
+.cta {
+    margin-top: 112px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+}
+
+.cta h2 {
+    font: 400 calc(1.22 * clamp(24px, 3vw, 36px)) / 1.1 var(--f-display);
+}
+
+.cta p {
+    color: var(--muted);
+    margin: 0;
+    max-width: 52ch;
+}
+
+@media (max-width: 860px) {
+    .cta {
+        margin-top: 64px;
+    }
+}
+
+.more {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    justify-items: start;
+    gap: 10px;
+}

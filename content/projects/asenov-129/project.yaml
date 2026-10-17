@@ -17,6 +17,7 @@ year: 2021
 built_area_m2: 2775
 scopes:
   - full
+residential: true
 sort: 2
 wide: false
 on_rail: true

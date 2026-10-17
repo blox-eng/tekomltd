@@ -7,6 +7,13 @@ const pathOf = (url: string) => {
     return pathname + search;
 };
 
+// Search results cut longer titles and descriptions.
+const MAX_TITLE = 60;
+const MAX_DESCRIPTION = 160;
+
+const decode = (text: string) =>
+    text.replace(/&(amp|lt|gt|quot|#39|#x27);/g, (_, entity: string) => ({ amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", '#x27': "'" })[entity]!);
+
 async function sitemapPaths(request: APIRequestContext): Promise<string[]> {
     const res = await request.get('/sitemap.xml');
     expect(res.status()).toBe(200);
@@ -15,7 +22,7 @@ async function sitemapPaths(request: APIRequestContext): Promise<string[]> {
     return urls.map(pathOf);
 }
 
-test('every page in the sitemap has a title, description, canonical, share image and JSON-LD, and is indexable', async ({ request }) => {
+test('every page in the sitemap has one h1, a title, description, canonical, share image and JSON-LD, and is indexable', async ({ request }) => {
     const problems: string[] = [];
     for (const path of await sitemapPaths(request)) {
         const res = await request.get(path);
@@ -29,9 +36,14 @@ test('every page in the sitemap has a title, description, canonical, share image
             new RegExp(`<meta[^>]*${attr}="${value}"[^>]*content="([^"]*)"`).exec(head)?.[1] ??
             new RegExp(`<meta[^>]*content="([^"]*)"[^>]*${attr}="${value}"`).exec(head)?.[1];
 
-        const title = /<title>([^<]*)<\/title>/.exec(head)?.[1]?.trim();
+        const title = decode(/<title>([^<]*)<\/title>/.exec(head)?.[1]?.trim() ?? '');
+        const description = decode(meta('name', 'description')?.trim() ?? '');
         if (!title) problems.push(`${path}: no <title>`);
-        if (!meta('name', 'description')?.trim()) problems.push(`${path}: no meta description`);
+        else if (title.length > MAX_TITLE) problems.push(`${path}: title is ${title.length} characters, over ${MAX_TITLE}`);
+        if (!description) problems.push(`${path}: no meta description`);
+        else if (description.length > MAX_DESCRIPTION) problems.push(`${path}: description is ${description.length} characters, over ${MAX_DESCRIPTION}`);
+        const h1s = html.match(/<h1[\s>]/g)?.length ?? 0;
+        if (h1s !== 1) problems.push(`${path}: ${h1s} <h1> headings, needs exactly one`);
         if (/noindex/i.test(meta('name', 'robots') ?? '') || /noindex/i.test(res.headers()['x-robots-tag'] ?? '')) problems.push(`${path}: noindex`);
 
         const canonical = /<link[^>]*rel="canonical"[^>]*href="([^"]+)"/.exec(head)?.[1];

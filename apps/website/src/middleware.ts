@@ -13,7 +13,8 @@ const PAGE_REDIRECTS = new Map<string, string>(JSON.parse(process.env.PAGE_REDIR
 export default function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
     if (isGone(pathname)) return new NextResponse(null, { status: 410 });
-    const destination = PAGE_REDIRECTS.get(pathname);
+    // WordPress addresses end in a slash; matching without it saves the extra 308 hop.
+    const destination = PAGE_REDIRECTS.get(pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname);
     if (destination) return NextResponse.redirect(new URL(destination, request.url), 301);
     return intl(request);
 }

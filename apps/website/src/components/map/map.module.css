@@ -106,6 +106,21 @@ a:focus-visible > .pin {
     fill: none;
 }
 
+/* The line points at the city map: beside the country map on desktop, below it on phones. */
+.leaderDown {
+    display: none;
+}
+
+@media (max-width: 860px) {
+    .leaderAcross {
+        display: none;
+    }
+
+    .leaderDown {
+        display: inline;
+    }
+}
+
 .tip {
     min-height: 26px;
     color: var(--muted);

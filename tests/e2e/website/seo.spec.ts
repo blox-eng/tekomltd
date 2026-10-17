@@ -22,6 +22,9 @@ async function sitemapPaths(request: APIRequestContext): Promise<string[]> {
     return urls.map(pathOf);
 }
 
+// Fetches every sitemap page and its share image in turn; over the internet that takes longer than the default 30 s.
+test.setTimeout(180_000);
+
 test('every page in the sitemap has one h1, a title, description, canonical, share image and JSON-LD, and is indexable', async ({ request }) => {
     const problems: string[] = [];
     for (const path of await sitemapPaths(request)) {

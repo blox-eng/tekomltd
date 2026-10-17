@@ -63,3 +63,11 @@ export function buildRedirects(
     const seen = new Set<string>();
     return redirects.filter(({ source }) => !seen.has(source) && seen.add(source));
 }
+
+/**
+ * The redirects with a fixed source path and no file extension, as [source, destination] pairs for the middleware.
+ * On Netlify the middleware runs first, at the edge, and a one-segment address such as /privacy-policy never
+ * reaches Next's own redirects (#39); answering these in the middleware works everywhere.
+ */
+export const exactPageRedirects = (redirects: readonly Redirect[]): [string, string][] =>
+    redirects.filter(({ source }) => !source.includes(':') && !/\.[a-z0-9]+$/i.test(source)).map(({ source, destination }) => [source, destination]);

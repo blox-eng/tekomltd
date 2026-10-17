@@ -15,7 +15,9 @@ import { fallbackLocalesOf } from '@/lib/fallbacks';
 import { describe, pageMetadata } from '@/lib/seo';
 import { projectPhoto, shareImage } from '@/lib/share';
 
-export const dynamicParams = false;
+// Unknown slugs render on demand and call notFound(). With `false`, Netlify answers a rewritten Bulgarian path
+// (`/x` → `/bg/x`) with a 500 before Next's redirects run, so one-segment redirects and 404s break (#39).
+export const dynamicParams = true;
 
 type Params = { locale: Locale; slug: string };
 

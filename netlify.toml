@@ -3,9 +3,9 @@
   base = "apps/website"
   command = "corepack enable && pnpm install --frozen-lockfile && pnpm content:check && pnpm sync-media && pnpm share-images && pnpm exec next build"
   publish = ".next"
-  # Netlify's default skips a build when nothing under `base` changed, but content/ and the
-  # other inputs below live at the repo root. Exit 0 skips, 1 builds.
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ../../content ../../packages ../../design/wordpress-snapshot ../../package.json ../../pnpm-lock.yaml ../../netlify.toml"
+  # Netlify's default skips a build when nothing under `base` changed, but content/ and other
+  # build inputs live at the repo root. The script also builds when there is no earlier commit to compare with.
+  ignore = "bash scripts/netlify-ignore.sh"
 
 [build.environment]
   NODE_VERSION = "22"

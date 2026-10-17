@@ -29,11 +29,11 @@ const isGlyph = (tool: string): tool is GlyphKey => (CREW_GLYPH_KEYS as readonly
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'home' });
-    const { metaDescription } = getSettings(locale as Locale);
+    const { metaTitle, metaDescription } = getSettings(locale as Locale);
     return pageMetadata({
         locale: locale as Locale,
         path: '/',
-        title: t('title'),
+        title: metaTitle ?? t('title'),
         absoluteTitle: true,
         description: metaDescription,
         image: siteShareImage(locale as Locale)

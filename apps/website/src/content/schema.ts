@@ -124,6 +124,8 @@ export const Crew = z.strictObject({
     roles: z.array(CrewRole).default([])
 });
 
+const PageText = z.strictObject({ projects: L.optional(), contact: L.optional(), eu_programmes: L.optional(), publications: L.optional() }).default({});
+
 export const PartnerService = z.strictObject({ icon: z.enum(SERVICE_GLYPH_KEYS), title: L, body: L });
 
 export const Partner = z.strictObject({ name: text, role: L, logo: logoPath, url: url.optional() });
@@ -205,8 +207,9 @@ export const Settings = z.strictObject({
     quote_cta: z.boolean().default(true),
     meta_title: L.optional(),
     meta_description: L.optional(),
-    /** Descriptions for pages that have no text of their own to take one from. */
-    page_descriptions: z.strictObject({ projects: L.optional(), publications: L.optional() }).default({}),
+    /** Search titles and descriptions for pages without a content file of their own. */
+    page_titles: PageText,
+    page_descriptions: PageText,
     og_image: imagePath.optional()
 });
 

@@ -23,6 +23,14 @@ wide: true
 on_rail: true
 wp_id: 1952
 wp_slug: "1952"
+meta_title:
+  bg: Реставрация на „Зелената баня“ в Стара Загора
+  en: Restoring the 1929 Green Bath in Stara Zagora
+  de: Restaurierung des „Grünen Bads“ in Stara Sagora
+meta_description:
+  bg: Паметник на културата от 1929 г., преустроен в очен медицински център с консервация и реставрация на фасадите. „Сребърна фасада на годината“ 2025.
+  en: A listed 1929 bathhouse converted into an eye clinic, with its facades conserved and restored. Silver Facade of the Year 2025.
+  de: Denkmalgeschütztes Bad von 1929, umgebaut zur Augenklinik, mit konservierten und restaurierten Fassaden. „Silberne Fassade des Jahres“ 2025.
 images:
   - file: 00-crop-thumb-1.jpg
     alt:

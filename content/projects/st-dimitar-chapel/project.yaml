@@ -22,6 +22,14 @@ wide: false
 on_rail: true
 wp_id: 1345
 wp_slug: chapel-buhchevata-kushta
+meta_title:
+  bg: Параклис „Св. Димитър“ с тухлен купол в Стара Загора
+  en: St Dimitar chapel with a brick dome, Stara Zagora
+  de: Kapelle St. Dimitar mit Ziegelkuppel, Stara Sagora
+meta_description:
+  bg: Православен параклис в двора на Бухчевата къща, по канона на църквата. Куполът е изцяло от плътни тухли, самоносещ, без стоманобетон, както в миналото.
+  en: An Orthodox chapel in the courtyard of the Buhchev House, built to church canon. Its dome is self-supporting solid brick with no concrete, as in the past.
+  de: Orthodoxe Kapelle im Hof des Buhtschew-Hauses, nach kirchlichem Kanon gebaut. Die Kuppel ist selbsttragend aus Vollziegeln, ganz ohne Stahlbeton.
 images:
   - file: thumb-paraklis-img-1-retouched.jpg
     alt:

@@ -22,6 +22,14 @@ wide: false
 on_rail: true
 wp_id: 912
 wp_slug: residential-building-garages-shop-gladston
+meta_title:
+  bg: Жилищна сграда с медицински център в Стара Загора
+  en: Apartments and medical centre in Stara Zagora
+  de: Wohnhaus mit Ärztezentrum in Stara Sagora
+meta_description:
+  bg: Пет етажа на ул. „Гладстон“ с 12 жилища, офиси, магазини и подземни гаражи. В двора е медицински център със седем кабинета. Построена 2001–2003 г.
+  en: Five storeys on Gladstone Street with 12 homes, offices, shops and underground garages, plus a medical centre in the courtyard. Built 2001–2003.
+  de: Fünf Geschosse in der Gladstone-Straße mit 12 Wohnungen, Büros, Läden und Tiefgarage, dazu ein Ärztezentrum im Hof. Gebaut 2001–2003.
 images:
   - file: gladston-img-1.jpg
     alt:

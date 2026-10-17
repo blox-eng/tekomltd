@@ -22,6 +22,14 @@ wide: false
 on_rail: true
 wp_id: 1323
 wp_slug: residential-building-osd
+meta_title:
+  bg: Жилищна сграда с магазини и кабинети в Стара Загора
+  en: Apartments over shops and clinics in Stara Zagora
+  de: Wohnhaus mit Läden und Praxen in Stara Sagora
+meta_description:
+  bg: Пет етажа с 10 апартамента над магазини и лекарски кабинети на ул. „Цар Иван Асен II“. ТЕКОМ изпълни конструкции, изолации и довършителни работи. 2005 г.
+  en: Five storeys with 10 flats over shops and doctors' rooms on Tsar Ivan Asen II Street. Tekom built the structure, insulation and finishes. Completed 2005.
+  de: Fünf Geschosse mit 10 Wohnungen über Läden und Arztpraxen in der Zar-Iwan-Assen-II-Straße. Tekom führte Rohbau, Dämmung und Ausbau aus. 2005.
 images:
   - file: ivan-asen-12-retouched.jpg
     alt:

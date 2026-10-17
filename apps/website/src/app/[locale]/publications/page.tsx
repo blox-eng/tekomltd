@@ -16,12 +16,13 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'publications' });
+    const { pageTitles, pageDescriptions } = getSettings(locale as Locale);
     return pageMetadata({
         locale: locale as Locale,
         image: siteShareImage(locale as Locale),
         path: '/publications',
-        title: t('h'),
-        description: getSettings(locale as Locale).pageDescriptions.publications,
+        title: pageTitles.publications ?? t('h'),
+        description: pageDescriptions.publications,
         fallbackLocales: fallbackLocalesOf('/publications')
     });
 }

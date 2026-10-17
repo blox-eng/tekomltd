@@ -22,6 +22,14 @@ wide: false
 on_rail: true
 wp_id: 1351
 wp_slug: residential-building-garages-zhelezni-9
+meta_title:
+  bg: Жилищна сграда на ул. „Железни врата“, Стара Загора
+  en: Apartments on Zhelezni Vrata St, Stara Zagora
+  de: Wohnhaus in der Scheleschni-Wrata-Str., Stara Sagora
+meta_description:
+  bg: Пет етажа с девет апартамента и четири гаража, след археологически проучвания на терена. ТЕКОМ е съинвеститор и строител; фасада Баумит Нанопор.
+  en: Five storeys with nine flats and four garages, built after archaeological digs on the site. Tekom co-invested and built it, with a Baumit Nanopor facade.
+  de: Fünf Geschosse mit neun Wohnungen und vier Garagen, gebaut nach Ausgrabungen auf dem Grundstück. Tekom war Mitinvestor und Bauunternehmer.
 images:
   - file: zhelezni-vrata-9-1-retouched.jpg
     alt:

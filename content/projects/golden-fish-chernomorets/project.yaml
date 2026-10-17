@@ -22,6 +22,14 @@ wide: true
 on_rail: true
 wp_id: 77
 wp_slug: residential-complex-chernomorets
+meta_title:
+  bg: Ваканционен комплекс с 50 апартамента в Черноморец
+  en: Holiday complex with 50 flats in Chernomorets
+  de: Ferienanlage mit 50 Wohnungen in Tschernomorez
+meta_description:
+  bg: "Комплекс „Голдън Фиш“ на 300 м от плажа: 50 апартамента, магазин, бистро и гаражи. Монолитна конструкция, каменен цокъл, дървен покрив. Завършен 2010 г."
+  en: "Golden Fish, 300 m from the beach: 50 apartments, a shop, a bistro and garages. Concrete frame, stone plinth and timber roof. Completed in 2010."
+  de: "Golden Fish, 300 m vom Strand: 50 Wohnungen, Laden, Bistro und Garagen. Stahlbetonbau, Natursteinsockel, Holzdach. Fertiggestellt 2010."
 images:
   - file: chernomorec-1-retouched.jpg
     alt:

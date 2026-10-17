@@ -8,6 +8,8 @@ const FIXTURE_CONTENT = resolve(__dirname, 'fixtures', 'content');
 
 export default defineConfig({
     testDir: './e2e',
+    // The fixture content leaves descriptions out on purpose; the SEO guard runs on the real content instead (CI check job, smoke).
+    testIgnore: /seo\.spec\.ts/,
     fullyParallel: true,
     retries: 0,
     reporter: 'line',

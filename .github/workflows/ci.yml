@@ -32,6 +32,12 @@ jobs:
       - run: pnpm test
       - name: Build the real content
         run: pnpm build
+      # Request-only checks: no browser is needed. The e2e job runs on fixture content, so this is where real pages are guarded.
+      - name: Every published page is ready for search
+        run: |
+          pnpm --filter @tekom/website start --port 3000 &
+          for i in $(seq 1 30); do curl -sf -o /dev/null http://localhost:3000/ && break; sleep 1; done
+          SITE_URL=http://localhost:3000 pnpm --filter @tekom/tests test:smoke seo.spec.ts
 
   e2e:
     runs-on: ubuntu-latest

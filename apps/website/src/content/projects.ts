@@ -1,7 +1,7 @@
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Locale } from '@tekom/i18n';
-import { toProjectCard, type ProjectCard, type ProjectImg } from './cards';
+import { toProjectCard, type ProjectCard, type ProjectImg, type Scope } from './cards';
 import { defaultRoot, imgOrNull, loadImg, once, readYaml, t, text, textOrNull, type Img } from './load';
 import { PROJECTS_DIR, projectFile } from './paths';
 import { Project } from './schema';
@@ -59,6 +59,18 @@ export function listProjects(locale: Locale, root: string = defaultRoot()): Proj
 export function listRailProjects(locale: Locale, root: string = defaultRoot()): ProjectCard[] {
     return loadProjects(root)
         .filter((p) => p.project.on_rail)
+        .map((p) => card(p, root, locale));
+}
+
+export type ProjectFilter = { scope: Scope; residential?: boolean };
+
+export const matchesFilter = (project: Pick<Project, 'scopes' | 'residential'>, { scope, residential }: ProjectFilter) =>
+    project.scopes.includes(scope) && (residential === undefined || project.residential === residential);
+
+/** Published projects that fit `filter`, in display order. */
+export function listProjectsMatching(filter: ProjectFilter, locale: Locale, root: string = defaultRoot()): ProjectCard[] {
+    return loadProjects(root)
+        .filter((p) => matchesFilter(p.project, filter))
         .map((p) => card(p, root, locale));
 }
 

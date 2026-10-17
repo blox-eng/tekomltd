@@ -3,7 +3,8 @@ import { basename, join, resolve } from 'node:path';
 import { LOCALES } from '@tekom/i18n';
 import { defaultRoot } from '../src/content/load';
 import { allProjectSlugs, getProject } from '../src/content/projects';
-import { projectPhoto, SHARE_DIR, shareFile, sitePhoto, type SharePhoto } from '../src/lib/share';
+import { allServiceSlugs, getService } from '../src/content/services';
+import { projectPhoto, servicePhoto, SHARE_DIR, shareFile, sitePhoto, type SharePhoto } from '../src/lib/share';
 import { renderShareImage } from '../src/lib/share-image';
 
 /** Replaces `outDir` with the share image of every page, one file per distinct photo and wordmark. Returns the file count. */
@@ -12,7 +13,10 @@ export async function writeShareImages(contentRoot: string, outDir: string): Pro
     for (const locale of LOCALES) {
         const photos = [
             sitePhoto(locale, contentRoot),
-            ...allProjectSlugs(contentRoot).map(({ slug }) => projectPhoto(getProject(slug, locale, contentRoot)!))
+            ...allProjectSlugs(contentRoot).map(({ slug }) => projectPhoto(getProject(slug, locale, contentRoot)!)),
+            ...allServiceSlugs(contentRoot)
+                .filter((service) => service.locales.includes(locale))
+                .map(({ slug }) => servicePhoto(getService(slug, locale, contentRoot)!))
         ];
         for (const photo of photos) jobs.set(shareFile(photo, locale), { photo, locale });
     }

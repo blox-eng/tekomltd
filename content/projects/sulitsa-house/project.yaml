@@ -16,6 +16,7 @@ show_on_map: true
 year: 2002
 scopes:
   - full
+residential: true
 sort: 8
 wide: false
 on_rail: true

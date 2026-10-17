@@ -229,3 +229,12 @@
     gap: 16px;
     flex-wrap: wrap;
 }
+
+.services {
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}

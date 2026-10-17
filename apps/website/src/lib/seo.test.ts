@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { ProjectDetail } from '../content/projects';
-import { businessJsonLd, projectJsonLd } from './jsonld';
+import type { ServiceDetail } from '../content/services';
+import { BUSINESS_ID, businessJsonLd, projectJsonLd, serviceJsonLd } from './jsonld';
 import { alternates, brandName, languageUrls, pageMetadata, publishedLocales, SITE_URL, siteUrlFrom, urlFor } from './seo';
 
 const IMAGE = { url: '/og/abc.jpg', width: 1200, height: 630, alt: 'Фасада' };
@@ -30,10 +31,12 @@ describe('alternates', () => {
 
 const settings = {
     legalName: 'ТЕКОМ ООД',
+    founded: 1991,
     address: 'ул. Асенов 119, Стара Загора, 6000',
     phone: '+359 88 506 9099',
     email: 'info@tekomltd.com',
-    socials: { linkedin: 'https://www.linkedin.com/company/x/' }
+    socials: { linkedin: 'https://www.linkedin.com/company/x/' },
+    profiles: [] as string[]
 };
 
 describe('fallback locales', () => {
@@ -95,9 +98,11 @@ describe('brandName', () => {
 describe('businessJsonLd', () => {
     const ld = businessJsonLd(settings as never);
     it('describes the business', () => {
-        expect(ld['@type']).toBe('HomeAndConstructionBusiness');
+        expect(ld['@type']).toBe('GeneralContractor');
         expect(ld).toMatchObject({
+            '@id': BUSINESS_ID,
             name: 'ТЕКОМ ООД',
+            foundingDate: '1991',
             telephone: '+359 88 506 9099',
             address: { streetAddress: 'ул. Асенов 119' },
             sameAs: [settings.socials.linkedin]
@@ -113,8 +118,14 @@ describe('businessJsonLd', () => {
         const bare = businessJsonLd({ ...settings, phone: '', email: '' } as never);
         expect('telephone' in bare || 'email' in bare).toBe(false);
     });
-    it('leaves sameAs out when there are no socials', () => {
-        expect('sameAs' in businessJsonLd({ ...settings, socials: {} } as never)).toBe(false);
+    it('leaves sameAs out when there are no socials or profiles', () => {
+        expect('sameAs' in businessJsonLd({ ...settings, socials: {}, profiles: [] } as never)).toBe(false);
+    });
+    it('adds the profiles to sameAs', () => {
+        expect(businessJsonLd({ ...settings, profiles: ['https://ksb.bg/member/x/'] } as never).sameAs).toEqual([
+            settings.socials.linkedin,
+            'https://ksb.bg/member/x/'
+        ]);
     });
 });
 
@@ -137,5 +148,31 @@ describe('projectJsonLd', () => {
     it('links the cover image by absolute URL', () => {
         expect(projectJsonLd(detail(null), 'en').image).toBe(`${SITE_URL}/media/projects/x/c.jpg`);
         expect(projectJsonLd(detail(null), 'en').url).toBe(`${SITE_URL}/en/projects/x`);
+    });
+});
+
+describe('serviceJsonLd', () => {
+    const service = {
+        slug: 'fasadi',
+        name: 'Фасади и топлоизолация',
+        h1: 'Фасади и топлоизолация в Стара Загора',
+        metaDescription: 'Описание',
+        cover: { cover: { src: '/media/projects/x/c.jpg' } }
+    } as ServiceDetail;
+    const ld = serviceJsonLd(service, 'bg');
+    it('names the business as provider by its @id', () => {
+        expect(ld.provider).toEqual({ '@id': BUSINESS_ID });
+        expect(businessJsonLd(settings as never)['@id']).toBe(BUSINESS_ID);
+    });
+    it('links the page and serves the area around Stara Zagora', () => {
+        expect(ld).toMatchObject({ '@type': 'Service', url: `${SITE_URL}/fasadi`, image: `${SITE_URL}/media/projects/x/c.jpg` });
+        expect(ld.areaServed).toMatchObject({ '@type': 'GeoCircle', geoRadius: 60_000 });
+    });
+});
+
+describe('pageMetadata without translations', () => {
+    it('keeps the canonical and leaves hreflang out', () => {
+        const meta = pageMetadata({ locale: 'bg', path: '/fasadi', title: 'T', image: { url: '/og/x.jpg', width: 1, height: 1, alt: '' }, translated: false });
+        expect(meta.alternates).toEqual({ canonical: `${SITE_URL}/fasadi` });
     });
 });

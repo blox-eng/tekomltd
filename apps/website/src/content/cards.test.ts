@@ -13,6 +13,7 @@ const project: Project = {
     lng: 25.6,
     show_on_map: true,
     scopes: ['restore'],
+    residential: false,
     wide: true,
     on_rail: true,
     old_slugs: [],
@@ -30,6 +31,7 @@ describe('toProjectCard', () => {
             year: 2025,
             areaM2: 872,
             scopes: ['restore'],
+            residential: false,
             cover,
             pin: { lat: 42.4, lng: 25.6 }
         });

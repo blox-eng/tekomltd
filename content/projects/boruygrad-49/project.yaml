@@ -18,6 +18,7 @@ built_area_m2: 1213
 scopes:
   - full
   - facade
+residential: true
 sort: 11
 wide: false
 on_rail: true

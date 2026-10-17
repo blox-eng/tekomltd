@@ -67,7 +67,7 @@ test('a project page carries canonical, hreflang, Open Graph image and JSON-LD',
     for (const lang of ['bg', 'en', 'de', 'x-default']) await expect(page.locator(`link[rel="alternate"][hreflang="${lang}"]`)).toHaveCount(1);
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/[0-9a-f]{12}\.jpg$/);
     const types = await page.locator('script[type="application/ld+json"]').evaluateAll((nodes) => nodes.map((n) => JSON.parse(n.textContent!)['@type']));
-    expect(types).toEqual(expect.arrayContaining(['HomeAndConstructionBusiness', 'CreativeWork', 'BreadcrumbList']));
+    expect(types).toEqual(expect.arrayContaining(['GeneralContractor', 'CreativeWork', 'BreadcrumbList']));
 });
 
 test('a fallback-locale page canonicalises to the Bulgarian page and leaves hreflang', async ({ page }) => {

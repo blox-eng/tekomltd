@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import type { Locale } from '@tekom/i18n';
+import { listServices } from '@/content/services';
 import { getSettings } from '@/content/settings';
 import { Link } from '@/i18n/navigation';
 
@@ -16,6 +17,7 @@ const SOCIAL_LABELS = { linkedin: 'LinkedIn', instagram: 'Instagram', facebook: 
 export async function Footer({ locale }: { locale: Locale }) {
     const [t, tn] = await Promise.all([getTranslations({ locale, namespace: 'footer' }), getTranslations({ locale, namespace: 'nav' })]);
     const settings = getSettings(locale);
+    const services = listServices(locale);
     const registration = [settings.eik && `EIK ${settings.eik}`, settings.vat && `VAT ${settings.vat}`].filter(Boolean).join(' / ');
     const socials = (Object.keys(SOCIAL_ICONS) as (keyof typeof SOCIAL_ICONS)[]).flatMap((key) => {
         const url = settings.socials[key];
@@ -43,9 +45,17 @@ export async function Footer({ locale }: { locale: Locale }) {
                             <li>
                                 <Link href="/projects">{tn('projects')}</Link>
                             </li>
-                            <li>
-                                <Link href="/#services">{t('services')}</Link>
-                            </li>
+                            {services.length > 0 ? (
+                                services.map(({ slug, name }) => (
+                                    <li key={slug}>
+                                        <Link href={`/${slug}`}>{name}</Link>
+                                    </li>
+                                ))
+                            ) : (
+                                <li>
+                                    <Link href="/#services">{t('services')}</Link>
+                                </li>
+                            )}
                             <li>
                                 <Link href="/contact">{tn('contact')}</Link>
                             </li>

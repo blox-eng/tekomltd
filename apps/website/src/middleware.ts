@@ -15,7 +15,11 @@ export default function middleware(request: NextRequest) {
     if (isGone(pathname)) return new NextResponse(null, { status: 410 });
     // WordPress addresses end in a slash; matching without it saves the extra 308 hop.
     const destination = PAGE_REDIRECTS.get(pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname);
-    if (destination) return NextResponse.redirect(new URL(destination, request.url), 301);
+    if (destination) {
+        const url = new URL(destination, request.url);
+        url.search = request.nextUrl.search;
+        return NextResponse.redirect(url, 301);
+    }
     return intl(request);
 }
 

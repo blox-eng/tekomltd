@@ -40,6 +40,12 @@ test('a trailing-slash WordPress URL ends on the new page', async ({ request }) 
     }
 });
 
+test('an old address keeps its query string, so campaign tags survive the redirect', async ({ request }) => {
+    const res = await get(request, '/privacy-policy/?utm_source=x');
+    expect(res.status()).toBe(301);
+    expect(new URL(res.headers().location!, 'http://x').search).toBe('?utm_source=x');
+});
+
 test('WordPress admin addresses answer 410', async ({ request }) => {
     for (const path of ['/wp-login.php', '/xmlrpc.php', '/wp-admin', '/wp-admin/admin-ajax.php']) {
         expect((await get(request, path)).status(), path).toBe(410);

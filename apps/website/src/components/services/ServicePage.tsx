@@ -5,6 +5,7 @@ import { JsonLd } from '@/components/JsonLd';
 import home from '@/components/home/home.module.css';
 import { ProjectTile } from '@/components/projects/ProjectTile';
 import projects from '@/components/projects/projects.module.css';
+import { SCOPES } from '@/content/schema';
 import type { ServiceDetail, ServiceLink } from '@/content/services';
 import { Link } from '@/i18n/navigation';
 import { breadcrumbJsonLd, serviceJsonLd } from '@/lib/jsonld';
@@ -19,7 +20,7 @@ export async function ServicePage({ service, others, locale }: Props) {
         getTranslations({ locale }),
         getTranslations({ locale, namespace: 'scope' })
     ]);
-    const scopeLabels = Object.fromEntries((['full', 'restore', 'facade', 'interior', 'stone'] as const).map((key) => [key, scope(key)]));
+    const scopeLabels = Object.fromEntries(SCOPES.map((key) => [key, scope(key)]));
     const { cover } = service.cover;
 
     return (

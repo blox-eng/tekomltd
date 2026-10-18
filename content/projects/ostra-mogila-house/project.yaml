@@ -18,6 +18,7 @@ built_area_m2: 335
 scopes:
   - full
   - stone
+residential: true
 sort: 7
 wide: false
 on_rail: true

@@ -17,6 +17,7 @@ export const PROJECTS_DIR = 'projects';
 export const PROJECT_FILE = 'project.yaml';
 export const LEGAL_DIR = 'legal';
 export const PAGES_DIR = 'pages';
+export const SERVICES_DIR = 'services';
 
 export const contentRootFrom = (repoRoot: string) => join(repoRoot, 'content');
 
@@ -25,6 +26,8 @@ export const urlMapFrom = (repoRoot: string) => join(repoRoot, 'design', 'wordpr
 
 export const projectFile = (slug: string) => join(PROJECTS_DIR, slug, PROJECT_FILE);
 export const legalFile = (slug: LegalSlug, locale: Locale) => join(LEGAL_DIR, `${slug}.${locale}.md`);
+
+export const serviceFile = (slug: string) => join(SERVICES_DIR, `${slug}.yaml`);
 
 export const pageFile = (slug: string, locale: Locale) => join(PAGES_DIR, `${slug}.${locale}.md`);
 

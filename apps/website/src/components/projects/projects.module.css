@@ -230,6 +230,123 @@
     flex-wrap: wrap;
 }
 
+.timeline {
+    margin: 0 0 56px;
+}
+
+.track {
+    position: relative;
+    height: calc(var(--rows) * 16px + 4px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid var(--line);
+}
+
+.track::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+.track li {
+    position: absolute;
+    left: var(--at);
+    bottom: calc(var(--stack) * 16px);
+    transform: translateX(-50%);
+}
+
+.track a {
+    display: block;
+    width: 12px;
+    height: 16px;
+}
+
+.track a::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 1px;
+    height: 16px;
+    background: var(--muted);
+    transition: background var(--dur-micro) var(--ease);
+}
+
+.track a:hover::before,
+.track a:focus-visible::before {
+    width: 2px;
+    background: var(--text);
+}
+
+.tip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 0;
+    width: max-content;
+    max-width: 60vw;
+    padding: 2px 6px;
+    background: var(--bg);
+    font: 500 12px var(--f-mono);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-micro) var(--ease);
+}
+
+.track li[data-side='middle'] .tip {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.track li[data-side='end'] .tip {
+    left: auto;
+    right: 0;
+}
+
+.track a:hover .tip,
+.track a:focus-visible .tip {
+    opacity: 1;
+}
+
+.axis {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 8px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.timeline figcaption {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-2);
+    font-size: 13px;
+}
+
+.stood {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 6px 16px;
+    margin: 0 0 18px;
+}
+
+.stood b {
+    font: 400 calc(1.22 * clamp(26px, 3vw, 38px)) / 1 var(--f-display);
+    font-variant-numeric: tabular-nums;
+}
+
+.stood span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
 .services {
     display: grid;
     justify-items: start;

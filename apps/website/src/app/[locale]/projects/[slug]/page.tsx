@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { LOCALES, type Locale } from '@tekom/i18n';
+import { yearsStood } from '@/components/projects/age';
 import { fallbackNote, projectFacts } from '@/components/projects/facts';
 import { SquareImage } from '@/components/projects/SquareImage';
 import styles from '@/components/projects/projects.module.css';
@@ -18,6 +19,8 @@ import { projectPhoto, shareImage } from '@/lib/share';
 // Unknown slugs render on demand and call notFound(). With `false`, Netlify answers a rewritten Bulgarian path
 // (`/x` → `/bg/x`) with a 500 before Next's redirects run, so one-segment redirects and 404s break (#39).
 export const dynamicParams = true;
+// The age counts from today: rebuild daily so it rolls over on 1 January without a deploy.
+export const revalidate = 86400;
 
 type Params = { locale: Locale; slug: string };
 
@@ -88,6 +91,12 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                     <h1 lang={project.titleFallback ? 'bg' : undefined}>{project.title}</h1>
                     {project.summary && <p lang={project.summaryFallback ? 'bg' : undefined}>{project.summary}</p>}
                     {note && <p className={`lang-note ${styles.note}`}>{note}</p>}
+                    {project.year !== null && (
+                        <p className={styles.stood}>
+                            <b>{t('stood', { n: yearsStood(project.year, new Date()) })}</b>
+                            <span className="mono">{t('since', { year: project.year })}</span>
+                        </p>
+                    )}
                     <dl className="facts">
                         {facts.map(({ key, label, value }) => (
                             <div key={key} style={{ display: 'contents' }}>

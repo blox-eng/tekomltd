@@ -60,7 +60,13 @@
         "next": "Nächstes:",
         "inBulgarian": "Beschreibung auf Bulgarisch. Übersetzung folgt.",
         "cta": "Etwas Ähnliches geplant? Sprechen Sie uns an",
-        "fullPhoto": "Ganzes Foto: {alt}"
+        "fullPhoto": "Ganzes Foto: {alt}",
+        "stood": "{n, plural, =0 {dieses Jahr fertiggestellt} one {# Jahr} other {# Jahre}}",
+        "since": "{year} → heute",
+        "ageShort": "{n, plural, =0 {neu} other {# J.}}",
+        "timeline": "Unsere Projekte nach Jahr",
+        "today": "heute",
+        "timelineSum": "{years} Jahre · {count} Projekte"
     },
     "eu": {
         "h": "EU-Programme und Veröffentlichungen",

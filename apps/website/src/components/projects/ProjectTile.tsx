@@ -1,13 +1,17 @@
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { ProjectCard } from '@/content/cards';
+import { yearsStood } from './age';
 import { SquareImage } from './SquareImage';
 import styles from './projects.module.css';
 
 type Props = { project: ProjectCard; scopeLabels: Record<string, string>; note: string; eager: boolean };
 
 export function ProjectTile({ project, scopeLabels, note, eager }: Props) {
+    const t = useTranslations('project');
     const { cover } = project;
-    const where = [project.place, project.year].filter(Boolean).join(' · ');
+    const age = project.year === null ? null : t('ageShort', { n: yearsStood(project.year, new Date()) });
+    const where = [project.place, project.year, age].filter(Boolean).join(' · ');
 
     return (
         <li>

@@ -15,6 +15,8 @@ import { isLegalSlug, LEGAL_SLUGS } from '@/content/paths';
 // Unknown slugs render on demand and call notFound(). With `false`, Netlify answers a rewritten Bulgarian path
 // (`/x` → `/bg/x`) with a 500 before Next's redirects run, so one-segment redirects and 404s break (#39).
 export const dynamicParams = true;
+// Service pages list project tiles whose age counts from today: rebuild daily so it rolls over on 1 January.
+export const revalidate = 86400;
 
 type Params = { locale: Locale; slug: string };
 

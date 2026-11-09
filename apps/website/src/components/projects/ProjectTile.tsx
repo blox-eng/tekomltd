@@ -3,11 +3,11 @@ import type { ProjectCard } from '@/content/cards';
 import { SquareImage } from './SquareImage';
 import styles from './projects.module.css';
 
-type Props = { project: ProjectCard; scopeLabels: Record<string, string>; note: string; eager: boolean };
+type Props = { project: ProjectCard; scopeLabels: Record<string, string>; note: string; age: string | null; eager: boolean };
 
-export function ProjectTile({ project, scopeLabels, note, eager }: Props) {
+export function ProjectTile({ project, scopeLabels, note, age, eager }: Props) {
     const { cover } = project;
-    const where = [project.place, project.year].filter(Boolean).join(' · ');
+    const where = [project.place, project.year, age].filter(Boolean).join(' · ');
 
     return (
         <li>

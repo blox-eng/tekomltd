@@ -43,10 +43,30 @@ test('the project detail links to the contact page and wraps to the next project
 
 test('the projects index lists every published project and never a draft', async ({ page }) => {
     await page.goto('/projects');
-    const links = page.locator('main a[href^="/projects/"]');
+    const links = page.locator('main li:has(h3) a[href^="/projects/"]');
     await expect(links).toHaveCount(3);
     await expect(page.locator('main a[href="/projects/secret-site"]')).toHaveCount(0);
     expect((await page.goto('/projects/secret-site'))?.status()).toBe(404);
+});
+
+const age = (year: number) => new Date().getFullYear() - year;
+
+test('a project shows how many years it has stood, and the tile says the same', async ({ page }) => {
+    await page.goto('/en/projects/stone-chapel');
+    await expect(page.getByText(`${age(2019)} years`, { exact: true })).toBeVisible();
+    await expect(page.getByText('2019 → today')).toBeVisible();
+    await page.goto('/en/projects/town-flat');
+    await expect(page.getByText('→ today')).toHaveCount(0);
+    await page.goto('/en/projects');
+    await expect(page.locator('main li:has(h3)').filter({ hasText: 'Параклис от камък' })).toContainText(`2019 · ${age(2019)} yrs`);
+});
+
+test('the projects index has a timeline from the first project to today, one link per dated project', async ({ page }) => {
+    await page.goto('/en/projects');
+    const line = page.getByRole('figure', { name: 'Our projects by year' });
+    await expect(line.getByRole('link')).toHaveCount(2);
+    await expect(line.getByRole('link', { name: 'House by the river, 2024' })).toHaveAttribute('href', '/en/projects/river-house');
+    await expect(line).toContainText(`${age(2019)} years · 2 projects`);
 });
 
 test('contact shows phone, mailto e-mail and address, and has no form', async ({ page }) => {

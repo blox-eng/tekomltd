@@ -61,7 +61,7 @@ test('a gallery thumbnail opens the full photo from the keyboard', async ({ page
 
 test('a grid thumbnail leads to the project, whose cover opens the full photo', async ({ page }) => {
     await page.goto('/en/projects');
-    await page.locator('main a[href="/en/projects/river-house"]').click();
+    await page.locator('main li:has(h3) a[href="/en/projects/river-house"]').click();
     const cover = page.getByRole('link', { name: 'Full photo: The front of the house' });
     await expect(cover).toHaveAttribute('href', '/media/projects/river-house/front.jpg');
     await fileOf(page, '/media/projects/river-house/front.jpg');

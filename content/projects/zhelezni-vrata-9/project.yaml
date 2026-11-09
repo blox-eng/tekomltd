@@ -17,6 +17,7 @@ year: 2011
 built_area_m2: 940
 scopes:
   - full
+residential: true
 sort: 12
 wide: false
 on_rail: true

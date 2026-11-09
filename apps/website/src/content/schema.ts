@@ -58,6 +58,8 @@ export const Project = z
         year: z.number().int().min(1900).max(2100).optional(),
         built_area_m2: z.number().positive().optional(),
         scopes: z.array(z.enum(SCOPES)).default([]),
+        /** A home: a house or a building of flats. The housing service page shows only these. */
+        residential: z.boolean().default(false),
         sort: z.number().int().optional(),
         wide: z.boolean().default(false),
         on_rail: z.boolean().default(true),
@@ -160,6 +162,41 @@ export const EuProgramme = z.strictObject({
     programme_logo: logoPath.optional()
 });
 
+/** Search snippet limits: the title template adds " · Теком", and Google cuts descriptions at about 155 characters. */
+export const META_TITLE_MAX = 52;
+export const META_DESCRIPTION_MAX = 155;
+
+const limited = (max: number) => z.strictObject({ bg: text.max(max), en: z.string().max(max).optional(), de: z.string().max(max).optional() });
+
+const ServiceItem = z.strictObject({ title: L, body: L });
+
+/** An old address of the site, without a trailing slash, that now leads to the service. */
+const oldPath = z.string().regex(/^(\/[a-z0-9]+(-[a-z0-9]+)*)+$/, 'use a path such as /services/private-services, without a trailing slash');
+
+export const Service = z.strictObject({
+    slug,
+    /** Which projects the page shows; the list follows the projects' own `scopes`. */
+    projects: z.strictObject({ scope: z.enum(SCOPES), residential: z.boolean().optional() }),
+    /** The project whose cover leads the page and its share image; the first matching project when left out. */
+    cover_project: slug.optional(),
+    old_paths: z.array(oldPath).default([]),
+    name: L,
+    nav_blurb: L,
+    meta_title: limited(META_TITLE_MAX),
+    meta_description: limited(META_DESCRIPTION_MAX),
+    h1: L,
+    intro: L,
+    benefits: z.array(ServiceItem).min(1),
+    explainers: z.array(ServiceItem).default([]),
+    steps_title: L,
+    steps: z.array(ServiceItem).min(1),
+    materials_title: L,
+    materials: L,
+    projects_title: L,
+    faq: z.array(z.strictObject({ q: L, a: L })).default([]),
+    cta: z.strictObject({ title: L, body: L, button: L })
+});
+
 export const PUBLICATION_KINDS = ['eu_notice', 'procurement', 'other'] as const;
 
 export const Publication = z.strictObject({
@@ -203,6 +240,8 @@ export const Settings = z.strictObject({
     email: z.email(),
     privacy_email: z.email(),
     socials: z.strictObject({ linkedin: url.optional(), instagram: url.optional(), facebook: url.optional() }).default({}),
+    /** Other pages about the company, such as its Chamber of Builders entry; search engines read them as the same business. */
+    profiles: z.array(url).default([]),
     crew_headline: z.strictObject({ bg: phrases, en: phrases.optional(), de: phrases.optional() }),
     quote_cta: z.boolean().default(true),
     meta_title: L.optional(),
@@ -230,6 +269,7 @@ export type Publication = z.infer<typeof Publication>;
 export type LegalPage = z.infer<typeof LegalPage>;
 export type Page = z.infer<typeof Page>;
 export type Settings = z.infer<typeof Settings>;
+export type Service = z.infer<typeof Service>;
 
 // `Promise` is the name the plan uses; the alias avoids shadowing the global inside this module.
 export { PromiseItem as Promise };

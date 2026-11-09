@@ -17,6 +17,7 @@ built_area_m2: 2300
 year: 2003
 scopes:
   - full
+residential: true
 sort: 16
 wide: false
 on_rail: true

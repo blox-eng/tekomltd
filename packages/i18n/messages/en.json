@@ -4,7 +4,10 @@
         "eu": "EU programmes",
         "contact": "Contact",
         "cta": "Request a quote",
-        "home": "Tekom, home page"
+        "home": "Tekom, home page",
+        "services": "Services",
+        "servicesMenu": "Our services",
+        "euShort": "EU"
     },
     "home": {
         "title": "Tekom: premium construction and finishing works, Stara Zagora",
@@ -102,5 +105,17 @@
         "procurement": "Procurement notices",
         "eu_notice": "EU notices",
         "other": "Other"
+    },
+    "service": {
+        "label": "Service",
+        "benefits": "What you get",
+        "faq": "Questions",
+        "table": "The projects at a glance",
+        "project": "Project",
+        "year": "Year",
+        "place": "Place",
+        "scope": "Scope",
+        "more": "Other services",
+        "ofProject": "This work is part of the service"
     }
 }

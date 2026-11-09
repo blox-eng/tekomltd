@@ -3,6 +3,7 @@ import { getProject } from '../content/projects';
 import { defaultRoot } from '../content/load';
 import { getLegalPage, getPage, listProgrammes, listPublications } from '../content/public-info';
 import { isLegalSlug } from '../content/paths';
+import { allServiceSlugs } from '../content/services';
 
 const NON_DEFAULT = LOCALES.filter((l) => l !== DEFAULT_LOCALE);
 
@@ -20,6 +21,8 @@ export function fallbackLocalesOf(path: string, root: string = defaultRoot()): L
         );
     if (path === '/publications') return test((l) => listPublications(l, undefined, root).some((p) => p.titleFallback));
     const slug = /^\/([^/]+)$/.exec(path)?.[1];
+    const service = slug ? allServiceSlugs(root).find((s) => s.slug === slug) : undefined;
+    if (service) return NON_DEFAULT.filter((l) => !service.locales.includes(l));
     if (slug && isLegalSlug(slug)) return test((l) => getLegalPage(slug, l, root)?.fallback ?? false);
     if (slug && slug !== 'projects' && slug !== 'contact') return test((l) => getPage(slug, l, root)?.fallback ?? false);
     return [];

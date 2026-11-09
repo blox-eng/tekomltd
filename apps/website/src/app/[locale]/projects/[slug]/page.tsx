@@ -7,6 +7,7 @@ import { fallbackNote, projectFacts } from '@/components/projects/facts';
 import { SquareImage } from '@/components/projects/SquareImage';
 import styles from '@/components/projects/projects.module.css';
 import { allProjectSlugs, getProject } from '@/content/projects';
+import { servicesOfProject } from '@/content/services';
 import { JsonLd } from '@/components/JsonLd';
 import { Link } from '@/i18n/navigation';
 import { breadcrumbJsonLd, projectJsonLd } from '@/lib/jsonld';
@@ -14,7 +15,9 @@ import { fallbackLocalesOf } from '@/lib/fallbacks';
 import { describe, pageMetadata } from '@/lib/seo';
 import { projectPhoto, shareImage } from '@/lib/share';
 
-export const dynamicParams = false;
+// Unknown slugs render on demand and call notFound(). With `false`, Netlify answers a rewritten Bulgarian path
+// (`/x` → `/bg/x`) with a 500 before Next's redirects run, so one-segment redirects and 404s break (#39).
+export const dynamicParams = true;
 
 type Params = { locale: Locale; slug: string };
 
@@ -41,12 +44,14 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     setRequestLocale(locale);
     const project = getProject(slug, locale);
     if (!project) notFound();
-    const [root, nav, t, scope] = await Promise.all([
+    const [root, nav, t, scope, st] = await Promise.all([
         getTranslations({ locale }),
         getTranslations({ locale, namespace: 'nav' }),
         getTranslations({ locale, namespace: 'project' }),
-        getTranslations({ locale, namespace: 'scope' })
+        getTranslations({ locale, namespace: 'scope' }),
+        getTranslations({ locale, namespace: 'service' })
     ]);
+    const services = servicesOfProject(project, locale);
     const scopeLabels = Object.fromEntries(project.scopes.map((key) => [key, scope(key)]));
     const facts = projectFacts(project, { address: t('address'), completed: t('completed'), area: t('area'), scope: t('scope') }, scopeLabels, locale);
     const note = fallbackNote(project, { note: root('note'), inBulgarian: t('inBulgarian') });
@@ -99,6 +104,19 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                             </span>
                         </Link>
                     </p>
+                    {services.length > 0 && (
+                        <div className={styles.services}>
+                            <span className="micro">{st('ofProject')}</span>
+                            {services.map(({ slug: service, name }) => (
+                                <Link key={service} href={`/${service}`} className={styles.nextLink}>
+                                    {name}{' '}
+                                    <span className="ar" aria-hidden="true">
+                                        →
+                                    </span>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
             {gallery.length > 0 && (

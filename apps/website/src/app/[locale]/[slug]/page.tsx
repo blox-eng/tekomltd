@@ -3,27 +3,43 @@ import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Markdown from 'react-markdown';
 import { LOCALES, type Locale } from '@tekom/i18n';
+import { ServicePage } from '@/components/services/ServicePage';
 import { allPageSlugs, getLegalPage, getPage } from '@/content/public-info';
+import { allServiceSlugs, getService, listServices } from '@/content/services';
 import { Link } from '@/i18n/navigation';
 import { fallbackLocalesOf } from '@/lib/fallbacks';
 import { describe, pageMetadata } from '@/lib/seo';
-import { siteShareImage } from '@/lib/share';
+import { servicePhoto, shareImage, siteShareImage } from '@/lib/share';
 import { isLegalSlug, LEGAL_SLUGS } from '@/content/paths';
 
-export const dynamicParams = false;
+// Unknown slugs render on demand and call notFound(). With `false`, Netlify answers a rewritten Bulgarian path
+// (`/x` → `/bg/x`) with a 500 before Next's redirects run, so one-segment redirects and 404s break (#39).
+export const dynamicParams = true;
 
 type Params = { locale: Locale; slug: string };
 
-/** Legal pages and the pages carried over from the old site share one layout and one route segment. */
+/** Legal pages, the pages carried over from the old site and the service pages share this one route segment. */
 const load = (slug: string, locale: Locale) => (isLegalSlug(slug) ? getLegalPage(slug, locale) : getPage(slug, locale));
 
 export function generateStaticParams(): Params[] {
     const slugs = [...LEGAL_SLUGS, ...allPageSlugs().map((page) => page.slug)];
-    return LOCALES.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
+    // A service is built only in the locales it is written in; the others answer 404 rather than show Bulgarian.
+    const services = allServiceSlugs().flatMap(({ slug, locales }) => locales.map((locale) => ({ locale, slug })));
+    return [...LOCALES.flatMap((locale) => slugs.map((slug) => ({ locale, slug }))), ...services];
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
     const { locale, slug } = await params;
+    const service = getService(slug, locale);
+    if (service)
+        return pageMetadata({
+            locale,
+            path: `/${slug}`,
+            title: service.metaTitle,
+            description: service.metaDescription,
+            image: shareImage(servicePhoto(service), locale),
+            translated: false
+        });
     const page = load(slug, locale);
     if (!page) return {};
     return pageMetadata({
@@ -39,6 +55,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function TextPage({ params }: { params: Promise<Params> }) {
     const { locale, slug } = await params;
     setRequestLocale(locale);
+    const service = getService(slug, locale);
+    if (service) return <ServicePage service={service} others={listServices(locale).filter((s) => s.slug !== slug)} locale={locale} />;
     const page = load(slug, locale);
     if (!page) notFound();
     const t = await getTranslations({ locale });

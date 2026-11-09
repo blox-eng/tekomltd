@@ -16,6 +16,7 @@ show_on_map: true
 year: 2021
 scopes:
   - facade
+residential: true
 sort: 18
 wide: false
 on_rail: true

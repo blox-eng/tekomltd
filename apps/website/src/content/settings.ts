@@ -26,6 +26,7 @@ export type SiteSettings = {
     email: string;
     privacyEmail: string;
     socials: { linkedin?: string; instagram?: string; facebook?: string };
+    profiles: string[];
     crewHeadline: string[];
     quoteCta: boolean;
     metaTitle: string | null;
@@ -49,6 +50,7 @@ export function getSettings(locale: Locale, root: string = defaultRoot()): SiteS
         email: s.email,
         privacyEmail: s.privacy_email,
         socials: s.socials,
+        profiles: s.profiles,
         crewHeadline: s.crew_headline[locale] ?? s.crew_headline.bg,
         quoteCta: s.quote_cta,
         metaTitle: textOrNull(s.meta_title, locale),

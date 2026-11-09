@@ -1,0 +1,22 @@
+# Facade work: shows the projects with scope `facade` (river-house), never the restoration (stone-chapel).
+slug: fasadi
+projects: { scope: facade }
+old_paths: [/old-services]
+name: { bg: Фасади }
+nav_blurb: { bg: По-топъл дом }
+meta_title: { bg: Фасади в Стара Загора }
+meta_description: { bg: Топлоизолация и фасадни мазилки в Стара Загора. }
+h1: { bg: Фасади в Стара Загора }
+intro: { bg: Изолираме и измазваме фасади. }
+benefits:
+  - { title: { bg: По-ниски сметки }, body: { bg: Плащате по-малко за отопление. } }
+steps_title: { bg: Как работим }
+steps:
+  - { title: { bg: Оглед }, body: { bg: Оглеждаме сградата. } }
+  - { title: { bg: Изолация }, body: { bg: Лепим плочите. } }
+materials_title: { bg: Материали }
+materials: { bg: Системи на един производител. }
+projects_title: { bg: 'Фасади, които сме изпълнили' }
+faq:
+  - { q: { bg: Може ли през зимата? }, a: { bg: Над +5 °C. } }
+cta: { title: { bg: Нова фасада? }, body: { bg: Пишете ни. }, button: { bg: Поискайте оглед } }

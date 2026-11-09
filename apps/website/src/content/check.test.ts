@@ -1,8 +1,9 @@
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { checkContent, type ContentError } from './check';
+import { serviceYaml } from './__fixtures__/service-yaml';
 
 const VALID = join(__dirname, '__fixtures__', 'valid');
 const PROJECT = 'projects/green-bath-eye-clinic/project.yaml';
@@ -152,5 +153,42 @@ describe('checkContent: old WordPress file addresses', () => {
                 message: expect.stringMatching(/^file not found: the old address \/wp-content\/uploads\/2015\/06\/a\.jpg leads here/)
             }
         ]);
+    });
+});
+
+describe('services', () => {
+    const withService = (name: string, text: string) =>
+        tree((root) => {
+            mkdirSync(join(root, 'services'));
+            write(root, `services/${name}`, text);
+        });
+    const messages = (root: string) => errorsOf(root).map((e) => `${e.file}: ${e.path} ${e.message}`);
+
+    it('accepts a service whose scope has a published project', () => {
+        expect(errorsOf(withService('restore.yaml', serviceYaml('restore', '{ scope: restore }')))).toEqual([]);
+    });
+    it('rejects a service that would list no project', () => {
+        expect(messages(withService('facade.yaml', serviceYaml('facade', '{ scope: facade }')))).toEqual([
+            'services/facade.yaml: projects no published project has scope "facade"'
+        ]);
+    });
+    it('rejects a slug that differs from the file name or takes an address of the site', () => {
+        expect(messages(withService('x.yaml', serviceYaml('y', '{ scope: restore }')))).toEqual([
+            'services/x.yaml: slug slug "y" must match the file name "x.yaml"'
+        ]);
+        expect(messages(withService('contact.yaml', serviceYaml('contact', '{ scope: restore }')))).toContainEqual(
+            'services/contact.yaml: slug "contact" is already an address of the site; give the service another slug'
+        );
+    });
+    it('rejects a cover project the page does not show, and an old path that is still a live page', () => {
+        const root = withService('restore.yaml', serviceYaml('restore', '{ scope: restore }', 'cover_project: other-site\nold_paths: [/about]'));
+        expect(messages(root)).toEqual([
+            'services/restore.yaml: cover_project "other-site" is not one of the projects this page shows',
+            'services/restore.yaml: old_paths.0 "/about" is a live page of the site; delete that page first'
+        ]);
+    });
+    it('rejects a search title that the template would push past the limit', () => {
+        const long = serviceYaml('restore', '{ scope: restore }').replace('meta_title: { bg: Заглавие }', `meta_title: { bg: ${'я'.repeat(53)} }`);
+        expect(messages(withService('restore.yaml', long))).toEqual(['services/restore.yaml: meta_title.bg Too big: expected string to have <=52 characters']);
     });
 });

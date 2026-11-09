@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildRedirects } from './redirects';
+import { buildRedirects, exactPageRedirects } from './redirects';
 
 const slugs = [{ slug: 'asenov-129', wpSlug: 'жилищна-сграда-с-магазини-и-гаражи', wpId: 1310, oldSlugs: ['old-asenov'] }];
 const pages = [
@@ -16,6 +16,13 @@ const files = [
 const r = buildRedirects(slugs, files, pages);
 
 describe('buildRedirects', () => {
+    it("sends a service page's old paths, in every locale, straight to the Bulgarian service page", () => {
+        const withServices = buildRedirects([], [], [], [{ slug: 'fasadi', oldPaths: ['/services/business-services', '/business-services'] }]);
+        for (const source of ['/services/business-services', '/business-services', '/en/business-services', '/de/services/business-services'])
+            expect(withServices).toContainEqual({ source, destination: '/fasadi', statusCode: 301 });
+        expect(withServices.every(({ destination }) => !withServices.some((x) => x.source === destination))).toBe(true);
+    });
+
     it('redirects the encoded WordPress project URL', () =>
         expect(r).toContainEqual(
             expect.objectContaining({
@@ -72,5 +79,15 @@ describe('buildRedirects', () => {
         );
         expect(only.some((x) => x.source.startsWith('/project-view/') && x.destination === '/projects/x')).toBe(false);
         expect(only.every((x) => x.source.replace(/\/$/, '') !== x.destination)).toBe(true);
+    });
+});
+
+describe('exactPageRedirects', () => {
+    it('keeps the fixed page paths for the middleware and leaves patterns and files to Next', () => {
+        const pairs = exactPageRedirects(r);
+        expect(pairs).toContainEqual(['/privacy-policy', '/privacy']);
+        expect(pairs).toContainEqual(['/projects/old-asenov', '/projects/asenov-129']);
+        expect(pairs.some(([source]) => source.includes(':'))).toBe(false);
+        expect(pairs.some(([source]) => source.startsWith('/wp-content/'))).toBe(false);
     });
 });

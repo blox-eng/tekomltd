@@ -67,10 +67,12 @@ type PageMeta = {
     image: ShareImage;
     /** Locales of this page that show Bulgarian text instead of a translation. */
     fallbackLocales?: readonly Locale[];
+    /** False for a page that exists in Bulgarian only: it gets a canonical and no hreflang. */
+    translated?: boolean;
 };
 
-export function pageMetadata({ locale, path, title, absoluteTitle, description, image, fallbackLocales = [] }: PageMeta): Metadata {
-    const alt = alternates(path, locale, fallbackLocales);
+export function pageMetadata({ locale, path, title, absoluteTitle, description, image, fallbackLocales = [], translated = true }: PageMeta): Metadata {
+    const alt = translated ? alternates(path, locale, fallbackLocales) : { canonical: urlFor(path, locale) };
     return {
         title: absoluteTitle ? { absolute: title } : title,
         description: description ?? undefined,

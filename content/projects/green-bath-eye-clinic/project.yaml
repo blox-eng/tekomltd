@@ -18,6 +18,7 @@ built_area_m2: 891
 scopes:
   - restore
   - full
+  - facade
 sort: 1
 wide: true
 on_rail: true

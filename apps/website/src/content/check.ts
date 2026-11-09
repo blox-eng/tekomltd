@@ -17,10 +17,11 @@ import {
     PUBLICATIONS_FILE,
     RESERVED_PAGE_SLUGS,
     resolveRef,
+    SERVICES_DIR,
     SETTINGS_FILE,
     urlMapFrom
 } from './paths';
-import { EuProgramme, Home, LegalPage, Page, Project, Publication, Settings } from './schema';
+import { EuProgramme, Home, LegalPage, Page, Project, Publication, Service, Settings } from './schema';
 
 export type ContentError = { file: string; path: string; message: string };
 export type CheckResult = { ok: true } | { ok: false; errors: ContentError[] };
@@ -101,18 +102,21 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
         }
     }
 
-    checkProjects();
+    const projects = checkProjects();
     const programmeCodes = checkProgrammes();
     checkPublications(programmeCodes);
     checkMarkdown(LEGAL_DIR, parseLegalFile, LegalPage, '<privacy|cookies|data-rights|terms>.<bg|en|de>.md');
-    checkMarkdown(PAGES_DIR, parsePageFile, Page, '<slug>.<bg|en|de>.md', RESERVED_PAGE_SLUGS);
+    const serviceSlugs = checkServices(projects);
+    checkMarkdown(PAGES_DIR, parsePageFile, Page, '<slug>.<bg|en|de>.md', [...RESERVED_PAGE_SLUGS, ...serviceSlugs]);
     if (options.urlMap) checkUrlMap(options.urlMap);
 
     return errors.length === 0 ? { ok: true } : { ok: false, errors };
 
-    function checkProjects() {
+    /** Valid projects that are not drafts, for the service pages that list them. */
+    function checkProjects(): Project[] {
+        const published: Project[] = [];
         const dir = join(absRoot, PROJECTS_DIR);
-        if (!existsSync(dir)) return;
+        if (!existsSync(dir)) return published;
         const folders = readdirSync(dir, { withFileTypes: true })
             .filter((d) => d.isDirectory())
             .map((d) => d.name)
@@ -131,6 +135,7 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
             }
             const project = parse(Project, readYaml(file), file);
             if (!project) continue;
+            if (!project.draft) published.push(project);
 
             if (project.slug !== folder) fail(file, 'slug', `slug "${project.slug}" must match its folder "${folder}"`);
             project.old_slugs.forEach((old, i) => {
@@ -162,6 +167,49 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
             project.images.forEach((image, i) => requireFile(file, `images.${i}.file`, image.file));
             requireFile(file, 'og_image', project.og_image);
         }
+        return published;
+    }
+
+    /** `services/<slug>.yaml`; returns the slugs, which no page may take. */
+    function checkServices(projects: Project[]): string[] {
+        const dir = join(absRoot, SERVICES_DIR);
+        if (!existsSync(dir)) return [];
+        const pageSlugs = existsSync(join(absRoot, PAGES_DIR)) ? readdirSync(join(absRoot, PAGES_DIR)).flatMap((name) => parsePageFile(name)?.slug ?? []) : [];
+        const slugs: string[] = [];
+        const oldPathOwner = new Map<string, string>();
+        const services: { file: string; service: Service }[] = [];
+        for (const name of readdirSync(dir).sort()) {
+            const file = `${SERVICES_DIR}/${name}`;
+            if (!name.endsWith('.yaml')) {
+                fail(file, '', 'name must be <slug>.yaml');
+                continue;
+            }
+            const service = parse(Service, readYaml(file), file);
+            if (!service) continue;
+            slugs.push(service.slug);
+            services.push({ file, service });
+            if (`${service.slug}.yaml` !== name) fail(file, 'slug', `slug "${service.slug}" must match the file name "${name}"`);
+            if (RESERVED_PAGE_SLUGS.includes(service.slug) || pageSlugs.includes(service.slug))
+                fail(file, 'slug', `"${service.slug}" is already an address of the site; give the service another slug`);
+            const { scope, residential } = service.projects;
+            const matching = projects.filter((p) => p.scopes.includes(scope) && (residential === undefined || p.residential === residential));
+            if (matching.length === 0)
+                fail(file, 'projects', `no published project has scope "${scope}"${residential === undefined ? '' : ` and residential: ${residential}`}`);
+            if (service.cover_project !== undefined && !matching.some((p) => p.slug === service.cover_project))
+                fail(file, 'cover_project', `"${service.cover_project}" is not one of the projects this page shows`);
+            service.old_paths.forEach((old, i) => {
+                const owner = oldPathOwner.get(old);
+                if (owner) fail(file, `old_paths.${i}`, `"${old}" already leads to ${owner}`);
+                oldPathOwner.set(old, owner ?? service.slug);
+            });
+        }
+        // An old path must not be an address that still answers, or the redirect would hide a live page.
+        const live = new Set([...RESERVED_PAGE_SLUGS, ...pageSlugs, ...slugs].map((s) => `/${s}`));
+        for (const { file, service } of services)
+            service.old_paths.forEach((old, i) => {
+                if (live.has(old)) fail(file, `old_paths.${i}`, `"${old}" is a live page of the site; delete that page first`);
+            });
+        return slugs;
     }
 
     function checkProgrammes(): Set<string> {

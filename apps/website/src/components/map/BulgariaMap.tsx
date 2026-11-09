@@ -53,7 +53,8 @@ export function BulgariaMap({ label, pins, cityCount, cyrillic }: Props) {
             <text className={styles.town} x={fixed(cx + CITY_LABEL.dx, 0)} y={fixed(cy + CITY_LABEL.dy, 0)}>
                 {name(CITY_LABEL)}
             </text>
-            <path className={styles.leader} d={`M${cx + 14},${cy} H${width - 6}`} />
+            <path className={`${styles.leader} ${styles.leaderAcross}`} d={`M${cx + 14},${cy} H${width - 6}`} />
+            <path className={`${styles.leader} ${styles.leaderDown}`} d={`M${cx},${cy + 14} V${height - 6}`} />
         </svg>
     );
 }

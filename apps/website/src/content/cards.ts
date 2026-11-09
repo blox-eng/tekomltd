@@ -14,6 +14,7 @@ export type ProjectCard = {
     year: number | null;
     areaM2: number | null;
     scopes: Scope[];
+    residential: boolean;
     cover: ProjectImg;
     pin: { lat: number; lng: number } | null;
 };
@@ -29,6 +30,7 @@ export function toProjectCard(project: Project, cover: ProjectImg, locale: Local
         year: project.year ?? null,
         areaM2: project.built_area_m2 ?? null,
         scopes: project.scopes,
+        residential: project.residential,
         cover,
         pin: hasPin ? { lat: project.lat!, lng: project.lng! } : null
     };

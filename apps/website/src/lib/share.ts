@@ -4,6 +4,7 @@ import type { Focus } from '../content/cards';
 import { getHome } from '../content/home';
 import { defaultRoot, type Img } from '../content/load';
 import type { ProjectDetail } from '../content/projects';
+import type { ServiceDetail } from '../content/services';
 import { getSettings } from '../content/settings';
 import { brandName } from './seo';
 
@@ -22,6 +23,8 @@ export const sitePhoto = (locale: Locale, root: string = defaultRoot()): SharePh
     getSettings(locale, root).ogImage ?? getHome(locale, root).rail[0]?.cover ?? null;
 
 export const projectPhoto = (project: ProjectDetail): SharePhoto => project.ogImage ?? project.cover;
+
+export const servicePhoto = (service: ServiceDetail): SharePhoto => service.cover.cover;
 
 /** Content-addressed: a new photo, focus or wordmark gets a new URL, so platforms drop their cached preview. */
 export function shareFile(photo: SharePhoto | null, locale: Locale): string {

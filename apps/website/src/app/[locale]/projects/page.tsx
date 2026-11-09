@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Locale } from '@tekom/i18n';
-import { timeline, yearsStood } from '@/components/projects/age';
+import { timeline } from '@/components/projects/age';
 import { ProjectTile } from '@/components/projects/ProjectTile';
 import { Timeline } from '@/components/projects/Timeline';
 import styles from '@/components/projects/projects.module.css';
@@ -52,14 +52,7 @@ export default async function ProjectsPage({ params }: Props) {
             {line && <Timeline line={line} label={t('timeline')} today={t('today')} sum={t('timelineSum', { years: line.years, count: line.ticks.length })} />}
             <ul className={styles.grid}>
                 {projects.map((project, index) => (
-                    <ProjectTile
-                        key={project.slug}
-                        project={project}
-                        scopeLabels={scopeLabels}
-                        note={root('note')}
-                        age={project.year === null ? null : t('ageShort', { n: yearsStood(project.year, now) })}
-                        eager={index < 3}
-                    />
+                    <ProjectTile key={project.slug} project={project} scopeLabels={scopeLabels} note={root('note')} eager={index < 3} />
                 ))}
             </ul>
         </div>

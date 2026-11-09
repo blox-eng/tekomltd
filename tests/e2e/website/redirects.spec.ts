@@ -40,6 +40,12 @@ test('a trailing-slash WordPress URL ends on the new page', async ({ request }) 
     }
 });
 
+test('an old address keeps its query string, so campaign tags survive the redirect', async ({ request }) => {
+    const res = await get(request, '/privacy-policy?utm_source=x');
+    expect(res.status()).toBe(301);
+    expect(new URL(res.headers().location!, 'http://x').search).toBe('?utm_source=x');
+});
+
 test('WordPress admin addresses answer 410', async ({ request }) => {
     for (const path of ['/wp-login.php', '/xmlrpc.php', '/wp-admin', '/wp-admin/admin-ajax.php']) {
         expect((await get(request, path)).status(), path).toBe(410);
@@ -67,7 +73,7 @@ test('a project page carries canonical, hreflang, Open Graph image and JSON-LD',
     for (const lang of ['bg', 'en', 'de', 'x-default']) await expect(page.locator(`link[rel="alternate"][hreflang="${lang}"]`)).toHaveCount(1);
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /\/og\/[0-9a-f]{12}\.jpg$/);
     const types = await page.locator('script[type="application/ld+json"]').evaluateAll((nodes) => nodes.map((n) => JSON.parse(n.textContent!)['@type']));
-    expect(types).toEqual(expect.arrayContaining(['HomeAndConstructionBusiness', 'CreativeWork', 'BreadcrumbList']));
+    expect(types).toEqual(expect.arrayContaining(['GeneralContractor', 'CreativeWork', 'BreadcrumbList']));
 });
 
 test('a fallback-locale page canonicalises to the Bulgarian page and leaves hreflang', async ({ page }) => {

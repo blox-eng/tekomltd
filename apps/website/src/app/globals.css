@@ -146,8 +146,101 @@ h3 {
     border-color: var(--line);
 }
 
-.site-nav a[aria-current='page'] {
+.site-nav a[aria-current='page'],
+.nav-menu > button[aria-current='page'] {
     border-color: var(--accent);
+}
+
+.nav-menu {
+    position: relative;
+}
+
+.nav-menu > button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    padding-block: 4px;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--dur-micro) var(--ease);
+}
+
+.nav-menu > button:not([aria-current='page']):hover {
+    border-color: var(--line);
+}
+
+.nav-menu > button svg {
+    width: 10px;
+    height: 6px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    transition: transform var(--dur-micro) var(--ease);
+}
+
+.nav-menu > button[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+}
+
+.nav-menu ul {
+    position: absolute;
+    top: calc(100% + 17px);
+    left: -16px;
+    width: min(340px, calc(100vw - 32px));
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+    background: var(--bg);
+    border: 1px solid var(--line);
+}
+
+.nav-menu li a {
+    display: grid;
+    gap: 2px;
+    padding: 10px 16px;
+    border: 0;
+}
+
+.nav-menu li a:hover,
+.nav-menu li a[aria-current='page'] {
+    background: var(--field);
+}
+
+.nav-menu li b {
+    font-weight: 500;
+}
+
+.nav-menu li span {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.eu-mark {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 6px;
+    color: var(--muted);
+    font: 500 12px var(--f-mono);
+    letter-spacing: 0.06em;
+    transition: color var(--dur-micro) var(--ease);
+}
+
+.eu-mark:hover,
+.eu-mark[aria-current='page'] {
+    color: var(--text);
+}
+
+.eu-mark svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.1;
+    stroke-linejoin: round;
 }
 
 .tools {
@@ -228,6 +321,23 @@ h3 {
 
     .tools {
         margin-left: auto;
+    }
+
+    /* On phones the menu spans the nav row instead of hanging off its button. */
+    .site-nav,
+    .nav-menu {
+        position: static;
+    }
+
+    .site-header .wrap {
+        position: relative;
+    }
+
+    .nav-menu ul {
+        top: 100%;
+        left: max(16px, env(safe-area-inset-left));
+        right: max(16px, env(safe-area-inset-right));
+        width: auto;
     }
 }
 

@@ -1,0 +1,18 @@
+# Restoration: the projects with scope `restore` (stone-chapel).
+slug: restavratsiya
+projects: { scope: restore }
+name: { bg: Реставрация }
+nav_blurb: { bg: Стари сгради за нов живот }
+meta_title: { bg: Реставрация в Стара Загора }
+meta_description: { bg: Реставрация на стари сгради в Стара Загора. }
+h1: { bg: Реставрация в Стара Загора }
+intro: { bg: Реставрираме стари сгради. }
+benefits:
+  - { title: { bg: Запазен характер }, body: { bg: Възстановяваме детайлите. } }
+steps_title: { bg: Как реставрираме }
+steps:
+  - { title: { bg: Проучване }, body: { bg: Събираме стари снимки. } }
+materials_title: { bg: Материали }
+materials: { bg: Камък и дърво. }
+projects_title: { bg: 'Сгради, които сме реставрирали' }
+cta: { title: { bg: Стара сграда? }, body: { bg: Пишете ни. }, button: { bg: Поискайте оглед } }

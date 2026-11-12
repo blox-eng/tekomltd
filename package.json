@@ -10,6 +10,7 @@
     "test": "turbo test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "content:check": "turbo content:check",
+    "new-update": "pnpm --filter @tekom/website new-update",
     "import:wp": "pnpm --filter @tekom/website import:wp",
     "seed:mockup": "pnpm --filter @tekom/website seed:mockup"
   },

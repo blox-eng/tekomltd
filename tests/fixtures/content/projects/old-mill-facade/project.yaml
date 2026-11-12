@@ -1,0 +1,19 @@
+# Finished with a progress block: shows its age and keeps its update log.
+slug: old-mill-facade
+title: { bg: Фасада на стара мелница, en: Old mill facade }
+place: { bg: Стара Загора, en: Stara Zagora }
+year: 2025
+scopes: [facade]
+sort: 5
+on_rail: false
+images:
+  - file: mill.jpg
+progress:
+  status: done
+  kind: facade
+  stages:
+    - { key: scaffold, done: 2025-04-01 }
+    - { key: insulation, done: 2025-05-10 }
+    - { key: render, done: 2025-06-01 }
+    - { key: scaffold_down, done: 2025-06-10 }
+    - { key: handover, done: 2025-06-20 }

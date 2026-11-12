@@ -1,0 +1,21 @@
+# Finished with a progress block but no updates, and an expected quarter and note left over from the work.
+slug: quiet-wall
+title: { bg: Фасада на тиха сграда, en: Quiet wall facade }
+place: { bg: Стара Загора, en: Stara Zagora }
+year: 2023
+scopes: [facade]
+sort: 6
+on_rail: false
+images:
+  - file: wall.jpg
+progress:
+  status: done
+  kind: facade
+  expected: 2023-Q2
+  note: { bg: Сроковете се преразглеждат., en: The dates are under review. }
+  stages:
+    - { key: scaffold, done: 2023-03-01 }
+    - { key: insulation, done: 2023-04-01 }
+    - { key: render, done: 2023-05-01 }
+    - { key: scaffold_down, done: 2023-05-10 }
+    - { key: handover, done: 2023-05-20 }

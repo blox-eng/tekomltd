@@ -1,8 +1,8 @@
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { afterEach, describe, expect, it } from 'vitest';
-import { checkContent, type ContentError } from './check';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { checkContent, main, type ContentError } from './check';
 import { serviceYaml } from './__fixtures__/service-yaml';
 
 const VALID = join(__dirname, '__fixtures__', 'valid');
@@ -190,5 +190,126 @@ describe('services', () => {
     it('rejects a search title that the template would push past the limit', () => {
         const long = serviceYaml('restore', '{ scope: restore }').replace('meta_title: { bg: Заглавие }', `meta_title: { bg: ${'я'.repeat(53)} }`);
         expect(messages(withService('restore.yaml', long))).toEqual(['services/restore.yaml: meta_title.bg Too big: expected string to have <=52 characters']);
+    });
+});
+
+describe('checkContent: projects in progress', () => {
+    const SITE = 'projects/work-site/project.yaml';
+    const TODAY = '2026-11-12';
+    const base = (progress: string, extra = '') =>
+        `slug: work-site\ntitle: { bg: Обект }\nplace: { bg: Стара Загора }\n${extra}images:\n  - file: site.jpg\nprogress:\n${progress}`;
+    const stages = (...lines: string[]) => `  status: in_progress\n  kind: facade\n  stages:\n${lines.join('\n')}\n`;
+
+    /** The valid tree plus `projects/work-site` with `yaml` and the update files in `updates`. */
+    function site(yaml: string, updates: Record<string, string> = {}) {
+        return tree((r) => {
+            mkdirSync(join(r, 'projects/work-site/updates'), { recursive: true });
+            cpSync(join(r, 'projects/green-bath-eye-clinic/cover.jpg'), join(r, 'projects/work-site/site.jpg'));
+            cpSync(join(r, 'projects/green-bath-eye-clinic/cover.jpg'), join(r, 'projects/work-site/updates/p.jpg'));
+            write(r, SITE, yaml);
+            for (const [name, body] of Object.entries(updates)) write(r, `projects/work-site/updates/${name}`, body);
+        });
+    }
+    const check = (root: string) => checkContent(root, { today: TODAY });
+    const errs = (root: string) => {
+        const result = check(root);
+        return result.ok ? [] : result.errors;
+    };
+
+    it('accepts a project in progress with a fresh update', () =>
+        expect(
+            check(site(base(stages('    - key: scaffold\n      started: 2026-10-01')), { '2026-11-01.bg.md': '---\nphotos:\n  - file: p.jpg\n---\nТекст' }))
+        ).toEqual({
+            ok: true,
+            warnings: []
+        }));
+    it('accepts a done date of today', () => expect(errs(site(base(stages('    - key: scaffold\n      done: 2026-11-12'))))).toEqual([]));
+    it('rejects a done date of tomorrow', () =>
+        expect(errs(site(base(stages('    - key: scaffold\n      done: 2026-11-13'))))).toEqual([
+            { file: SITE, path: 'progress.stages.0.done', message: 'date 2026-11-13 is in the future; write the day it happened' }
+        ]));
+    it('rejects a start date in the future', () =>
+        expect(errs(site(base(stages('    - key: scaffold\n      started: 2027-01-01'))))).toEqual([
+            { file: SITE, path: 'progress.stages.0.started', message: 'date 2027-01-01 is in the future; write the day it happened' }
+        ]));
+    it('rejects done before started', () =>
+        expect(errs(site(base(stages('    - key: scaffold\n      started: 2026-10-02\n      done: 2026-10-01'))))).toEqual([
+            { file: SITE, path: 'progress.stages.0.done', message: 'done 2026-10-01 is before started 2026-10-02' }
+        ]));
+    it('rejects a year while the work goes on', () =>
+        expect(errs(site(base(stages('    - key: scaffold'), 'year: 2026\n')))).toEqual([
+            { file: SITE, path: 'year', message: 'remove year until progress.status is done' }
+        ]));
+    it('needs a year when the project is done', () =>
+        expect(errs(site(base('  status: done\n  kind: facade\n  stages:\n    - key: scaffold\n      done: 2026-10-01\n')))).toEqual([
+            { file: SITE, path: 'year', message: 'a finished project needs year' }
+        ]));
+    it('needs a done date on every stage when the project is done', () =>
+        expect(errs(site(base('  status: done\n  kind: facade\n  stages:\n    - key: scaffold\n      started: 2026-10-01\n', 'year: 2026\n')))).toEqual([
+            { file: SITE, path: 'progress.stages.0.done', message: 'a finished project needs a done date on every stage' }
+        ]));
+    it('needs the stages listed with done dates when the project is done', () =>
+        expect(errs(site(base('  status: done\n  kind: facade\n', 'year: 2026\n')))).toEqual([
+            { file: SITE, path: 'progress.stages', message: 'a finished project lists its stages, each with a done date' }
+        ]));
+
+    const ok = base(stages('    - key: scaffold'));
+    it.each(['2026-11-01.md', '01-11-2026.bg.md', 'notes.txt'])('rejects the update name %s', (name) =>
+        expect(errs(site(ok, { [name]: 'x' }))).toEqual([
+            { file: `projects/work-site/updates/${name}`, path: '(file)', message: 'name must be YYYY-MM-DD.bg.md, for example 2026-11-20.bg.md' }
+        ])
+    );
+    it('rejects an update date that is not on the calendar', () =>
+        expect(errs(site(ok, { '2026-02-30.bg.md': 'x' }))).toEqual([
+            { file: 'projects/work-site/updates/2026-02-30.bg.md', path: '(file)', message: '2026-02-30 is not a real past or present date' }
+        ]));
+    it('rejects an update date in the future', () =>
+        expect(errs(site(ok, { '2026-11-13.bg.md': 'x' }))).toEqual([
+            { file: 'projects/work-site/updates/2026-11-13.bg.md', path: '(file)', message: '2026-11-13 is not a real past or present date' }
+        ]));
+    it('needs the Bulgarian update before a translation', () =>
+        expect(errs(site(ok, { '2026-11-01.en.md': 'x' }))).toEqual([
+            { file: 'projects/work-site/updates/2026-11-01.en.md', path: '(file)', message: 'add 2026-11-01.bg.md first; the Bulgarian text is required' }
+        ]));
+    it('keeps photos in the Bulgarian update', () =>
+        expect(errs(site(ok, { '2026-11-01.bg.md': 'x', '2026-11-01.en.md': '---\nphotos:\n  - file: p.jpg\n---\nx' }))).toEqual([
+            { file: 'projects/work-site/updates/2026-11-01.en.md', path: 'photos', message: 'photos go in the .bg.md file' }
+        ]));
+    it('finds a missing update photo', () =>
+        expect(errs(site(ok, { '2026-11-01.bg.md': '---\nphotos:\n  - file: gone.jpg\n---\nx' }))).toEqual([
+            { file: 'projects/work-site/updates/2026-11-01.bg.md', path: 'photos.0.file', message: 'file not found: gone.jpg' }
+        ]));
+    it('asks for a JPEG when a phone photo is HEIC', () =>
+        expect(errs(site(ok, { 'IMG_0001.HEIC': 'x' }))).toEqual([
+            { file: 'projects/work-site/updates/IMG_0001.HEIC', path: '(file)', message: 'save the photo as .jpg; the site cannot show .heic' }
+        ]));
+    it('checks the extension of an update photo', () =>
+        expect(errs(site(ok, { '2026-11-01.bg.md': '---\nphotos:\n  - file: p.gif\n---\nx' }))).toEqual([
+            { file: 'projects/work-site/updates/2026-11-01.bg.md', path: 'photos.0.file', message: expect.stringMatching(/^must end in \.jpg/) }
+        ]));
+    it('needs a progress block for updates', () =>
+        expect(
+            errs(site('slug: work-site\ntitle: { bg: Обект }\nplace: { bg: Стара Загора }\nimages:\n  - file: site.jpg\n', { '2026-11-01.bg.md': 'x' }))
+        ).toEqual([{ file: 'projects/work-site/updates/2026-11-01.bg.md', path: '(file)', message: 'updates need a progress block in project.yaml' }]));
+
+    it('does not warn when the newest update is 45 days old', () => expect(check(site(ok, { '2026-09-28.bg.md': 'x' }))).toEqual({ ok: true, warnings: [] }));
+    it('warns when the newest update is 46 days old', () =>
+        expect(check(site(ok, { '2026-09-27.bg.md': 'x' }))).toEqual({
+            ok: true,
+            warnings: [{ file: SITE, path: 'progress', message: 'newest update is 46 days old; add one in updates/' }]
+        }));
+    it('does not warn for a draft', () => expect(check(site(`draft: true\n${ok}`, { '2026-01-01.bg.md': 'x' }))).toEqual({ ok: true, warnings: [] }));
+    it('still checks a draft', () =>
+        expect(errs(site(`draft: true\n${base(stages('    - key: scaffold\n      done: 2027-01-01'))}`)).map((e) => e.path)).toEqual([
+            'progress.stages.0.done'
+        ]));
+    it('prints warnings and still passes', () => {
+        const root = site(ok, { '2020-01-01.bg.md': 'x' });
+        const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+        const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+        expect(main(['node', 'check.ts', root])).toBe(0);
+        expect(warn).toHaveBeenCalledWith(expect.stringMatching(/^warning: projects\/work-site\/project\.yaml: progress newest update is \d+ days old/));
+        warn.mockRestore();
+        log.mockRestore();
     });
 });

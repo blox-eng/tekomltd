@@ -18,6 +18,7 @@ export const PROJECT_FILE = 'project.yaml';
 export const LEGAL_DIR = 'legal';
 export const PAGES_DIR = 'pages';
 export const SERVICES_DIR = 'services';
+export const UPDATES_DIR = 'updates';
 
 export const contentRootFrom = (repoRoot: string) => join(repoRoot, 'content');
 
@@ -46,3 +47,10 @@ export function parseLegalFile(name: string): { slug: LegalSlug; locale: Locale 
 
 /** A file reference inside a content file is relative to that file. */
 export const resolveRef = (root: string, contentFile: string, ref: string) => resolve(root, dirname(contentFile), ref);
+
+/** `YYYY-MM-DD.<locale>.md`, one dated update of a project in progress. */
+export function parseUpdateFile(name: string): { date: string; locale: Locale } | null {
+    const match = /^(\d{4}-\d{2}-\d{2})\.([a-z]{2})\.md$/.exec(basename(name));
+    const locale = LOCALES.find((l) => l === match?.[2]);
+    return match && locale ? { date: match[1]!, locale } : null;
+}

@@ -3,17 +3,17 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { checkContent } from './check';
 import { getHome } from './home';
-import { allProjectSlugs, getProject, listProjects } from './projects';
+import { allProjectSlugs, getProject, listProjects, listRailProjects } from './projects';
 import { allPageSlugs, getLegalPage, getPage, listProgrammes, listPublications } from './public-info';
 import { getSettings } from './settings';
 
 const root = join(__dirname, '__fixtures__', 'loader');
 
-it('uses a fixture that passes the content check', () => expect(checkContent(root)).toEqual({ ok: true }));
+it('uses a fixture that passes the content check', () => expect(checkContent(root)).toMatchObject({ ok: true }));
 
 describe('listProjects', () => {
-    it('lists published projects by sort order and never drafts', () => {
-        expect(listProjects('bg', root).map((p) => p.slug)).toEqual(['old-town-house', 'green-bath-eye-clinic', 'third-site']);
+    it('lists projects in progress first, then by sort order, and never drafts', () => {
+        expect(listProjects('bg', root).map((p) => p.slug)).toEqual(['rising-block', 'hill-house', 'old-town-house', 'green-bath-eye-clinic', 'third-site']);
     });
     it('reads the image size from the file', () => {
         const card = listProjects('bg', root).find((p) => p.slug === 'green-bath-eye-clinic')!;
@@ -31,6 +31,50 @@ describe('listProjects', () => {
     it('memoises per root', () => expect(listProjects('bg', root)).toEqual(listProjects('bg', root)));
 });
 
+describe('projects in progress', () => {
+    it('keeps the rail in sort order', () =>
+        expect(listRailProjects('bg', root).map((p) => p.slug)).toEqual(['old-town-house', 'green-bath-eye-clinic', 'rising-block', 'hill-house']));
+    it('marks only projects in progress', () => {
+        const cards = listProjects('bg', root);
+        expect(cards.filter((c) => c.inProgress).map((c) => c.slug)).toEqual(['rising-block', 'hill-house']);
+    });
+    it('gives finished projects no progress', () => expect(getProject('old-town-house', 'bg', root)!.progress).toBeNull());
+    it('lists updates newest first, with their photos and the translation fallback', () => {
+        const progress = getProject('rising-block', 'en', root)!.progress!;
+        expect(progress.updates.map((u) => [u.date, u.fallback])).toEqual([
+            ['2026-11-01', false],
+            ['2026-10-01', true]
+        ]);
+        expect(progress.updates[0]!.body).toContain('excavation survey');
+        expect(progress.updates[1]!.photos).toMatchObject([{ src: '/media/projects/rising-block/updates/2026-10-01-1.jpg', alt: 'Изкопът' }]);
+        expect(progress.lastUpdate).toBe('2026-11-01');
+    });
+    it('reads stages, quarter, permit and note', () => {
+        const progress = getProject('rising-block', 'en', root)!.progress!;
+        expect(progress.stages.map((s) => [s.key, s.label, s.state])).toEqual([
+            ['design', null, 'done'],
+            [null, 'Archaeological survey', 'active'],
+            ['permit', null, 'active'],
+            ['act14', null, 'next']
+        ]);
+        expect(progress).toMatchObject({
+            status: 'in_progress',
+            kind: 'building',
+            expected: { year: 2028, quarter: 1 },
+            permit: 'РС № 1/2026, Община Стара Загора',
+            note: 'Работата продължава по график.',
+            noteFallback: true
+        });
+    });
+    it('uses the default stages of the kind and has no update yet', () => {
+        const progress = getProject('hill-house', 'bg', root)!.progress!;
+        expect(progress.stages.map((s) => s.state)).toEqual(Array(7).fill('next'));
+        expect(progress.updates).toEqual([]);
+        expect(progress.lastUpdate).toBeNull();
+        expect(progress.expected).toBeNull();
+    });
+});
+
 describe('getProject', () => {
     it('returns the detail with the next project', () => {
         const p = getProject('old-town-house', 'bg', root)!;
@@ -38,7 +82,7 @@ describe('getProject', () => {
         expect(p.images.map((i) => i.src)).toEqual(['/media/projects/old-town-house/front.jpg']);
     });
     it('wraps from the last project to the first', () => {
-        expect(getProject('third-site', 'en', root)!.next).toEqual({ slug: 'old-town-house', title: 'Къща в стария град' });
+        expect(getProject('hill-house', 'en', root)!.next).toEqual({ slug: 'old-town-house', title: 'Къща в стария град' });
     });
     it('keeps all gallery images in order', () => {
         expect(getProject('green-bath-eye-clinic', 'en', root)!.images.map((i) => [i.src, i.width])).toEqual([
@@ -50,7 +94,7 @@ describe('getProject', () => {
         expect(getProject('nope', 'bg', root)).toBeNull();
         expect(getProject('hidden-draft', 'bg', root)).toBeNull();
     });
-    it('knows its place in the list', () => expect(getProject('third-site', 'bg', root)).toMatchObject({ position: 3, total: 3 }));
+    it('knows its place in the list', () => expect(getProject('third-site', 'bg', root)).toMatchObject({ position: 3, total: 5 }));
     it('flags a Bulgarian fallback title', () => expect(getProject('old-town-house', 'de', root)!.titleFallback).toBe(true));
 });
 
@@ -59,14 +103,16 @@ describe('allProjectSlugs', () => {
         expect(allProjectSlugs(root)).toEqual([
             { slug: 'old-town-house', wpSlug: null, wpId: null, oldSlugs: [] },
             { slug: 'green-bath-eye-clinic', wpSlug: 'green-bath-eye-clinic', wpId: 1952, oldSlugs: ['eye-clinic'] },
-            { slug: 'third-site', wpSlug: null, wpId: null, oldSlugs: [] }
+            { slug: 'third-site', wpSlug: null, wpId: null, oldSlugs: [] },
+            { slug: 'rising-block', wpSlug: null, wpId: null, oldSlugs: [] },
+            { slug: 'hill-house', wpSlug: null, wpId: null, oldSlugs: [] }
         ]);
     });
 });
 
 describe('getHome', () => {
     it('puts only published on-rail projects on the rail, in sort order', () => {
-        expect(getHome('bg', root).rail.map((c) => c.slug)).toEqual(['old-town-house', 'green-bath-eye-clinic']);
+        expect(getHome('bg', root).rail.map((c) => c.slug)).toEqual(['old-town-house', 'green-bath-eye-clinic', 'rising-block', 'hill-house']);
     });
     it('pins every published project with show_on_map and coordinates, on the rail or not', () => {
         expect(getHome('bg', root).map.map((c) => c.slug)).toEqual(['green-bath-eye-clinic', 'third-site']);

@@ -4,6 +4,7 @@ import type { Locale } from '@tekom/i18n';
 import { JsonLd } from '@/components/JsonLd';
 import home from '@/components/home/home.module.css';
 import { ProjectTile } from '@/components/projects/ProjectTile';
+import { InProgressLabel } from '@/components/projects/Progress';
 import projects from '@/components/projects/projects.module.css';
 import { SCOPES } from '@/content/schema';
 import type { ServiceDetail, ServiceLink } from '@/content/services';
@@ -118,7 +119,7 @@ export async function ServicePage({ service, others, locale }: Props) {
                                 <td>
                                     <Link href={`/projects/${project.slug}`}>{project.title}</Link>
                                 </td>
-                                <td className="mono">{project.year ?? '—'}</td>
+                                <td className="mono">{project.inProgress ? <InProgressLabel /> : (project.year ?? '—')}</td>
                                 <td>{project.place}</td>
                                 <td className={styles.wide}>{project.scopes.map((key) => scopeLabels[key]).join(', ')}</td>
                             </tr>

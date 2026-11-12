@@ -164,7 +164,7 @@ describe('smaller types', () => {
 });
 
 describe('checkContent', () => {
-    it('passes a complete valid tree', () => expect(checkContent(fixture('valid'))).toEqual({ ok: true }));
+    it('passes a complete valid tree', () => expect(checkContent(fixture('valid'))).toEqual({ ok: true, warnings: [] }));
 
     it('reports a published project without photos, but allows a draft', () => {
         const r = checkContent(fixture('no-photos'));
@@ -272,4 +272,19 @@ describe('checkContent', () => {
             { file: 'pages/free-positions.en.md', path: '(file)', message: 'needs the Bulgarian page pages/free-positions.bg.md' }
         ]);
     });
+});
+
+describe('Project progress', () => {
+    const progress = { status: 'in_progress', kind: 'building' };
+    it('parses a project without progress unchanged', () => expect(Project.parse(minimal).progress).toBeUndefined());
+    it('accepts a progress block', () => expect(Project.safeParse({ ...minimal, progress }).success).toBe(true));
+    it('rejects a stage with both key and label', () =>
+        expect(Project.safeParse({ ...minimal, progress: { ...progress, stages: [{ key: 'act14', label: { bg: 'x' } }] } }).success).toBe(false));
+    it('rejects a stage with neither key nor label', () =>
+        expect(Project.safeParse({ ...minimal, progress: { ...progress, stages: [{ started: '2026-01-02' }] } }).success).toBe(false));
+    it('rejects an unknown quarter', () => expect(Project.safeParse({ ...minimal, progress: { ...progress, expected: '2028-Q5' } }).success).toBe(false));
+    it('rejects a date that is not on the calendar', () =>
+        expect(Project.safeParse({ ...minimal, progress: { ...progress, stages: [{ key: 'design', started: '2026-02-30' }] } }).success).toBe(false));
+    it('accepts a real date', () =>
+        expect(Project.safeParse({ ...minimal, progress: { ...progress, stages: [{ key: 'design', started: '2024-02-29' }] } }).success).toBe(true));
 });

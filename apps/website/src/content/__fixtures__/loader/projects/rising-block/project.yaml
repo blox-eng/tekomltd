@@ -1,0 +1,23 @@
+slug: rising-block
+title: { bg: Жилищна сграда в строеж, en: Building in progress }
+place: { bg: Стара Загора }
+scopes: [full]
+residential: true
+sort: 9
+images:
+  - file: site.jpg
+progress:
+  status: in_progress
+  kind: building
+  expected: 2028-Q1
+  permit: РС № 1/2026, Община Стара Загора
+  note: { bg: Работата продължава по график. }
+  stages:
+    - key: design
+      started: 2026-01-05
+      done: 2026-05-20
+    - label: { bg: Археологически проучвания, en: Archaeological survey }
+      started: 2026-06-01
+    - key: permit
+      started: 2026-06-10
+    - key: act14

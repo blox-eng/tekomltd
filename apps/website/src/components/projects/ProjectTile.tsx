@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { ProjectCard } from '@/content/cards';
 import { yearsStood } from './age';
+import { InProgressLabel } from './Progress';
 import { SquareImage } from './SquareImage';
 import styles from './projects.module.css';
 
@@ -26,7 +27,15 @@ export function ProjectTile({ project, scopeLabels, note, eager }: Props) {
                 </div>
                 <h3 lang={project.titleFallback ? 'bg' : undefined}>{project.title}</h3>
                 {project.titleFallback && <span className={styles.note}>{note}</span>}
-                <span className={`${styles.where} mono`}>{where}</span>
+                <span className={`${styles.where} mono`}>
+                    {where}
+                    {project.inProgress && (
+                        <>
+                            {' · '}
+                            <InProgressLabel />
+                        </>
+                    )}
+                </span>
             </Link>
         </li>
     );

@@ -1,0 +1,23 @@
+# Draft: our own building of flats. Fill in the dates and the first update, then remove draft.
+slug: stoletov-46
+title:
+  bg: Жилищна сграда „Столетов 46“
+place:
+  bg: Стара Загора
+scopes:
+  - full
+residential: true
+draft: true
+progress:
+  status: in_progress
+  kind: building
+  stages:
+    - key: design
+    - label:
+        bg: Археологически проучвания
+    - key: permit
+    - key: excavation
+    - key: zero
+    - key: act14
+    - key: act15
+    - key: act16

@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { LOCALES, type Locale } from '@tekom/i18n';
 import { yearsStood } from '@/components/projects/age';
 import { fallbackNote, projectFacts } from '@/components/projects/facts';
+import { Progress } from '@/components/projects/Progress';
 import { SquareImage } from '@/components/projects/SquareImage';
 import styles from '@/components/projects/projects.module.css';
 import { allProjectSlugs, getProject } from '@/content/projects';
@@ -107,7 +108,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                     </dl>
                     <p className={styles.cta}>
                         <Link href="/contact" className="btn">
-                            {t('cta')}
+                            {t(project.progress?.kind === 'building' && project.progress.status === 'in_progress' ? 'ctaBuilding' : 'cta')}
                             <span className="ar" aria-hidden="true">
                                 →
                             </span>
@@ -128,6 +129,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                     )}
                 </div>
             </div>
+            {project.progress && <Progress progress={project.progress} />}
             {gallery.length > 0 && (
                 <ul className={styles.gallery}>
                     {gallery.map((image) => (

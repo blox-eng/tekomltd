@@ -45,6 +45,16 @@ projects/kazanlak-house/project.yaml: images.0.file file not found: kazanlak-1.j
 - `... is outside Bulgaria` — координатите `lat`/`lng` са сгрешени или разменени (вижте „Нов проект“).
 - `image must be a file under /media/` — снимка в страница сочи към друг сайт или към грешен път. Качете снимката в `content/` и я пишете с `/media/…` (вижте „Смяна на текст“).
 - `file not found: the old address ... leads here` — файл, към който води адрес от стария сайт, е преименуван или изтрит. Върнете го със същото име или питайте разработчика.
+- `date ... is in the future; write the day it happened` — дата на етап е след днес. Пишете деня, в който се е случило.
+- `done ... is before started ...` — датите на етапа са разменени.
+- `remove year until progress.status is done` — проект в строеж още няма година. Махнете `year`.
+- `a finished project needs year` / `a finished project needs a done date on every stage` / `a finished project lists its stages, each with a done date` — при `status: done` добавете `year` и дата `done` на всеки етап.
+- `name must be YYYY-MM-DD.bg.md` — файл в `updates` е с грешно име. Пример: `2026-11-20.bg.md`.
+- `... is not a real past or present date` — датата в името на актуализацията не съществува или е след днес.
+- `add ....bg.md first; the Bulgarian text is required` — има превод без български файл със същата дата.
+- `photos go in the .bg.md file` — снимки са записани в `.en.md` или `.de.md`. Преместете ги в `.bg.md`.
+- `updates need a progress block in project.yaml` — има папка `updates`, но в `project.yaml` няма блок `progress`.
+- `warning: ... newest update is N days old` — само предупреждение: време е за нова актуализация.
 
 ## Правила за YAML (важно)
 
@@ -189,6 +199,107 @@ email: info@tekomltd.com
 
 Телефонът и ЕИК (`eik`) са в кавички.
 
+## 8. Проект в строеж
+
+Обект, по който работим сега: собствена сграда, къща на клиент или фасада. Сайтът показва етапите, кога очакваме да свършим и дневник с актуализации. Когато работата свърши, проектът става обикновен завършен проект и пази дневника си.
+
+### Започване
+
+Направете проекта както в „1. Нов проект“, но **без** `year`. Добавете най-отдолу блок `progress` за вида обект. Копирайте целия блок: етапите са готови, без дати.
+
+Нова жилищна сграда (`building`):
+
+```yaml
+progress:
+  status: in_progress
+  kind: building
+  expected: 2028-Q1
+  stages:
+    - key: design
+    - key: permit
+    - key: excavation
+    - key: zero
+    - key: act14
+    - key: act15
+    - key: act16
+```
+
+Къща (`house`):
+
+```yaml
+progress:
+  status: in_progress
+  kind: house
+  stages:
+    - key: design
+    - key: permit
+    - key: zero
+    - key: rough
+    - key: roof
+    - key: finishing
+    - key: use_permit
+```
+
+Фасада (`facade`):
+
+```yaml
+progress:
+  status: in_progress
+  kind: facade
+  stages:
+    - key: scaffold
+    - key: insulation
+    - key: render
+    - key: scaffold_down
+    - key: handover
+```
+
+- `expected` е тримесечието, в което очакваме да свършим: `2028-Q1` … `2028-Q4`. Не е задължително. Сайтът никога не показва ден.
+- `permit: "РС № 12/2026, Община Стара Загора"` показва разрешението за строеж. Не е задължително.
+- `note: { bg: Сроковете се преразглеждат. }` е кратка бележка за посетителя, например когато работата спре или срокът се мести. Махнете я, когато вече не важи.
+- Свой етап, който го няма в списъка: вместо `key` пишете `label`, например `- label: { bg: Археологически проучвания }`. Сложете го на мястото му в реда.
+- Местоположението е каквото Вие запишете. За частна къща пишете само селото или района в `place` и не пишете `address`, `lat`, `lng` и `show_on_map`.
+- Никога не пишете цени, суми, името на възложителя, ЕИК или лични имена.
+
+### Етап започна, етап свърши
+
+Добавете дата под етапа (`ГГГГ-ММ-ДД`, денят, в който се е случило):
+
+```yaml
+    - key: act14
+      started: 2027-03-01
+      done: 2027-09-15
+```
+
+Етап само със `started` е „в ход“. С `done` е завършен. Няколко етапа могат да са в ход едновременно.
+
+### Нова актуализация
+
+Актуализациите са в папка `updates` в папката на проекта. Всяка е един файл с името на датата: `updates/2026-11-20.bg.md`.
+
+- В GitHub: **Add file → Create new file**, името е `updates/2026-11-20.bg.md`. Поставете шаблона по-долу.
+- На компютър: `pnpm new-update stoletov-46` прави файла с днешна дата и шаблона.
+
+```markdown
+---
+photos:
+  - file: 2026-11-20-1.jpg
+    alt: Покривът е готов
+---
+
+**Направено:** покривът и комините.
+
+**Следва:** дограмата.
+```
+
+Снимките се качват в същата папка `updates` (**Add file → Upload files**). Без снимки пишете `photos: []`. Превод: файл със същата дата и `.en.md` или `.de.md`, само с текст. Снимките са само в `.bg.md`.
+
+Пишете поне веднъж на месец. Ако последната актуализация е по-стара от 45 дни, проверката показва предупреждение (`warning: ... newest update is N days old`). Сайтът се публикува, но посетителят вижда старата дата.
+
+### Край
+
+Когато обектът е предаден: `status: done`, добавете `year: 2027` в горната част и дата `done` на всеки етап. Етикетът „в строеж“ изчезва, проектът показва колко години стои и дневникът остава.
+
 ## Преди да изпратите
 
 Всеки pull request има малък списък (шаблон): прегледан ли е Deploy Preview, зелена ли е проверката, как изглеждат снимките на телефон. Отметнете го честно.
@@ -236,6 +347,16 @@ Common errors:
 - `... is outside Bulgaria` — `lat`/`lng` are wrong or swapped (see "Add a project").
 - `image must be a file under /media/` — an image in a page points at another site or a wrong path. Upload the image into `content/` and write it with `/media/…` (see "Change a text").
 - `file not found: the old address ... leads here` — a file that an address of the old site leads to was renamed or deleted. Put it back under the same name, or ask the developer.
+- `date ... is in the future; write the day it happened` — a stage date is after today. Write the day it happened.
+- `done ... is before started ...` — the stage dates are swapped.
+- `remove year until progress.status is done` — a project in progress has no year yet. Remove `year`.
+- `a finished project needs year` / `... a done date on every stage` / `... lists its stages, each with a done date` — with `status: done`, add `year` and a `done` date on every stage.
+- `name must be YYYY-MM-DD.bg.md` — a file in `updates` has a wrong name. Example: `2026-11-20.bg.md`.
+- `... is not a real past or present date` — the date in the update's name does not exist or is after today.
+- `add ....bg.md first; the Bulgarian text is required` — a translation has no Bulgarian file of the same date.
+- `photos go in the .bg.md file` — photos are listed in `.en.md` or `.de.md`. Move them to `.bg.md`.
+- `updates need a progress block in project.yaml` — there is an `updates` folder but no `progress` block.
+- `warning: ... newest update is N days old` — only a warning: time for a new update.
 
 ## YAML rules (important)
 
@@ -384,6 +505,20 @@ email: info@tekomltd.com
 ```
 
 The phone and the EIK (`eik`) go in quotes.
+
+## 8. A project in progress
+
+A job we work on now: our own building, a client's house or a facade. The site shows its stages, the expected completion and a log of updates. When the work is done, it becomes a normal finished project and keeps its log.
+
+- Start it as in "1. Add a project", but **without** `year`, and add a `progress` block at the bottom. Copy the block for the kind (`building`, `house` or `facade`) from the Bulgarian section above: the stage list is ready, with no dates.
+- `expected: 2028-Q1` (optional) is the quarter we expect to finish. `permit` (optional) is the building permit. `note` (optional) is a short line for visitors, for example when a date moves.
+- A stage of your own: write `label: { bg: … }` instead of `key`.
+- A stage under way gets `started: YYYY-MM-DD`; a finished stage also gets `done: YYYY-MM-DD`.
+- An update is a file `updates/YYYY-MM-DD.bg.md` in the project folder, with `photos:` in its front matter and the text below. `pnpm new-update <folder>` makes one with today's date. Photos go in the `updates` folder and only in the `.bg.md` file; `.en.md` / `.de.md` hold the translated text.
+- Write at least monthly. After 45 days without an update, the check prints a warning; the site still publishes.
+- The location is what you write. For a private house, write only the village or area in `place`.
+- Never write prices, amounts, the client's name, EIK or personal names.
+- To finish: `status: done`, add `year`, and give every stage a `done` date.
 
 ## Before you submit
 

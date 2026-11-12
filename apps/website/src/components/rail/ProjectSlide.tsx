@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { OBJECT_POSITION } from '@/components/projects/square';
 import { Link } from '@/i18n/navigation';
+import { InProgressLabel } from '@/components/projects/Progress';
 import type { ProjectCard } from '@/content/cards';
 import styles from './rail.module.css';
 
@@ -28,7 +29,15 @@ export function ProjectSlide({ project, scopeLabels, first }: Props) {
                     ))}
                 </div>
                 <h3>{project.title}</h3>
-                <span className={`${styles.where} mono`}>{where}</span>
+                <span className={`${styles.where} mono`}>
+                    {where}
+                    {project.inProgress && (
+                        <>
+                            {' · '}
+                            <InProgressLabel />
+                        </>
+                    )}
+                </span>
             </div>
         </Link>
     );

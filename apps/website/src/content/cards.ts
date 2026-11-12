@@ -17,6 +17,8 @@ export type ProjectCard = {
     residential: boolean;
     cover: ProjectImg;
     pin: { lat: number; lng: number } | null;
+    /** Work goes on now: a `progress` block with `status: in_progress`. */
+    inProgress: boolean;
 };
 
 export function toProjectCard(project: Project, cover: ProjectImg, locale: Locale): ProjectCard {
@@ -32,6 +34,7 @@ export function toProjectCard(project: Project, cover: ProjectImg, locale: Local
         scopes: project.scopes,
         residential: project.residential,
         cover,
-        pin: hasPin ? { lat: project.lat!, lng: project.lng! } : null
+        pin: hasPin ? { lat: project.lat!, lng: project.lng! } : null,
+        inProgress: project.progress?.status === 'in_progress'
     };
 }

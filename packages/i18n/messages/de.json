@@ -97,7 +97,8 @@
             "handover": "Übergabe"
         },
         "stageNext": "noch nicht begonnen",
-        "renderPending": "Entwurf folgt"
+        "renderPending": "Entwurf folgt",
+        "inProgressMeta": "im Bau: Bauphasen und Baustellentagebuch"
     },
     "eu": {
         "h": "EU-Programme und Veröffentlichungen",

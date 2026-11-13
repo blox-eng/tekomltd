@@ -97,7 +97,8 @@
             "handover": "Handover"
         },
         "stageNext": "not started",
-        "renderPending": "Design to come"
+        "renderPending": "Design to come",
+        "inProgressMeta": "in progress: stages and site log"
     },
     "eu": {
         "h": "EU programmes and publications",

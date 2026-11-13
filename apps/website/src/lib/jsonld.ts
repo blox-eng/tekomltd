@@ -60,7 +60,7 @@ export function projectJsonLd(project: ProjectDetail, locale: Locale) {
         '@type': 'CreativeWork',
         name: project.title,
         url: urlFor(`/projects/${project.slug}`, locale),
-        image: `${SITE_URL}${project.cover.src}`,
+        ...(project.cover && { image: `${SITE_URL}${project.cover.src}` }),
         ...(project.summary && { description: project.summary }),
         ...(project.year && { dateCreated: String(project.year) }),
         locationCreated: {

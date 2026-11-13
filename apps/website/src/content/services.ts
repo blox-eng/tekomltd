@@ -1,7 +1,7 @@
 import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { LOCALES, type Locale } from '@tekom/i18n';
-import type { ProjectCard } from './cards';
+import type { ProjectCard, ProjectImg } from './cards';
 import { defaultRoot, once, readYaml, text } from './load';
 import { SERVICES_DIR, serviceFile } from './paths';
 import { listProjectsMatching, matchesFilter } from './projects';
@@ -24,7 +24,8 @@ export type ServiceDetail = ServiceLink & {
     materials: string;
     projectsTitle: string;
     projects: ProjectCard[];
-    cover: ProjectCard;
+    /** The lead project of the page; always one with a photo. */
+    cover: ProjectCard & { cover: ProjectImg };
     faq: { q: string; a: string }[];
     cta: { title: string; body: string; button: string };
 };
@@ -57,8 +58,9 @@ export function getService(slug: string, locale: Locale, root: string = defaultR
     const service = published(locale, root).find((s) => s.slug === slug);
     if (!service) return null;
     const projects = listProjectsMatching(service.projects, locale, root);
-    const cover = projects.find((p) => p.slug === service.cover_project) ?? projects[0];
-    if (!cover) throw new Error(`content: ${serviceFile(slug)} matches no published project`);
+    const withPhoto = projects.filter((p): p is ProjectCard & { cover: ProjectImg } => p.cover !== null);
+    const cover = withPhoto.find((p) => p.slug === service.cover_project) ?? withPhoto[0];
+    if (!cover) throw new Error(`content: ${serviceFile(slug)} matches no published project with a photo`);
     return {
         ...link(service, locale),
         metaTitle: text(service.meta_title, locale),

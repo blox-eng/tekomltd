@@ -4,6 +4,7 @@ import type { Locale } from '@tekom/i18n';
 import { toProjectCard, type ProjectCard, type ProjectImg, type Scope } from './cards';
 import { defaultRoot, imgOrNull, loadImg, once, readYaml, t, text, textOrNull, type Img } from './load';
 import { PROJECTS_DIR, projectFile } from './paths';
+import { loadProgress, type ProgressView } from './progress';
 import { Project } from './schema';
 
 type Loaded = { project: Project; file: string };
@@ -19,6 +20,7 @@ export type ProjectDetail = ProjectCard & {
     metaTitle: string | null;
     metaDescription: string | null;
     ogImage: Img | null;
+    progress: ProgressView | null;
 };
 
 const bySort = (a: Project, b: Project) => (a.sort ?? Infinity) - (b.sort ?? Infinity) || (b.year ?? 0) - (a.year ?? 0) || a.slug.localeCompare(b.slug);
@@ -32,7 +34,8 @@ function loadProjects(root: string): Loaded[] {
             .filter(({ project }) => !project.draft)
             .sort((a, b) => bySort(a.project, b.project))
             .map((loaded) => {
-                if (loaded.project.images.length === 0) throw new Error(`content: ${loaded.file} needs at least one image`);
+                const inProgress = loaded.project.progress?.status === 'in_progress';
+                if (loaded.project.images.length === 0 && !inProgress) throw new Error(`content: ${loaded.file} needs at least one image`);
                 return loaded;
             });
     });
@@ -42,7 +45,8 @@ function images({ project, file }: Loaded, root: string, locale: Locale): Projec
     return project.images.map((i) => ({ ...loadImg(root, file, i.file, text(i.alt ?? project.title, locale)), focus: i.focus }));
 }
 
-function coverOf(loaded: Loaded, root: string, locale: Locale): ProjectImg {
+function coverOf(loaded: Loaded, root: string, locale: Locale): ProjectImg | null {
+    if (loaded.project.images.length === 0) return null;
     const index = Math.max(
         0,
         loaded.project.images.findIndex((i) => i.is_cover)
@@ -52,8 +56,10 @@ function coverOf(loaded: Loaded, root: string, locale: Locale): ProjectImg {
 
 const card = (loaded: Loaded, root: string, locale: Locale) => toProjectCard(loaded.project, coverOf(loaded, root, locale), locale);
 
+/** Projects in progress first, then the rest; each group keeps the display order. */
 export function listProjects(locale: Locale, root: string = defaultRoot()): ProjectCard[] {
-    return loadProjects(root).map((p) => card(p, root, locale));
+    const cards = loadProjects(root).map((p) => card(p, root, locale));
+    return [...cards.filter((c) => c.inProgress), ...cards.filter((c) => !c.inProgress)];
 }
 
 export function listRailProjects(locale: Locale, root: string = defaultRoot()): ProjectCard[] {
@@ -94,7 +100,8 @@ export function getProject(slug: string, locale: Locale, root: string = defaultR
         next: { slug: nextProject.slug, title: text(nextProject.title, locale) },
         metaTitle: textOrNull(project.meta_title, locale),
         metaDescription: textOrNull(project.meta_description, locale),
-        ogImage: imgOrNull(root, file, project.og_image, base.title)
+        ogImage: imgOrNull(root, file, project.og_image, base.title),
+        progress: loadProgress(project, file, root, locale)
     };
 }
 

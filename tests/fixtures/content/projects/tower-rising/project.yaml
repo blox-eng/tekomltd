@@ -1,0 +1,31 @@
+# In progress: a building with a custom stage, one stage under way, expected quarter, permit, note and two updates.
+slug: tower-rising
+title: { bg: Жилищна сграда „Кула“, en: The Tower building }
+place: { bg: Стара Загора, en: Stara Zagora }
+scopes: [full, facade]
+residential: true
+sort: 4
+on_rail: false
+images:
+  - file: site.jpg
+    alt: { bg: Строителната площадка }
+progress:
+  status: in_progress
+  kind: building
+  expected: 2028-Q1
+  permit: РС № 1/2026, Община Стара Загора
+  note: { bg: Работата продължава по график., en: Work goes on as planned. }
+  stages:
+    - key: design
+      started: 2026-01-05
+      done: 2026-05-20
+    - label: { bg: Археологически проучвания, en: Archaeological survey }
+      started: 2026-06-01
+      done: 2026-09-15
+    - key: permit
+      started: 2026-06-10
+    - key: excavation
+    - key: zero
+    - key: act14
+    - key: act15
+    - key: act16

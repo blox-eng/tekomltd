@@ -1,0 +1,21 @@
+# Draft: a family house. Write only the area in place; no address, no pin.
+slug: starozagorski-bani-house
+title:
+  bg: Еднофамилна къща
+place:
+  bg: Старозагорски бани
+scopes:
+  - full
+residential: true
+draft: true
+progress:
+  status: in_progress
+  kind: house
+  stages:
+    - key: design
+    - key: permit
+    - key: zero
+    - key: rough
+    - key: roof
+    - key: finishing
+    - key: use_permit

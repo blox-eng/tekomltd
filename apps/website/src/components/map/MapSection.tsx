@@ -7,8 +7,8 @@ import { MapTip } from './MapTip';
 import styles from './map.module.css';
 
 export async function MapSection({ locale, cards }: { locale: string; cards: ProjectCard[] }) {
-    const t = await getTranslations({ locale, namespace: 'map' });
-    const { country, city, cityCount } = mapPins(cards);
+    const [t, project] = await Promise.all([getTranslations({ locale, namespace: 'map' }), getTranslations({ locale, namespace: 'project' })]);
+    const { country, city, cityCount } = mapPins(cards, project('inProgress'));
 
     return (
         <section className={styles.section} data-map>

@@ -1,0 +1,18 @@
+# Draft: facade work on another company's building. Name the building by type and place only.
+slug: facade-stara-zagora
+title:
+  bg: Фасада на жилищна сграда
+place:
+  bg: Стара Загора
+scopes:
+  - facade
+draft: true
+progress:
+  status: in_progress
+  kind: facade
+  stages:
+    - key: scaffold
+    - key: insulation
+    - key: render
+    - key: scaffold_down
+    - key: handover

@@ -44,10 +44,23 @@ describe('blueprint', () => {
         expect(plan.walls.match(/M/g)).toHaveLength(3);
     });
 
-    it('takes walls only from the layer it is told', () => {
+    it('asks which layers are walls when the drawing has several', () => {
         const extra: TestEntity = { type: 'LINE', layer: 'Мебели', from: [2000, 3000], to: [3000, 3000] };
-        expect(blueprint(bytes([...twoFlatsMm(), extra]), {}).wallLines).toBe(4);
+        expect(() => blueprint(bytes([...twoFlatsMm(), extra]), {})).toThrow(
+            'Линии има на няколко слоя: Стени (3), Мебели (1). Избери стените с --walls "Стени" (няколко слоя: --walls "Стени,Мебели")'
+        );
         expect(blueprint(bytes([...twoFlatsMm(), extra]), { walls: 'Стени' }).wallLines).toBe(3);
+        expect(blueprint(bytes([...twoFlatsMm(), extra]), { walls: 'Стени,Мебели' }).wallLines).toBe(4);
+    });
+
+    it('refuses a walls layer that holds nothing', () =>
+        expect(() => blueprint(bytes(twoFlatsMm()), { walls: 'Нищо' })).toThrow('Няма линии на слой „Нищо“. Слоеве с линии: Стени (3)'));
+
+    it('draws an arc the way it turns in the drawing', () => {
+        // Centre (9, 7) m, 0° → 90° counter-clockwise: from (9.9, 7) up to (9, 7.9). On screen y points down,
+        // so the arc goes from (8.9, 5.75) to (8, 4.85) and bows away from the centre at (8, 5.75): sweep flag 0.
+        const { plan } = blueprint(bytes(twoFlatsMm()), {});
+        expect(plan.walls).toContain('M8.9 5.75A0.9 0.9 0 0 0 8 4.85');
     });
 
     it('reads the unit from the header, and the flag wins over both', () => {

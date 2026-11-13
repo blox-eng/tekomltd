@@ -82,7 +82,23 @@ export function blueprint(bytes: Buffer, opts: { walls?: string; units?: LengthU
         if (!outlines.includes(e) && !codes.includes(e)) errors.push(`${e.type} на слой ${UNIT_LAYER}: там са само затворени контури и кодове`);
     if (outlines.length === 0) throw new BlueprintError([`Няма контури на слой ${UNIT_LAYER}: начертай затворен контур за всеки обект`]);
 
-    const walls = entities.filter((e) => WALL_TYPES.has(e.type) && (opts.walls ? e.layer === opts.walls : e.layer !== UNIT_LAYER && !NOT_WALLS.test(e.layer)));
+    const candidates = entities.filter((e) => WALL_TYPES.has(e.type) && e.layer !== UNIT_LAYER && !NOT_WALLS.test(e.layer));
+    const counts = new Map<string, number>();
+    for (const e of candidates) counts.set(e.layer, (counts.get(e.layer) ?? 0) + 1);
+    const layers = [...counts].sort((a, b) => b[1] - a[1]);
+    const listed = layers.map(([name, n]) => `${name} (${n})`).join(', ');
+    const chosen = opts.walls
+        ?.split(',')
+        .map((l) => l.trim())
+        .filter(Boolean);
+    // Furniture, installations and a title frame must not reach the public plan: with more than one layer, the owner names the walls.
+    if (!chosen && layers.length > 1)
+        throw new BlueprintError([
+            `Линии има на няколко слоя: ${listed}. Избери стените с --walls "${layers[0]![0]}" (няколко слоя: --walls "${layers.map(([name]) => name).join(',')}")`
+        ]);
+    const walls = chosen ? entities.filter((e) => WALL_TYPES.has(e.type) && chosen.includes(e.layer)) : candidates;
+    for (const layer of chosen ?? [])
+        if (!walls.some((e) => e.layer === layer)) throw new BlueprintError([`Няма линии на слой „${layer}“. Слоеве с линии: ${listed}`]);
     const all = [...walls, ...outlines].flatMap(extent);
     const xs = all.map((p) => p[0]);
     const ys = all.map((p) => p[1]);
@@ -129,7 +145,8 @@ export function blueprint(bytes: Buffer, opts: { walls?: string; units?: LengthU
             const rad = (deg: number) => (deg * Math.PI) / 180;
             const at = (deg: number): Point => [cx + r * Math.cos(rad(deg)), cy + r * Math.sin(rad(deg))];
             const sweep = (((e.end! - e.start!) % 360) + 360) % 360;
-            return `M${pt(at(e.start!))}A${rr} ${rr} 0 ${sweep > 180 ? 1 : 0} 1 ${pt(at(e.end!))}`;
+            // The drawing turns counter-clockwise; with y flipped for the screen that is sweep flag 0.
+            return `M${pt(at(e.start!))}A${rr} ${rr} 0 ${sweep > 180 ? 1 : 0} 0 ${pt(at(e.end!))}`;
         })
         .join('');
     return {

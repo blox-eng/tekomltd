@@ -349,7 +349,9 @@ pnpm blueprint <проект> <етаж> път/до/етаж-4.dxf
 - пише `plans/4.svg` в папката на проекта;
 - за всеки нов обект пише `units/<код>.yaml` с измерената застроена площ. Съществуващ файл не се пипа; ако площта в чертежа е различна с над 2 %, командата го казва.
 
-Тя казва и мерната единица на чертежа: `мерна единица: mm (предположение…)`. Ако е грешно, пуснете я пак с `--units cm` или `--units m`. Ако стените са на един слой, а другите слоеве пречат: `--walls "Стени"`.
+Тя казва и мерната единица на чертежа: `мерна единица: mm (предположение…)`. Ако е грешно, пуснете я пак с `--units cm` или `--units m`.
+
+Ако линии има на повече от един слой (мебели, инсталации, рамка), командата спира и изброява слоевете. Посочете само стените: `--walls "Стени"`, или няколко слоя: `--walls "Стени,Колони"`. Така мебели и инсталации не стигат до сайта.
 
 Ако има грешка, командата не пише нищо и казва къде е: `Контур без код при (15, 7.38) m: добави текст с кода в контура на слой TEKOM_UNIT`.
 
@@ -652,7 +654,7 @@ A job we work on now: our own building, a client's house or a facade. The site s
 A building where we sell flats, garages, parking spaces, storage rooms or shops. The site shows how many units there are and how many are free, the floors as a drawing, a plan of each floor and one page per unit with an e-mail enquiry button. **Never write prices**: the files are public, and the check refuses any `price:` line.
 
 - **Prepare each floor's DXF once.** Add one layer `TEKOM_UNIT`. On it, draw one closed polyline per unit along its outer walls, with one text inside holding the unit code (`12`, `A3`). Nothing else goes on that layer. Never commit the DXF: the check refuses `.dxf` and `.dwg` files under `content/`.
-- **Convert it:** `pnpm blueprint <project> <floor> path/to/floor.dxf`. It writes `plans/<floor>.svg` and a `units/<code>.yaml` stub per new unit with the built area measured from the drawing. It prints the length unit it detected; correct it with `--units mm|cm|m`. `--walls "<layer>"` takes walls from one layer only. On an error it writes nothing and says where the outline is.
+- **Convert it:** `pnpm blueprint <project> <floor> path/to/floor.dxf`. It writes `plans/<floor>.svg` and a `units/<code>.yaml` stub per new unit with the built area measured from the drawing. It prints the length unit it detected; correct it with `--units mm|cm|m`. When lines sit on more than one layer (furniture, installations, a title frame), it stops and lists the layers: name the walls with `--walls "Walls"` or `--walls "Walls,Columns"`. On an error it writes nothing and says where the outline is.
 - **`sales` in `project.yaml`:** `view` (`switch` for a small building, `scroll` for a big one), optional `email`, `floors` bottom to top (`key`, optional `label`), `updated` (the day you checked the statuses). See the Bulgarian section for a full example.
 - **A unit:** `code`, `type` (`flat`, `garage`, `parking`, `storage`, `shop`), `floors` (two for a maisonette), `rooms` (flats only), `area` (`total`, `built`, `net`, with net ≤ built ≤ total), optional `terrace`, `orientation`, `note`, and `status` (`free`, `reserved`, `upcoming`, `sold`).
 - **Change a status:** edit `status` in the unit file and set `updated` to today. Totals, floor counts and pages follow. After 45 days the check warns.

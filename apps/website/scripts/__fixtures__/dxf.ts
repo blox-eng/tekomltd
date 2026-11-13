@@ -1,14 +1,15 @@
 /** Builds small DXF files for the blueprint tests: only the group codes the reader uses. */
 export type TestEntity =
     | { type: 'LINE'; layer: string; from: [number, number]; to: [number, number] }
-    | { type: 'LWPOLYLINE'; layer: string; points: [number, number][]; closed?: boolean }
-    | { type: 'ARC'; layer: string; center: [number, number]; radius: number; start: number; end: number }
-    | { type: 'TEXT' | 'MTEXT'; layer: string; at: [number, number]; text: string };
+    | { type: 'LWPOLYLINE'; layer: string; points: [number, number][]; closed?: boolean; mirrored?: boolean }
+    | { type: 'ARC'; layer: string; center: [number, number]; radius: number; start: number; end: number; mirrored?: boolean }
+    | { type: 'TEXT' | 'MTEXT'; layer: string; at: [number, number]; text: string; mirrored?: boolean };
 
 const pair = (code: number, value: string | number) => `${String(code).padStart(3)}\n${value}`;
 
-export function dxfText(entities: TestEntity[], header: { insunits?: number; codepage?: string } = {}): string {
+export function dxfText(entities: TestEntity[], header: { insunits?: number; codepage?: string; acadver?: string } = {}): string {
     const head = [pair(0, 'SECTION'), pair(2, 'HEADER')];
+    if (header.acadver) head.push(pair(9, '$ACADVER'), pair(1, header.acadver));
     if (header.codepage) head.push(pair(9, '$DWGCODEPAGE'), pair(3, header.codepage));
     if (header.insunits !== undefined) head.push(pair(9, '$INSUNITS'), pair(70, header.insunits));
     head.push(pair(0, 'ENDSEC'), pair(0, 'SECTION'), pair(2, 'ENTITIES'));
@@ -21,6 +22,8 @@ export function dxfText(entities: TestEntity[], header: { insunits?: number; cod
         }
         if (e.type === 'ARC') out.push(pair(10, e.center[0]), pair(20, e.center[1]), pair(40, e.radius), pair(50, e.start), pair(51, e.end));
         if (e.type === 'TEXT' || e.type === 'MTEXT') out.push(pair(10, e.at[0]), pair(20, e.at[1]), pair(1, e.text));
+        // A mirrored entity: coordinates in its object system, whose x points the other way (extrusion 0, 0, -1).
+        if ('mirrored' in e && e.mirrored) out.push(pair(210, 0), pair(220, 0), pair(230, -1));
         return out;
     });
     return [...head, ...body, pair(0, 'ENDSEC'), pair(0, 'EOF'), ''].join('\n');

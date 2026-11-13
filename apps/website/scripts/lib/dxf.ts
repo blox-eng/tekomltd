@@ -24,12 +24,29 @@ export const plainText = (mtext: string) =>
         .replace(/[{}]/g, '')
         .trim();
 
+/** A drawing saved by AutoCAD 2007 (AC1021) or later is UTF-8, even when $DWGCODEPAGE still names ANSI_1251. */
 function decode(bytes: Buffer): string {
-    const page = bytes
-        .toString('latin1')
-        .match(/\$DWGCODEPAGE\s*\r?\n\s*3\s*\r?\n([^\r\n]+)/)?.[1]
-        ?.trim();
-    return new TextDecoder(page === 'ANSI_1251' ? 'windows-1251' : 'utf-8').decode(bytes);
+    const head = bytes.toString('latin1', 0, 64 * 1024);
+    const version = Number(head.match(/\$ACADVER\s*\r?\n\s*1\s*\r?\n\s*AC(\d+)/)?.[1] ?? 0);
+    const page = head.match(/\$DWGCODEPAGE\s*\r?\n\s*3\s*\r?\n([^\r\n]+)/)?.[1]?.trim();
+    return new TextDecoder(version < 1021 && page === 'ANSI_1251' ? 'windows-1251' : 'utf-8').decode(bytes);
+}
+
+/** Entities whose coordinates are in their object system (OCS). LINE and MTEXT are already in world coordinates. */
+const OCS = new Set(['LWPOLYLINE', 'ARC', 'CIRCLE', 'TEXT']);
+
+/** A mirrored entity has extrusion (0, 0, -1): its OCS x points the other way. Turn it back into world coordinates. */
+function unmirror(e: Entity): Entity {
+    const flip = ([x, y]: Point): Point => [-x, y];
+    const out: Entity = { ...e };
+    if (e.points) out.points = e.points.map(flip);
+    if (e.at) out.at = flip(e.at);
+    if (e.center) out.center = flip(e.center);
+    if (e.type === 'ARC' && e.start !== undefined && e.end !== undefined) {
+        out.start = (((180 - e.end) % 360) + 360) % 360;
+        out.end = (((180 - e.start) % 360) + 360) % 360 || 360;
+    }
+    return out;
 }
 
 export function readDxf(bytes: Buffer): { insunits: number | null; entities: Entity[] } {
@@ -39,17 +56,17 @@ export function readDxf(bytes: Buffer): { insunits: number | null; entities: Ent
     let section = '';
     let expectSection = false;
     const entities: Entity[] = [];
-    let current: (Entity & { chunks: string[]; x?: number }) | null = null;
+    let current: (Entity & { chunks: string[]; x?: number; z?: number }) | null = null;
     let mtext = '';
 
     const finish = () => {
         if (!current) return;
         if (current.type === 'MTEXT') current.text = plainText(current.chunks.join('') + mtext);
         else if (current.type === 'TEXT') current.text = mtext.trim();
-        const { chunks, x, ...entity } = current;
+        const { chunks, x, z, ...entity } = current;
         void chunks;
         void x;
-        entities.push(entity);
+        entities.push(z !== undefined && z < 0 && OCS.has(entity.type) ? unmirror(entity) : entity);
         current = null;
         mtext = '';
     };
@@ -78,6 +95,7 @@ export function readDxf(bytes: Buffer): { insunits: number | null; entities: Ent
         const n = Number(value);
         const e = current;
         if (code === 8) e.layer = value;
+        else if (code === 230) e.z = n;
         else if (e.type === 'LWPOLYLINE') {
             if (code === 70) e.closed = (n & 1) === 1;
             else if (code === 10) e.x = n;

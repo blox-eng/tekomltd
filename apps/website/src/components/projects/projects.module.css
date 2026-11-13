@@ -503,3 +503,112 @@
 .tile:focus-visible .pending {
     color: var(--muted);
 }
+
+/* /projects by year (#51): a sticky year column beside the groups. The snap only settles; it never holds. */
+:global(html):has(.byYear) {
+    scroll-snap-type: y proximity;
+}
+
+.byYear {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 32px;
+    padding-bottom: 112px;
+}
+
+.yearIndex {
+    position: sticky;
+    top: calc(var(--header-h, 70px) + 24px);
+    align-self: start;
+}
+
+.yearIndex ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--line);
+}
+
+.yearIndex a {
+    display: block;
+    margin-left: -1px;
+    padding: 5px 0 5px 12px;
+    border-left: 1px solid transparent;
+    color: var(--faint);
+    font: 400 12px var(--f-mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    transition: color var(--dur-standard) var(--ease);
+}
+
+.yearIndex a:hover {
+    color: var(--text);
+}
+
+.yearIndex a[aria-current] {
+    color: var(--accent);
+    border-left-color: var(--accent);
+}
+
+.year {
+    scroll-snap-align: start;
+    scroll-margin-top: calc(var(--header-h, 70px) + 24px);
+}
+
+.year + .year {
+    margin-top: 56px;
+}
+
+.year > h2 {
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line-2);
+}
+
+.year .grid {
+    padding-bottom: 0;
+}
+
+@media (max-width: 640px) {
+    .byYear {
+        display: block;
+    }
+
+    .yearIndex {
+        top: var(--header-h, 104px);
+        z-index: 2;
+        margin: 0 -16px 20px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--line);
+    }
+
+    .yearIndex ol {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        padding: 8px 16px;
+        border-left: 0;
+        scrollbar-width: none;
+    }
+
+    .yearIndex a {
+        margin: 0;
+        padding: 4px 0;
+        border-left: 0;
+        border-bottom: 1px solid transparent;
+    }
+
+    .yearIndex a[aria-current] {
+        border-bottom-color: var(--accent);
+    }
+
+    .year {
+        scroll-margin-top: calc(var(--header-h, 104px) + 48px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .yearIndex a {
+        transition: none;
+    }
+}

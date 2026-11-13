@@ -97,7 +97,9 @@
             "handover": "Handover"
         },
         "stageNext": "not started",
-        "renderPending": "Design to come"
+        "renderPending": "Design to come",
+        "yearsNav": "Years",
+        "noYear": "no year"
     },
     "eu": {
         "h": "EU programmes and publications",

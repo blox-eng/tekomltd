@@ -97,7 +97,9 @@
             "handover": "Übergabe"
         },
         "stageNext": "noch nicht begonnen",
-        "renderPending": "Entwurf folgt"
+        "renderPending": "Entwurf folgt",
+        "yearsNav": "Jahre",
+        "noYear": "ohne Jahr"
     },
     "eu": {
         "h": "EU-Programme und Veröffentlichungen",

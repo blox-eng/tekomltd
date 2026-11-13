@@ -20,9 +20,9 @@ const nextConfig: NextConfig = {
     poweredByHeader: false,
     // Workspace packages ship TypeScript source.
     transpilePackages: ['@tekom/ui', '@tekom/i18n'],
-    // A page rendered on request (a 404, say) reads content/; the server function must carry its text files.
+    // A page rendered on request (a 404, an ISR refresh) reads content/; the server function must carry its text files and the floor plans.
     outputFileTracingRoot: resolve(process.cwd(), '..', '..'),
-    outputFileTracingIncludes: { '/**': ['../../content/**/*.yaml', '../../content/**/*.md'] },
+    outputFileTracingIncludes: { '/**': ['../../content/**/*.yaml', '../../content/**/*.md', '../../content/**/*.svg'] },
     // Read by the middleware, which answers these before any routing (src/middleware.ts).
     env: { PAGE_REDIRECTS: JSON.stringify(exactPageRedirects(redirects)) },
     async redirects() {

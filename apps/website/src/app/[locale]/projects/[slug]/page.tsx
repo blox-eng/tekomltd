@@ -15,7 +15,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { Link } from '@/i18n/navigation';
 import { breadcrumbJsonLd, projectJsonLd } from '@/lib/jsonld';
 import { fallbackLocalesOf } from '@/lib/fallbacks';
-import { describe, pageMetadata } from '@/lib/seo';
+import { pageMetadata, projectDescription } from '@/lib/seo';
 import { projectPhoto, shareImage } from '@/lib/share';
 
 // Unknown slugs render on demand and call notFound(). With `false`, Netlify answers a rewritten Bulgarian path
@@ -34,11 +34,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     const { locale, slug } = await params;
     const project = getProject(slug, locale);
     if (!project) return {};
+    const t = await getTranslations({ locale, namespace: 'project' });
     return pageMetadata({
         locale,
         path: `/projects/${slug}`,
         title: project.metaTitle ?? project.title,
-        description: project.metaDescription ?? (project.summary ? describe(project.summary) : null),
+        description: projectDescription(project, { inProgress: t('inProgressMeta') }),
         image: shareImage(projectPhoto(project), locale),
         fallbackLocales: fallbackLocalesOf(`/projects/${slug}`)
     });

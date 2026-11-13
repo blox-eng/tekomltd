@@ -99,7 +99,8 @@
         "stageNext": "noch nicht begonnen",
         "renderPending": "Entwurf folgt",
         "yearsNav": "Jahre",
-        "noYear": "ohne Jahr"
+        "noYear": "ohne Jahr",
+        "inProgressMeta": "im Bau: Bauphasen und Baustellentagebuch"
     },
     "eu": {
         "h": "EU-Programme und Veröffentlichungen",

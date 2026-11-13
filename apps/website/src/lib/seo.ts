@@ -71,6 +71,16 @@ type PageMeta = {
     translated?: boolean;
 };
 
+type Describable = { metaDescription: string | null; summary: string | null; title: string; place: string; inProgress: boolean };
+
+/** The search snippet of a project: its meta description, else its summary, else a plain line of what and where it is. */
+export function projectDescription(project: Describable, words: { inProgress: string }): string {
+    if (project.metaDescription) return project.metaDescription;
+    if (project.summary) return describe(project.summary);
+    const where = `${project.title}, ${project.place}.`;
+    return project.inProgress ? `${where} ${words.inProgress.charAt(0).toUpperCase()}${words.inProgress.slice(1)}.` : where;
+}
+
 export function pageMetadata({ locale, path, title, absoluteTitle, description, image, fallbackLocales = [], translated = true }: PageMeta): Metadata {
     const alt = translated ? alternates(path, locale, fallbackLocales) : { canonical: urlFor(path, locale) };
     return {

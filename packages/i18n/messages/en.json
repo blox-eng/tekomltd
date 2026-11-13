@@ -99,7 +99,8 @@
         "stageNext": "not started",
         "renderPending": "Design to come",
         "yearsNav": "Years",
-        "noYear": "no year"
+        "noYear": "no year",
+        "inProgressMeta": "in progress: stages and site log"
     },
     "eu": {
         "h": "EU programmes and publications",

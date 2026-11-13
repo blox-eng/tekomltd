@@ -51,3 +51,8 @@ test('an old WordPress upload address serves the file', async ({ request }) => {
     expect(res.status()).toBe(200);
     expect(res.headers()['content-type']).toMatch(/^(image\/|application\/)/);
 });
+
+test('real content puts no update on the home page yet', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('[data-announcement]')).toHaveCount(0);
+});

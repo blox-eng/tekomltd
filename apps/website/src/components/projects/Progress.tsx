@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import Markdown from 'react-markdown';
 import { Glyph } from '@tekom/ui';
 import type { ProgressView, StageView } from '@/content/progress';
+import { CtaLink } from '@/components/CtaLink';
 import { SquareImage } from './SquareImage';
 import styles from './projects.module.css';
 
@@ -96,6 +97,7 @@ export function Progress({ progress }: { progress: ProgressView }) {
                     <div className="prose" lang={update.fallback ? 'bg' : undefined}>
                         <Markdown>{update.body}</Markdown>
                     </div>
+                    {update.cta && <CtaLink cta={update.cta} />}
                     {update.photos.length > 0 && (
                         <ul className={styles.gallery}>
                             {update.photos.map((photo) => (

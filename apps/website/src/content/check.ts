@@ -324,8 +324,10 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
             if (!front) continue;
             if (locale !== DEFAULT_LOCALE) {
                 if (front.photos.length > 0) fail(update, 'photos', `photos go in the .${DEFAULT_LOCALE}.md file`);
+                if (front.home || front.cta) fail(update, front.home ? 'home' : 'cta', `home and cta go in the .${DEFAULT_LOCALE}.md file`);
                 continue;
             }
+            if (front.home && project.draft) fail(update, 'home', 'the project is a draft; publish it or remove home');
             front.photos.forEach((photo, i) => requireFile(update, `photos.${i}.file`, photo.file));
             dates.push(date);
         }

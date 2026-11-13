@@ -437,10 +437,50 @@ describe('checkContent: buildings for sale', () => {
         }));
 
     it('warns when the availability is older than 45 days', () => {
-        expect(check(sale(), '2026-12-16')).toEqual({ ok: true, warnings: [] });
-        expect(check(sale(), '2026-12-17')).toEqual({
-            ok: true,
-            warnings: [{ file: FILE, path: 'sales.updated', message: 'availability is 46 days old; check every status, then set sales.updated to today' }]
+        expect(check(sale(), '2026-12-16').warnings.filter((w) => w.path === 'sales.updated')).toEqual([]);
+        const later = check(sale(), '2026-12-17');
+        expect(later.ok).toBe(true);
+        expect(later.warnings).toContainEqual({
+            file: FILE,
+            path: 'sales.updated',
+            message: 'availability is 46 days old; check every status, then set sales.updated to today'
         });
     });
+});
+
+describe('checkContent: updates on the home page', () => {
+    const SALES = join(__dirname, '__fixtures__', 'sales', 'projects');
+    const UPDATE = 'projects/sale-block/updates/2026-11-01.bg.md';
+    const site = (change: (root: string) => void = () => {}) =>
+        tree((r) => {
+            cpSync(join(SALES, 'sale-block'), join(r, 'projects/sale-block'), { recursive: true });
+            change(r);
+        });
+    const errs = (root: string) => {
+        const result = checkContent(root, { today: '2026-11-12' });
+        return result.ok ? [] : result.errors;
+    };
+
+    it('accepts a home update with a button', () => expect(errs(site())).toEqual([]));
+
+    it('refuses a button that leaves the site', () =>
+        expect(errs(site((r) => edit(r, UPDATE, (t) => t.replace('/projects/sale-block#apartamenti', 'https://example.com'))))).toContainEqual({
+            file: UPDATE,
+            path: 'cta.href',
+            message: 'the button goes to a page of this site (/…) or to mailto:'
+        }));
+
+    it('refuses home on an update of a draft project', () =>
+        expect(errs(site((r) => edit(r, 'projects/sale-block/project.yaml', (t) => `${t}draft: true\n`)))).toContainEqual({
+            file: UPDATE,
+            path: 'home',
+            message: 'the project is a draft; publish it or remove home'
+        }));
+
+    it('refuses home and cta in a translation', () =>
+        expect(errs(site((r) => write(r, 'projects/sale-block/updates/2026-11-01.en.md', '---\nhome: true\n---\nText\n')))).toContainEqual({
+            file: 'projects/sale-block/updates/2026-11-01.en.md',
+            path: 'home',
+            message: 'home and cta go in the .bg.md file'
+        }));
 });

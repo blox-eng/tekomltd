@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { CREW_GLYPH_KEYS, type GlyphKey } from '@tekom/ui';
 import type { Locale } from '@tekom/i18n';
+import { Announcement } from '@/components/home/Announcement';
 import { Crews } from '@/components/home/Crews';
 import { formatStat } from '@/components/home/format';
 import { PartnerServices } from '@/components/home/PartnerServices';
@@ -15,6 +16,7 @@ import { PanelSlide } from '@/components/rail/PanelSlide';
 import { ProjectSlide } from '@/components/rail/ProjectSlide';
 import { Rail } from '@/components/rail/Rail';
 import { buildRail, collageTools } from '@/components/rail/rail';
+import { latestAnnouncement } from '@/content/announcement';
 import { getHome } from '@/content/home';
 import { SCOPES } from '@/content/schema';
 import { Link } from '@/i18n/navigation';
@@ -52,6 +54,7 @@ export default async function HomePage({ params }: Props) {
     ]);
     const { rail, map, panels, promises, stats, crews, partnerServices, brands, partners, settings } = getHome(locale);
 
+    const announcement = latestAnnouncement(locale);
     const items = buildRail(rail, panels);
     const tools = crews.flatMap((crew) => crew.roles.map((role) => role.tool)).filter(isGlyph);
     const scopeLabels = Object.fromEntries(SCOPES.map((key) => [key, scope(key)]));
@@ -60,6 +63,7 @@ export default async function HomePage({ params }: Props) {
     return (
         <>
             <h1 className="sr">{t('title')}</h1>
+            {announcement && <Announcement announcement={announcement} label={t('news')} />}
             <Rail
                 label={nav('projects')}
                 count={items.length}

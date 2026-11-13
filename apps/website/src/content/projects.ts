@@ -5,6 +5,8 @@ import { toProjectCard, type ProjectCard, type ProjectImg, type Scope } from './
 import { defaultRoot, imgOrNull, loadImg, once, readYaml, t, text, textOrNull, type Img } from './load';
 import { PROJECTS_DIR, projectFile } from './paths';
 import { loadProgress, type ProgressView } from './progress';
+import { loadSales, type SalesView } from './sales';
+import { getSettings } from './settings';
 import { Project } from './schema';
 
 type Loaded = { project: Project; file: string };
@@ -21,6 +23,7 @@ export type ProjectDetail = ProjectCard & {
     metaDescription: string | null;
     ogImage: Img | null;
     progress: ProgressView | null;
+    sales: SalesView | null;
 };
 
 const bySort = (a: Project, b: Project) => (a.sort ?? Infinity) - (b.sort ?? Infinity) || (b.year ?? 0) - (a.year ?? 0) || a.slug.localeCompare(b.slug);
@@ -101,7 +104,8 @@ export function getProject(slug: string, locale: Locale, root: string = defaultR
         metaTitle: textOrNull(project.meta_title, locale),
         metaDescription: textOrNull(project.meta_description, locale),
         ogImage: imgOrNull(root, file, project.og_image, base.title),
-        progress: loadProgress(project, file, root, locale)
+        progress: loadProgress(project, file, root, locale),
+        sales: project.sales ? loadSales(project, file, root, locale, getSettings(locale, root).email) : null
     };
 }
 

@@ -1,0 +1,6 @@
+code: '7'
+type: flat
+floors: ['1', '2']
+rooms: 4
+area: { total: 112, built: 104, net: 95 }
+status: free

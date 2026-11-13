@@ -1,0 +1,7 @@
+code: '11'
+type: flat
+floors: ['0']
+rooms: 2
+area: { total: 176, built: 163.2, net: 144 }
+orientation: [S, W]
+status: free

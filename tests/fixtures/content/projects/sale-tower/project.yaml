@@ -1,0 +1,17 @@
+slug: sale-tower
+title: { bg: Кула „Пример“, en: Example tower }
+place: { bg: Стара Загора }
+scopes: [full]
+residential: true
+sort: 9
+on_rail: false
+progress:
+  status: in_progress
+  kind: building
+sales:
+  view: scroll
+  email: sales@example.com
+  floors:
+    - key: '1'
+    - key: '2'
+  updated: 2026-11-01

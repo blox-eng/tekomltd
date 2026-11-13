@@ -157,5 +157,63 @@
         "scope": "Обхват",
         "more": "Други услуги",
         "ofProject": "Тази работа е част от услугата"
+    },
+    "sales": {
+        "title": "Обекти в продажба",
+        "floorsNav": "Етажи",
+        "floor": "Етаж {key}",
+        "floorShort": "ет. {key}",
+        "units": "{n, plural, one {# обект} other {# обекта}}",
+        "count": {
+            "free": "{n, plural, one {# свободен} other {# свободни}}",
+            "upcoming": "{n, plural, one {# предстои} other {# предстоят}}",
+            "reserved": "{n, plural, one {# резервиран} other {# резервирани}}",
+            "sold": "{n, plural, one {# продаден} other {# продадени}}"
+        },
+        "freeArea": "свободни от {min} до {max} m² обща площ",
+        "freeAreaOne": "свободен: {min} m² обща площ",
+        "asOf": "наличност към {date}",
+        "freeOnFloor": "{n, plural, =0 {няма свободни} one {# свободен} other {# свободни}}",
+        "status": {
+            "free": "свободен",
+            "upcoming": "предстои",
+            "reserved": "резервиран",
+            "sold": "продаден"
+        },
+        "type": {
+            "flat": "Ап.",
+            "garage": "Гараж",
+            "parking": "Паркомясто",
+            "storage": "Склад",
+            "shop": "Магазин"
+        },
+        "types": {
+            "flat": "Апартаменти",
+            "garage": "Гаражи",
+            "parking": "Паркоместа",
+            "storage": "Складове",
+            "shop": "Магазини"
+        },
+        "rooms": "{n, plural, one {# стая} other {# стаи}}",
+        "areaTotal": "{n} m² обща площ",
+        "plan": "План: {floor}",
+        "listTitle": "Всички обекти",
+        "filter": {
+            "type": "Вид",
+            "floor": "Етаж",
+            "rooms": "Стаи",
+            "all": "Всички",
+            "onlyFree": "само свободни"
+        },
+        "noneFree": "Няма свободни обекти с тези филтри.",
+        "noneMatch": "Няма обекти с тези филтри.",
+        "col": {
+            "unit": "Обект",
+            "floor": "Етаж",
+            "rooms": "Стаи",
+            "area": "Обща площ",
+            "status": "Статус"
+        },
+        "floorInline": "етаж {key}"
     }
 }

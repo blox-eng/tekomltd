@@ -157,5 +157,63 @@
         "scope": "Umfang",
         "more": "Weitere Leistungen",
         "ofProject": "Diese Arbeit gehört zur Leistung"
+    },
+    "sales": {
+        "title": "Einheiten zum Verkauf",
+        "floorsNav": "Etagen",
+        "floor": "Etage {key}",
+        "floorShort": "Et. {key}",
+        "units": "{n, plural, one {# Einheit} other {# Einheiten}}",
+        "count": {
+            "free": "{n} frei",
+            "upcoming": "{n} demnächst",
+            "reserved": "{n} reserviert",
+            "sold": "{n} verkauft"
+        },
+        "freeArea": "frei von {min} bis {max} m² Gesamtfläche",
+        "freeAreaOne": "frei: {min} m² Gesamtfläche",
+        "asOf": "Verfügbarkeit am {date}",
+        "freeOnFloor": "{n, plural, =0 {keine frei} other {# frei}}",
+        "status": {
+            "free": "frei",
+            "upcoming": "demnächst",
+            "reserved": "reserviert",
+            "sold": "verkauft"
+        },
+        "type": {
+            "flat": "Whg.",
+            "garage": "Garage",
+            "parking": "Stellplatz",
+            "storage": "Lager",
+            "shop": "Laden"
+        },
+        "types": {
+            "flat": "Wohnungen",
+            "garage": "Garagen",
+            "parking": "Stellplätze",
+            "storage": "Lagerräume",
+            "shop": "Läden"
+        },
+        "rooms": "{n, plural, one {# Zimmer} other {# Zimmer}}",
+        "areaTotal": "{n} m² Gesamtfläche",
+        "plan": "Grundriss: {floor}",
+        "listTitle": "Alle Einheiten",
+        "filter": {
+            "type": "Art",
+            "floor": "Etage",
+            "rooms": "Zimmer",
+            "all": "Alle",
+            "onlyFree": "nur freie"
+        },
+        "noneFree": "Keine freien Einheiten mit diesen Filtern.",
+        "noneMatch": "Keine Einheiten mit diesen Filtern.",
+        "col": {
+            "unit": "Einheit",
+            "floor": "Etage",
+            "rooms": "Zimmer",
+            "area": "Gesamtfläche",
+            "status": "Status"
+        },
+        "floorInline": "Etage {key}"
     }
 }

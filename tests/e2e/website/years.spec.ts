@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-// Values come from tests/fixtures/content: two projects in progress, 2025, 2024, 2023, 2019, and town-flat without a year.
+// Values come from tests/fixtures/content: four projects in progress, 2025, 2024, 2023, 2019, and town-flat without a year.
 
 test('the projects index groups projects by year under a year column', async ({ page }) => {
     await page.goto('/en/projects');
@@ -10,7 +10,7 @@ test('the projects index groups projects by year under a year column', async ({ 
     await expect(groups.locator('h2')).toHaveText(['today', '2025', '2024', '2023', '2019', 'no year']);
     await expect(page.locator('#y-2019')).toContainText('Параклис от камък');
     await expect(page.locator('#y-none')).toContainText('Flat in the centre');
-    await expect(page.locator('#y-now li:has(h3)')).toHaveCount(2);
+    await expect(page.locator('#y-now li:has(h3)')).toHaveCount(4);
 });
 
 test('a year link jumps to its group and is marked as the year in view', async ({ page }) => {

@@ -157,5 +157,63 @@
         "scope": "Scope",
         "more": "Other services",
         "ofProject": "This work is part of the service"
+    },
+    "sales": {
+        "title": "Units for sale",
+        "floorsNav": "Floors",
+        "floor": "Floor {key}",
+        "floorShort": "fl. {key}",
+        "units": "{n, plural, one {# unit} other {# units}}",
+        "count": {
+            "free": "{n} available",
+            "upcoming": "{n} coming soon",
+            "reserved": "{n} reserved",
+            "sold": "{n} sold"
+        },
+        "freeArea": "available from {min} to {max} m² total area",
+        "freeAreaOne": "available: {min} m² total area",
+        "asOf": "availability as of {date}",
+        "freeOnFloor": "{n, plural, =0 {none available} other {# available}}",
+        "status": {
+            "free": "available",
+            "upcoming": "coming soon",
+            "reserved": "reserved",
+            "sold": "sold"
+        },
+        "type": {
+            "flat": "Apt.",
+            "garage": "Garage",
+            "parking": "Parking",
+            "storage": "Storage",
+            "shop": "Shop"
+        },
+        "types": {
+            "flat": "Apartments",
+            "garage": "Garages",
+            "parking": "Parking spaces",
+            "storage": "Storage rooms",
+            "shop": "Shops"
+        },
+        "rooms": "{n, plural, one {# room} other {# rooms}}",
+        "areaTotal": "{n} m² total area",
+        "plan": "Plan: {floor}",
+        "listTitle": "All units",
+        "filter": {
+            "type": "Type",
+            "floor": "Floor",
+            "rooms": "Rooms",
+            "all": "All",
+            "onlyFree": "available only"
+        },
+        "noneFree": "No available units match these filters.",
+        "noneMatch": "No units match these filters.",
+        "col": {
+            "unit": "Unit",
+            "floor": "Floor",
+            "rooms": "Rooms",
+            "area": "Total area",
+            "status": "Status"
+        },
+        "floorInline": "floor {key}"
     }
 }

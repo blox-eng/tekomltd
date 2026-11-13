@@ -1,0 +1,354 @@
+/* The sales layout. Tokens only; red only for the floor or unit in focus (DESIGN.md §0.2). */
+
+.sales {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: calc(var(--header-h, 70px) + 24px);
+}
+
+.sales > h2 {
+    margin: 0 0 16px;
+}
+
+.totals p {
+    margin: 0;
+}
+
+.count {
+    font-size: 20px;
+    line-height: 1.35;
+    color: var(--text);
+}
+
+.totals p + p {
+    margin-top: 6px;
+    color: var(--muted);
+}
+
+.asOf {
+    font-size: 12px;
+}
+
+/* —— status: glyph + word —— */
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.status :global(.glyph) {
+    width: 18px;
+    height: 18px;
+    flex: none;
+}
+
+.status[data-status='sold'] {
+    color: var(--muted);
+}
+
+/* —— switch view: elevation + one plan —— */
+
+.floors {
+    display: grid;
+    grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+    gap: 40px;
+    margin-top: 32px;
+    align-items: start;
+}
+
+.elevation {
+    position: sticky;
+    top: calc(var(--header-h, 70px) + 24px);
+}
+
+.elevation ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid var(--text);
+}
+
+.elevation li {
+    background: var(--wall);
+    border-bottom: 1px solid var(--bg);
+}
+
+.elevation a {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 14px;
+    color: var(--text);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition:
+        border-color var(--dur-micro) var(--ease),
+        color var(--dur-micro) var(--ease);
+}
+
+.elevation a:hover {
+    border-left-color: var(--text);
+}
+
+.elevation a[aria-current] {
+    background: var(--field);
+    color: var(--accent);
+    border-left-color: var(--accent);
+}
+
+.free {
+    color: var(--muted);
+    font: 400 12px var(--f-mono);
+    align-self: center;
+}
+
+.elevation a[aria-current] .free {
+    color: var(--accent);
+}
+
+.floor {
+    scroll-margin-top: calc(var(--header-h, 70px) + 24px);
+}
+
+.floor[hidden] {
+    display: none;
+}
+
+/* —— scroll view: every floor, snapping, with the floor column of /projects —— */
+
+:global(html):has(.byFloor) {
+    scroll-snap-type: y proximity;
+}
+
+.byFloor {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 32px;
+    margin-top: 32px;
+}
+
+.floorScroll {
+    scroll-snap-align: start;
+    scroll-margin-top: calc(var(--header-h, 70px) + 24px);
+    padding-bottom: 48px;
+}
+
+.floorScroll + .floorScroll {
+    padding-top: 24px;
+    border-top: 1px solid var(--line-2);
+}
+
+.floorScroll > h3 {
+    margin: 0 0 16px;
+}
+
+/* —— the plan —— */
+
+.plan {
+    margin: 0;
+}
+
+.sheet {
+    position: relative;
+    width: 100%;
+    max-width: calc(70vh * var(--ratio));
+    max-height: 70vh;
+    margin: 0 auto;
+}
+
+.sheet svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.walls {
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 2px;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+}
+
+.sheet path[data-status] {
+    fill: var(--field);
+    stroke: none;
+    transition: fill var(--dur-micro) var(--ease);
+}
+
+.sheet path[data-status='sold'] {
+    fill: var(--wall);
+}
+
+.hatchLine {
+    stroke: var(--line);
+    stroke-width: 2px;
+    vector-effect: non-scaling-stroke;
+}
+
+.sheet a:hover path,
+.sheet a:focus-visible path {
+    fill: color-mix(in srgb, var(--accent) 14%, var(--field));
+}
+
+.sheet a:focus-visible {
+    outline: none;
+}
+
+.sheet a:focus-visible path {
+    stroke: var(--accent);
+    stroke-width: 3px;
+    vector-effect: non-scaling-stroke;
+}
+
+.sheet path[data-current] {
+    fill: var(--accent);
+}
+
+.tag {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    font: 400 11px/1.25 var(--f-mono);
+    color: var(--muted);
+    text-align: center;
+    white-space: nowrap;
+    padding: 2px 5px;
+    background: var(--field);
+}
+
+.tag b {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text);
+}
+
+.tag[data-status='sold'] b {
+    color: var(--muted);
+}
+
+.small .sheet {
+    max-height: 32vh;
+    max-width: calc(32vh * var(--ratio));
+}
+
+/* —— the list —— */
+
+.list {
+    margin-top: 56px;
+}
+
+.list > h2 {
+    margin: 0 0 16px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    align-items: end;
+    margin-bottom: 16px;
+}
+
+.filter {
+    display: grid;
+    gap: 4px;
+}
+
+.filter select {
+    min-height: 40px;
+    padding: 0 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--field);
+    color: var(--text);
+    font: inherit;
+}
+
+.check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+}
+
+.check input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+}
+
+.tableWrap {
+    overflow-x: auto;
+}
+
+.list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.list th,
+.list td {
+    padding: 12px 12px 12px 0;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.list thead th {
+    color: var(--muted);
+    font: 400 11px var(--f-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.list tbody th a {
+    color: var(--text);
+}
+
+.list tr[data-status='sold'] th a,
+.list tr[data-status='sold'] td {
+    color: var(--muted);
+}
+
+.none {
+    margin: 16px 0 0;
+    color: var(--muted);
+}
+
+@media (max-width: 860px) {
+    .floors {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .elevation {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .byFloor {
+        display: block;
+    }
+
+    .floorScroll {
+        scroll-margin-top: calc(var(--header-h, 104px) + 48px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .elevation a,
+    .sheet path[data-status] {
+        transition: none;
+    }
+}

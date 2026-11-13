@@ -37,14 +37,14 @@ test('the project detail links to the contact page and wraps to the next project
     await page.goto('/en/projects/river-house');
     await expect(page.getByRole('link', { name: /Planning something similar/ })).toHaveAttribute('href', '/en/contact');
     await expect(page.getByRole('link', { name: /^Next:/ })).toHaveAttribute('href', '/en/projects/stone-chapel');
-    await page.goto('/en/projects/hill-house');
+    await page.goto('/en/projects/sale-tower');
     await expect(page.getByRole('link', { name: /^Next:/ })).toHaveAttribute('href', '/en/projects/river-house');
 });
 
 test('the projects index lists every published project and never a draft', async ({ page }) => {
     await page.goto('/projects');
     const links = page.locator('main li:has(h3) a[href^="/projects/"]');
-    await expect(links).toHaveCount(7);
+    await expect(links).toHaveCount(9);
     await expect(page.locator('main a[href="/projects/secret-site"]')).toHaveCount(0);
     expect((await page.goto('/projects/secret-site'))?.status()).toBe(404);
 });

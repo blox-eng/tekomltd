@@ -1,0 +1,10 @@
+code: '201'
+type: flat # flat, garage, parking, storage или shop
+floors: ['2']
+rooms: 3
+area:
+  total: 132
+  built: 122.4 # застроена, измерена от чертежа
+  net: 108
+orientation: [] # N NE E SE S SW W NW
+status: free

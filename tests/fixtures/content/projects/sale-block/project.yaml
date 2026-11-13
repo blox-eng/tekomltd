@@ -1,0 +1,18 @@
+slug: sale-block
+title: { bg: Жилищна сграда „Пример“, en: Example block, de: Beispielhaus }
+summary: { bg: Пет етажа и гараж в центъра на града. Сградата е пример за раздела „Сграда в продажба“., en: An example building for sale. }
+place: { bg: Стара Загора, en: Stara Zagora }
+scopes: [full]
+residential: true
+sort: 8
+progress:
+  status: in_progress
+  kind: building
+  expected: 2028-Q2
+sales:
+  floors:
+    - key: '0'
+      label: { bg: Партер, en: Ground floor, de: Erdgeschoss }
+    - key: '1'
+    - key: '2'
+  updated: 2026-11-01

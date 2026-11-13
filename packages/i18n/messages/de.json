@@ -214,6 +214,51 @@
             "area": "Gesamtfläche",
             "status": "Status"
         },
-        "floorInline": "Etage {key}"
+        "floorInline": "Etage {key}",
+        "unit": {
+            "facts": {
+                "type": "Art",
+                "floor": "Etage",
+                "rooms": "Zimmer",
+                "total": "Gesamtfläche",
+                "net": "Nettofläche",
+                "built": "Bebaute Fläche",
+                "terrace": "Terrasse",
+                "orientation": "Ausrichtung",
+                "status": "Status"
+            },
+            "typeName": {
+                "flat": "Wohnung",
+                "garage": "Garage",
+                "parking": "Stellplatz",
+                "storage": "Lagerraum",
+                "shop": "Laden"
+            },
+            "dir": {
+                "N": "Nord",
+                "NE": "Nordost",
+                "E": "Ost",
+                "SE": "Südost",
+                "S": "Süd",
+                "SW": "Südwest",
+                "W": "West",
+                "NW": "Nordwest"
+            },
+            "cta": {
+                "free": "Anfrage zu {unit}",
+                "reserved": "Fragen, ob sie frei wird",
+                "upcoming": "Interesse vormerken"
+            },
+            "sold": "Diese Einheit ist verkauft.",
+            "seeFree": "Freie Einheiten ansehen",
+            "subject": "Anfrage",
+            "greeting": "Guten Tag, ich interessiere mich für {unit}.",
+            "back": "Zu {floor}",
+            "prev": "Vorherige",
+            "next": "Nächste",
+            "where": "Lage auf der Etage",
+            "onFloor": "Auf dieser Etage",
+            "meta": "{unit}, {details}, {status}. {project}, {place}."
+        }
     }
 }

@@ -5,9 +5,9 @@ import { toProjectCard, type ProjectCard, type ProjectImg, type Scope } from './
 import { defaultRoot, imgOrNull, loadImg, once, readYaml, t, text, textOrNull, type Img } from './load';
 import { PROJECTS_DIR, projectFile } from './paths';
 import { loadProgress, type ProgressView } from './progress';
-import { loadSales, type SalesView } from './sales';
+import { loadSales, unitFiles, type SalesView } from './sales';
 import { getSettings } from './settings';
-import { Project } from './schema';
+import { Project, Unit } from './schema';
 
 type Loaded = { project: Project; file: string };
 
@@ -107,6 +107,13 @@ export function getProject(slug: string, locale: Locale, root: string = defaultR
         progress: loadProgress(project, file, root, locale),
         sales: project.sales ? loadSales(project, file, root, locale, getSettings(locale, root).email) : null
     };
+}
+
+/** Every unit page: published projects with a sales block, one entry per unit, lowercase as in the URL. */
+export function allUnitSlugs(root: string = defaultRoot()): { slug: string; unit: string }[] {
+    return loadProjects(root).flatMap(({ project, file }) =>
+        project.sales ? unitFiles(root, file).map((f) => ({ slug: project.slug, unit: readYaml(root, f, Unit).code.toLowerCase() })) : []
+    );
 }
 
 export function allProjectSlugs(root: string = defaultRoot()) {

@@ -110,3 +110,73 @@ test('a project without units has no sales layout', async ({ page }) => {
     await page.goto('/projects/tower-rising');
     await expect(page.locator('#apartamenti')).toHaveCount(0);
 });
+
+const subjectOf = async (link: import('@playwright/test').Locator) => {
+    const href = (await link.getAttribute('href'))!;
+    expect(href.startsWith('mailto:info@example.com?')).toBe(true);
+    return new URLSearchParams(href.split('?')[1]!.replace(/\+/g, '%2B'));
+};
+
+test('a free unit page shows its facts and asks about it by e-mail', async ({ page }) => {
+    await page.goto(`${SALE}/12`);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Ап. 12');
+    const facts = page.locator('[data-unit-facts]');
+    await expect(facts).toContainText('Обща площ88 m²');
+    await expect(facts).toContainText('Чиста площ72 m²');
+    await expect(facts).toContainText('Застроена площ81,6 m²');
+    await expect(facts).toContainText('юг');
+    await expect(facts).toContainText('свободен');
+    const ask = page.getByRole('link', { name: 'Попитай за Ап. 12' });
+    const query = await subjectOf(ask);
+    expect(query.get('subject')).toBe('Запитване: Жилищна сграда „Пример“ · Ап. 12, ет. 1');
+    expect(query.get('body')).toMatch(/\/projects\/sale-block\/12\nЗдравейте, интересувам се от Ап\. 12\.\n\n$/);
+    await expect(page.locator('a[href^="mailto:"]')).toHaveCount(1);
+});
+
+test('the button follows the status of the unit', async ({ page }) => {
+    await page.goto(`${SALE}/13`);
+    await expect(page.getByRole('link', { name: 'Попитай дали се освобождава' })).toHaveAttribute('href', /^mailto:/);
+    await page.goto(`${SALE}/21`);
+    await expect(page.getByRole('link', { name: 'Запиши интерес' })).toHaveAttribute('href', /^mailto:/);
+    await page.goto(`${SALE}/a3`);
+    await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
+    await expect(page.getByText('Този обект е продаден.')).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Виж свободните обекти' })).toHaveAttribute('href', `${SALE}#apartamenti`);
+});
+
+test('a unit address is lowercase only', async ({ page }) => {
+    expect((await page.goto(`${SALE}/a3`))?.status()).toBe(200);
+    expect((await page.goto(`${SALE}/A3`))?.status()).toBe(404);
+    expect((await page.goto(`${SALE}/99`))?.status()).toBe(404);
+});
+
+test('a maisonette lists both floors and draws both plans', async ({ page }) => {
+    await page.goto(`${SALE}/7`);
+    await expect(page.locator('[data-unit-facts]')).toContainText('Етаж 1, Етаж 2');
+    await expect(page.locator('[data-unit-plan]')).toHaveCount(2);
+});
+
+test('the unit page links to its neighbours and back to its floor', async ({ page }) => {
+    await page.goto(`${SALE}/13`);
+    await expect(page.getByRole('link', { name: /Ап\. 12/ }).first()).toHaveAttribute('href', `${SALE}/12`);
+    await expect(page.getByRole('link', { name: /Ап\. A3/ }).first()).toHaveAttribute('href', `${SALE}/a3`);
+    await expect(page.getByRole('link', { name: 'Към Етаж 1' })).toHaveAttribute('href', `${SALE}#etazh-1`);
+});
+
+test('the English unit page asks in English', async ({ page }) => {
+    await page.goto(`/en${SALE}/12`);
+    const query = await subjectOf(page.getByRole('link', { name: 'Ask about Apt. 12' }));
+    expect(query.get('subject')).toBe('Enquiry: Example block · Apt. 12, fl. 1');
+});
+
+test('the sitemap lists every unit page', async ({ request }) => {
+    const xml = await (await request.get('/sitemap.xml')).text();
+    expect(xml).toContain('/projects/sale-block/12</loc>');
+    expect(xml).toContain('/projects/sale-block/a3</loc>');
+});
+
+test('the unit page has no accessibility violations', async ({ page }) => {
+    await page.goto(`${SALE}/12`);
+    const { violations } = await new AxeBuilder({ page }).analyze();
+    expect(violations).toEqual([]);
+});

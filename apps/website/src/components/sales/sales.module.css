@@ -352,3 +352,109 @@
         transition: none;
     }
 }
+
+/* —— the unit page —— */
+
+.unitOutline {
+    fill: color-mix(in srgb, var(--accent) 8%, var(--field));
+    stroke: var(--accent);
+    stroke-width: 3px;
+    vector-effect: non-scaling-stroke;
+}
+
+.unit {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+    gap: 48px;
+    align-items: start;
+    margin-top: 24px;
+}
+
+.unit figure + figure {
+    margin-top: 32px;
+}
+
+.unit figcaption {
+    margin-top: 8px;
+}
+
+.unit h1 {
+    font: 400 calc(1.22 * clamp(26px, 3vw, 38px)) / 1.1 var(--f-display);
+    margin: 0;
+}
+
+.crop svg {
+    overflow: hidden;
+}
+
+.of {
+    margin: 6px 0 24px;
+    color: var(--muted);
+}
+
+.areas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-block: 1px solid var(--line);
+}
+
+.areas div {
+    display: grid;
+    gap: 2px;
+}
+
+.areas span {
+    color: var(--muted);
+    font: 400 11px var(--f-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.areas b {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+.areas .built {
+    grid-column: 1 / -1;
+}
+
+.areas .built b {
+    font-size: 15px;
+}
+
+.ask {
+    margin: 24px 0 0;
+}
+
+.soldNote {
+    margin: 24px 0 8px;
+}
+
+.where {
+    margin-top: 40px;
+}
+
+.where > span {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+}
+
+@media (max-width: 860px) {
+    .unit {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+    }
+}

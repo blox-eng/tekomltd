@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { allProjectSlugs } from '@/content/projects';
+import { allProjectSlugs, allUnitSlugs } from '@/content/projects';
 import { allPageSlugs } from '@/content/public-info';
 import { allServiceSlugs } from '@/content/services';
 import { LEGAL_SLUGS } from '@/content/paths';
@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const paths = [
         ...STATIC_PATHS,
         ...allProjectSlugs().map(({ slug }) => `/projects/${slug}`),
+        ...allUnitSlugs().map(({ slug, unit }) => `/projects/${slug}/${unit}`),
         ...LEGAL_SLUGS.map((slug) => `/${slug}`),
         ...allPageSlugs().map(({ slug }) => `/${slug}`)
     ];

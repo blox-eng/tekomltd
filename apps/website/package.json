@@ -40,7 +40,7 @@
         "@tekom/ui": "workspace:*",
         "gray-matter": "^4.0.3",
         "image-size": "^2.0.4",
-        "next": "^15.5.27",
+        "next": "^15.5.28",
         "next-intl": "^4.14.9",
         "react": "^19.3.0",
         "react-dom": "^19.3.0",

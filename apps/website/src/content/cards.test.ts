@@ -33,8 +33,13 @@ describe('toProjectCard', () => {
             scopes: ['restore'],
             residential: false,
             cover,
-            pin: { lat: 42.4, lng: 25.6 }
+            pin: { lat: 42.4, lng: 25.6 },
+            inProgress: false
         });
+    });
+    it('marks a project in progress, but not a finished one with a progress block', () => {
+        expect(toProjectCard({ ...project, progress: { status: 'in_progress', kind: 'facade' } }, cover, 'en').inProgress).toBe(true);
+        expect(toProjectCard({ ...project, progress: { status: 'done', kind: 'facade' } }, cover, 'en').inProgress).toBe(false);
     });
     it('hides missing facts as null', () => {
         const c = toProjectCard({ ...project, year: undefined, built_area_m2: undefined, lat: undefined, lng: undefined }, cover, 'en');

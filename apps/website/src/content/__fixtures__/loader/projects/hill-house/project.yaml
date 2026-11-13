@@ -1,0 +1,8 @@
+slug: hill-house
+title: { bg: Къща на хълма }
+place: { bg: Старозагорски бани }
+scopes: [full]
+residential: true
+progress:
+  status: in_progress
+  kind: house

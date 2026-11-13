@@ -19,15 +19,28 @@ import {
     resolveRef,
     SERVICES_DIR,
     SETTINGS_FILE,
+    UPDATES_DIR,
+    parseUpdateFile,
     urlMapFrom
 } from './paths';
-import { EuProgramme, Home, LegalPage, Page, Project, Publication, Service, Settings } from './schema';
+import { sofiaToday, UpdateFront } from './progress';
+import { EuProgramme, Home, isoDate, LegalPage, Page, Project, Publication, Service, Settings } from './schema';
 
 export type ContentError = { file: string; path: string; message: string };
-export type CheckResult = { ok: true } | { ok: false; errors: ContentError[] };
-export type CheckOptions = { /** url-map.json of the WordPress import: every file it redirects to must still exist. */ urlMap?: string };
+export type CheckResult = { ok: true; warnings: ContentError[] } | { ok: false; errors: ContentError[]; warnings: ContentError[] };
+export type CheckOptions = {
+    /** url-map.json of the WordPress import: every file it redirects to must still exist. */ urlMap?: string;
+    /** `YYYY-MM-DD`; dates after it are in the future. Defaults to the local date. */ today?: string;
+};
 
 const WHOLE_FILE = '(file)';
+
+/** An update log older than this many days gets a warning. */
+const STALE_DAYS = 45;
+const IMAGE_FILE = /\.(jpe?g|png|webp|avif)$/i;
+/** Phone formats a browser cannot show. */
+const PHONE_PHOTO = /\.(heic|heif)$/i;
+const daysBetween = (from: string, to: string) => Math.round((Date.parse(to) - Date.parse(from)) / 86_400_000);
 
 /** Roughly Bulgaria; a pin outside it is a typo or swapped coordinates. */
 const BULGARIA = { lat: [41, 44.5], lng: [22, 29] } as const;
@@ -35,7 +48,10 @@ const BULGARIA = { lat: [41, 44.5], lng: [22, 29] } as const;
 export function checkContent(root: string, options: CheckOptions = {}): CheckResult {
     const absRoot = resolve(root);
     const errors: ContentError[] = [];
+    const warnings: ContentError[] = [];
     const fail = (file: string, path: string, message: string) => errors.push({ file, path: path || WHOLE_FILE, message });
+    const warn = (file: string, path: string, message: string) => warnings.push({ file, path: path || WHOLE_FILE, message });
+    const today = options.today ?? sofiaToday();
 
     const rel = (file: string) => relative(absRoot, file).split(sep).join('/');
 
@@ -63,7 +79,7 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
     }
 
     if (!existsSync(absRoot) || !statSync(absRoot).isDirectory()) {
-        return { ok: false, errors: [{ file: root, path: WHOLE_FILE, message: 'content folder not found' }] };
+        return { ok: false, errors: [{ file: root, path: WHOLE_FILE, message: 'content folder not found' }], warnings };
     }
 
     const has = (file: string) => existsSync(join(absRoot, file));
@@ -110,7 +126,7 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
     checkMarkdown(PAGES_DIR, parsePageFile, Page, '<slug>.<bg|en|de>.md', [...RESERVED_PAGE_SLUGS, ...serviceSlugs]);
     if (options.urlMap) checkUrlMap(options.urlMap);
 
-    return errors.length === 0 ? { ok: true } : { ok: false, errors };
+    return errors.length === 0 ? { ok: true, warnings } : { ok: false, errors, warnings };
 
     /** Valid projects that are not drafts, for the service pages that list them. */
     function checkProjects(): Project[] {
@@ -163,11 +179,81 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
                     `lat ${lat}, lng ${lng} is outside Bulgaria (lat 41–44.5, lng 22–29); check the numbers and that lat and lng are not swapped`
                 );
             }
-            if (!project.draft && project.images.length === 0) fail(file, 'images', 'project has no photos; add at least one image or set draft: true');
+            const inProgress = project.progress?.status === 'in_progress';
+            if (!project.draft && !inProgress && project.images.length === 0)
+                fail(file, 'images', 'project has no photos; add at least one image or set draft: true');
             project.images.forEach((image, i) => requireFile(file, `images.${i}.file`, image.file));
             requireFile(file, 'og_image', project.og_image);
+            checkProgress(file, folder, project);
         }
         return published;
+    }
+
+    /** The `progress` block and the dated files in `updates/`. Drafts are checked; only the stale warning skips them. */
+    function checkProgress(file: string, folder: string, project: Project) {
+        const progress = project.progress;
+        if (progress) {
+            progress.stages?.forEach((stage, i) => {
+                for (const key of ['started', 'done'] as const) {
+                    const date = stage[key];
+                    if (date && date > today) fail(file, `progress.stages.${i}.${key}`, `date ${date} is in the future; write the day it happened`);
+                }
+                if (stage.started && stage.done && stage.done < stage.started)
+                    fail(file, `progress.stages.${i}.done`, `done ${stage.done} is before started ${stage.started}`);
+            });
+            if (progress.status === 'in_progress' && project.year !== undefined) fail(file, 'year', 'remove year until progress.status is done');
+            if (progress.status === 'done') {
+                if (project.year === undefined) fail(file, 'year', 'a finished project needs year');
+                if (!progress.stages) fail(file, 'progress.stages', 'a finished project lists its stages, each with a done date');
+                progress.stages?.forEach((stage, i) => {
+                    if (!stage.done) fail(file, `progress.stages.${i}.done`, 'a finished project needs a done date on every stage');
+                });
+            }
+        }
+
+        const dir = `${PROJECTS_DIR}/${folder}/${UPDATES_DIR}`;
+        if (!existsSync(join(absRoot, dir))) return;
+        const names = readdirSync(join(absRoot, dir)).sort();
+        const texts = names.filter((name) => !IMAGE_FILE.test(name));
+        if (!progress) {
+            for (const name of texts) fail(`${dir}/${name}`, '', 'updates need a progress block in project.yaml');
+            return;
+        }
+        const dates: string[] = [];
+        for (const name of texts) {
+            const update = `${dir}/${name}`;
+            if (PHONE_PHOTO.test(name)) {
+                fail(update, '', `save the photo as .jpg; the site cannot show .${name.split('.').pop()!.toLowerCase()}`);
+                continue;
+            }
+            const parsed = parseUpdateFile(name);
+            if (!parsed) {
+                fail(update, '', 'name must be YYYY-MM-DD.bg.md, for example 2026-11-20.bg.md');
+                continue;
+            }
+            const { date, locale } = parsed;
+            if (!isoDate.safeParse(date).success || date > today) {
+                fail(update, '', `${date} is not a real past or present date`);
+                continue;
+            }
+            if (locale !== DEFAULT_LOCALE && !names.includes(`${date}.${DEFAULT_LOCALE}.md`)) {
+                fail(update, '', `add ${date}.${DEFAULT_LOCALE}.md first; the Bulgarian text is required`);
+                continue;
+            }
+            const front = parse(UpdateFront, parseFrontMatter(readFileSync(join(absRoot, update), 'utf8')).data, update);
+            if (!front) continue;
+            if (locale !== DEFAULT_LOCALE) {
+                if (front.photos.length > 0) fail(update, 'photos', `photos go in the .${DEFAULT_LOCALE}.md file`);
+                continue;
+            }
+            front.photos.forEach((photo, i) => requireFile(update, `photos.${i}.file`, photo.file));
+            dates.push(date);
+        }
+        const newest = dates.sort().at(-1);
+        if (newest && progress.status === 'in_progress' && !project.draft) {
+            const age = daysBetween(newest, today);
+            if (age > STALE_DAYS) warn(file, 'progress', `newest update is ${age} days old; add one in ${UPDATES_DIR}/`);
+        }
     }
 
     /** `services/<slug>.yaml`; returns the slugs, which no page may take. */
@@ -197,6 +283,10 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
                 fail(file, 'projects', `no published project has scope "${scope}"${residential === undefined ? '' : ` and residential: ${residential}`}`);
             if (service.cover_project !== undefined && !matching.some((p) => p.slug === service.cover_project))
                 fail(file, 'cover_project', `"${service.cover_project}" is not one of the projects this page shows`);
+            else if (service.cover_project !== undefined && matching.find((p) => p.slug === service.cover_project)!.images.length === 0)
+                fail(file, 'cover_project', `"${service.cover_project}" has no photo yet; choose a project with a photo`);
+            else if (matching.length > 0 && matching.every((p) => p.images.length === 0))
+                fail(file, 'projects', 'every project this page shows is still without a photo; add one photo to one of them');
             service.old_paths.forEach((old, i) => {
                 const owner = oldPathOwner.get(old);
                 if (owner) fail(file, `old_paths.${i}`, `"${old}" already leads to ${owner}`);
@@ -324,6 +414,7 @@ export function main(argv: string[]) {
     // The url-map belongs to the repo's own content; a fixture tree passed as an argument has none.
     const urlMap = argv[2] === undefined && existsSync(urlMapFrom(repoRoot)) ? urlMapFrom(repoRoot) : undefined;
     const result = checkContent(root, { urlMap });
+    for (const w of result.warnings) console.warn(`warning: ${w.file}: ${w.path} ${w.message}`);
     if (result.ok) {
         console.log('content:check: all content files are valid');
         return 0;

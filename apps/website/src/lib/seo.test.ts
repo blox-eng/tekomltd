@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { ProjectDetail } from '../content/projects';
 import type { ServiceDetail } from '../content/services';
 import { BUSINESS_ID, businessJsonLd, projectJsonLd, serviceJsonLd } from './jsonld';
-import { alternates, brandName, languageUrls, pageMetadata, publishedLocales, SITE_URL, siteUrlFrom, urlFor } from './seo';
+import { alternates, brandName, languageUrls, pageMetadata, publishedLocales, SITE_URL, siteUrlFrom, urlFor, projectDescription } from './seo';
 
 const IMAGE = { url: '/og/abc.jpg', width: 1200, height: 630, alt: 'Фасада' };
 
@@ -174,5 +174,18 @@ describe('pageMetadata without translations', () => {
     it('keeps the canonical and leaves hreflang out', () => {
         const meta = pageMetadata({ locale: 'bg', path: '/fasadi', title: 'T', image: { url: '/og/x.jpg', width: 1, height: 1, alt: '' }, translated: false });
         expect(meta.alternates).toEqual({ canonical: `${SITE_URL}/fasadi` });
+    });
+});
+
+describe('projectDescription', () => {
+    const words = { inProgress: 'в строеж: етапи и дневник на строежа' };
+    const project = { metaDescription: null, summary: null, title: 'Жилищна сграда „Столетов 46“', place: 'Стара Загора', inProgress: true };
+    it('says what and where a project in progress is when it has no summary', () =>
+        expect(projectDescription(project, words)).toBe('Жилищна сграда „Столетов 46“, Стара Загора. В строеж: етапи и дневник на строежа.'));
+    it('says what and where a finished project is when it has no summary', () =>
+        expect(projectDescription({ ...project, inProgress: false }, words)).toBe('Жилищна сграда „Столетов 46“, Стара Загора.'));
+    it('prefers the meta description, then the summary', () => {
+        expect(projectDescription({ ...project, metaDescription: 'Мета.', summary: 'Резюме.' }, words)).toBe('Мета.');
+        expect(projectDescription({ ...project, summary: 'Резюме.' }, words)).toBe('Резюме.');
     });
 });

@@ -22,12 +22,17 @@ writeFileSync(join(root, 'services', 'restore.yaml'), serviceYaml('restore', '{ 
 
 afterAll(() => rmSync(root, { recursive: true, force: true }));
 
-it('uses a tree that passes the content check', () => expect(checkContent(root)).toEqual({ ok: true }));
+it('uses a tree that passes the content check', () => expect(checkContent(root)).toEqual({ ok: true, warnings: [] }));
 
 describe('getService', () => {
     it('lists the projects of its scope in display order, and only homes when it asks for them', () => {
-        expect(getService('building', 'bg', root)!.projects.map((p) => p.slug)).toEqual(['old-town-house', 'green-bath-eye-clinic']);
-        expect(getService('homes', 'bg', root)!.projects.map((p) => p.slug)).toEqual(['old-town-house']);
+        expect(getService('building', 'bg', root)!.projects.map((p) => p.slug)).toEqual([
+            'old-town-house',
+            'green-bath-eye-clinic',
+            'rising-block',
+            'hill-house'
+        ]);
+        expect(getService('homes', 'bg', root)!.projects.map((p) => p.slug)).toEqual(['old-town-house', 'rising-block', 'hill-house']);
     });
     it('never lists a draft', () => {
         expect(getService('restore', 'bg', root)!.projects.map((p) => p.slug)).toEqual(['green-bath-eye-clinic']);

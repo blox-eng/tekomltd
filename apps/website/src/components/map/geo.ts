@@ -44,12 +44,13 @@ function nudgeOverlaps(pins: Pin[]): Pin[] {
     });
 }
 
-export function mapPins(cards: ProjectCard[]): { country: Pin[]; city: Pin[]; cityCount: number } {
+/** `inProgress` is the word a tip adds for a project in progress. */
+export function mapPins(cards: ProjectCard[], inProgress = ''): { country: Pin[]; city: Pin[]; cityCount: number } {
     const located = cards.flatMap((card) => (card.pin ? [{ card, pin: card.pin }] : []));
     const toPin = (card: ProjectCard, [x, y]: [number, number]): Pin => ({
         slug: card.slug,
         title: card.title,
-        tip: [card.place, card.title].filter(Boolean).join(' · '),
+        tip: [card.place, card.title, card.inProgress && inProgress].filter(Boolean).join(' · '),
         x,
         y
     });

@@ -1,0 +1,22 @@
+# Our own building of flats, in progress. No photo yet: the site shows the placeholder.
+slug: stoletov-46
+title:
+  bg: Жилищна сграда „Столетов 46“
+place:
+  bg: Стара Загора
+scopes:
+  - full
+residential: true
+progress:
+  status: in_progress
+  kind: building
+  stages:
+    - key: design
+    - label:
+        bg: Археологически проучвания
+    - key: permit
+    - key: excavation
+    - key: zero
+    - key: act14
+    - key: act15
+    - key: act16

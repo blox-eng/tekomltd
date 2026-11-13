@@ -355,3 +355,151 @@
     padding-top: 18px;
     border-top: 1px solid var(--line);
 }
+
+/* Projects in progress (#45). */
+
+.building {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.building :global(.glyph) {
+    width: 1.25em;
+    height: 1.25em;
+    flex: none;
+}
+
+.progress {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    max-width: 760px;
+}
+
+.phead {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 32px;
+}
+
+.phead > .building {
+    font: 500 11px var(--f-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.progress h2 {
+    margin: 0 0 12px;
+}
+
+.ladder {
+    list-style: none;
+    margin: 0 0 48px;
+    padding: 0;
+}
+
+.ladder li {
+    display: grid;
+    grid-template-columns: 14px minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line-2);
+}
+
+.ladder li[data-state='next'] {
+    color: var(--muted);
+}
+
+.mark {
+    width: 9px;
+    height: 9px;
+    border: 1px solid var(--faint);
+    border-radius: 50%;
+    align-self: center;
+}
+
+.ladder li[data-state='done'] .mark {
+    background: var(--text);
+    border-color: var(--text);
+}
+
+.ladder li[data-state='active'] .mark {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.when {
+    color: var(--muted);
+    font-size: 13px;
+    text-align: right;
+}
+
+.ladder li[data-state='active'] .when {
+    color: var(--text);
+}
+
+.last {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 0 0 8px;
+}
+
+.pnote {
+    margin: 0 0 8px;
+}
+
+.update {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-2);
+}
+
+.update > time {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.update .gallery {
+    margin-top: 20px;
+}
+
+/* Read by screen readers, not shown. */
+.sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* Placeholder for a project in progress without a photo: the home page's pending look. */
+.pending {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background: var(--wall);
+    color: var(--faint);
+}
+
+.pending svg {
+    width: 58%;
+    max-width: 320px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.tile:hover .pending,
+.tile:focus-visible .pending {
+    color: var(--muted);
+}

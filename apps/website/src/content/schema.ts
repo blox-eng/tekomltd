@@ -32,7 +32,7 @@ const filePath = (extensions: readonly string[]) =>
         .refine((p) => extensions.some((e) => p.toLowerCase().endsWith(`.${e}`)), `must end in .${extensions.join(', .')}`);
 
 const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp', 'avif'];
-const imagePath = filePath(IMAGE_EXTENSIONS);
+export const imagePath = filePath(IMAGE_EXTENSIONS);
 const logoPath = filePath(['png', 'svg']);
 const documentPath = filePath(['pdf', 'doc', 'docx', 'xls', 'xlsx', 'png', 'jpg', 'jpeg']);
 
@@ -43,6 +43,49 @@ export const ProjectImage = z.strictObject({
     alt: L.optional(),
     is_cover: z.boolean().default(false),
     focus: z.enum(FOCUS).default('center')
+});
+
+export const PROGRESS_KINDS = ['building', 'house', 'facade'] as const;
+export const STAGE_KEYS = [
+    'design',
+    'permit',
+    'excavation',
+    'zero',
+    'act14',
+    'act15',
+    'act16',
+    'rough',
+    'roof',
+    'finishing',
+    'use_permit',
+    'scaffold',
+    'insulation',
+    'render',
+    'scaffold_down',
+    'handover'
+] as const;
+
+/** `YYYY-MM-DD`, a day that exists. YAML 1.2 reads it as a string. */
+export const isoDate = z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'write the date as YYYY-MM-DD')
+    .refine((d) => new Date(`${d}T00:00:00Z`).toISOString().startsWith(d), 'not a real date');
+
+/** A stage is done with `done`, under way with only `started`, still to come with neither. */
+export const Stage = z
+    .strictObject({ key: z.enum(STAGE_KEYS).optional(), label: L.optional(), started: isoDate.optional(), done: isoDate.optional() })
+    .refine((s) => (s.key === undefined) !== (s.label === undefined), { message: 'give a stage either key or label', path: ['key'] });
+
+export const Progress = z.strictObject({
+    status: z.enum(['in_progress', 'done']),
+    kind: z.enum(PROGRESS_KINDS),
+    expected: z
+        .string()
+        .regex(/^\d{4}-Q[1-4]$/, 'write the quarter as YYYY-Q1 … YYYY-Q4')
+        .optional(),
+    permit: text.optional(),
+    note: L.optional(),
+    stages: z.array(Stage).min(1).optional()
 });
 
 export const Project = z
@@ -70,7 +113,8 @@ export const Project = z
         meta_title: L.optional(),
         meta_description: L.optional(),
         og_image: imagePath.optional(),
-        images: z.array(ProjectImage).default([])
+        images: z.array(ProjectImage).default([]),
+        progress: Progress.optional()
     })
     .refine((p) => (p.lat === undefined) === (p.lng === undefined), { message: 'lat and lng go together', path: ['lat'] })
     .refine((p) => p.images.filter((i) => i.is_cover).length <= 1, { message: 'only one image can be the cover', path: ['images'] });
@@ -273,3 +317,8 @@ export type Service = z.infer<typeof Service>;
 
 // `Promise` is the name the plan uses; the alias avoids shadowing the global inside this module.
 export { PromiseItem as Promise };
+
+export type Kind = (typeof PROGRESS_KINDS)[number];
+export type StageKey = (typeof STAGE_KEYS)[number];
+export type Stage = z.infer<typeof Stage>;
+export type Progress = z.infer<typeof Progress>;

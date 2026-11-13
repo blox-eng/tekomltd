@@ -12,12 +12,15 @@ const card: ProjectCard = {
     scopes: ['full'],
     residential: false,
     cover: { src: '/media/a.jpg', width: 10, height: 10, alt: '', focus: 'center' },
-    pin: { lat: 42.4256, lng: 25.6241 }
+    pin: { lat: 42.4256, lng: 25.6241 },
+    inProgress: false
 };
 
 describe('geo', () => {
     it('puts Stara Zagora centre inside the city box', () => expect(inCity({ lat: 42.4256, lng: 25.6241 })).toBe(true));
     it('puts Chernomorets outside the city box', () => expect(inCity({ lat: 42.4464, lng: 27.633 })).toBe(false));
+    it('says in its tip that a project is in progress', () =>
+        expect(mapPins([{ ...card, inProgress: true }], 'в строеж').city[0]!.tip).toBe('Stara Zagora · Old town house · в строеж'));
     it('leaves out projects without coordinates', () => expect(mapPins([{ ...card, pin: null }]).country).toHaveLength(0));
     it('draws a 500 m scale bar to scale', () => expect(scaleBarPx(500)).toBeCloseTo(98.3, 0));
 

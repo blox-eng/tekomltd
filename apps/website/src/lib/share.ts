@@ -22,7 +22,7 @@ export type ShareImage = { url: string; width: number; height: number; alt: stri
 export const sitePhoto = (locale: Locale, root: string = defaultRoot()): SharePhoto | null =>
     getSettings(locale, root).ogImage ?? getHome(locale, root).rail[0]?.cover ?? null;
 
-export const projectPhoto = (project: ProjectDetail): SharePhoto => project.ogImage ?? project.cover;
+export const projectPhoto = (project: ProjectDetail): SharePhoto | null => project.ogImage ?? project.cover;
 
 export const servicePhoto = (service: ServiceDetail): SharePhoto => service.cover.cover;
 

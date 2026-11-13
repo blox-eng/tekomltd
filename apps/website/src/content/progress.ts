@@ -4,7 +4,7 @@ import { DEFAULT_LOCALE, type Locale } from '@tekom/i18n';
 import { z } from 'zod';
 import { loadImg, parseFrontMatter, t, type Img } from './load';
 import { parseUpdateFile, UPDATES_DIR } from './paths';
-import { imagePath, type Kind, type Progress, type Project, type Stage, type StageKey } from './schema';
+import { imagePath, L, type Kind, type Progress, type Project, type Stage, type StageKey } from './schema';
 
 export const DEFAULT_STAGES: Record<Kind, StageKey[]> = {
     building: ['design', 'permit', 'excavation', 'zero', 'act14', 'act15', 'act16'],
@@ -27,7 +27,7 @@ export function parseQuarter(expected: string): { year: number; quarter: 1 | 2 |
 }
 
 export type StageView = { key: StageKey | null; label: string | null; labelFallback: boolean; started: string | null; done: string | null; state: StageState };
-export type UpdateView = { date: string; body: string; fallback: boolean; photos: Img[] };
+export type UpdateView = { date: string; body: string; fallback: boolean; photos: Img[]; cta: { label: string; href: string } | null };
 export type ProgressView = {
     status: Progress['status'];
     kind: Kind;
@@ -42,7 +42,15 @@ export type ProgressView = {
 
 /** Front matter of an update. Photos live in the Bulgarian file only. */
 export const UpdateFront = z.strictObject({
-    photos: z.array(z.strictObject({ file: imagePath, alt: z.string().optional() })).default([])
+    photos: z.array(z.strictObject({ file: imagePath, alt: z.string().optional() })).default([]),
+    /** Show this update on the home page. */
+    home: z.boolean().default(false),
+    cta: z
+        .strictObject({
+            label: L,
+            href: z.string().refine((h) => /^\/(?!\/)/.test(h) || h.startsWith('mailto:'), 'the button goes to a page of this site (/…) or to mailto:')
+        })
+        .optional()
 });
 
 /** `<project folder>/updates/<name>` for every update file, relative to the content root. */
@@ -64,13 +72,14 @@ function loadUpdates(root: string, projectFile: string, locale: Locale): UpdateV
         .map((bg) => {
             const own = files.find((f) => f.date === bg.date && f.locale === locale);
             const { data, body: bgBody } = parseFrontMatter(readFileSync(join(root, bg.file), 'utf8'));
-            const { photos } = UpdateFront.parse(data);
+            const { photos, cta } = UpdateFront.parse(data);
             const body = own ? parseFrontMatter(readFileSync(join(root, own.file), 'utf8')).body : bgBody;
             return {
                 date: bg.date,
                 body,
                 fallback: own === undefined,
-                photos: photos.map((p) => loadImg(root, bg.file, p.file, p.alt ?? ''))
+                photos: photos.map((p) => loadImg(root, bg.file, p.file, p.alt ?? '')),
+                cta: cta ? { label: t(cta.label, locale).text, href: cta.href } : null
             };
         });
 }

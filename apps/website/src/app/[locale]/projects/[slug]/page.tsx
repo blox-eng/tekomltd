@@ -7,6 +7,7 @@ import { yearsStood } from '@/components/projects/age';
 import { fallbackNote, projectFacts } from '@/components/projects/facts';
 import { PendingVisual } from '@/components/projects/PendingVisual';
 import { Progress } from '@/components/projects/Progress';
+import { Sales } from '@/components/sales/Sales';
 import { SquareImage } from '@/components/projects/SquareImage';
 import styles from '@/components/projects/projects.module.css';
 import { allProjectSlugs, getProject } from '@/content/projects';
@@ -138,6 +139,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 </div>
             </div>
             {project.progress && <Progress progress={project.progress} />}
+            {project.sales && <Sales slug={slug} sales={project.sales} />}
             {gallery.length > 0 && (
                 <ul className={styles.gallery}>
                     {gallery.map((image) => (

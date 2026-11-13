@@ -20,11 +20,14 @@ import {
     SERVICES_DIR,
     SETTINGS_FILE,
     UPDATES_DIR,
+    UNITS_DIR,
     parseUpdateFile,
+    planFile,
     urlMapFrom
 } from './paths';
+import { readPlan } from './plan';
 import { sofiaToday, UpdateFront } from './progress';
-import { EuProgramme, Home, isoDate, LegalPage, Page, Project, Publication, Service, Settings } from './schema';
+import { EuProgramme, Home, isoDate, LegalPage, Page, Project, Publication, Service, Settings, Unit } from './schema';
 
 export type ContentError = { file: string; path: string; message: string };
 export type CheckResult = { ok: true; warnings: ContentError[] } | { ok: false; errors: ContentError[]; warnings: ContentError[] };
@@ -38,6 +41,8 @@ const WHOLE_FILE = '(file)';
 /** An update log older than this many days gets a warning. */
 const STALE_DAYS = 45;
 const IMAGE_FILE = /\.(jpe?g|png|webp|avif)$/i;
+/** CAD drawings; the full architect file must never be committed. */
+const DRAWING_FILE = /\.(dxf|dwg)$/i;
 /** Phone formats a browser cannot show. */
 const PHONE_PHOTO = /\.(heic|heif)$/i;
 const daysBetween = (from: string, to: string) => Math.round((Date.parse(to) - Date.parse(from)) / 86_400_000);
@@ -124,6 +129,7 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
     checkMarkdown(LEGAL_DIR, parseLegalFile, LegalPage, '<privacy|cookies|data-rights|terms>.<bg|en|de>.md');
     const serviceSlugs = checkServices(projects);
     checkMarkdown(PAGES_DIR, parsePageFile, Page, '<slug>.<bg|en|de>.md', [...RESERVED_PAGE_SLUGS, ...serviceSlugs]);
+    checkNoDrawings(absRoot);
     if (options.urlMap) checkUrlMap(options.urlMap);
 
     return errors.length === 0 ? { ok: true, warnings } : { ok: false, errors, warnings };
@@ -185,8 +191,82 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
             project.images.forEach((image, i) => requireFile(file, `images.${i}.file`, image.file));
             requireFile(file, 'og_image', project.og_image);
             checkProgress(file, folder, project);
+            checkSales(file, folder, project);
         }
         return published;
+    }
+
+    /** Architect drawings never enter the public repo; only the cleaned plans do. */
+    function checkNoDrawings(dir: string) {
+        for (const entry of readdirSync(dir, { withFileTypes: true })) {
+            const path = join(dir, entry.name);
+            if (entry.isDirectory()) checkNoDrawings(path);
+            else if (DRAWING_FILE.test(entry.name))
+                fail(rel(path), '', 'remove the DXF/DWG file from content/; commit only the plan that pnpm blueprint writes');
+        }
+    }
+
+    /** The `sales` block, `units/*.yaml` and `plans/<floor>.svg`. */
+    function checkSales(file: string, folder: string, project: Project) {
+        const sales = project.sales;
+        const dir = `${PROJECTS_DIR}/${folder}/${UNITS_DIR}`;
+        const names = existsSync(join(absRoot, dir))
+            ? readdirSync(join(absRoot, dir))
+                  .filter((n) => n.endsWith('.yaml'))
+                  .sort()
+            : [];
+        if (!sales) {
+            if (names.length > 0) fail(file, 'sales', `${UNITS_DIR}/ needs a sales block in ${PROJECT_FILE}`);
+            return;
+        }
+        if (names.length === 0) fail(file, 'sales', `sales needs at least one unit in ${dir}/`);
+        const age = daysBetween(sales.updated, today);
+        if (sales.updated > today) fail(file, 'sales.updated', `date ${sales.updated} is in the future; write the day you checked the statuses`);
+        else if (age > STALE_DAYS && !project.draft)
+            warn(file, 'sales.updated', `availability is ${age} days old; check every status, then set sales.updated to today`);
+
+        const outlines = new Map<string, Set<string>>();
+        sales.floors.forEach(({ key }, i) => {
+            const plan = `${PROJECTS_DIR}/${folder}/${planFile(PROJECT_FILE, key)}`;
+            if (!has(plan)) return fail(file, `sales.floors.${i}`, `${planFile(PROJECT_FILE, key)} is missing; make it with pnpm blueprint`);
+            try {
+                outlines.set(key, new Set(readPlan(readFileSync(join(absRoot, plan), 'utf8')).units.map((u) => u.code)));
+            } catch (e) {
+                fail(plan, '', (e as Error).message);
+            }
+        });
+        const floorKeys = new Set(sales.floors.map((f) => f.key));
+        const bySlug = new Map<string, string>();
+        const placed = new Map<string, Set<string>>();
+        const known = new Set<string>();
+        for (const name of names) {
+            const unitFile = `${dir}/${name}`;
+            const unit = parse(Unit, readYaml(unitFile), unitFile);
+            if (!unit) continue;
+            known.add(unit.code);
+            if (name !== `${unit.code}.yaml`) fail(unitFile, 'code', `name the file ${unit.code}.yaml, after its code`);
+            const slug = unit.code.toLowerCase();
+            const twin = bySlug.get(slug);
+            if (twin) fail(unitFile, 'code', `units ${twin} and ${unit.code} share the address …/${slug}; rename one`);
+            else bySlug.set(slug, unit.code);
+            unit.floors.forEach((key, i) => {
+                if (!floorKeys.has(key)) return fail(unitFile, `floors.${i}`, `floor ${key} is not in sales.floors of ${PROJECT_FILE}`);
+                const codes = outlines.get(key);
+                if (!codes) return;
+                if (!codes.has(unit.code)) fail(unitFile, 'floors', `unit ${unit.code} has no outline on plans/${key}.svg`);
+                placed.set(key, (placed.get(key) ?? new Set()).add(unit.code));
+            });
+        }
+        for (const [key, codes] of outlines)
+            for (const code of codes)
+                if (!placed.get(key)?.has(code))
+                    fail(
+                        `${PROJECTS_DIR}/${folder}/${planFile(PROJECT_FILE, key)}`,
+                        '',
+                        known.has(code)
+                            ? `outline ${code} is on plans/${key}.svg, but ${UNITS_DIR}/${code}.yaml does not list floor ${key}`
+                            : `outline ${code} has no ${UNITS_DIR}/${code}.yaml`
+                    );
     }
 
     /** The `progress` block and the dated files in `updates/`. Drafts are checked; only the stale warning skips them. */
@@ -244,8 +324,10 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
             if (!front) continue;
             if (locale !== DEFAULT_LOCALE) {
                 if (front.photos.length > 0) fail(update, 'photos', `photos go in the .${DEFAULT_LOCALE}.md file`);
+                if (front.home || front.cta) fail(update, front.home ? 'home' : 'cta', `home and cta go in the .${DEFAULT_LOCALE}.md file`);
                 continue;
             }
+            if (front.home && project.draft) fail(update, 'home', 'the project is a draft; publish it or remove home');
             front.photos.forEach((photo, i) => requireFile(update, `photos.${i}.file`, photo.file));
             dates.push(date);
         }

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 12">
+  <path class="walls" d="M0 0H24V12H0ZM0 0V12M8 0V12M14 0V12M18 0V12"/>
+  <path data-unit="12" data-x="4" data-y="6" d="M0 0H8V12H0Z"/>
+  <path data-unit="13" data-x="11" data-y="6" d="M8 0H14V12H8Z"/>
+  <path data-unit="A3" data-x="16" data-y="6" d="M14 0H18V12H14Z"/>
+  <path data-unit="7" data-x="21" data-y="6" d="M18 0H24V12H18Z"/>
+</svg>

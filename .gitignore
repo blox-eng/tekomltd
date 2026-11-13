@@ -41,3 +41,9 @@ yarn-error.log*
 apps/website/public/media/
 # rendered from content/ by apps/website/scripts/share-images.ts
 apps/website/public/og/
+
+# Architect drawings never enter the public repo; commit only the plans pnpm blueprint writes.
+*.dxf
+*.DXF
+*.dwg
+*.DWG

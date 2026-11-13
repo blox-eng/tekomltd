@@ -1,0 +1,16 @@
+slug: sale-block
+title: { bg: Жилищна сграда „Пример“, en: Example block }
+place: { bg: Стара Загора }
+scopes: [full]
+residential: true
+sort: 10
+progress:
+  status: in_progress
+  kind: building
+sales:
+  floors:
+    - key: '0'
+      label: { bg: Партер, en: Ground floor }
+    - key: '1'
+    - key: '2'
+  updated: 2026-11-01

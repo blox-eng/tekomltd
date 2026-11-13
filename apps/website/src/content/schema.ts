@@ -88,6 +88,46 @@ export const Progress = z.strictObject({
     stages: z.array(Stage).min(1).optional()
 });
 
+export const UNIT_STATUSES = ['free', 'reserved', 'upcoming', 'sold'] as const;
+export const UNIT_TYPES = ['flat', 'garage', 'parking', 'storage', 'shop'] as const;
+export const ORIENTATIONS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] as const;
+
+/** A floor key is part of a file name and of a URL hash: `-1`, `0`, `4`, `penthouse`. */
+export const floorKey = z.string().regex(/^-?[a-z0-9]+$/, 'write the floor key in ASCII: -1, 0, 4, penthouse');
+export const unitCode = z.string().regex(/^[A-Za-z0-9-]+$/, 'write the unit code with letters, digits and hyphens: 12, A3');
+
+const m2 = z.number().positive();
+
+/** One unit for sale. There is no price field, and the strict object refuses one. */
+export const Unit = z
+    .strictObject({
+        code: unitCode,
+        type: z.enum(UNIT_TYPES),
+        floors: z.array(floorKey).min(1).max(2),
+        rooms: z.number().int().min(1).optional(),
+        area: z.strictObject({ total: m2, built: m2, net: m2 }),
+        terrace: m2.optional(),
+        orientation: z.array(z.enum(ORIENTATIONS)).default([]),
+        status: z.enum(UNIT_STATUSES),
+        note: L.optional()
+    })
+    .refine((u) => (u.type === 'flat') === (u.rooms !== undefined), {
+        message: 'a flat has rooms; a garage, parking, storage or shop has none',
+        path: ['rooms']
+    })
+    .refine((u) => u.area.net <= u.area.built && u.area.built <= u.area.total, {
+        message: 'the areas go net ≤ built ≤ total (чиста ≤ застроена ≤ обща)',
+        path: ['area']
+    });
+
+export const Sales = z.strictObject({
+    email: z.email().optional(),
+    view: z.enum(['switch', 'scroll']).default('switch'),
+    /** Bottom floor first. */
+    floors: z.array(z.strictObject({ key: floorKey, label: L.optional() })).min(1),
+    updated: isoDate
+});
+
 export const Project = z
     .strictObject({
         slug,
@@ -114,7 +154,8 @@ export const Project = z
         meta_description: L.optional(),
         og_image: imagePath.optional(),
         images: z.array(ProjectImage).default([]),
-        progress: Progress.optional()
+        progress: Progress.optional(),
+        sales: Sales.optional()
     })
     .refine((p) => (p.lat === undefined) === (p.lng === undefined), { message: 'lat and lng go together', path: ['lat'] })
     .refine((p) => p.images.filter((i) => i.is_cover).length <= 1, { message: 'only one image can be the cover', path: ['images'] });
@@ -322,3 +363,8 @@ export type Kind = (typeof PROGRESS_KINDS)[number];
 export type StageKey = (typeof STAGE_KEYS)[number];
 export type Stage = z.infer<typeof Stage>;
 export type Progress = z.infer<typeof Progress>;
+export type Unit = z.infer<typeof Unit>;
+export type Sales = z.infer<typeof Sales>;
+export type UnitType = (typeof UNIT_TYPES)[number];
+export type UnitStatus = (typeof UNIT_STATUSES)[number];
+export type Orientation = (typeof ORIENTATIONS)[number];

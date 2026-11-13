@@ -19,6 +19,8 @@ export const LEGAL_DIR = 'legal';
 export const PAGES_DIR = 'pages';
 export const SERVICES_DIR = 'services';
 export const UPDATES_DIR = 'updates';
+export const PLANS_DIR = 'plans';
+export const UNITS_DIR = 'units';
 
 export const contentRootFrom = (repoRoot: string) => join(repoRoot, 'content');
 
@@ -26,6 +28,10 @@ export const contentRootFrom = (repoRoot: string) => join(repoRoot, 'content');
 export const urlMapFrom = (repoRoot: string) => join(repoRoot, 'design', 'wordpress-snapshot', 'url-map.json');
 
 export const projectFile = (slug: string) => join(PROJECTS_DIR, slug, PROJECT_FILE);
+/** `<project folder>/plans/<floor>.svg`, relative to the content root. */
+export const planFile = (projectFile: string, floor: string) => join(dirname(projectFile), PLANS_DIR, `${floor}.svg`);
+/** `<project folder>/units/<code>.yaml`, relative to the content root. */
+export const unitFile = (projectFile: string, code: string) => join(dirname(projectFile), UNITS_DIR, `${code}.yaml`);
 export const legalFile = (slug: LegalSlug, locale: Locale) => join(LEGAL_DIR, `${slug}.${locale}.md`);
 
 export const serviceFile = (slug: string) => join(SERVICES_DIR, `${slug}.yaml`);

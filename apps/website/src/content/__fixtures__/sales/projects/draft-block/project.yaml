@@ -1,0 +1,7 @@
+slug: draft-block
+title: { bg: Чернова }
+place: { bg: Стара Загора }
+draft: true
+progress:
+  status: in_progress
+  kind: building

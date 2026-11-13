@@ -1,0 +1,6 @@
+code: '22'
+type: flat
+floors: ['2']
+rooms: 2
+area: { total: 64, built: 59, net: 52 }
+status: sold

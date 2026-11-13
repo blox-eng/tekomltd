@@ -25,7 +25,9 @@ export const GLYPHS = {
     kitchen: '<rect x="6" y="22" width="36" height="20"/><path d="M6 30h36M24 22v20"/><circle cx="15" cy="12" r="3"/><circle cx="33" cy="12" r="3"/>',
     leaf: '<path d="M12 36C12 18 24 10 38 10c0 16-10 26-26 26z"/><path d="M12 36l16-16"/>',
     solar: '<path d="M8 34l6-18h20l6 18z"/><path d="M11 25h26M20 16l-2 18M28 16l2 18"/><path d="M24 34v8"/>',
-    tree: '<circle cx="24" cy="18" r="11"/><path d="M24 29v13M18 42h12"/>'
+    tree: '<circle cx="24" cy="18" r="11"/><path d="M24 29v13M18 42h12"/>',
+    door: '<path d="M10 42h28M14 42V6h20v36"/><path d="M14 6l12 4v32"/><path d="M22 25v3"/>',
+    hourglass: '<path d="M13 6h22M13 42h22"/><path d="M16 6c0 10 16 12 16 18s-16 8-16 18M32 6c0 10-16 12-16 18s16 8 16 18"/>'
 } as const;
 
 export type GlyphKey = keyof typeof GLYPHS;
@@ -45,6 +47,8 @@ export const CREW_GLYPH_KEYS = [
     'square',
     'laptop'
 ] as const satisfies readonly GlyphKey[];
+/** A unit's status on a sales plan: glyph and word together, never colour alone. */
+export const STATUS_GLYPHS = { free: 'door', reserved: 'hourglass', upcoming: 'blueprint', sold: 'key' } as const satisfies Record<string, GlyphKey>;
 export const SERVICE_GLYPH_KEYS = [
     'blueprint',
     'square',

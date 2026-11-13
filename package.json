@@ -11,6 +11,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "content:check": "turbo content:check",
     "new-update": "pnpm --filter @tekom/website new-update",
+        "blueprint": "pnpm --filter @tekom/website blueprint",
     "import:wp": "pnpm --filter @tekom/website import:wp",
     "seed:mockup": "pnpm --filter @tekom/website seed:mockup"
   },

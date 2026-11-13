@@ -55,6 +55,17 @@ projects/kazanlak-house/project.yaml: images.0.file file not found: kazanlak-1.j
 - `photos go in the .bg.md file` — снимки са записани в `.en.md` или `.de.md`. Преместете ги в `.bg.md`.
 - `updates need a progress block in project.yaml` — има папка `updates`, но в `project.yaml` няма блок `progress`.
 - `warning: ... newest update is N days old` — само предупреждение: време е за нова актуализация.
+- `Unrecognized key: "price"` — в обект има цена. Цени не се пишат; изтрийте реда.
+- `remove the DXF/DWG file from content/` — качен е чертеж. Изтрийте го; качва се само планът от `pnpm blueprint`.
+- `plans/N.svg is missing; make it with pnpm blueprint` — етаж в `sales.floors` няма план.
+- `outline 12 has no units/12.yaml` / `unit 12 has no outline on plans/N.svg` — кодовете в плана и в `units/` не съвпадат.
+- `floor N is not in sales.floors of project.yaml` — обектът е на етаж, който сградата няма.
+- `the areas go net ≤ built ≤ total` — площите в `area` са разменени.
+- `a flat has rooms; …` — `rooms` е само при `type: flat` и там е задължително.
+- `name the file N.yaml, after its code` / `units A3 and a3 share the address` — името на файла не е кодът, или два кода се различават само по главни и малки букви.
+- `the button goes to a page of this site (/…) or to mailto:` — `cta.href` сочи към друг сайт.
+- `the project is a draft; publish it or remove home` / `home and cta go in the .bg.md file` — `home` е на чернова или в превод.
+- `warning: ... availability is N days old` — само предупреждение: проверете статусите и сменете `updated`.
 
 ## Правила за YAML (важно)
 
@@ -300,6 +311,113 @@ photos:
 
 Когато обектът е предаден: `status: done`, добавете `year: 2027` в горната част и дата `done` на всеки етап. Етикетът „в строеж“ изчезва, проектът показва колко години стои и дневникът остава.
 
+## 9. Сграда в продажба
+
+Сграда, в която продаваме апартаменти, гаражи, паркоместа, складове или магазини. Сайтът показва колко обекта има и колко са свободни, етажите като чертеж, план на всеки етаж и отделна страница за всеки обект с бутон за запитване по имейл. **Цени никога не се пишат**: файловете са публични. Проверката спира всеки ред `price:`.
+
+### Подготовка на чертежа (веднъж за всеки етаж)
+
+Архитектът дава DXF. В него няма контури на апартаментите, затова някой (архитектът или ние) добавя **един нов слой** с името `TEKOM_UNIT`:
+
+- За всеки обект: един **затворен** полилайн (polyline) по външните стени на обекта.
+- Вътре в контура: един текст с кода на обекта: `12`, `A3`, `G1`. Само латински букви, цифри и тире.
+- Нищо друго на този слой.
+
+```
+┌───────────┬────────┬─────┐   слой TEKOM_UNIT:
+│           │        │     │   ┌──────┐
+│    12     │   13   │ A3  │   │  12  │  ← затворен контур + код вътре
+│           │        │     │   └──────┘
+└───────────┴────────┴─────┘
+```
+
+DXF файлът **не се качва** в сайта: в него има размери, конструкция, инсталации и имена. Проверката спира всеки `.dxf` или `.dwg` в `content/`.
+
+### Етаж от DXF към сайта
+
+На компютър, от папката на сайта:
+
+```
+pnpm blueprint <проект> <етаж> път/до/етаж-4.dxf
+```
+
+Например `pnpm blueprint novata-sgrada 4 ~/Desktop/etazh-4.dxf`. Етажът се пише с латиница и цифри: `-1`, `0`, `4`, `penthouse`.
+
+Командата:
+
+- взима стените и контурите и пропуска размери, текст, щриховки и мебели;
+- пише `plans/4.svg` в папката на проекта;
+- за всеки нов обект пише `units/<код>.yaml` с измерената застроена площ. Съществуващ файл не се пипа; ако площта в чертежа е различна с над 2 %, командата го казва.
+
+Тя казва и мерната единица на чертежа: `мерна единица: mm (предположение…)`. Ако е грешно, пуснете я пак с `--units cm` или `--units m`.
+
+Ако линии има на повече от един слой (мебели, инсталации, рамка), командата спира и изброява слоевете. Посочете само стените: `--walls "Стени"`, или няколко слоя: `--walls "Стени,Колони"`. Така мебели и инсталации не стигат до сайта.
+
+Ако има грешка, командата не пише нищо и казва къде е: `Контур без код при (15, 7.38) m: добави текст с кода в контура на слой TEKOM_UNIT`.
+
+### Блокът `sales` в `project.yaml`
+
+```yaml
+sales:
+  view: switch          # switch — малка сграда: етажът се избира отляво; scroll — голяма сграда: всички етажи един под друг
+  # email: sales@tekomltd.com   # по желание; иначе е имейлът от settings.yaml
+  floors:               # отдолу нагоре
+    - key: '-1'
+      label: { bg: Сутерен, en: Basement }
+    - key: '0'
+      label: { bg: Партер, en: Ground floor }
+    - key: '1'
+    - key: '2'
+  updated: 2026-11-20   # денят, в който проверихте статусите
+```
+
+Всеки етаж в `floors` трябва да има `plans/<key>.svg`.
+
+### Един обект: `units/12.yaml`
+
+```yaml
+code: '12'
+type: flat            # flat, garage, parking, storage или shop
+floors: ['4']         # мезонет: ['4', '5']
+rooms: 3              # само за flat
+area:
+  total: 88           # обща площ, с общите части
+  built: 81.6         # застроена; командата я мери от чертежа
+  net: 72             # чиста площ
+terrace: 9.5          # по желание
+orientation: [S, W]   # N NE E SE S SW W NW
+status: free          # free, reserved, upcoming или sold
+note: { bg: Ъглов апартамент с две тераси. }   # по желание
+```
+
+Площите вървят чиста ≤ застроена ≤ обща. Кодът и името на файла са същите: `12` → `12.yaml`.
+
+### Смяна на статус
+
+Отворете `units/12.yaml`, сменете `status` и сменете `updated` в `project.yaml` на днешната дата. Всичко останало (броят свободни, етажите, страницата на обекта) се смята само.
+
+| Статус | Сайтът показва | Бутон |
+|---|---|---|
+| `free` | свободен | „Попитай за Ап. 12“ |
+| `reserved` | резервиран | „Попитай дали се освобождава“ |
+| `upcoming` | предстои | „Запиши интерес“ |
+| `sold` | продаден | без бутон, връзка към свободните |
+
+Бутонът отваря пощата на купувача с готова тема: `Запитване: <сграда> · Ап. 12, ет. 4`. Ако `updated` е по-стар от 45 дни, проверката показва предупреждение: проверете статусите.
+
+### Новина на началната страница
+
+Всяка актуализация (вижте „8. Проект в строеж“) може да излезе на началната страница. В горната част на `.bg.md` файла добавете:
+
+```yaml
+home: true
+cta:                                   # бутон, по желание
+  label: { bg: Свободни апартаменти, en: Available flats }
+  href: /projects/novata-sgrada#apartamenti   # страница от сайта или mailto:
+```
+
+Началната страница показва най-новата актуализация с `home: true`. За да я махнете, изтрийте реда `home: true`.
+
 ## Преди да изпратите
 
 Всеки pull request има малък списък (шаблон): прегледан ли е Deploy Preview, зелена ли е проверката, как изглеждат снимките на телефон. Отметнете го честно.
@@ -357,6 +475,17 @@ Common errors:
 - `photos go in the .bg.md file` — photos are listed in `.en.md` or `.de.md`. Move them to `.bg.md`.
 - `updates need a progress block in project.yaml` — there is an `updates` folder but no `progress` block.
 - `warning: ... newest update is N days old` — only a warning: time for a new update.
+- `Unrecognized key: "price"` — a unit has a price. Prices are never written; delete the line.
+- `remove the DXF/DWG file from content/` — a drawing was committed. Delete it; only the plan from `pnpm blueprint` goes in.
+- `plans/N.svg is missing; make it with pnpm blueprint` — a floor in `sales.floors` has no plan.
+- `outline 12 has no units/12.yaml` / `unit 12 has no outline on plans/N.svg` — the codes in the plan and in `units/` differ.
+- `floor N is not in sales.floors of project.yaml` — the unit is on a floor the building does not list.
+- `the areas go net ≤ built ≤ total` — the areas are swapped.
+- `a flat has rooms; …` — `rooms` belongs to `type: flat` only, and a flat needs it.
+- `name the file N.yaml, after its code` / `units A3 and a3 share the address` — the file name is not the code, or two codes differ only in case.
+- `the button goes to a page of this site (/…) or to mailto:` — `cta.href` points at another site.
+- `the project is a draft; publish it or remove home` / `home and cta go in the .bg.md file` — `home` is on a draft or in a translation.
+- `warning: ... availability is N days old` — only a warning: check the statuses and update `updated`.
 
 ## YAML rules (important)
 
@@ -519,6 +648,17 @@ A job we work on now: our own building, a client's house or a facade. The site s
 - The location is what you write. For a private house, write only the village or area in `place`.
 - Never write prices, amounts, the client's name, EIK or personal names.
 - To finish: `status: done`, add `year`, and give every stage a `done` date.
+
+## 9. A building for sale
+
+A building where we sell flats, garages, parking spaces, storage rooms or shops. The site shows how many units there are and how many are free, the floors as a drawing, a plan of each floor and one page per unit with an e-mail enquiry button. **Never write prices**: the files are public, and the check refuses any `price:` line.
+
+- **Prepare each floor's DXF once.** Add one layer `TEKOM_UNIT`. On it, draw one closed polyline per unit along its outer walls, with one text inside holding the unit code (`12`, `A3`). Nothing else goes on that layer. Never commit the DXF: the check refuses `.dxf` and `.dwg` files under `content/`.
+- **Convert it:** `pnpm blueprint <project> <floor> path/to/floor.dxf`. It writes `plans/<floor>.svg` and a `units/<code>.yaml` stub per new unit with the built area measured from the drawing. It prints the length unit it detected; correct it with `--units mm|cm|m`. When lines sit on more than one layer (furniture, installations, a title frame), it stops and lists the layers: name the walls with `--walls "Walls"` or `--walls "Walls,Columns"`. On an error it writes nothing and says where the outline is.
+- **`sales` in `project.yaml`:** `view` (`switch` for a small building, `scroll` for a big one), optional `email`, `floors` bottom to top (`key`, optional `label`), `updated` (the day you checked the statuses). See the Bulgarian section for a full example.
+- **A unit:** `code`, `type` (`flat`, `garage`, `parking`, `storage`, `shop`), `floors` (two for a maisonette), `rooms` (flats only), `area` (`total`, `built`, `net`, with net ≤ built ≤ total), optional `terrace`, `orientation`, `note`, and `status` (`free`, `reserved`, `upcoming`, `sold`).
+- **Change a status:** edit `status` in the unit file and set `updated` to today. Totals, floor counts and pages follow. After 45 days the check warns.
+- **On the home page:** add `home: true` (and an optional `cta` with `label` and `href`, a page of the site or `mailto:`) to an update's `.bg.md` front matter. The newest such update shows above the rail.
 
 ## Before you submit
 

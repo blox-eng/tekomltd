@@ -1,0 +1,6 @@
+code: A3
+type: flat
+floors: ['1']
+rooms: 1
+area: { total: 40, built: 37, net: 33 }
+status: sold

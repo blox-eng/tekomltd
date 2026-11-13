@@ -1,0 +1,6 @@
+code: '21'
+type: flat
+floors: ['2']
+rooms: 3
+area: { total: 90, built: 84, net: 76 }
+status: upcoming

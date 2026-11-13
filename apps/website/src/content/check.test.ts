@@ -339,3 +339,148 @@ describe('checkContent: projects in progress', () => {
         log.mockRestore();
     });
 });
+
+describe('checkContent: buildings for sale', () => {
+    const SALES = join(__dirname, '__fixtures__', 'sales', 'projects', 'sale-block');
+    const DIR = 'projects/sale-block';
+    const FILE = `${DIR}/project.yaml`;
+    const TODAY = '2026-11-12';
+    const sale = (change: (root: string) => void = () => {}) =>
+        tree((r) => {
+            cpSync(SALES, join(r, DIR), { recursive: true });
+            change(r);
+        });
+    const check = (root: string, today = TODAY) => checkContent(root, { today });
+    const errs = (root: string) => {
+        const result = check(root);
+        return result.ok ? [] : result.errors;
+    };
+
+    it('accepts the example building', () => expect(check(sale())).toEqual({ ok: true, warnings: [] }));
+
+    it('refuses a price in a unit', () =>
+        expect(errs(sale((r) => edit(r, `${DIR}/units/12.yaml`, (t) => `${t}price: 120000\n`)))).toContainEqual(
+            expect.objectContaining({ file: `${DIR}/units/12.yaml`, message: expect.stringContaining('price') })
+        ));
+
+    it('refuses a DXF or DWG file anywhere in content', () => {
+        const message = 'remove the DXF/DWG file from content/; commit only the plan that pnpm blueprint writes';
+        expect(errs(sale((r) => write(r, `${DIR}/plans/1.dxf`, '0\nEOF\n')))).toContainEqual({ file: `${DIR}/plans/1.dxf`, path: '(file)', message });
+        expect(errs(sale((r) => write(r, 'Floor.DWG', 'x')))).toContainEqual({ file: 'Floor.DWG', path: '(file)', message });
+    });
+
+    it('refuses a unit on a floor the building does not list', () =>
+        expect(errs(sale((r) => edit(r, `${DIR}/units/22.yaml`, (t) => t.replace("floors: ['2']", "floors: ['3']"))))).toContainEqual({
+            file: `${DIR}/units/22.yaml`,
+            path: 'floors.0',
+            message: 'floor 3 is not in sales.floors of project.yaml'
+        }));
+
+    it('refuses a floor without a plan', () =>
+        expect(errs(sale((r) => rmSync(join(r, DIR, 'plans/0.svg'))))).toContainEqual({
+            file: FILE,
+            path: 'sales.floors.0',
+            message: 'plans/0.svg is missing; make it with pnpm blueprint'
+        }));
+
+    it('refuses a plan that is not in the blueprint format', () =>
+        expect(errs(sale((r) => write(r, `${DIR}/plans/0.svg`, '<svg/>')))).toContainEqual({
+            file: `${DIR}/plans/0.svg`,
+            path: '(file)',
+            message: 'плана няма viewBox; направи го отново с pnpm blueprint'
+        }));
+
+    it('refuses an outline without a unit file and a unit without an outline', () => {
+        const root = sale((r) => edit(r, `${DIR}/plans/1.svg`, (t) => t.replace('data-unit="13"', 'data-unit="99"')));
+        expect(errs(root)).toContainEqual({ file: `${DIR}/plans/1.svg`, path: '(file)', message: 'outline 99 has no units/99.yaml' });
+        expect(errs(root)).toContainEqual({ file: `${DIR}/units/13.yaml`, path: 'floors', message: 'unit 13 has no outline on plans/1.svg' });
+    });
+
+    it('refuses areas out of order', () =>
+        expect(errs(sale((r) => edit(r, `${DIR}/units/12.yaml`, (t) => t.replace('net: 72', 'net: 90'))))).toContainEqual(
+            expect.objectContaining({ file: `${DIR}/units/12.yaml`, path: 'area' })
+        ));
+
+    it('refuses rooms on a garage', () =>
+        expect(errs(sale((r) => edit(r, `${DIR}/units/G1.yaml`, (t) => `${t}rooms: 1\n`)))).toContainEqual(
+            expect.objectContaining({ file: `${DIR}/units/G1.yaml`, path: 'rooms' })
+        ));
+
+    it('refuses two codes that share one address', () =>
+        expect(
+            errs(sale((r) => write(r, `${DIR}/units/a3.yaml`, readFileSync(join(r, DIR, 'units/A3.yaml'), 'utf8').replace('code: A3', 'code: a3'))))
+        ).toContainEqual({
+            file: `${DIR}/units/a3.yaml`,
+            path: 'code',
+            message: 'units A3 and a3 share the address …/a3; rename one'
+        }));
+
+    it('refuses a unit file named after another code', () =>
+        expect(errs(sale((r) => edit(r, `${DIR}/units/22.yaml`, (t) => t.replace("code: '22'", "code: '23'"))))).toContainEqual({
+            file: `${DIR}/units/22.yaml`,
+            path: 'code',
+            message: 'name the file 23.yaml, after its code'
+        }));
+
+    it('refuses a sales block without units', () =>
+        expect(errs(sale((r) => rmSync(join(r, DIR, 'units'), { recursive: true })))).toContainEqual({
+            file: FILE,
+            path: 'sales',
+            message: `sales needs at least one unit in ${DIR}/units/`
+        }));
+
+    it('refuses units without a sales block', () =>
+        expect(errs(sale((r) => edit(r, FILE, (t) => t.slice(0, t.indexOf('sales:')))))).toContainEqual({
+            file: FILE,
+            path: 'sales',
+            message: 'units/ needs a sales block in project.yaml'
+        }));
+
+    it('warns when the availability is older than 45 days', () => {
+        expect(check(sale(), '2026-12-16').warnings.filter((w) => w.path === 'sales.updated')).toEqual([]);
+        const later = check(sale(), '2026-12-17');
+        expect(later.ok).toBe(true);
+        expect(later.warnings).toContainEqual({
+            file: FILE,
+            path: 'sales.updated',
+            message: 'availability is 46 days old; check every status, then set sales.updated to today'
+        });
+    });
+});
+
+describe('checkContent: updates on the home page', () => {
+    const SALES = join(__dirname, '__fixtures__', 'sales', 'projects');
+    const UPDATE = 'projects/sale-block/updates/2026-11-01.bg.md';
+    const site = (change: (root: string) => void = () => {}) =>
+        tree((r) => {
+            cpSync(join(SALES, 'sale-block'), join(r, 'projects/sale-block'), { recursive: true });
+            change(r);
+        });
+    const errs = (root: string) => {
+        const result = checkContent(root, { today: '2026-11-12' });
+        return result.ok ? [] : result.errors;
+    };
+
+    it('accepts a home update with a button', () => expect(errs(site())).toEqual([]));
+
+    it('refuses a button that leaves the site', () =>
+        expect(errs(site((r) => edit(r, UPDATE, (t) => t.replace('/projects/sale-block#apartamenti', 'https://example.com'))))).toContainEqual({
+            file: UPDATE,
+            path: 'cta.href',
+            message: 'the button goes to a page of this site (/…) or to mailto:'
+        }));
+
+    it('refuses home on an update of a draft project', () =>
+        expect(errs(site((r) => edit(r, 'projects/sale-block/project.yaml', (t) => `${t}draft: true\n`)))).toContainEqual({
+            file: UPDATE,
+            path: 'home',
+            message: 'the project is a draft; publish it or remove home'
+        }));
+
+    it('refuses home and cta in a translation', () =>
+        expect(errs(site((r) => write(r, 'projects/sale-block/updates/2026-11-01.en.md', '---\nhome: true\n---\nText\n')))).toContainEqual({
+            file: 'projects/sale-block/updates/2026-11-01.en.md',
+            path: 'home',
+            message: 'home and cta go in the .bg.md file'
+        }));
+});

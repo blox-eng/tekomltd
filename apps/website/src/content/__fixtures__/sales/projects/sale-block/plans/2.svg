@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 12">
+  <path class="walls" d="M0 0H24V12H0ZM0 0V12M6 0V12M16 0V12"/>
+  <path data-unit="7" data-x="3" data-y="6" d="M0 0H6V12H0Z"/>
+  <path data-unit="21" data-x="11" data-y="6" d="M6 0H16V12H6Z"/>
+  <path data-unit="22" data-x="20" data-y="6" d="M16 0H24V12H16Z"/>
+</svg>

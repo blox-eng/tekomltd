@@ -1,0 +1,6 @@
+code: '13'
+type: flat
+floors: ['1']
+rooms: 2
+area: { total: 66, built: 61.2, net: 54 }
+status: reserved

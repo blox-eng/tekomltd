@@ -12,6 +12,7 @@
         "test": "vitest run --passWithNoTests",
         "content:check": "tsx src/content/check.ts",
         "new-update": "tsx scripts/new-update.ts",
+        "blueprint": "tsx scripts/blueprint.ts",
         "sync-media": "tsx scripts/sync-media.ts",
         "share-images": "tsx scripts/share-images.ts",
         "prebuild": "pnpm sync-media && pnpm share-images",

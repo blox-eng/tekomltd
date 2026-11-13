@@ -1,0 +1,5 @@
+code: G1
+type: garage
+floors: ['0']
+area: { total: 18, built: 16, net: 15 }
+status: sold

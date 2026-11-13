@@ -4,6 +4,8 @@ import type { Locale } from '@tekom/i18n';
 import { timeline } from '@/components/projects/age';
 import { ProjectTile } from '@/components/projects/ProjectTile';
 import { Timeline } from '@/components/projects/Timeline';
+import { YearIndex } from '@/components/projects/YearIndex';
+import { groupByYear, type YearKey } from '@/components/projects/years';
 import styles from '@/components/projects/projects.module.css';
 import { listProjects } from '@/content/projects';
 import { getSettings } from '@/content/settings';
@@ -42,6 +44,9 @@ export default async function ProjectsPage({ params }: Props) {
     const projects = listProjects(locale);
     const now = new Date();
     const line = timeline(projects, now);
+    const groups = groupByYear(projects);
+    const yearLabel = (key: YearKey) => (key === 'now' ? t('today') : key === 'none' ? t('noYear') : String(key));
+    let shown = 0;
 
     return (
         <div className="wrap">
@@ -50,11 +55,23 @@ export default async function ProjectsPage({ params }: Props) {
                 <p>{map('p')}</p>
             </section>
             {line && <Timeline line={line} label={t('timeline')} today={t('today')} sum={t('timelineSum', { years: line.years, count: line.ticks.length })} />}
-            <ul className={styles.grid}>
-                {projects.map((project, index) => (
-                    <ProjectTile key={project.slug} project={project} scopeLabels={scopeLabels} note={root('note')} eager={index < 3} />
-                ))}
-            </ul>
+            <div className={styles.byYear} data-years>
+                <YearIndex label={t('yearsNav')} items={groups.map((g) => ({ id: g.id, label: yearLabel(g.key) }))} />
+                <div>
+                    {groups.map((group) => (
+                        <section key={group.id} id={group.id} className={styles.year} aria-labelledby={`${group.id}-h`}>
+                            <h2 id={`${group.id}-h`} className="micro">
+                                {yearLabel(group.key)}
+                            </h2>
+                            <ul className={styles.grid}>
+                                {group.projects.map((project) => (
+                                    <ProjectTile key={project.slug} project={project} scopeLabels={scopeLabels} note={root('note')} eager={shown++ < 3} />
+                                ))}
+                            </ul>
+                        </section>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }

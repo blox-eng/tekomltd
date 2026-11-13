@@ -1,0 +1,9 @@
+code: '12'
+type: flat
+floors: ['1']
+rooms: 3
+area: { total: 88, built: 81.6, net: 72 }
+terrace: 9.5
+orientation: [S]
+status: free
+note: { bg: Ъглов апартамент с две тераси. }

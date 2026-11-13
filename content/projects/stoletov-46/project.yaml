@@ -1,4 +1,4 @@
-# Draft: our own building of flats. Fill in the dates and the first update, then remove draft.
+# Our own building of flats, in progress. No photo yet: the site shows the placeholder.
 slug: stoletov-46
 title:
   bg: Жилищна сграда „Столетов 46“
@@ -7,7 +7,6 @@ place:
 scopes:
   - full
 residential: true
-draft: true
 progress:
   status: in_progress
   kind: building

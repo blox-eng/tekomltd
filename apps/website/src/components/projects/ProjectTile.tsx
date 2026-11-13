@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { ProjectCard } from '@/content/cards';
 import { yearsStood } from './age';
+import { PendingVisual } from './PendingVisual';
 import { InProgressLabel } from './Progress';
 import { SquareImage } from './SquareImage';
 import styles from './projects.module.css';
@@ -18,7 +19,7 @@ export function ProjectTile({ project, scopeLabels, note, eager }: Props) {
         <li>
             <Link href={`/projects/${project.slug}`} className={styles.tile}>
                 <div className={styles.ph}>
-                    <SquareImage image={cover} sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 420px" eager={eager} />
+                    {cover ? <SquareImage image={cover} sizes="(max-width: 520px) 100vw, (max-width: 900px) 50vw, 420px" eager={eager} /> : <PendingVisual />}
                 </div>
                 <div className={styles.scope}>
                     {project.scopes.map((scope) => (

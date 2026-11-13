@@ -15,13 +15,14 @@ export type ProjectCard = {
     areaM2: number | null;
     scopes: Scope[];
     residential: boolean;
-    cover: ProjectImg;
+    /** Null only for a project in progress that has no photo yet: the page shows the placeholder. */
+    cover: ProjectImg | null;
     pin: { lat: number; lng: number } | null;
     /** Work goes on now: a `progress` block with `status: in_progress`. */
     inProgress: boolean;
 };
 
-export function toProjectCard(project: Project, cover: ProjectImg, locale: Locale): ProjectCard {
+export function toProjectCard(project: Project, cover: ProjectImg | null, locale: Locale): ProjectCard {
     const title = t(project.title, locale);
     const hasPin = project.show_on_map && project.lat !== undefined && project.lng !== undefined;
     return {

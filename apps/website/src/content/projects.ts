@@ -34,7 +34,8 @@ function loadProjects(root: string): Loaded[] {
             .filter(({ project }) => !project.draft)
             .sort((a, b) => bySort(a.project, b.project))
             .map((loaded) => {
-                if (loaded.project.images.length === 0) throw new Error(`content: ${loaded.file} needs at least one image`);
+                const inProgress = loaded.project.progress?.status === 'in_progress';
+                if (loaded.project.images.length === 0 && !inProgress) throw new Error(`content: ${loaded.file} needs at least one image`);
                 return loaded;
             });
     });
@@ -44,7 +45,8 @@ function images({ project, file }: Loaded, root: string, locale: Locale): Projec
     return project.images.map((i) => ({ ...loadImg(root, file, i.file, text(i.alt ?? project.title, locale)), focus: i.focus }));
 }
 
-function coverOf(loaded: Loaded, root: string, locale: Locale): ProjectImg {
+function coverOf(loaded: Loaded, root: string, locale: Locale): ProjectImg | null {
+    if (loaded.project.images.length === 0) return null;
     const index = Math.max(
         0,
         loaded.project.images.findIndex((i) => i.is_cover)

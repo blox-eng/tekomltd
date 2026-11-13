@@ -66,6 +66,10 @@ describe('projects in progress', () => {
             noteFallback: true
         });
     });
+    it('gives a project in progress without photos no cover', () => {
+        expect(listProjects('bg', root).find((p) => p.slug === 'hill-house')!.cover).toBeNull();
+        expect(getProject('hill-house', 'bg', root)!.images).toEqual([]);
+    });
     it('uses the default stages of the kind and has no update yet', () => {
         const progress = getProject('hill-house', 'bg', root)!.progress!;
         expect(progress.stages.map((s) => s.state)).toEqual(Array(7).fill('next'));

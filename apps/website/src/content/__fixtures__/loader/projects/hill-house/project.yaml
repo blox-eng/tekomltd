@@ -3,8 +3,6 @@ title: { bg: Къща на хълма }
 place: { bg: Старозагорски бани }
 scopes: [full]
 residential: true
-images:
-  - file: plot.jpg
 progress:
   status: in_progress
   kind: house

@@ -477,3 +477,29 @@
     clip-path: inset(50%);
     white-space: nowrap;
 }
+
+/* Placeholder for a project in progress without a photo: the home page's pending look. */
+.pending {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    background: var(--wall);
+    color: var(--faint);
+}
+
+.pending svg {
+    width: 58%;
+    max-width: 320px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.tile:hover .pending,
+.tile:focus-visible .pending {
+    color: var(--muted);
+}

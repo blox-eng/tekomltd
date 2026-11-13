@@ -179,7 +179,9 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
                     `lat ${lat}, lng ${lng} is outside Bulgaria (lat 41–44.5, lng 22–29); check the numbers and that lat and lng are not swapped`
                 );
             }
-            if (!project.draft && project.images.length === 0) fail(file, 'images', 'project has no photos; add at least one image or set draft: true');
+            const inProgress = project.progress?.status === 'in_progress';
+            if (!project.draft && !inProgress && project.images.length === 0)
+                fail(file, 'images', 'project has no photos; add at least one image or set draft: true');
             project.images.forEach((image, i) => requireFile(file, `images.${i}.file`, image.file));
             requireFile(file, 'og_image', project.og_image);
             checkProgress(file, folder, project);
@@ -281,6 +283,10 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
                 fail(file, 'projects', `no published project has scope "${scope}"${residential === undefined ? '' : ` and residential: ${residential}`}`);
             if (service.cover_project !== undefined && !matching.some((p) => p.slug === service.cover_project))
                 fail(file, 'cover_project', `"${service.cover_project}" is not one of the projects this page shows`);
+            else if (service.cover_project !== undefined && matching.find((p) => p.slug === service.cover_project)!.images.length === 0)
+                fail(file, 'cover_project', `"${service.cover_project}" has no photo yet; choose a project with a photo`);
+            else if (matching.length > 0 && matching.every((p) => p.images.length === 0))
+                fail(file, 'projects', 'every project this page shows is still without a photo; add one photo to one of them');
             service.old_paths.forEach((old, i) => {
                 const owner = oldPathOwner.get(old);
                 if (owner) fail(file, `old_paths.${i}`, `"${old}" already leads to ${owner}`);

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { OBJECT_POSITION } from '@/components/projects/square';
 import { Link } from '@/i18n/navigation';
+import { PendingVisual } from '@/components/projects/PendingVisual';
 import { InProgressLabel } from '@/components/projects/Progress';
 import type { ProjectCard } from '@/content/cards';
 import styles from './rail.module.css';
@@ -13,15 +14,19 @@ export function ProjectSlide({ project, scopeLabels, first }: Props) {
 
     return (
         <Link href={`/projects/${project.slug}`} className={`${styles.slide} ${styles.project}`}>
-            <Image
-                src={cover.src}
-                alt={cover.alt}
-                width={cover.width}
-                height={cover.height}
-                sizes="(max-width: 640px) 100vw, min(880px, 100vh)"
-                priority={first}
-                style={{ objectPosition: OBJECT_POSITION[cover.focus] }}
-            />
+            {cover ? (
+                <Image
+                    src={cover.src}
+                    alt={cover.alt}
+                    width={cover.width}
+                    height={cover.height}
+                    sizes="(max-width: 640px) 100vw, min(880px, 100vh)"
+                    priority={first}
+                    style={{ objectPosition: OBJECT_POSITION[cover.focus] }}
+                />
+            ) : (
+                <PendingVisual />
+            )}
             <div className={styles.cap}>
                 <div className={styles.scope}>
                     {project.scopes.map((scope) => (

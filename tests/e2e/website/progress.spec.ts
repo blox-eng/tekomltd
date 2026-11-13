@@ -84,3 +84,14 @@ test('a screen reader hears what each stage date means', async ({ page }) => {
     await expect(stages.first()).toContainText('done on 20.05.2026');
     await expect(stages.nth(3)).toContainText('not started');
 });
+
+test('a project in progress without a photo shows the drawing and the stamp instead', async ({ page }) => {
+    await page.goto('/en/projects');
+    const tile = page.locator('main li:has(h3)', { hasText: 'House on the hill' });
+    await expect(tile.getByRole('img', { name: 'Design to come' })).toBeVisible();
+    await expect(tile.locator('img')).toHaveCount(0);
+    await page.goto('/en/projects/hill-house');
+    await expect(page.getByRole('img', { name: 'Design to come' })).toBeVisible();
+    await page.getByRole('img', { name: 'Design to come' }).hover();
+    await expect(page.locator('[data-pending] .stamp')).toHaveCSS('opacity', '1');
+});

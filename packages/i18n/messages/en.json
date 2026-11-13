@@ -96,7 +96,8 @@
             "scaffold_down": "Scaffolding removed",
             "handover": "Handover"
         },
-        "stageNext": "not started"
+        "stageNext": "not started",
+        "renderPending": "Design to come"
     },
     "eu": {
         "h": "EU programmes and publications",

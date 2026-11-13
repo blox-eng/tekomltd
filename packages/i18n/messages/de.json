@@ -96,7 +96,8 @@
             "scaffold_down": "Gerüstabbau",
             "handover": "Übergabe"
         },
-        "stageNext": "noch nicht begonnen"
+        "stageNext": "noch nicht begonnen",
+        "renderPending": "Entwurf folgt"
     },
     "eu": {
         "h": "EU-Programme und Veröffentlichungen",

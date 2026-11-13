@@ -1,4 +1,4 @@
-# In progress: a house with the default stages, no dates, no updates, no address.
+# In progress: a house with the default stages, no dates, no updates, no address and no photo yet.
 slug: hill-house
 title: { bg: Къща на хълма, en: House on the hill }
 place: { bg: Старозагорски бани, en: Starozagorski Bani }
@@ -6,8 +6,6 @@ scopes: [full]
 residential: true
 sort: 7
 on_rail: false
-images:
-  - file: plot.jpg
 progress:
   status: in_progress
   kind: house

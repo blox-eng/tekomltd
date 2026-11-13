@@ -187,6 +187,19 @@ describe('services', () => {
             'services/restore.yaml: old_paths.0 "/about" is a live page of the site; delete that page first'
         ]);
     });
+    it('rejects a cover project that has no photo yet', () => {
+        const root = tree((r) => {
+            mkdirSync(join(r, 'services'));
+            mkdirSync(join(r, 'projects/new-site'));
+            write(
+                r,
+                'projects/new-site/project.yaml',
+                'slug: new-site\ntitle: { bg: Нов обект }\nplace: { bg: Стара Загора }\nscopes: [restore]\nprogress:\n  status: in_progress\n  kind: building\n'
+            );
+            write(r, 'services/restore.yaml', serviceYaml('restore', '{ scope: restore }', 'cover_project: new-site'));
+        });
+        expect(messages(root)).toEqual(['services/restore.yaml: cover_project "new-site" has no photo yet; choose a project with a photo']);
+    });
     it('rejects a search title that the template would push past the limit', () => {
         const long = serviceYaml('restore', '{ scope: restore }').replace('meta_title: { bg: Заглавие }', `meta_title: { bg: ${'я'.repeat(53)} }`);
         expect(messages(withService('restore.yaml', long))).toEqual(['services/restore.yaml: meta_title.bg Too big: expected string to have <=52 characters']);
@@ -287,6 +300,19 @@ describe('checkContent: projects in progress', () => {
         expect(errs(site(ok, { '2026-11-01.bg.md': '---\nphotos:\n  - file: p.gif\n---\nx' }))).toEqual([
             { file: 'projects/work-site/updates/2026-11-01.bg.md', path: 'photos.0.file', message: expect.stringMatching(/^must end in \.jpg/) }
         ]));
+    it('lets a project in progress go without photos', () =>
+        expect(errs(site(base(stages('    - key: scaffold')).replace('images:\n  - file: site.jpg\n', '')))).toEqual([]));
+    it('still needs a photo once the project is done', () =>
+        expect(
+            errs(
+                site(
+                    base('  status: done\n  kind: facade\n  stages:\n    - key: scaffold\n      done: 2026-10-01\n', 'year: 2026\n').replace(
+                        'images:\n  - file: site.jpg\n',
+                        ''
+                    )
+                )
+            ).map((e) => e.path)
+        ).toEqual(['images']));
     it('needs a progress block for updates', () =>
         expect(
             errs(site('slug: work-site\ntitle: { bg: Обект }\nplace: { bg: Стара Загора }\nimages:\n  - file: site.jpg\n', { '2026-11-01.bg.md': 'x' }))

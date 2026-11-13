@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { LOCALES, type Locale } from '@tekom/i18n';
 import { yearsStood } from '@/components/projects/age';
 import { fallbackNote, projectFacts } from '@/components/projects/facts';
+import { PendingVisual } from '@/components/projects/PendingVisual';
 import { Progress } from '@/components/projects/Progress';
 import { SquareImage } from '@/components/projects/SquareImage';
 import styles from '@/components/projects/projects.module.css';
@@ -60,7 +61,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     const facts = projectFacts(project, { address: t('address'), completed: t('completed'), area: t('area'), scope: t('scope') }, scopeLabels, locale);
     const note = fallbackNote(project, { note: root('note'), inBulgarian: t('inBulgarian') });
     const { cover } = project;
-    const gallery = project.images.filter((image) => image.src !== cover.src);
+    const gallery = project.images.filter((image) => image.src !== cover?.src);
     const position = String(project.position).padStart(2, '0');
 
     return (
@@ -80,9 +81,15 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 {t('back')}
             </Link>
             <div className={styles.dhead}>
-                <a href={cover.src} className={styles.dhero} aria-label={t('fullPhoto', { alt: cover.alt })}>
-                    <Image src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} sizes="(max-width: 860px) 100vw, 60vw" priority />
-                </a>
+                {cover ? (
+                    <a href={cover.src} className={styles.dhero} aria-label={t('fullPhoto', { alt: cover.alt })}>
+                        <Image src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} sizes="(max-width: 860px) 100vw, 60vw" priority />
+                    </a>
+                ) : (
+                    <div className={styles.dhero}>
+                        <PendingVisual />
+                    </div>
+                )}
                 <div>
                     <div className={styles.scope}>
                         {project.scopes.map((key) => (

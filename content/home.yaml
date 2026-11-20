@@ -3,7 +3,7 @@ rail_panels:
     after_project_index: 0
     accent: true
     label:
-      bg: Наш екип
+      bg: Собствен екип
       en: Our own crew
       de: Eigenes Team
     title:
@@ -11,14 +11,14 @@ rail_panels:
       en: Facades
       de: Fassaden
     body:
-      bg: Топлоизолации, декоративни мазилки и каменни облицовки от нашия фасаден екип, по системата на производителя, за да важи гаранцията.
+      bg: Топлоизолации, декоративни мазилки и каменни облицовки. Фасадният ни екип ги полага по системата на производителя, за да важи гаранцията.
       en: Insulation systems, decorative plaster and stone cladding by our own facade crew, built to the manufacturer's system so the warranty holds.
       de: Dämmsysteme, Dekorputz und Steinverkleidung von unserem eigenen Fassadenteam, nach Herstellersystem, damit die Garantie gilt.
   - kind: capability
     after_project_index: 1
     accent: false
     label:
-      bg: Същият екип, отвътре
+      bg: Същият екип и отвътре
       en: Same crew, inside
       de: Dasselbe Team, innen
     title:
@@ -26,33 +26,33 @@ rail_panels:
       en: Interiors & painting
       de: Innenausbau & Malerarbeiten
     body:
-      bg: Шпакловки, боя, плочки и камък, завършени от едни и същи хора от първата до последната стая.
+      bg: Шпаклоем, боядисваме, редим плочки и камък. Първата и последната стая ги довършват едни и същи хора.
       en: Plaster, paint, tile and stone, finished by the same people from the first room to the last.
       de: Putz, Farbe, Fliesen und Stein, vom ersten bis zum letzten Raum von denselben Leuten ausgeführt.
   - kind: capability
     after_project_index: 2
     accent: false
     label:
-      bg: Наш екип
+      bg: Собствен екип
       en: Our own crew
       de: Eigenes Team
     title:
-      bg: Строим от нулата
+      bg: Нови сгради
       en: Built from scratch
       de: Neubau von Grund auf
     body:
-      bg: Основи, конструкция, зидария и покрив. Сградата е наша отговорност от първия бетон до предаването на ключа.
+      bg: Наливаме основите и конструкцията, зидаме стените, покриваме сградата. Отговаряме за нея от първия бетон до предаването на ключа.
       en: Foundations, structure, masonry and roof. The building is ours from the first pour to the handover of the keys.
       de: Fundament, Tragwerk, Mauerwerk und Dach. Vom ersten Beton bis zur Schlüsselübergabe in unserer Verantwortung.
   - kind: crew_stat
     after_project_index: 3
     stat_value: "{years}"
     unit:
-      bg: години на обекта
+      bg: години по обектите
       en: years on site
       de: Jahre auf der Baustelle
     body:
-      bg: Семейна фирма от Стара Загора. Хората, които започват проекта Ви, са хората, които го завършват.
+      bg: Семейна фирма от Стара Загора. Хората, които започват проекта Ви, го и завършват.
       en: A family company from Stara Zagora. The people who start your project are the people who finish it.
       de: Ein Familienunternehmen aus Stara Sagora. Wer Ihr Projekt beginnt, beendet es auch.
     unconfirmed: false
@@ -60,15 +60,15 @@ rail_panels:
     after_project_index: 4
     accent: false
     label:
-      bg: Нашите партньори
+      bg: Партньори
       en: Our partners
       de: Unsere Partner
     title:
-      bg: Най-добрите за останалото
+      bg: Специалисти за останалото
       en: The best people for the rest
       de: Die Besten für den Rest
     body:
-      bg: Дограма, кухни, инсталации, озеленяване. Включваме партньори, на които имаме доверие, и ги координираме на обекта Ви.
+      bg: Дограма, кухни, инсталации, озеленяване. Възлагаме ги на партньори и координираме работата им на обекта Ви.
       en: Windows, kitchens, installations, landscaping. We bring in partners we trust and coordinate them on your site.
       de: Fenster, Küchen, Installationen, Gartenbau. Wir holen Partner, denen wir vertrauen, und koordinieren sie auf Ihrer Baustelle.
   - kind: capability
@@ -83,18 +83,18 @@ rail_panels:
       en: Restoration
       de: Restaurierung
     body:
-      bg: Къщи от кирпич, баня от 1929 г., параклис с тухлен купол. Пазим това, което прави сградата ценна.
+      bg: Родовата къща в Чепеларе, „Зелената баня“ от 1929 г., параклис с тухлен купол. Възстановяваме фасади, прозорци и зидария по запазени образци и снимки.
       en: Adobe houses, a 1929 bathhouse, a brick-domed chapel. We keep what makes a building worth saving.
       de: Lehmhäuser, ein Badehaus von 1929, eine Kapelle mit Ziegelkuppel. Wir bewahren, was ein Gebäude wertvoll macht.
   - kind: crew_stat
     after_project_index: 9
     stat_value: "1"
     unit:
-      bg: екип, от основите до ключ
+      bg: екип от основите до ключа
       en: crew, foundations to finish
       de: Team, vom Fundament bis zur Übergabe
     body:
-      bg: Конструкция, фасади и довършителни работи от нашите хора. Партньори само там, където специалист го прави по-добре.
+      bg: Конструкцията, фасадите и довършителните работи изпълняват наши хора. Партньори включваме само там, където специалист се справя по-добре.
       en: Structure, facades and finishing by our own people. Partners only where a specialist does it better.
       de: Rohbau, Fassaden und Ausbau mit eigenen Leuten. Partner nur dort, wo ein Spezialist es besser kann.
     unconfirmed: false
@@ -110,7 +110,7 @@ rail_panels:
       en: You see your site every day
       de: Ihre Baustelle, jeden Tag sichtbar
     body:
-      bg: Ежедневни снимки, протоколи и материали в общ дневник. Без изненади при предаването.
+      bg: Всеки ден качваме в общ дневник снимки, протоколи и списъци на вложените материали. При предаването знаете какво е вградено във всеки слой.
       en: Daily photos, protocols and materials in one shared log. No surprises at handover.
       de: Tägliche Fotos, Protokolle und Material in einem gemeinsamen Log. Keine Überraschungen bei der Übergabe.
   - kind: invite
@@ -124,17 +124,17 @@ rail_panels:
       en: This could be
       de: Als Nächstes vielleicht
     turns:
-      - bg: Вашият дом
+      - bg: Вашата къща
         en: your home
         de: Ihr Zuhause
-      - bg: Вашата мечта
+      - bg: Вашата жилищна сграда
         en: your dream
         de: Ihr Traumhaus
       - bg: Вашият офис
         en: your office
         de: Ihr Büro
     body:
-      bg: Разкажете ни какво искате да построите или обновите.
+      bg: Разкажете ни какво искате да построите или обновите. Идваме на оглед.
       en: Tell us what you want to build or renovate.
       de: Erzählen Sie uns, was Sie bauen oder renovieren möchten.
   - kind: invite
@@ -148,50 +148,50 @@ rail_panels:
       en: This could be
       de: Als Nächstes vielleicht
     turns:
-      - bg: Вашият дом
+      - bg: Вашата къща
         en: your home
         de: Ihr Zuhause
-      - bg: Вашата мечта
+      - bg: Вашият хотел
         en: your dream
         de: Ihr Traumhaus
-      - bg: Вашият офис
+      - bg: Вашата фасада
         en: your office
         de: Ihr Büro
     body:
-      bg: Разкажете ни какво искате да построите или обновите.
+      bg: Разкажете ни какво искате да построите или обновите. Идваме на оглед.
       en: Tell us what you want to build or renovate.
       de: Erzählen Sie uns, was Sie bauen oder renovieren möchten.
 promises:
   - title:
-      bg: Цена, на която можете да разчитате
+      bg: Оглед преди началото
       en: A price you can plan on
       de: Ein Preis, mit dem Sie planen können
     body:
-      bg: Количествата се вземат от проекта и се договарят преди началото, а не се откриват на обекта.
+      bg: Идваме на обекта, преглеждаме проекта и описваме всеки етап, преди да започнем.
       en: Quantities taken from the drawings and agreed before work starts, not discovered on site.
       de: Mengen aus den Plänen, vor Baubeginn vereinbart, nicht erst auf der Baustelle entdeckt.
   - title:
-      bg: Изпълнено правилно
+      bg: По системата на производителя
       en: Done the right way
       de: Richtig ausgeführt
     body:
-      bg: Всеки слой по системата на производителя и българските норми, с проследими материали.
+      bg: Полагаме всеки слой по системата на производителя и българските норми. Знаете кой материал е вграден и къде.
       en: Every layer to the manufacturer's system and Bulgarian standards, with materials you can trace.
       de: Jede Schicht nach Herstellersystem und bulgarischer Norm, mit nachverfolgbarem Material.
   - title:
-      bg: Нищо скрито
+      bg: Снимки на всеки скрит слой
       en: Nothing hidden
       de: Nichts verdeckt
     body:
-      bg: "Ежедневни снимки и протоколи за всичко, което ще бъде покрито: изолации, хидроизолации, инсталации."
+      bg: "Снимаме и протоколираме всичко, което после покриваме: изолации, хидроизолации, инсталации."
       en: "Daily photos and protocols of everything that gets covered up: insulation, waterproofing, installations."
       de: "Tägliche Fotos und Protokolle von allem, was später verdeckt wird: Dämmung, Abdichtung, Installationen."
   - title:
-      bg: Предаване без изненади
+      bg: Предаване стая по стая
       en: Handover without surprises
       de: Übergabe ohne Überraschungen
     body:
-      bg: Приемане стая по стая, с документи и гаранции на едно място.
+      bg: Приемате обекта стая по стая. Документите и гаранциите получавате на едно място.
       en: Signed off room by room, with documents and warranties in one place.
       de: Raumweise Abnahme, Unterlagen und Garantien an einem Ort.
 stats:
@@ -203,19 +203,19 @@ stats:
     unconfirmed: false
   - value: 24000
     label:
-      bg: м² РЗП в показаните проекти
+      bg: м² разгъната площ в проектите на тази страница
       en: m² built on the projects shown here
       de: m² Fläche der gezeigten Projekte
     unconfirmed: false
   - value: 17
     label:
-      bg: сгради, къщи и параклис, всички в употреба
+      bg: сгради, къщи и параклис, които се ползват и днес
       en: buildings, houses and a chapel, all still in use
       de: Gebäude, Häuser und eine Kapelle, alle in Nutzung
     unconfirmed: false
   - value: 1
     label:
-      bg: семейство, две поколения на обекта
+      bg: семейство, две поколения на строежа
       en: family, two generations on site
       de: Familie, zwei Generationen auf der Baustelle
     unconfirmed: true
@@ -227,7 +227,7 @@ crews:
       en: The crew on site
       de: Das Team auf der Baustelle
     body:
-      bg: От основите до последния слой боя. Обикновено ги намирате на скелето.
+      bg: От основите до последния слой боя. Обикновено са на скелето.
       en: From the foundations to the last coat of paint. Usually found on the scaffolding.
       de: Vom Fundament bis zum letzten Anstrich. Meist auf dem Gerüst zu finden.
     roles:
@@ -238,7 +238,7 @@ crews:
           de: Vorarbeiter
         years: 22
         quip:
-          bg: Помолихме го да позира. Провери отвеса вместо това.
+          bg: Разпределя хората на обекта и проверява отвеса.
           en: Asked to pose. Checked the plumb line instead.
           de: Sollte posieren. Prüfte stattdessen das Lot.
       - tool: trowel
@@ -248,17 +248,17 @@ crews:
           de: Stuckateur
         years: 15
         quip:
-          bg: Ще се усмихне, като изсъхне мазилката.
+          bg: Маже стените и таваните.
           en: Will smile once the plaster dries.
           de: Lächelt, sobald der Putz trocken ist.
       - tool: boards
         role:
-          bg: Топлоизолации
+          bg: Изолировчик
           en: Insulation
           de: Dämmung
         years: 11
         quip:
-          bg: Предпочита да го снимаме с термокамера.
+          bg: Лепи топлоизолацията по фасадите.
           en: Prefers to be photographed in thermal imaging.
           de: Lässt sich lieber per Wärmebild fotografieren.
       - tool: roller
@@ -268,7 +268,7 @@ crews:
           de: Maler
         years: 18
         quip:
-          bg: Казва, че стената е портретът.
+          bg: Шпаклова и боядисва стените.
           en: Says the wall is the portrait.
           de: Sagt, die Wand sei das Porträt.
       - tool: tiles
@@ -278,7 +278,7 @@ crews:
           de: Fliesenleger
         years: 14
         quip:
-          bg: Записахме го за снимки. Нареди 40 м² плочки вместо това.
+          bg: Реди плочки и камък по подове, бани и тераси.
           en: Booked for the shoot. Laid 40 m² of tile instead.
           de: Zum Shooting gebucht. Verlegte stattdessen 40 m² Fliesen.
       - tool: spatula
@@ -288,7 +288,7 @@ crews:
           de: Dekorputz
         years: 12
         quip:
-          bg: Венецианската мазилка иска седем слоя. Тя също.
+          bg: Полага декоративни и венециански мазилки.
           en: Venetian plaster takes seven coats. So does she.
           de: Venezianischer Putz braucht sieben Schichten. Sie auch.
       - tool: hat
@@ -298,7 +298,7 @@ crews:
           de: Bauleiter
         years: 25
         quip:
-          bg: Отложи снимката заради бетониране.
+          bg: Води строежа по проекта и съставя протоколите за всеки етап.
           en: Rescheduled the photo for a concrete pour.
           de: Fototermin wegen Betonage verschoben.
       - tool: brick
@@ -308,7 +308,7 @@ crews:
           de: Maurer
         years: 20
         quip:
-          bg: Наредил е повече тухли, отколкото селфита е направил.
+          bg: Зида стени от тухли и блокове.
           en: Has laid more bricks than he has taken selfies.
           de: Mehr Ziegel gesetzt als Selfies gemacht.
       - tool: truss
@@ -318,7 +318,7 @@ crews:
           de: Zimmermann, Dächer
         years: 13
         quip:
-          bg: Мери два пъти. Още не е готов за близък план.
+          bg: Прави дървените конструкции на покривите.
           en: Measured twice. Still not ready for his close-up.
           de: Zweimal gemessen. Noch nicht bereit fürs Close-up.
   - key: office
@@ -328,7 +328,7 @@ crews:
       en: The crew in the office
       de: Das Team im Büro
     body:
-      bg: Оферти, проекти, поръчки, документи и телефонът, който отговаря. Обикновено ги намирате зад купчина чертежи.
+      bg: Проекти, поръчки на материали, документи и телефонът, на който Ви отговаряме.
       en: Quotes, drawings, orders, paperwork and the phone that answers. Usually found behind a stack of drawings.
       de: Angebote, Pläne, Bestellungen, Papierkram und das Telefon, das abhebt. Meist hinter einem Stapel Pläne zu finden.
     roles:
@@ -339,7 +339,7 @@ crews:
           de: Geschäftsführer
         years: 30
         quip:
-          bg: Подписва всеки протокол за предаване. Снимката още не я е одобрил.
+          bg: Ръководи фирмата и подписва всеки протокол за предаване.
           en: Signs off every handover. Has not signed off on this photo yet.
           de: Zeichnet jede Übergabe ab. Dieses Foto noch nicht.
       - tool: ledger
@@ -349,7 +349,7 @@ crews:
           de: Buchhalter
         years: 19
         quip:
-          bg: Изчисли фотосесията до последния цент. Ще се появи, щом бъде фактурирана.
+          bg: Води счетоводството и документите на фирмата.
           en: Priced the photo shoot to the last cent. Will appear once it is invoiced.
           de: Hat das Shooting auf den Cent kalkuliert. Erscheint, sobald es fakturiert ist.
       - tool: square
@@ -359,7 +359,7 @@ crews:
           de: Planer
         years: 16
         quip:
-          bg: Начерта общата снимка в мащаб. Забрави да се включи в нея.
+          bg: Чертае и проверява проектите, преди да започне строежът.
           en: Drew the group photo to scale. Forgot to draw himself in.
           de: Hat das Gruppenfoto maßstabsgetreu gezeichnet. Sich selbst vergessen.
       - tool: laptop
@@ -369,7 +369,7 @@ crews:
           de: IT
         years: 6
         quip:
-          bg: Казва, че снимката е в облака. Облака никой не го е виждал.
+          bg: Поддържа компютрите, сайта и дневника на обектите.
           en: Says the photo is in the cloud. Nobody has seen the cloud.
           de: Sagt, das Foto sei in der Cloud. Niemand hat die Cloud gesehen.
 partner_services:
@@ -379,7 +379,7 @@ partner_services:
       en: Constructability review
       de: Prüfung der Ausführbarkeit
     body:
-      bg: Проверка на проекта преди строежа, за да излязат проблемите на хартия, а не на обекта.
+      bg: Преглеждаме проекта преди строежа. Проблемите излизат на хартия, преди да стигнат до обекта.
       en: Your drawings checked before anything is built, so problems show up on paper, not on site.
       de: Ihre Pläne vor Baubeginn geprüft, damit Probleme auf dem Papier auftauchen, nicht auf der Baustelle.
   - icon: square
@@ -415,7 +415,7 @@ partner_services:
       en: Surveying
       de: Vermessung
     body:
-      bg: Трасиране и нива, измерени преди да копаем.
+      bg: Трасиране и нивелация преди изкопа.
       en: Plots, levels and setting out, measured before we dig.
       de: Grundstück, Höhen und Absteckung, vermessen vor dem Aushub.
   - icon: bolt
@@ -424,7 +424,7 @@ partner_services:
       en: Electrical
       de: Elektroinstallation
     body:
-      bg: Окабеляване, табла и осветление, преди да положим мазилката.
+      bg: Кабели, табла и осветление, положени преди мазилката.
       en: Wiring, panels and lighting, laid before our plaster goes on.
       de: Leitungen, Verteiler und Licht, verlegt bevor unser Putz kommt.
   - icon: drop
@@ -442,7 +442,7 @@ partner_services:
       en: Air conditioning & ventilation
       de: Klima & Lüftung
     body:
-      bg: Системи, оразмерени за къщата, а не по каталог.
+      bg: Системи, оразмерени за конкретната сграда.
       en: Systems sized for the house, not the catalogue.
       de: Anlagen für das Haus ausgelegt, nicht für den Katalog.
   - icon: window
@@ -451,7 +451,7 @@ partner_services:
       en: Windows & doors
       de: Fenster & Türen
     body:
-      bg: Профили и стъклопакети, вградени в изолацията ни без топлинни мостове.
+      bg: Профили и стъклопакети, вградени в изолацията без топлинни мостове.
       en: Profiles and glazing fitted into our insulation without thermal bridges.
       de: Profile und Verglasung, wärmebrückenfrei in unsere Dämmung eingebaut.
   - icon: kitchen
@@ -460,7 +460,7 @@ partner_services:
       en: Kitchens & furniture
       de: Küchen & Möbel
     body:
-      bg: По мярка, след като стените са прави и подовете нивелирани.
+      bg: По мярка, след като стените са изправени и подовете нивелирани.
       en: Made to measure, after our walls are true and our floors are level.
       de: Nach Maß, wenn unsere Wände gerade und Böden eben sind.
   - icon: leaf
@@ -469,7 +469,7 @@ partner_services:
       en: Energy audit & certificate
       de: Energieaudit & Ausweis
     body:
-      bg: Одитът и сертификатът, за които е изпълнена изолацията.
+      bg: Енергийно обследване и сертификат за сградата след изолацията.
       en: The audit and certificate your insulation was built to pass.
       de: Audit und Ausweis, für die Ihre Dämmung gebaut wurde.
   - icon: solar
@@ -478,7 +478,7 @@ partner_services:
       en: Solar panels
       de: Photovoltaik
     body:
-      bg: Покривни системи, планирани заедно с покрива, а не след него.
+      bg: Покривни системи, планирани заедно с покрива.
       en: Roof-mounted systems, planned with the roof rather than after it.
       de: Dachanlagen, mit dem Dach geplant statt nachträglich.
   - icon: tree

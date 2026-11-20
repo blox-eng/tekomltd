@@ -31,7 +31,7 @@
     },
     "map": {
         "h": "Wo wir gebaut haben",
-        "p": "Die meisten unserer Bauten stehen im Umkreis von zwei Kilometern um unser Büro.",
+        "p": "Wählen Sie einen Punkt, um das Projekt zu öffnen.",
         "bg": "Bulgarien",
         "sz": "Stara Sagora, Zentrum"
     },
@@ -67,7 +67,7 @@
         "ageShort": "{n, plural, =0 {neu} other {# J.}}",
         "timeline": "Unsere Projekte nach Jahr",
         "today": "heute",
-        "timelineSum": "{years} Jahre · {count} Projekte",
+        "timelineSum": "{years} Jahre · {count, plural, one {# Projekt} other {# Projekte}}",
         "inProgress": "im Bau",
         "stagesTitle": "Bauphasen",
         "stageActive": "läuft",

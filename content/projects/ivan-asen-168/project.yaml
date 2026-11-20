@@ -1,10 +1,10 @@
 slug: ivan-asen-168
 title:
-  bg: Жилищна сграда с общ двор и магазин
+  bg: Жилищна сграда на ул. „Цар Иван Асен II“ 168
   en: Apartment building with shared courtyard
   de: Wohnhaus mit gemeinsamem Hof
 summary:
-  bg: Жилищна сграда на ул. „Цар Иван Асен II“ 168 в Стара Загора, с пет етажа и терасовиден етаж. На партера има магазини и лекарски кабинети, а в жилищната част има 10 апартамента с мазета. ТЕКОМ изпълни всички конструкции, зидарии, мазилки, топло- и хидроизолации и довършителни работи. Сградата е завършена през 2005 г.
+  bg: Жилищна сграда на ул. „Цар Иван Асен II“ 168 в Стара Загора. Има пет етажа и терасовиден етаж. На партера са магазини и лекарски кабинети. В жилищната част са десет апартамента с мазета. Сградата има общ двор. ТЕКОМ изпълни всички конструкции, зидарии, мазилки, топло- и хидроизолации и довършителни работи и завърши сградата през 2005 г.
 place:
   bg: Стара Загора
   en: Stara Zagora
@@ -28,20 +28,20 @@ meta_title:
   en: Apartments over shops and clinics in Stara Zagora
   de: Wohnhaus mit Läden und Praxen in Stara Sagora
 meta_description:
-  bg: Пет етажа с 10 апартамента над магазини и лекарски кабинети на ул. „Цар Иван Асен II“. ТЕКОМ изпълни конструкции, изолации и довършителни работи. 2005 г.
+  bg: Пет етажа с десет апартамента над магазини и лекарски кабинети на ул. „Цар Иван Асен II“. ТЕКОМ изпълни конструкциите, изолациите и довършителните работи.
   en: Five storeys with 10 flats over shops and doctors' rooms on Tsar Ivan Asen II Street. Tekom built the structure, insulation and finishes. Completed 2005.
   de: Fünf Geschosse mit 10 Wohnungen über Läden und Arztpraxen in der Zar-Iwan-Assen-II-Straße. Tekom führte Rohbau, Dämmung und Ausbau aus. 2005.
 images:
   - file: ivan-asen-12-retouched.jpg
     alt:
-      bg: Жилищна сграда с общ двор и магазин
+      bg: Сградата на ъгъла, с тераси и магазини на партера
     is_cover: true
   - file: ivan-asen-168-3.jpg
     alt:
-      bg: Жилищна сграда с общ двор и магазин
+      bg: Фасадата с диагонални ивици и тераси
   - file: ivan-asen-168-2.jpg
     alt:
-      bg: Жилищна сграда с общ двор и магазин
+      bg: Терасите и терасовидният етаж под керемидения покрив
   - file: ivan-asen-168-1-1.jpg
     alt:
-      bg: Жилищна сграда с общ двор и магазин
+      bg: Страничната фасада с тераси и диагонални ивици

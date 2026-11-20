@@ -31,7 +31,7 @@
     },
     "map": {
         "h": "Where we have built",
-        "p": "Most of our work stands within two kilometres of our office. Tap a pin to open the project.",
+        "p": "Tap a pin to open the project.",
         "bg": "Bulgaria",
         "sz": "Stara Zagora, centre"
     },
@@ -67,7 +67,7 @@
         "ageShort": "{n, plural, =0 {new} one {# yr} other {# yrs}}",
         "timeline": "Our projects by year",
         "today": "today",
-        "timelineSum": "{years} years · {count} projects",
+        "timelineSum": "{years} years · {count, plural, one {# project} other {# projects}}",
         "inProgress": "in progress",
         "stagesTitle": "Stages",
         "stageActive": "under way",

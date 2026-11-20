@@ -1,10 +1,10 @@
 slug: zhelezni-vrata-9
 title:
-  bg: Жилищна сграда с гаражи
+  bg: Жилищна сграда на ул. „Железни врата“ 9
   en: Apartment building with garages
   de: Wohnhaus mit Garagen
 summary:
-  bg: Жилищна сграда на ул. „Железни врата“ 9 в Стара Загора, с пет етажа и терасовиден етаж. На партера има четири гаража, а в жилищната част са девет апартамента с мазета. ТЕКОМ беше съинвеститор и строител и изпълни конструкцията, зидариите, мазилките, топло- и хидроизолациите и фасадата с мазилка Баумит Нанопор. Строежът е от 2009 до 2011 г., след спасителни археологически проучвания на терена.
+  bg: Жилищна сграда на ул. „Железни врата“ 9 в Стара Загора, с пет етажа и терасовиден етаж. На партера са четири гаража. В жилищната част са девет апартамента с мазета. ТЕКОМ беше съинвеститор и строител. Изпълни конструкцията, зидариите, мазилките, топло- и хидроизолациите и фасадата с мазилка Баумит Нанопор. Строежът започна след спасителни археологически проучвания на терена и продължи от 2009 до 2011 г.
 place:
   bg: Стара Загора
   en: Stara Zagora
@@ -24,27 +24,27 @@ on_rail: true
 wp_id: 1351
 wp_slug: residential-building-garages-zhelezni-9
 meta_title:
-  bg: Жилищна сграда на ул. „Железни врата“, Стара Загора
+  bg: Жилищна сграда на ул. „Железни врата“ 9, Стара Загора
   en: Apartments on Zhelezni Vrata St, Stara Zagora
   de: Wohnhaus in der Scheleschni-Wrata-Str., Stara Sagora
 meta_description:
-  bg: Пет етажа с девет апартамента и четири гаража, след археологически проучвания на терена. ТЕКОМ е съинвеститор и строител; фасада Баумит Нанопор.
+  bg: Пет етажа с девет апартамента и четири гаража, построени след археологически проучвания. ТЕКОМ беше съинвеститор и строител. Фасада Баумит Нанопор.
   en: Five storeys with nine flats and four garages, built after archaeological digs on the site. Tekom co-invested and built it, with a Baumit Nanopor facade.
   de: Fünf Geschosse mit neun Wohnungen und vier Garagen, gebaut nach Ausgrabungen auf dem Grundstück. Tekom war Mitinvestor und Bauunternehmer.
 images:
   - file: zhelezni-vrata-9-1-retouched.jpg
     alt:
-      bg: Жилищна сграда с гаражи
+      bg: Фасадата с тераси и гаражните врати на партера
     is_cover: true
   - file: jelezni-vrata-9-fasada-1.jpg
     alt:
-      bg: Жилищна сграда с гаражи
+      bg: Уличната фасада с тераси и терасовиден етаж
   - file: apartament-zhelezni-vrata-9.jpg
     alt:
-      bg: Жилищна сграда с гаражи
+      bg: Разпределение на апартамент с две спални, дневна и тераса
   - file: zhelezni-vrata-9-01.jpg
     alt:
-      bg: Жилищна сграда с гаражи
+      bg: Стълбище с гранитни стъпала и метален парапет
   - file: zhelezni-vrata-9-02.jpg
     alt:
-      bg: Жилищна сграда с гаражи
+      bg: Визуализация на баня с плочки в дървесни и сиви тонове

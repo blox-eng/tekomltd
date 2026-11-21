@@ -62,7 +62,7 @@ test('a legal page renders its title and last-updated date', async ({ page }) =>
     await expect(page.getByText('2026-01-15')).toBeVisible();
 });
 
-test('the quote button links to the localised contact page', async ({ page }) => {
+test('the site-visit button links to the localised contact page', async ({ page }) => {
     await page.goto('/de');
-    await expect(page.getByRole('link', { name: 'Angebot anfragen' })).toHaveAttribute('href', '/de/contact');
+    await expect(page.getByRole('link', { name: 'Vor-Ort-Termin anfragen' })).toHaveAttribute('href', '/de/contact');
 });

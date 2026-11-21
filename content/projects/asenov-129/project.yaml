@@ -1,10 +1,10 @@
 slug: asenov-129
 title:
-  bg: Жилищна сграда с магазини и гаражи
-  en: Apartment building with shops and garages
-  de: Wohnhaus mit Läden und Garagen
+  bg: Жилищна сграда на ул. „Хаджи Димитър Асенов“ 129–131
+  en: Apartment building, 129–131 Hadzhi Dimitar Asenov St
+  de: Wohnhaus, ul. Hadzhi Dimitar Asenov 129–131
 summary:
-  bg: Седеметажна жилищна сграда със сутерен на ул. „Хаджи Димитър Асенов“ 129–131, изградена от ТЕКОМ от основите като собствена инвестиция със съинвеститор. Има 25 апартамента, 5 магазина и гаражи в сутерена и на партера. Конструкцията е монолитна безгредова стоманобетонна. Фасадата съчетава облицовка с дървесна структура и нано мазилка, а дограмата е PVC с троен стъклопакет. Въведена е в експлоатация през 2021 г.
+  bg: Седеметажна жилищна сграда със сутерен на ул. „Хаджи Димитър Асенов“ 129–131. ТЕКОМ беше съинвеститор и строител и построи сградата от основите. В нея има 25 апартамента и пет магазина. Гаражите са в сутерена и на партера. Конструкцията е монолитна, безгредова, от стоманобетон. Фасадата съчетава облицовка с дървесна структура и наномазилка. Дограмата е PVC с троен стъклопакет. Сградата е въведена в експлоатация през 2021 г.
 place:
   bg: Стара Загора
   en: Stara Zagora
@@ -25,38 +25,38 @@ wp_id: 1849
 wp_slug: жилищна-сграда-с-магазини-и-гаражи
 meta_title:
   bg: Жилищна сграда с 25 апартамента в Стара Загора
-  en: "25-flat apartment building in Stara Zagora"
+  en: Apartment building with 25 flats in Stara Zagora
   de: Wohnhaus mit 25 Wohnungen in Stara Sagora
 meta_description:
-  bg: Седеметажна сграда с 25 апартамента, 5 магазина и гаражи на ул. „Хаджи Димитър Асенов“. ТЕКОМ я построи от основите; въведена е през 2021 г.
-  en: Seven-storey building with 25 flats, 5 shops and garages on Hadzhi Dimitar Asenov Street. Built by Tekom from the ground up and completed in 2021.
-  de: Siebengeschossiges Haus mit 25 Wohnungen, 5 Läden und Garagen in der Hadschi-Dimitar-Asenow-Straße. Von Tekom komplett gebaut, fertig 2021.
+  bg: Седем етажа с 25 апартамента, пет магазина и гаражи на ул. „Хаджи Димитър Асенов“. ТЕКОМ построи сградата от основите. В експлоатация от 2021 г.
+  en: Seven storeys with 25 flats, five shops and garages on Hadzhi Dimitar Asenov St. Tekom built it from the foundations up. In use since 2021.
+  de: Sieben Geschosse mit 25 Wohnungen, fünf Läden und Garagen in der ul. Hadzhi Dimitar Asenov. Tekom baute das Haus von den Fundamenten an. In Betrieb seit 2021.
 images:
   - file: street-retouched.jpg
     alt:
-      bg: Жилищна сграда с магазини и гаражи
+      bg: "Сградата откъм улицата: бяла мазилка, облицовка с дървесна структура и растения на покрива"
     is_cover: true
   - file: dji-0091.jpg
     alt:
-      bg: Жилищна сграда с магазини и гаражи
+      bg: Сградата отгоре, между съседните къщи с керемидени покриви
   - file: dji-0104.jpg
     alt:
-      bg: Жилищна сграда с магазини и гаражи
+      bg: Сградата отгоре, със заоблените тераси на ъгъла
   - file: dscf0964-1.jpg
     alt:
-      bg: Жилищна сграда с магазини и гаражи
+      bg: Терасите на фасадата, гледани отдолу през дърветата
   - file: dscf0997-1.jpg
     alt:
-      bg: Жилищна сграда с магазини и гаражи
+      bg: Ъгълът на последния етаж с перила и растения на покривната тераса
   - file: dscf1036-1.jpg
     alt:
-      bg: Жилищна сграда с магазини и гаражи
+      bg: Тераса и облицовка с дървесна структура до прозорец с PVC дограма
   - file: dscf1038-1.jpg
     alt:
-      bg: Жилищна сграда с магазини и гаражи
+      bg: Облицовка с дървесна структура, бяла мазилка и тъмни вертикални ламели
   - file: img-20201202-105809.jpg
     alt:
-      bg: Жилищна сграда с магазини и гаражи
+      bg: Сградата от улицата, между дървета с жълти листа
   - file: pasted-image-1.jpg
     alt:
-      bg: Жилищна сграда с магазини и гаражи
+      bg: Визуализация на сградата от проекта, с магазините на партера

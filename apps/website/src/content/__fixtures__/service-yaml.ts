@@ -14,5 +14,5 @@ steps: [{ title: { bg: Стъпка }, body: { bg: Текст } }]
 materials_title: { bg: Материали }
 materials: { bg: Текст }
 projects_title: { bg: Проекти }
-cta: { title: { bg: Пишете ни }, body: { bg: Текст }, button: { bg: Оферта } }
+cta: { title: { bg: Пишете ни }, body: { bg: Текст }, button: { bg: Поискайте оглед } }
 `;

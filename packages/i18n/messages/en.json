@@ -3,71 +3,71 @@
         "projects": "Projects",
         "eu": "EU programmes",
         "contact": "Contact",
-        "cta": "Request a quote",
+        "cta": "Request a site visit",
         "home": "Tekom, home page",
         "services": "Services",
         "servicesMenu": "Our services",
         "euShort": "EU"
     },
     "home": {
-        "title": "Tekom: premium construction and finishing works, Stara Zagora",
+        "title": "Tekom · construction in Stara Zagora since 1993",
         "allProjects": "All projects",
         "news": "News"
     },
     "scope": {
-        "full": "Full build",
+        "full": "Turnkey construction",
         "restore": "Restoration",
         "facade": "Facade",
-        "interior": "Interior finishing",
-        "stone": "Stone & tile"
+        "interior": "Finishing works",
+        "stone": "Flooring and cladding"
     },
     "rail": {
         "prev": "Previous",
         "next": "Next"
     },
     "why": {
-        "h": "Build it right. <em>Take the risk out.</em>",
-        "p": "Most building problems start as small shortcuts nobody sees. We work so that nothing on your site goes unseen."
+        "h": "We photograph every layer <em>before we cover it.</em>",
+        "p": "Insulation, waterproofing and installations stay hidden in the walls. We photograph them and record them in a protocol, and you see them in your site log."
     },
     "map": {
         "h": "Where we have built",
-        "p": "Most of our work stands within two kilometres of our office. Tap a pin to open the project.",
+        "p": "Choose a point to open the project.",
         "bg": "Bulgaria",
         "sz": "Stara Zagora, centre"
     },
     "materials": {
-        "h": "Materials we build with",
-        "p": "Systems from manufacturers who stand behind them, applied the way they specify."
+        "h": "Materials we work with",
+        "p": "We lay every system the way its manufacturer describes it. That way the manufacturer's warranty holds too."
     },
     "partners": {
         "h": "Partners"
     },
     "crew": {
         "photoPending": "Photo pending",
-        "p": "Our own people, on site and in the office. We tried to take their photo, but they were busy working.",
+        "p": "Our people on site and in the office. Their photos are to follow.",
         "y": "years at Tekom"
     },
     "partnerServices": {
-        "h": "For everything else, we rely on our partners",
-        "p": "Specialists we have built with for years. We bring them in, coordinate them on your site and answer for the result.",
-        "k": "Through our partners"
+        "h": "Our partners do the rest",
+        "p": "Windows and doors, kitchens, installations and landscaping. We coordinate the partners on site and answer for their work.",
+        "k": "Through partners"
     },
     "project": {
         "back": "← All projects",
         "address": "Address",
         "completed": "Completed",
-        "area": "Built area",
-        "scope": "Our scope",
+        "area": "Gross floor area",
+        "scope": "What we did",
         "next": "Next:",
         "inBulgarian": "Description in Bulgarian. Translation to follow.",
-        "cta": "Planning something similar? Talk to us",
+        "cta": "Write to us about a similar project",
         "fullPhoto": "Full photo: {alt}",
         "stood": "{n, plural, =0 {finished this year} one {# year} other {# years}}",
         "since": "{year} → today",
         "ageShort": "{n, plural, =0 {new} one {# yr} other {# yrs}}",
         "timeline": "Our projects by year",
         "today": "today",
-        "timelineSum": "{years} years · {count} projects",
+        "timelineSum": "{years} years · {count, plural, one {# project} other {# projects}}",
         "inProgress": "in progress",
         "stagesTitle": "Stages",
         "stageActive": "under way",
@@ -78,7 +78,7 @@
         "lastUpdate": "last update: {date}",
         "noUpdates": "the first update is coming",
         "updatesTitle": "Site log",
-        "ctaBuilding": "Interested in a flat? Write to us",
+        "ctaBuilding": "Write to us about a flat in this building",
         "stage": {
             "design": "Design",
             "permit": "Building permit",
@@ -97,28 +97,28 @@
             "scaffold_down": "Scaffolding removed",
             "handover": "Handover"
         },
-        "stageNext": "not started",
-        "renderPending": "Design to come",
+        "stageNext": "to come",
+        "renderPending": "Visualisation to come",
         "yearsNav": "Years",
         "noYear": "no year",
         "inProgressMeta": "in progress: stages and site log"
     },
     "eu": {
         "h": "EU programmes and publications",
-        "p": "Projects Tekom carries out with EU co-funding, with the notices each programme requires us to publish.",
-        "notices": "Notices",
+        "p": "Tekom's projects with EU co-funding and the publications each programme requires.",
+        "notices": "Publications",
         "cofunded": "Co-funded by the European Union",
         "emblemAlt": "European Union flag",
         "summary": "About the project",
         "objectives": "Aims",
         "results": "Results",
-        "totalBudget": "Total budget",
-        "euContribution": "EU contribution",
-        "period": "Period"
+        "totalBudget": "Total value",
+        "euContribution": "EU funding",
+        "period": "Implementation period"
     },
     "contact": {
         "h": "Tell us about your project",
-        "p": "We reply within one working day and visit the site before we quote.",
+        "p": "We reply within one working day. Then we come to see your site.",
         "phone": "Phone",
         "office": "Office",
         "email": "Email"
@@ -132,19 +132,19 @@
         "procure": "Procurement notices",
         "privacy": "Privacy",
         "policy": "Privacy policy (GDPR)",
-        "cookies": "Cookies: none for tracking",
-        "rights": "Your data rights",
+        "cookies": "Cookies: no tracking",
+        "rights": "Your rights",
         "terms": "Terms",
-        "follow": "Follow the work",
+        "follow": "Follow our work",
         "eu": "Projects co-funded by the European Union under BG05SFPR002-1.004-1772-C01 and BG16RFPR001-1.004.",
-        "made": "Data controller: ТЕКОМ ООД · privacy@tekomltd.com"
+        "made": "Data controller: TEKOM Ltd · privacy@tekomltd.com"
     },
     "note": "Translation to follow",
     "publications": {
         "h": "Publications",
         "all": "All",
         "procurement": "Procurement notices",
-        "eu_notice": "EU notices",
+        "eu_notice": "European notices",
         "other": "Other"
     },
     "service": {

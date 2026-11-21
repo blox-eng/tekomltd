@@ -73,7 +73,7 @@ test.describe('rail on desktop', () => {
         const invite = page.locator(`${REAL} [data-rail-invite]`);
         await expect(invite).toHaveCount(1);
         await expect(invite).toContainText('This could be');
-        await expect(invite.locator('.turn')).toContainText(/your home|your dream|your office/);
+        await expect(invite.locator('.turn')).toContainText(/your home|your facade|your office/);
         await expect(invite.getByRole('link')).toHaveAttribute('href', '/en/contact');
     });
 

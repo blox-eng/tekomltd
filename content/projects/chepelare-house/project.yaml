@@ -1,10 +1,10 @@
 slug: chepelare-house
 title:
-  bg: Възстановена родова къща в Чепеларе
-  en: Restored family house in Chepelare
-  de: Wiederaufgebautes Familienhaus in Tschepelare
+  bg: Реконструкция на родова къща в Чепеларе
+  en: Reconstruction of a family house in Chepelare
+  de: Wiederaufbau eines Familienhauses in Tschepelare
 summary:
-  bg: Реконструкция на родова къща на ул. „Дичо Петров“ 30 в Чепеларе и преустройството ѝ в къща за гости, завършени през 2004 г. Първата къща на рода е построена на това място през втората половина на XIX век, а сегашната е възстановена по стари снимки. Външните стени са от каменна зидария, подовете са на дървен гредоред, покривът е дървен с керемиди. Къщата има четири стаи и механа с камина.
+  bg: Реконструкция на родова къща на ул. „Дичо Петров“ 30 в Чепеларе и преустройството ѝ в къща за гости. Работата завърши през 2004 г. Първата къща на рода е построена на това място през втората половина на XIX век. Сегашната е възстановена по стари снимки. Външните стени са от каменна зидария. Подовете са на дървен гредоред, покривът е дървен с керемиди. Къщата има четири стаи и механа с камина.
 place:
   bg: Чепеларе
   en: Chepelare
@@ -24,33 +24,33 @@ on_rail: true
 wp_id: 1601
 wp_slug: private-house-yard-chepelare
 meta_title:
-  bg: Реставрация на родова къща в Чепеларе
-  en: Restored 19th-century family house in Chepelare
-  de: Restauriertes Familienhaus in Tschepelare
+  bg: Реконструкция на родова къща в Чепеларе
+  en: Reconstruction of a family house in Chepelare
+  de: Wiederaufbau eines Familienhauses in Tschepelare
 meta_description:
-  bg: Родова къща от XIX век, възстановена по стари снимки и преустроена в къща за гости. Каменни стени, дървен гредоред, четири стаи и механа с камина.
-  en: A 19th-century family house rebuilt from old photographs and turned into a guest house. Stone walls, timber floors, four rooms and a tavern with fireplace.
-  de: Familienhaus aus dem 19. Jahrhundert, nach alten Fotos wiederaufgebaut und zum Gästehaus umgebaut. Steinmauern, Holzbalkendecken, vier Zimmer, Kamin.
+  bg: Родова къща, възстановена по стари снимки на мястото на къща от XIX век. Каменни стени, дървен гредоред, четири стаи за гости и механа с камина.
+  en: A family house rebuilt from old photographs on the site of a 19th-century house. Stone walls, timber joists, four guest rooms and a tavern with a fireplace.
+  de: Ein Familienhaus, nach alten Fotos an der Stelle eines Hauses aus dem 19. Jahrhundert wiederaufgebaut. Steinmauern, Holzbalkendecken, vier Gästezimmer und eine Taverne mit Kamin.
 images:
   - file: chepelare-retouched.jpg
     alt:
-      bg: Възстановена родова къща в Чепеларе
+      bg: Къщата откъм улицата, с каменен цокъл, дървен балкон и бръшлян над портата
     is_cover: true
   - file: chepelare-1.jpg
     alt:
-      bg: Възстановена родова къща в Чепеларе
+      bg: Фасадата с каменен цокъл, дървени рамки на прозорците и надпис „Янковската къща“
   - file: chepelare-kamina-2.jpg
     alt:
-      bg: Възстановена родова къща в Чепеларе
+      bg: Камината в механата, с каменна облицовка и дървена полица
   - file: chepelare-kamina-1.jpg
     alt:
-      bg: Възстановена родова къща в Чепеларе
+      bg: Механата с камина, каменни стени и стари съдове
   - file: chepelare-2.jpg
     alt:
-      bg: Възстановена родова къща в Чепеларе
+      bg: Къщата през зимата, със сняг по покрива
   - file: design-6.jpg
     alt:
-      bg: Възстановена родова къща в Чепеларе
+      bg: Каменна чешма под навеса в двора
   - file: design-7.jpg
     alt:
-      bg: Възстановена родова къща в Чепеларе
+      bg: Къщата под сняг, с гората зад нея

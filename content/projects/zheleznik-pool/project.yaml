@@ -1,10 +1,10 @@
 slug: zheleznik-pool
 title:
-  bg: Обществен басейн, 500 м³
-  en: Public pool, 500 m³
-  de: Öffentliches Schwimmbad, 500 m³
+  bg: Открит басейн от 500 м³ в кв. „Железник“
+  en: 500 m³ outdoor pool in Zheleznik
+  de: Freibad mit 500 m³ im Viertel Scheleznik
 summary:
-  bg: Плажен комплекс с открит басейн в кв. „Железник“, Стара Загора, изграден през 2001 г. Басейнът е с криволинейно очертание, преливник и бар във водата, с монолитни стоманобетонни дъно и стени и подводно осветление. В комплекса са изградени още компенсаторен резервоар и помпено помещение, сезонен бар, съблекални, душове, лекарски кабинет и офис. Настилките около басейна са от базалтови плочи.
+  bg: Плажен комплекс с открит басейн в кв. „Железник“, Стара Загора, изграден през 2001 г. Басейнът е с обем 500 м³, с криволинейно очертание, преливник, бар във водата и подводно осветление. Дъното и стените са излети монолитно от стоманобетон. В комплекса са изградени още компенсаторен резервоар, помпено помещение, сезонен бар, съблекални, душове, лекарски кабинет и офис. Около басейна е положена настилка от базалтови плочи.
 place:
   bg: Стара Загора
   en: Stara Zagora
@@ -23,17 +23,17 @@ wp_id: 1326
 wp_slug: public-pool
 meta_title:
   bg: Открит басейн в кв. „Железник“, Стара Загора
-  en: Outdoor public pool in Zheleznik, Stara Zagora
+  en: Outdoor pool in Zheleznik, Stara Zagora
   de: Freibad im Viertel Scheleznik, Stara Sagora
 meta_description:
-  bg: Плажен комплекс с басейн от 500 м³ с преливник, бар във водата и подводно осветление, плюс съблекални, бар и базалтови настилки. Изграден 2001 г.
-  en: A 500 m³ lido with an overflow edge, swim-up bar and underwater lighting, plus changing rooms, a bar and basalt paving. Built in 2001.
-  de: Freibad mit 500 m³, Überlaufrinne, Poolbar und Unterwasserlicht, dazu Umkleiden, Bar und Basaltpflaster. Gebaut 2001.
+  bg: Плажен комплекс с басейн от 500 м³, преливник, бар във водата и подводно осветление. Съблекални, сезонен бар и базалтова настилка. Изграден 2001 г.
+  en: A beach complex with a 500 m³ pool, an overflow edge, a bar in the water and underwater lighting. Changing rooms, a seasonal bar and basalt paving. Built in 2001.
+  de: Badeanlage mit 500 m³ Becken, Überlaufrinne, Bar im Wasser und Unterwasserbeleuchtung. Umkleiden, Saisonbar und Basaltpflaster. Gebaut 2001.
 images:
   - file: basein-1.jpg
     alt:
-      bg: Обществен басейн, 500 м³
+      bg: Басейнът с плувци и барът с чадъри до него
     is_cover: true
   - file: basein-2.jpg
     alt:
-      bg: Обществен басейн, 500 м³
+      bg: Преливникът по ръба на басейна и настилката около него

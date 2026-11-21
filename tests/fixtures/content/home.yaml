@@ -71,9 +71,9 @@ rail_panels:
       - bg: Вашият дом
         en: your home
         de: Ihr Zuhause
-      - bg: Вашата мечта
-        en: your dream
-        de: Ihr Traumhaus
+      - bg: Вашата фасада
+        en: your facade
+        de: Ihre Fassade
       - bg: Вашият офис
         en: your office
         de: Ihr Büro
@@ -83,9 +83,9 @@ rail_panels:
       de: Erzählen Sie uns, was Sie bauen oder renovieren möchten.
 promises:
   - title:
-      bg: Цена, на която можете да разчитате
-      en: A price you can plan on
-      de: Ein Preis, mit dem Sie planen können
+      bg: Оглед преди началото
+      en: A site visit before we start
+      de: Ein Vor-Ort-Termin vor dem Start
     body:
       bg: Количествата се вземат от проекта и се договарят преди началото, а не се откриват на обекта.
       en: Quantities taken from the drawings and agreed before work starts, not discovered on site.
@@ -248,9 +248,9 @@ crews:
       en: The crew in the office
       de: Das Team im Büro
     body:
-      bg: Оферти, проекти, поръчки, документи и телефонът, който отговаря. Обикновено ги намирате зад купчина чертежи.
-      en: Quotes, drawings, orders, paperwork and the phone that answers. Usually found behind a stack of drawings.
-      de: Angebote, Pläne, Bestellungen, Papierkram und das Telefon, das abhebt. Meist hinter einem Stapel Pläne zu finden.
+      bg: Проекти, поръчки, документи и телефонът, който отговаря. Обикновено ги намирате зад купчина чертежи.
+      en: Drawings, orders, paperwork and the phone that answers. Usually found behind a stack of drawings.
+      de: Pläne, Bestellungen, Papierkram und das Telefon, das abhebt. Meist hinter einem Stapel Pläne zu finden.
     roles:
       - tool: key
         role:

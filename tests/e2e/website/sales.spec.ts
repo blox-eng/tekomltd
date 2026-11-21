@@ -126,7 +126,7 @@ test('a free unit page shows its facts and asks about it by e-mail', async ({ pa
     await expect(facts).toContainText('Застроена площ81,6 m²');
     await expect(facts).toContainText('юг');
     await expect(facts).toContainText('свободен');
-    const ask = page.getByRole('link', { name: 'Попитай за Ап. 12' });
+    const ask = page.getByRole('link', { name: 'Попитайте за Ап. 12' });
     const query = await subjectOf(ask);
     expect(query.get('subject')).toBe('Запитване: Жилищна сграда „Пример“ · Ап. 12, ет. 1');
     expect(query.get('body')).toMatch(/\/projects\/sale-block\/12\nЗдравейте, интересувам се от Ап\. 12\.\n\n$/);
@@ -135,13 +135,13 @@ test('a free unit page shows its facts and asks about it by e-mail', async ({ pa
 
 test('the button follows the status of the unit', async ({ page }) => {
     await page.goto(`${SALE}/13`);
-    await expect(page.getByRole('link', { name: 'Попитай дали се освобождава' })).toHaveAttribute('href', /^mailto:/);
+    await expect(page.getByRole('link', { name: 'Попитайте дали ще се освободи' })).toHaveAttribute('href', /^mailto:/);
     await page.goto(`${SALE}/21`);
-    await expect(page.getByRole('link', { name: 'Запиши интерес' })).toHaveAttribute('href', /^mailto:/);
+    await expect(page.getByRole('link', { name: 'Заявете интерес' })).toHaveAttribute('href', /^mailto:/);
     await page.goto(`${SALE}/a3`);
     await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
     await expect(page.getByText('Този обект е продаден.')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Виж свободните обекти' })).toHaveAttribute('href', `${SALE}#apartamenti`);
+    await expect(page.getByRole('link', { name: 'Вижте свободните обекти' })).toHaveAttribute('href', `${SALE}#apartamenti`);
 });
 
 test('a unit address is lowercase only', async ({ page }) => {

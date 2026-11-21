@@ -189,7 +189,7 @@ describe('checkContent', () => {
         if (r.ok) return;
         expect(r.errors[0]!.file).toBe('settings.yaml');
         expect(r.errors[0]!.path).toBe('crew_headline.bg');
-        expect(r.errors[0]!.message).toMatch(/Екипът зад мечтата/);
+        expect(r.errors[0]!.message).toMatch(/Екипът зад фасадите/);
     });
 
     it('rejects a slug that does not match its folder', () => {

@@ -18,11 +18,11 @@ test('a project without an English title shows the Bulgarian title and the note 
 test('a project without a year or area shows neither row, and never prints null', async ({ page }) => {
     await page.goto('/en/projects/town-flat');
     await expect(page.getByText('Completed')).toHaveCount(0);
-    await expect(page.getByText('Built area')).toHaveCount(0);
+    await expect(page.getByText('Gross floor area')).toHaveCount(0);
     await expect(page.locator('main')).not.toContainText('null');
     await page.goto('/en/projects/river-house');
     await expect(page.getByText('Completed')).toBeVisible();
-    await expect(page.getByText('Built area')).toBeVisible();
+    await expect(page.getByText('Gross floor area')).toBeVisible();
 });
 
 test('bg pages never show the translation note', async ({ page }) => {
@@ -35,7 +35,7 @@ test('bg pages never show the translation note', async ({ page }) => {
 
 test('the project detail links to the contact page and wraps to the next project', async ({ page }) => {
     await page.goto('/en/projects/river-house');
-    await expect(page.getByRole('link', { name: /Planning something similar/ })).toHaveAttribute('href', '/en/contact');
+    await expect(page.getByRole('link', { name: /Write to us about a similar project/ })).toHaveAttribute('href', '/en/contact');
     await expect(page.getByRole('link', { name: /^Next:/ })).toHaveAttribute('href', '/en/projects/stone-chapel');
     await page.goto('/en/projects/sale-tower');
     await expect(page.getByRole('link', { name: /^Next:/ })).toHaveAttribute('href', '/en/projects/river-house');

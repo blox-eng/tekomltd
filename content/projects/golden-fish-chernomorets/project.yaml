@@ -1,10 +1,10 @@
 slug: golden-fish-chernomorets
 title:
   bg: Ваканционен комплекс „Голдън Фиш“
-  en: Golden Fish holiday residences
+  en: Golden Fish holiday complex
   de: Ferienanlage „Golden Fish“
 summary:
-  bg: Ваканционен комплекс в северозападната част на Черноморец, на около 300 м от плажа. Сградата е с два входа, сутерен с гаражи и складове, три етажа и терасовиден етаж, с общо 50 апартамента, магазин и бистро. Конструкцията е монолитна стоманобетонна, фасадите са с мазилка и каменна облицовка на цокъла, покривът е дървен. Проект на арх. Николай Ситев, въведен в експлоатация през 2010 г.
+  bg: Ваканционен комплекс в северозападната част на Черноморец, на около 300 м от плажа. Сградата има два входа, сутерен с гаражи и складове, три етажа и терасовиден етаж. В нея са 50 апартамента, магазин и бистро. Конструкцията е монолитна стоманобетонна. Фасадите са с мазилка, цокълът е облицован с камък, покривът е дървен. Проектът е на арх. Николай Ситев. Комплексът е въведен в експлоатация през 2010 г.
 place:
   bg: Черноморец
   en: Chernomorets
@@ -27,50 +27,50 @@ meta_title:
   en: Holiday complex with 50 flats in Chernomorets
   de: Ferienanlage mit 50 Wohnungen in Tschernomorez
 meta_description:
-  bg: "Комплекс „Голдън Фиш“ на 300 м от плажа: 50 апартамента, магазин, бистро и гаражи. Монолитна конструкция, каменен цокъл, дървен покрив. Завършен 2010 г."
-  en: "Golden Fish, 300 m from the beach: 50 apartments, a shop, a bistro and garages. Concrete frame, stone plinth and timber roof. Completed in 2010."
-  de: "Golden Fish, 300 m vom Strand: 50 Wohnungen, Laden, Bistro und Garagen. Stahlbetonbau, Natursteinsockel, Holzdach. Fertiggestellt 2010."
+  bg: Комплексът „Голдън Фиш“ е на 300 м от плажа. В него са 50 апартамента, магазин, бистро и гаражи. Монолитна конструкция, каменен цокъл, дървен покрив. 2010 г.
+  en: The Golden Fish complex is 300 m from the beach. It has 50 flats, a shop, a bistro and garages. Cast-in-place concrete frame, stone plinth, timber roof. 2010.
+  de: Die Anlage „Golden Fish“ liegt 300 m vom Strand entfernt. Sie hat 50 Wohnungen, einen Laden, ein Bistro und Garagen. Monolithischer Stahlbetonbau, Natursteinsockel, Holzdach. 2010.
 images:
   - file: chernomorec-1-retouched.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Комплексът, гледан от тревната площ в двора
     is_cover: true
   - file: chernomorec-fasada-yug.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Южната фасада с тераси над градината
   - file: chernomorec-ap29-3.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Баня в апартамент 29, с лилава стъклена мивка и душкабина
   - file: chernomorec-ap29-1.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Дневна с бял ъглов диван под скосения таван в апартамент 29
   - file: chernomorec-ap29-2.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Спалня с лилави стени в апартамент 29
   - file: chernomorec-ap37.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Дневна с кухненски бокс в апартамент 37
   - file: chernomorec-ap37-1.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Ъглова вана с хидромасаж в апартамент 37
   - file: chernomorec-ap37-2.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Баня с душкабина и мивка в апартамент 37
   - file: chernomorec-ap39.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Кухненски бокс и маса за хранене в апартамент 39
   - file: chernomorec-fasada-2.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Фасадата с тераси и детската площадка в двора
   - file: design-5.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Кухня и маса за хранене в един от апартаментите
   - file: design-1.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Кухня с тъмни долни шкафове и остъклени горни шкафове
   - file: design-3.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Баня с окачена тоалетна и червена стъклена мивка
   - file: design-2.jpg
     alt:
-      bg: Ваканционен комплекс „Голдън Фиш“
+      bg: Баня с душ и плочки в кафяво и бяло

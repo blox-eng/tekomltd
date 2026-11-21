@@ -1,10 +1,10 @@
 slug: art-gallery-centre
 title:
-  bg: Административен и търговски център с художествена галерия
-  en: Office and retail centre with art gallery
-  de: Büro- und Geschäftshaus mit Kunstgalerie
+  bg: Търговска и офис сграда над римските крепостни стени
+  en: Retail and office building over the Roman fortress walls
+  de: Geschäfts- und Bürohaus über den römischen Festungsmauern
 summary:
-  bg: Търговски и офис център на ъгъла на ул. „Хаджи Димитър Асенов“ и ул. „Генерал Столетов“, в археологическия резерват „Августа Траяна – Берое“. Сградата е със скелетна стоманобетонна конструкция, шест надземни етажа и сутерен, с пет магазина и 17 офиса. При изкопа бяха открити части от римските крепостни стени (II–VI век). Те са консервирани и показани в сутерена, където вместо паркинг е оформена художествена галерия.
+  bg: Търговска и офис сграда на ъгъла на ул. „Хаджи Димитър Асенов“ и ул. „Генерал Столетов“, в археологическия резерват „Августа Траяна – Берое“. Тя има скелетна стоманобетонна конструкция, шест надземни етажа и сутерен. В нея са пет магазина и 17 офиса. При изкопа бяха открити части от римските крепостни стени от II–VI век. Стените са консервирани и показани в сутерена, където вместо паркинг е оформена художествена галерия.
 place:
   bg: Стара Загора
   en: Stara Zagora
@@ -24,36 +24,36 @@ on_rail: true
 wp_id: 1866
 wp_slug: административен-и-търговски-център-с
 meta_title:
-  bg: Търговски център над римски стени в Стара Загора
-  en: Office building over Roman walls in Stara Zagora
-  de: Geschäftshaus über römischen Mauern in Stara Sagora
+  bg: Търговска и офис сграда над римски стени в Стара Загора
+  en: Retail and office building over Roman walls in Stara Zagora
+  de: Geschäfts- und Bürohaus über römischen Mauern in Stara Sagora
 meta_description:
-  bg: Офис и търговска сграда на шест етажа в резервата „Августа Траяна“. Римските крепостни стени от изкопа са запазени и показани в галерия в сутерена.
-  en: Six-storey office and retail building in the Augusta Traiana reserve. The Roman fortress walls found on site are preserved in a basement gallery.
-  de: Sechsgeschossiges Büro- und Geschäftshaus im Reservat Augusta Traiana. Die beim Aushub gefundenen römischen Mauern sind im Untergeschoss zu sehen.
+  bg: Шест етажа с пет магазина и 17 офиса в резервата „Августа Траяна“. Римските крепостни стени от изкопа са показани в галерия в сутерена.
+  en: Six storeys with five shops and 17 offices in the Augusta Traiana reserve. The Roman fortress walls found in the excavation are on show in a basement gallery.
+  de: Sechs Geschosse mit fünf Läden und 17 Büros im Reservat „Augusta Traiana“. Die beim Aushub gefundenen römischen Festungsmauern sind in einer Galerie im Untergeschoss zu sehen.
 images:
   - file: thumb-img-0619-1-small-retouched.jpg
     alt:
-      bg: Административен и търговски център с художествена галерия
+      bg: Сградата на ъгъла на ул. „Хаджи Димитър Асенов“, с остъклена стълбищна кула
     is_cover: true
   - file: design-hdasenov-119-5.jpg
     alt:
-      bg: Административен и търговски център с художествена галерия
+      bg: Окачен таван с оранжеви греди и вградени лампи
   - file: design-hdasenov-119-1.jpg
     alt:
-      bg: Административен и търговски център с художествена галерия
+      bg: Таван с правоъгълна ниша в кафяво и розово и висящо осветително тяло
   - file: design-hdasenov-119-2.jpg
     alt:
-      bg: Административен и търговски център с художествена галерия
+      bg: Кръгъл таван на две нива с полилей над остъкления ъгъл
   - file: design-hdasenov-119-6.jpg
     alt:
-      bg: Административен и търговски център с художествена галерия
+      bg: Магазините на партера откъм улицата и остъклената стълбищна кула
   - file: design-hdasenov-119-7.jpg
     alt:
-      bg: Административен и търговски център с художествена галерия
+      bg: Санитарен възел с черен плот, бяла мивка и окачена тоалетна
   - file: design-hdasenov-119-3.jpg
     alt:
-      bg: Административен и търговски център с художествена галерия
+      bg: Таван на нива с оранжеви ивици и вградени лампи
   - file: design-hdasenov-119-4.jpg
     alt:
-      bg: Административен и търговски център с художествена галерия
+      bg: Оранжев таван на нива с вградени квадратни лампи

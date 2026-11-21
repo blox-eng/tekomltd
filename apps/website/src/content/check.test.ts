@@ -484,3 +484,31 @@ describe('checkContent: updates on the home page', () => {
             message: 'home and cta go in the .bg.md file'
         }));
 });
+
+describe('checkContent: voice', () => {
+    it('names the file, the field and the fix for an em dash or a price word', () => {
+        const root = tree((r) => {
+            edit(r, PROJECT, (text) => text.replace('place: { bg: Стара Загора', 'place: { bg: Стара Загора — център'));
+            edit(r, 'legal/privacy.bg.md', (text) => `${text}\n\nПоискайте оферта.\n`);
+        });
+        expect(errorsOf(root)).toEqual([
+            { file: 'legal/privacy.bg.md', path: expect.stringMatching(/^line \d+$/), message: '"оферта": no price, luxury or bargain words (docs/VOICE.md)' },
+            { file: PROJECT, path: 'place.bg', message: 'em dash (—): use a comma, a colon or a new sentence' }
+        ]);
+    });
+
+    it('leaves the official EU and notice texts word for word', () => {
+        const root = tree((r) =>
+            edit(r, 'publications.yaml', (text) => text.replace('title: { bg: Съобщение }', 'title: { bg: Покана за представяне на оферти — 2026 }'))
+        );
+        expect(errorsOf(root)).toEqual([]);
+    });
+
+    it('leaves the tender documents on the invitations page as published', () => {
+        const root = tree((r) => {
+            const about = readFileSync(join(r, 'pages/about.bg.md'), 'utf8');
+            write(r, 'pages/invitations.bg.md', about.replace(/slug: about/, 'slug: invitations') + '\n\n[Образец на оферта](https://example.com/)\n');
+        });
+        expect(errorsOf(root)).toEqual([]);
+    });
+});

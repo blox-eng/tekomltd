@@ -27,6 +27,7 @@ import {
 } from './paths';
 import { readPlan } from './plan';
 import { sofiaToday, UpdateFront } from './progress';
+import { voiceProblems } from './voice';
 import { EuProgramme, Home, isoDate, LegalPage, Page, Project, Publication, Service, Settings, Unit } from './schema';
 
 export type ContentError = { file: string; path: string; message: string };
@@ -130,9 +131,35 @@ export function checkContent(root: string, options: CheckOptions = {}): CheckRes
     const serviceSlugs = checkServices(projects);
     checkMarkdown(PAGES_DIR, parsePageFile, Page, '<slug>.<bg|en|de>.md', [...RESERVED_PAGE_SLUGS, ...serviceSlugs]);
     checkNoDrawings(absRoot);
+    checkVoice();
     if (options.urlMap) checkUrlMap(options.urlMap);
 
     return errors.length === 0 ? { ok: true, warnings } : { ok: false, errors, warnings };
+
+    /** docs/VOICE.md on every text the site shows. The EU programmes, the notices and the tender invitations carry official wording and stay as published. */
+    function checkVoice() {
+        const official = new Set([EU_PROGRAMMES_FILE, PUBLICATIONS_FILE]);
+        const report = (file: string, path: string, text: string) => {
+            for (const problem of voiceProblems(text)) fail(file, path, problem);
+        };
+        const walk = (file: string, value: unknown, path: string[]) => {
+            if (typeof value === 'string') report(file, path.join('.'), value);
+            else if (Array.isArray(value)) value.forEach((v, i) => walk(file, v, [...path, String(i)]));
+            else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) walk(file, v, [...path, k]);
+        };
+        for (const file of copyFiles(absRoot).map(rel)) {
+            if (official.has(file) || file.startsWith(`${PAGES_DIR}/invitations.`)) continue;
+            const text = readFileSync(join(absRoot, file), 'utf8');
+            if (file.endsWith('.md')) text.split('\n').forEach((line, i) => report(file, `line ${i + 1}`, line));
+            else {
+                try {
+                    walk(file, YAML.parse(text), []);
+                } catch {
+                    // readYaml already reported a file that does not parse.
+                }
+            }
+        }
+    }
 
     /** Valid projects that are not drafts, for the service pages that list them. */
     function checkProjects(): Project[] {
@@ -507,3 +534,12 @@ export function main(argv: string[]) {
 }
 
 if (process.argv[1] && basename(process.argv[1]) === 'check.ts') process.exitCode = main(process.argv);
+
+/** Every YAML and Markdown file under `dir`, at any depth. */
+function copyFiles(dir: string): string[] {
+    return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+        const path = join(dir, entry.name);
+        if (entry.isDirectory()) return copyFiles(path);
+        return /\.(ya?ml|md)$/.test(entry.name) ? [path] : [];
+    });
+}

@@ -29,8 +29,8 @@ test.describe('landing page', () => {
         await page.goto('/en');
         const turn = page.locator('section[data-crews] h2 .turn');
         await turn.scrollIntoViewIfNeeded();
-        await expect(turn).toContainText('the plaster');
-        await expect(turn).not.toContainText('the plaster', { timeout: 4500 });
+        await expect(turn).toContainText('plaster');
+        await expect(turn).not.toContainText('plaster', { timeout: 4500 });
         expect(await turn.evaluate((el) => getComputedStyle(el).textDecorationStyle)).toBe('dotted');
     });
 
@@ -80,6 +80,6 @@ test.describe('landing page, reduced motion', () => {
         const turn = page.locator('section[data-crews] h2 .turn');
         await turn.scrollIntoViewIfNeeded();
         await page.waitForTimeout(4500);
-        await expect(turn).toContainText('the plaster');
+        await expect(turn).toContainText('plaster');
     });
 });

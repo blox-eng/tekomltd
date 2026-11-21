@@ -1,10 +1,10 @@
 slug: st-dimitar-chapel
 title:
-  bg: Параклис „Св. Димитър“ в Бухчевата къща
-  en: St Dimitar chapel, solid brick dome
-  de: Kapelle St. Dimitar mit Ziegelkuppel
+  bg: Параклис „Св. Димитър“ в двора на Бухчевата къща
+  en: St Dimitar chapel in the courtyard of the Buhchev House
+  de: Kapelle St. Dimitar im Hof des Buhtschew-Hauses
 summary:
-  bg: Параклисът носи името на Св.Димитър и е изпълнен по желание на собственика в двора на Бухчевата къща – емблематична сграда в Стара Загора. Спазени са всички изисквания на канона на Православната църква. Интересно решение има за купола на Параклиса, който е изпълнен изцяло от плътни керамични тухли със самоносеща конструкция, без да е използван стоманобетон – така както са били изпълнявани в миналото.
+  bg: Параклисът „Св. Димитър“ е построен по желание на собственика в двора на Бухчевата къща в Стара Загора. Спазени са изискванията на канона на Православната църква. Куполът е изцяло от плътни керамични тухли, със самоносеща конструкция, без стоманобетон. Така са зидали куполите в миналото.
 place:
   bg: Стара Загора
   en: Stara Zagora
@@ -24,23 +24,23 @@ wp_id: 1345
 wp_slug: chapel-buhchevata-kushta
 meta_title:
   bg: Параклис „Св. Димитър“ с тухлен купол в Стара Загора
-  en: St Dimitar chapel with a brick dome, Stara Zagora
-  de: Kapelle St. Dimitar mit Ziegelkuppel, Stara Sagora
+  en: St Dimitar chapel with a brick dome in Stara Zagora
+  de: Kapelle St. Dimitar mit Ziegelkuppel in Stara Sagora
 meta_description:
-  bg: Православен параклис в двора на Бухчевата къща, по канона на църквата. Куполът е изцяло от плътни тухли, самоносещ, без стоманобетон, както в миналото.
-  en: An Orthodox chapel in the courtyard of the Buhchev House, built to church canon. Its dome is self-supporting solid brick with no concrete, as in the past.
-  de: Orthodoxe Kapelle im Hof des Buhtschew-Hauses, nach kirchlichem Kanon gebaut. Die Kuppel ist selbsttragend aus Vollziegeln, ganz ohne Stahlbeton.
+  bg: Православен параклис в двора на Бухчевата къща, построен по канона на църквата. Куполът е самоносещ, изцяло от плътни тухли, без стоманобетон.
+  en: An Orthodox chapel in the courtyard of the Buhchev House, built to church canon. The dome is self-supporting, all solid brick, with no reinforced concrete.
+  de: Orthodoxe Kapelle im Hof des Buhtschew-Hauses, nach kirchlichem Kanon gebaut. Die Kuppel ist selbsttragend, ganz aus Vollziegeln, ohne Stahlbeton.
 images:
   - file: thumb-paraklis-img-1-retouched.jpg
     alt:
-      bg: Параклис „Св. Димитър“ в Бухчевата къща
+      bg: Параклисът с кръст на покрива и икона над входа
     is_cover: true
   - file: paraklis-img-3.jpg
     alt:
-      bg: Параклис „Св. Димитър“ в Бухчевата къща
+      bg: Иконата над входа и саксия с цветя
   - file: paraklis-img-2.jpg
     alt:
-      bg: Параклис „Св. Димитър“ в Бухчевата къща
+      bg: Входът на параклиса с отворени врати и иконата над тях
   - file: paraklis-img-0.jpg
     alt:
-      bg: Параклис „Св. Димитър“ в Бухчевата къща
+      bg: Параклисът с полукръглия навес над входа

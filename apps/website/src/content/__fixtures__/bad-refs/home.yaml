@@ -17,7 +17,7 @@ rail_panels:
     unit: { bg: години на обекта, en: years on site }
     body: { bg: Семейна фирма от Стара Загора. }
 promises:
-  - title: { bg: 'Цена, на която можете да разчитате' }
+  - title: { bg: 'Оглед преди началото' }
     body: { bg: Количествата се вземат от проекта. }
 stats:
   - value: '25'
@@ -36,7 +36,7 @@ crews:
   - key: office
     scene: office
     title: { bg: Екипът в офиса }
-    body: { bg: 'Оферти, чертежи, поръчки.' }
+    body: { bg: 'Чертежи, поръчки, графици.' }
     roles:
       - tool: key
         role: { bg: Управител }

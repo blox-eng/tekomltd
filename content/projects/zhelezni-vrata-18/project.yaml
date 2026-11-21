@@ -4,7 +4,7 @@ title:
   en: Apartment building above a Roman temple
   de: Wohnhaus über einem römischen Tempel
 summary:
-  bg: Жилищна сграда със 17 апартамента, 7 офиса, медицински кабинети и 8 подземни гаража в археологическия резерват „Августа Траяна“, завършена през 2006 г. При спасителните разкопки през 2004 г. бяха открити монументален римски храм от края на II век, изграден от каменни блокове с железни скоби, и раннохристиянска базилика с баптистерий. Храмът е запазен под защитно покритие, а част от гаражите бяха съкратени заради него.
+  bg: Жилищна сграда на ул. „Железни врата“ 18–20, в резервата „Августа Траяна“, завършена през 2006 г. В нея има 17 апартамента, седем офиса, медицински кабинети и осем подземни гаража. При спасителните разкопки през 2004 г. бяха открити римски храм от края на II век и раннохристиянска базилика с баптистерий. Храмът е иззидан от каменни блокове с железни скоби и е запазен под защитно покритие. Заради него част от гаражите бяха съкратени.
 place:
   bg: Стара Загора
   en: Stara Zagora
@@ -25,53 +25,53 @@ wp_id: 1310
 wp_slug: residential-building-garages-osd
 meta_title:
   bg: Жилищна сграда над римски храм в Стара Загора
-  en: Apartments above a Roman temple, Stara Zagora
-  de: Wohnhaus über einem römischen Tempel, Stara Sagora
+  en: Apartment building above a Roman temple in Stara Zagora
+  de: Wohnhaus über einem römischen Tempel in Stara Sagora
 meta_description:
-  bg: "17 апартамента, офиси и гаражи в резервата „Августа Траяна“. Римски храм от II век, открит при разкопките, е запазен под защитно покритие. 2006 г."
-  en: "17 flats, offices and garages in the Augusta Traiana reserve. A 2nd-century Roman temple found during the dig is preserved under a protective cover. 2006."
-  de: "17 Wohnungen, Büros und Garagen im Reservat Augusta Traiana. Ein römischer Tempel aus dem 2. Jh. blieb unter einer Schutzabdeckung erhalten. 2006."
+  bg: 17 апартамента, офиси и гаражи в резервата „Августа Траяна“. Римски храм от II век, открит при разкопките, е запазен под защитно покритие. 2006 г.
+  en: 17 flats, offices and garages in the Augusta Traiana reserve. A 2nd-century Roman temple found during the excavations is preserved under a protective cover. 2006.
+  de: 17 Wohnungen, Büros und Garagen im Reservat „Augusta Traiana“. Ein römischer Tempel aus dem 2. Jahrhundert, bei den Ausgrabungen entdeckt, ist unter einer Schutzabdeckung erhalten. 2006.
 images:
   - file: zhelezni-vrata-1-retouched.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Сградата на ъгъла на ул. „Железни врата“, с тераси и офиси на партера
     is_cover: true
   - file: zhelezni-vrata-arch-5.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Големи каменни блокове, открити при разкопките през 2004 г.
   - file: zhelezni-vrata-arch-4.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Каменни зидове в изкопа по време на разкопките
   - file: zhelezni-vrata-arch-3.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Каменен барабан от колона, открит на терена
   - file: zhelezni-vrata-arch-7.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Основи от каменни зидове, разкрити при разкопките
   - file: zhelezni-vrata-arch-6.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Керамична тръба в зид от тухли и камък
   - file: zhelezni-vrata-arch-8.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Зид от тухли и камък в изкопа
   - file: zhelezni-vrata-arch-2.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Теренът с разкритите основи по време на разкопките
   - file: design-zhelezni-vrata-18-3.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Стая с ментовозелени стени и окачен таван
   - file: design-zhelezni-vrata-18-2.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Баня с бели плочки и стъклена полица
   - file: design-zhelezni-vrata-18-6.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Стая с окачен таван на нива и завеси
   - file: design-zhelezn-vrata-18-2.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Коридор с вграден шкаф и хладилник до трапезарията
   - file: design-zhelezni-vrata-1.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Окачен таван с вградени лампи над вградените шкафове
   - file: design-zhelezni-vrata-18-4.jpg
     alt:
-      bg: Жилищна сграда над римски храм
+      bg: Баня със стъклена мивка и душкабина

@@ -1,10 +1,10 @@
 slug: boruygrad-49
 title:
-  bg: Жилищна сграда с гаражи и магазин
-  en: Apartment building with garages and shop
-  de: Wohnhaus mit Garagen und Laden
+  bg: Жилищна сграда на ул. „Боруйград“ 49
+  en: Apartment building, 49 Boruygrad St
+  de: Wohnhaus, ul. Boruygrad 49
 summary:
-  bg: "Жилищна сграда на ул. „Боруйград“ 49 в Стара Загора, с пет етажа и терасовиден етаж. На партера има гараж, два офиса, склад и паркинг, а над тях са седем апартамента. ТЕКОМ изпълни сградата от 2011 до 2013 г.: конструкция, зидарии, мазилки, топло- и хидроизолации и фасада с мазилка Баумит Нанопор."
+  bg: "Жилищна сграда на ул. „Боруйград“ 49 в Стара Загора. Има пет етажа и терасовиден етаж. На партера са гараж, два офиса, склад и паркинг. Над тях са седем апартамента. ТЕКОМ изпълни сградата от 2011 до 2013 г.: конструкция, зидарии, мазилки, топло- и хидроизолации и фасада с мазилка Баумит Нанопор."
 place:
   bg: Стара Загора
   en: Stara Zagora
@@ -25,24 +25,24 @@ on_rail: true
 wp_id: 1569
 wp_slug: residential-building-garages-boruigrad
 meta_title:
-  bg: Жилищна сграда на ул. „Боруйград“ в Стара Загора
-  en: Apartment building on Boruygrad St, Stara Zagora
-  de: Wohnhaus in der Boruigrad-Straße, Stara Sagora
+  bg: Жилищна сграда на ул. „Боруйград“ 49, Стара Загора
+  en: Apartment building, 49 Boruygrad St, Stara Zagora
+  de: Wohnhaus, ul. Boruygrad 49, Stara Sagora
 meta_description:
-  bg: Сграда на пет етажа със седем апартамента, гараж, офиси и магазин. ТЕКОМ изпълни конструкцията, изолациите и фасадата с Баумит Нанопор през 2011–2013 г.
-  en: Five-storey building with seven flats, a garage, offices and a shop. Tekom built the structure, insulation and Baumit Nanopor facade in 2011–2013.
-  de: Fünfgeschossiges Haus mit sieben Wohnungen, Garage, Büros und Laden. Tekom baute Rohbau, Dämmung und Baumit-Nanopor-Fassade 2011–2013.
+  bg: Пет етажа със седем апартамента, гараж и офиси. ТЕКОМ изпълни конструкцията, изолациите и фасадата с Баумит Нанопор през 2011–2013 г.
+  en: Five storeys with seven flats, a garage and offices. Tekom built the structure, the insulation and the Baumit Nanopor facade in 2011–2013.
+  de: Fünf Geschosse mit sieben Wohnungen, Garage und Büros. Tekom führte 2011–2013 Rohbau, Dämmung und die Fassade mit Baumit Nanopor aus.
 images:
   - file: boruigrad-1-retouched.jpg
     alt:
-      bg: Жилищна сграда с гаражи и магазин
+      bg: Фасадата с тераси откъм улицата и входът на гаража на партера
     is_cover: true
   - file: b-49-01.jpg
     alt:
-      bg: Жилищна сграда с гаражи и магазин
+      bg: Заоблените тераси с мазилка Баумит Нанопор
   - file: b-49-02.jpg
     alt:
-      bg: Жилищна сграда с гаражи и магазин
+      bg: Дневна в апартамент, с осветен таван и стена с дървена облицовка
   - file: b-49-03.jpg
     alt:
-      bg: Жилищна сграда с гаражи и магазин
+      bg: Кухня в апартамент, с дървени шкафове и остров

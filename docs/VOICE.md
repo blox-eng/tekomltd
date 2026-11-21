@@ -1,6 +1,6 @@
 # Гласът на сайта / The site's voice
 
-Every text on tekomltd.com follows these rules. `content:check` enforces the ones a machine can see.
+Every text on tekomltd.com follows these rules, in Bulgarian, English and German. `content:check` enforces the ones a machine can see: it refuses an em dash and the price, luxury and bargain words of rules 3 and 4 in all three languages (`apps/website/src/content/voice.ts`). It skips `eu-programmes.yaml`, `publications.yaml` and the invitations page, because their wording is official.
 
 ## The reader
 

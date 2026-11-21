@@ -145,7 +145,7 @@ describe('getHome', () => {
 
 describe('getSettings', () => {
     it('picks the headline phrases for the locale and falls back to Bulgarian', () => {
-        expect(getSettings('en', root).crewHeadline).toEqual(['The people behind the plaster', 'The people behind your dream home']);
+        expect(getSettings('en', root).crewHeadline).toEqual(['The people behind the plaster', 'The people behind the facades']);
         expect(getSettings('de', root).crewHeadline[0]).toBe('Хората зад мазилката');
     });
     it('localises address and meta', () => {

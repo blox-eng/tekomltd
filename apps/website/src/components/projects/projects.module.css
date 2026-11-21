@@ -504,11 +504,7 @@
     color: var(--muted);
 }
 
-/* /projects by year (#51): a sticky year column beside the groups. The snap only settles; it never holds. */
-:global(html):has(.byYear) {
-    scroll-snap-type: y proximity;
-}
-
+/* /projects by year (#51): a sticky year column beside the groups. No page snap: it pulled the reader back (#58). */
 .byYear {
     display: grid;
     grid-template-columns: 64px minmax(0, 1fr);
@@ -551,7 +547,6 @@
 }
 
 .year {
-    scroll-snap-align: start;
     scroll-margin-top: calc(var(--header-h, 70px) + 24px);
 }
 

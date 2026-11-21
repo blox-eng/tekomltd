@@ -36,8 +36,14 @@ export function YearIndex({ label, items }: Props) {
     }, [items]);
 
     // On a phone the years are one sideways row: keep the current year in sight.
+    // Scroll only the row: scrollIntoView also moves the page, which jumped under the reader (#58).
     useEffect(() => {
-        list.current?.querySelector('[aria-current]')?.scrollIntoView({ block: 'nearest', inline: 'center' });
+        const row = list.current;
+        const link = row?.querySelector('[aria-current]');
+        if (!row || !link) return;
+        const r = row.getBoundingClientRect();
+        const l = link.getBoundingClientRect();
+        row.scrollLeft += l.left - r.left - (r.width - l.width) / 2;
     }, [current]);
 
     return (

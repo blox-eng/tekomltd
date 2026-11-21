@@ -171,8 +171,8 @@
             "reserved": "{n, plural, one {# резервиран} other {# резервирани}}",
             "sold": "{n, plural, one {# продаден} other {# продадени}}"
         },
-        "freeArea": "свободни от {min} до {max} м² обща площ",
-        "freeAreaOne": "свободен: {min} м² обща площ",
+        "freeArea": "свободни от {min} до {max} m² обща площ",
+        "freeAreaOne": "свободен: {min} m² обща площ",
         "asOf": "наличност към {date}",
         "freeOnFloor": "{n, plural, =0 {няма свободни} one {# свободен} other {# свободни}}",
         "status": {
@@ -196,7 +196,7 @@
             "shop": "Магазини"
         },
         "rooms": "{n, plural, one {# стая} other {# стаи}}",
-        "areaTotal": "{n} м² обща площ",
+        "areaTotal": "{n} m² обща площ",
         "plan": "План: {floor}",
         "listTitle": "Всички обекти",
         "filter": {

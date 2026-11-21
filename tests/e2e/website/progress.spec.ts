@@ -24,7 +24,7 @@ test('the page of a project in progress shows its stages, quarter, permit, note 
     const dates = await progress.locator('article time').evaluateAll((els) => els.map((el) => el.getAttribute('datetime')));
     expect(dates).toEqual(['2026-11-01', '2026-10-01']);
     await expect(page.getByText('→ today')).toHaveCount(0);
-    await expect(page.getByRole('link', { name: /Interested in a flat/ })).toHaveAttribute('href', '/en/contact');
+    await expect(page.getByRole('link', { name: /Write to us about a flat/ })).toHaveAttribute('href', '/en/contact');
 });
 
 test('a finished project keeps its log and shows its age instead of the label', async ({ page }) => {
@@ -82,16 +82,16 @@ test('a screen reader hears what each stage date means', async ({ page }) => {
     await page.goto('/en/projects/tower-rising');
     const stages = page.locator('[data-progress]').getByRole('list', { name: 'Stages' }).getByRole('listitem');
     await expect(stages.first()).toContainText('done on 20.05.2026');
-    await expect(stages.nth(3)).toContainText('not started');
+    await expect(stages.nth(3)).toContainText('to come');
 });
 
 test('a project in progress without a photo shows the drawing and the stamp instead', async ({ page }) => {
     await page.goto('/en/projects');
     const tile = page.locator('main li:has(h3)', { hasText: 'House on the hill' });
-    await expect(tile.getByRole('img', { name: 'Design to come' })).toBeVisible();
+    await expect(tile.getByRole('img', { name: 'Visualisation to come' })).toBeVisible();
     await expect(tile.locator('img')).toHaveCount(0);
     await page.goto('/en/projects/hill-house');
-    await expect(page.getByRole('img', { name: 'Design to come' })).toBeVisible();
-    await page.getByRole('img', { name: 'Design to come' }).hover();
+    await expect(page.getByRole('img', { name: 'Visualisation to come' })).toBeVisible();
+    await page.getByRole('img', { name: 'Visualisation to come' }).hover();
     await expect(page.locator('[data-pending] .stamp')).toHaveCSS('opacity', '1');
 });

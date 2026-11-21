@@ -3,31 +3,31 @@
         "projects": "Projekte",
         "eu": "EU-Programme",
         "contact": "Kontakt",
-        "cta": "Angebot anfragen",
+        "cta": "Vor-Ort-Termin anfragen",
         "home": "Tekom, Startseite",
         "services": "Leistungen",
         "servicesMenu": "Unsere Leistungen",
         "euShort": "EU"
     },
     "home": {
-        "title": "Tekom: hochwertiger Bau und Innenausbau, Stara Sagora",
+        "title": "Tekom · Bauen in Stara Sagora seit 1993",
         "allProjects": "Alle Projekte",
         "news": "Neuigkeiten"
     },
     "scope": {
-        "full": "Schlüsselfertig",
+        "full": "Schlüsselfertiges Bauen",
         "restore": "Restaurierung",
         "facade": "Fassade",
-        "interior": "Innenausbau",
-        "stone": "Stein & Fliesen"
+        "interior": "Ausbauarbeiten",
+        "stone": "Beläge und Verkleidungen"
     },
     "rail": {
         "prev": "Zurück",
         "next": "Weiter"
     },
     "why": {
-        "h": "Richtig bauen. <em>Ohne Risiko.</em>",
-        "p": "Die meisten Bauprobleme beginnen mit kleinen Abkürzungen, die niemand sieht. Bei uns bleibt auf Ihrer Baustelle nichts unsichtbar."
+        "h": "Wir fotografieren jede Schicht, <em>bevor wir sie verdecken.</em>",
+        "p": "Dämmung, Abdichtung und Installationen bleiben in den Wänden verborgen. Wir fotografieren sie und halten sie in einem Protokoll fest. Sie sehen sie im Bautagebuch Ihrer Baustelle."
     },
     "map": {
         "h": "Wo wir gebaut haben",
@@ -36,31 +36,31 @@
         "sz": "Stara Sagora, Zentrum"
     },
     "materials": {
-        "h": "Materialien, mit denen wir bauen",
-        "p": "Systeme von Herstellern, die dafür einstehen, verarbeitet nach deren Vorgaben."
+        "h": "Materialien, mit denen wir arbeiten",
+        "p": "Wir verarbeiten jedes System so, wie der Hersteller es beschreibt. So gilt auch seine Garantie."
     },
     "partners": {
         "h": "Partner"
     },
     "crew": {
         "photoPending": "Foto folgt",
-        "p": "Eigene Leute, auf der Baustelle und im Büro. Wir wollten sie fotografieren, aber sie waren mit Arbeiten beschäftigt.",
+        "p": "Unsere Leute auf der Baustelle und im Büro. Ihre Fotos folgen.",
         "y": "J. bei Tekom"
     },
     "partnerServices": {
-        "h": "Für alles andere vertrauen wir auf unsere Partner",
-        "p": "Spezialisten, mit denen wir seit Jahren bauen. Wir holen sie dazu, koordinieren sie auf Ihrer Baustelle und stehen für das Ergebnis ein.",
-        "k": "Über unsere Partner"
+        "h": "Den Rest übernehmen unsere Partner",
+        "p": "Fenster und Türen, Küchen, Installationen und Gartengestaltung. Wir koordinieren die Partner auf der Baustelle und stehen für ihre Arbeit ein.",
+        "k": "Über Partner"
     },
     "project": {
         "back": "← Alle Projekte",
         "address": "Adresse",
         "completed": "Fertiggestellt",
-        "area": "Fläche",
-        "scope": "Unser Umfang",
+        "area": "Bruttogeschossfläche",
+        "scope": "Was wir ausgeführt haben",
         "next": "Nächstes:",
         "inBulgarian": "Beschreibung auf Bulgarisch. Übersetzung folgt.",
-        "cta": "Etwas Ähnliches geplant? Sprechen Sie uns an",
+        "cta": "Schreiben Sie uns zu einem ähnlichen Projekt",
         "fullPhoto": "Ganzes Foto: {alt}",
         "stood": "{n, plural, =0 {dieses Jahr fertiggestellt} one {# Jahr} other {# Jahre}}",
         "since": "{year} → heute",
@@ -78,7 +78,7 @@
         "lastUpdate": "letzte Aktualisierung: {date}",
         "noUpdates": "das erste Update folgt",
         "updatesTitle": "Baustellentagebuch",
-        "ctaBuilding": "Interesse an einer Wohnung? Schreiben Sie uns",
+        "ctaBuilding": "Schreiben Sie uns zu einer Wohnung in diesem Gebäude",
         "stage": {
             "design": "Planung",
             "permit": "Baugenehmigung",
@@ -97,30 +97,30 @@
             "scaffold_down": "Gerüstabbau",
             "handover": "Übergabe"
         },
-        "stageNext": "noch nicht begonnen",
-        "renderPending": "Entwurf folgt",
+        "stageNext": "folgt",
+        "renderPending": "Visualisierung folgt",
         "yearsNav": "Jahre",
         "noYear": "ohne Jahr",
         "inProgressMeta": "im Bau: Bauphasen und Baustellentagebuch"
     },
     "eu": {
         "h": "EU-Programme und Veröffentlichungen",
-        "p": "Von der EU kofinanzierte Projekte von Tekom und die vorgeschriebenen Veröffentlichungen.",
-        "notices": "Unterlagen",
+        "p": "Die Projekte von Tekom mit EU-Kofinanzierung und die Veröffentlichungen, die jedes Programm vorschreibt.",
+        "notices": "Veröffentlichungen",
         "cofunded": "Kofinanziert von der Europäischen Union",
         "emblemAlt": "Flagge der Europäischen Union",
         "summary": "Zum Projekt",
         "objectives": "Ziele",
         "results": "Ergebnisse",
-        "totalBudget": "Gesamtbudget",
-        "euContribution": "EU-Beitrag",
+        "totalBudget": "Gesamtwert",
+        "euContribution": "EU-Finanzierung",
         "period": "Laufzeit"
     },
     "contact": {
         "h": "Erzählen Sie uns von Ihrem Projekt",
-        "p": "Wir antworten innerhalb eines Werktags und besichtigen vor dem Angebot.",
-        "phone": "Phone",
-        "office": "Office",
+        "p": "Wir antworten innerhalb eines Werktags. Danach kommen wir zu einem Vor-Ort-Termin zu Ihnen.",
+        "phone": "Telefon",
+        "office": "Büro",
         "email": "E-Mail"
     },
     "footer": {
@@ -135,16 +135,16 @@
         "cookies": "Cookies: kein Tracking",
         "rights": "Ihre Rechte",
         "terms": "AGB",
-        "follow": "Unsere Arbeit verfolgen",
+        "follow": "Verfolgen Sie unsere Arbeit",
         "eu": "Von der Europäischen Union kofinanzierte Projekte: BG05SFPR002-1.004-1772-C01 und BG16RFPR001-1.004.",
-        "made": "Verantwortlicher: ТЕКОМ ООД · privacy@tekomltd.com"
+        "made": "Verantwortlicher: TEKOM OOD · privacy@tekomltd.com"
     },
     "note": "Übersetzung folgt",
     "publications": {
         "h": "Veröffentlichungen",
         "all": "Alle",
         "procurement": "Vergabebekanntmachungen",
-        "eu_notice": "EU-Mitteilungen",
+        "eu_notice": "Europäische Bekanntmachungen",
         "other": "Weitere"
     },
     "service": {

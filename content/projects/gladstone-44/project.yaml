@@ -1,8 +1,8 @@
 slug: gladstone-44
 title:
   bg: Жилищна сграда на ул. „Гладстон“ 41
-  en: Homes, shops and a medical centre
-  de: Wohnungen, Läden und Arztpraxis
+  en: Apartment building, 41 Gladstone St
+  de: Wohnhaus, ul. Gladstone 41
 summary:
   bg: Жилищна сграда на ул. „Гладстон“ 41 в Стара Загора, построена през 2001–2003 г. Има пет етажа, терасовиден етаж и подземни гаражи. В нея са 12 жилища, три офиса и три магазина към улицата. В двора е медицински център със седем лекарски кабинета и отделен вход. В сутерена са десет гаража и складове към жилищата и офисите.
 place:
@@ -25,12 +25,12 @@ wp_id: 912
 wp_slug: residential-building-garages-shop-gladston
 meta_title:
   bg: Жилищна сграда с медицински център в Стара Загора
-  en: Apartments and medical centre in Stara Zagora
+  en: Apartment building with a medical centre in Stara Zagora
   de: Wohnhaus mit Ärztezentrum in Stara Sagora
 meta_description:
   bg: Пет етажа на ул. „Гладстон“ с 12 жилища, три офиса, три магазина и подземни гаражи. В двора е медицински център със седем кабинета. 2001–2003 г.
-  en: Five storeys on Gladstone Street with 12 homes, offices, shops and underground garages, plus a medical centre in the courtyard. Built 2001–2003.
-  de: Fünf Geschosse in der Gladstone-Straße mit 12 Wohnungen, Büros, Läden und Tiefgarage, dazu ein Ärztezentrum im Hof. Gebaut 2001–2003.
+  en: Five storeys on Gladstone St with 12 homes, three offices, three shops and underground garages. A medical centre with seven consulting rooms stands in the courtyard. 2001–2003.
+  de: Fünf Geschosse in der ul. Gladstone mit 12 Wohnungen, drei Büros, drei Läden und Tiefgaragen. Im Hof steht ein Ärztezentrum mit sieben Behandlungsräumen. 2001–2003.
 images:
   - file: gladston-img-1.jpg
     alt:

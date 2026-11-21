@@ -1,8 +1,8 @@
 slug: kalia-facade
 title:
   bg: Фасада на жилищна сграда „Калия“
-  en: Modern facade for the Kalia apartment building
-  de: Moderne Fassade für das Wohnhaus „Kalia“
+  en: Facade of the Kalia apartment building
+  de: Fassade des Wohnhauses „Kalia“
 summary:
   bg: Фасада на нова многофамилна жилищна сграда с гаражи до парк „Аязмо“. ТЕКОМ положи топлоизолационна система с 10 см минерална вата и хидрофобна силикатна мазилка по около 1 700 м². Обрамчи прозорците и облицова около 50 м² с фиброцимент с дървесна структура. Вътре измаза стените и таваните с машинна мазилка. Терасите получиха хидроизолация и настилка от гранитогрес.
 place:
@@ -22,36 +22,36 @@ wide: false
 on_rail: true
 meta_title:
   bg: Фасада на жилищна сграда „Калия“ в Стара Загора
-  en: Facade of the Kalia apartment building, Stara Zagora
-  de: Fassade für das Wohnhaus „Kalia“ in Stara Sagora
+  en: Facade of the Kalia apartment building in Stara Zagora
+  de: Fassade des Wohnhauses „Kalia“ in Stara Sagora
 meta_description:
   bg: Топлоизолация с 10 см минерална вата и силикатна мазилка по 1 700 м² фасада, облицовка от фиброцимент с дървесна структура и тераси с гранитогрес.
-  en: Mineral wool insulation and silicate render over 1,700 m² of facade, wood-textured fibre cement cladding and porcelain-tiled terraces.
-  de: Mineralwolldämmung und Silikatputz auf 1.700 m² Fassade, Faserzementverkleidung in Holzoptik und Terrassen mit Feinsteinzeug.
+  en: Thermal insulation with 10 cm of mineral wool and silicate render over 1,700 m² of facade, wood-textured fibre cement cladding and porcelain-tiled terraces.
+  de: Wärmedämmung mit 10 cm Mineralwolle und Silikatputz auf 1.700 m² Fassade, Faserzementverkleidung in Holzoptik und Terrassen mit Feinsteinzeug.
 images:
   - file: kalia-retouched.jpg
     alt:
       bg: Фасадата на „Калия“ със светла мазилка, обрамчени прозорци и фиброцимент с дървесна структура
-      en: Render and wood-finish fibre-cement facade of the Kalia apartment building
-      de: Fassade aus Putz und Faserzement in Holzoptik am Wohnhaus „Kalia“
+      en: The Kalia facade with light render, framed windows and wood-textured fibre cement
+      de: Die Fassade des Wohnhauses „Kalia“ mit hellem Putz, gerahmten Fenstern und Faserzement in Holzoptik
     is_cover: true
   - file: kalia-corner.jpg
     alt:
       bg: Ъгълът на „Калия“ с обрамчени прозорци и остъклени тераси
-      en: Corner of the Kalia building with framed windows
-      de: Ecke des Wohnhauses „Kalia“ mit gerahmten Fenstern
+      en: The corner of the Kalia building with framed windows and glazed terraces
+      de: Die Ecke des Wohnhauses „Kalia“ mit gerahmten Fenstern und verglasten Terrassen
   - file: kalia-facade-1.jpg
     alt:
       bg: Завършената фасада на „Калия“ откъм улицата
-      en: The finished facade of the Kalia building
-      de: Die fertige Fassade des Wohnhauses „Kalia“
+      en: The finished Kalia facade from the street
+      de: Die fertige Fassade des Wohnhauses „Kalia“ von der Straße aus
   - file: kalia-facade-2.jpg
     alt:
       bg: Фасадата при предаването, с камион на ТЕКОМ пред сградата
-      en: The Kalia facade at handover
-      de: Die Fassade des Wohnhauses „Kalia“ bei der Übergabe
+      en: The facade at handover, with a Tekom lorry in front of the building
+      de: Die Fassade bei der Übergabe, mit einem Tekom-Lkw vor dem Gebäude
   - file: kalia-scaffolding.jpg
     alt:
       bg: Скелето на ТЕКОМ с предпазна мрежа по фасадата по време на работа
-      en: Tekom scaffolding during the facade works
-      de: Tekom-Gerüst während der Fassadenarbeiten
+      en: Tekom scaffolding with safety netting on the facade during the works
+      de: Tekom-Gerüst mit Schutznetz an der Fassade während der Arbeiten
